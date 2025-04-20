@@ -28,7 +28,7 @@ sms bomber pro irani 🇮🇷v1 with Go (Golang)
 - Termux : `pkg install golang `
 
 
-## در Linux/Termux اجرا شود
+## در Linux / Termux اجرا شود
 
 
 ## کپی کردن فایل بمبر در دستگاه
