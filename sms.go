@@ -12,11 +12,11 @@ import (
 )
 
 /*
-Channel telegram : @esfelurm or @Team_Exploit
+Channel telegram : none
 ===============================================
-Link Github : https://github.com/esfelurm
+Link Github : https://github.com/monsmain01
 ===============================================
-Sms Bomber pro v1
+Sms Bomber faster
 */
 func clearScreen() {
 	cmd := exec.Command("clear")
@@ -46,9 +46,9 @@ func sms(url string, header map[string]interface{}, ch chan<- int) {
 }
 
 func main() {
-	// red := "\033[01;31m"
-	// green := "\033[01;32m"
-	// yellow := "\033[01;33m"
+	// green := "\033[01;31m"
+	// white := "\033[01;32m"
+	// red := "\033[01;33m"
 	clearScreen()
 	fmt.Println("\033[01;33m")
 	fmt.Println(` 
@@ -70,8 +70,8 @@ func main() {
             #@@@@@@%####**+*%@@@@@@@@@@%*+**####%@@@@@@#              
             -@@@@*:       .  -#@@@@@@#:  .       -#@@@%:              
              *@@%#            -@@@@@@.            #@@@+               
-             .%@@# @esfelurm  +@@@@@@= Sms Bomber #@@#                
-              :@@*           =%@@@@@@%-           *@@:                
+            .%@@# @monsmain01 +@@@@@@= Sms Bomber  #@@#                
+              :@@*           =%@@@@@@%-  faster    *@@:                
               #@@%         .*@@@@#%@@@%+.         %@@+                
               %@@@+      -#@@@@@* :%@@@@@*-      *@@@*                
               *@@@@#++*#%@@@@@@+    #@@@@@@%#+++%@@@@=                
