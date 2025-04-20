@@ -49,16 +49,6 @@ func sms(url string, headers map[string]interface{}, ch chan<- int) {
 	ch <- resp.StatusCode
 }
 
-package main
-
-import (
-	"fmt"
-)
-
-func clearScreen() {
-	// Clearing screen logic goes here
-}
-
 func main() {
 	clearScreen()
 
