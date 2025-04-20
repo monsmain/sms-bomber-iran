@@ -11,13 +11,7 @@ import (
 	"time"
 )
 
-/*
-Channel telegram :--------
-===============================================
-Link Github : https://github.com/monsmain01
-===============================================
-Sms Bomber pro v1
-*/
+// clearScreen clears the terminal screen based on the OS
 func clearScreen() {
 	cmd := exec.Command("clear")
 	if runtime.GOOS == "windows" {
@@ -26,31 +20,39 @@ func clearScreen() {
 	cmd.Stdout = os.Stdout
 	cmd.Run()
 }
-func sms(url string, header map[string]interface{}, ch chan<- int) {
-	//time.Sleep(3 * time.Second)
-	jsonData, err := json.Marshal(header)
+
+// sms sends a POST request with the given headers to the specified URL
+func sms(url string, headers map[string]interface{}, ch chan<- int) {
+	jsonData, err := json.Marshal(headers)
 	if err != nil {
-		fmt.Println("\033[01;31m[-] Error ! ")
+		fmt.Println("\033[01;31m[-] Error while encoding JSON!\033[0m")
 		ch <- http.StatusInternalServerError
 		return
 	}
+
 	time.Sleep(3 * time.Second)
+
 	resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonData))
 	time.Sleep(3 * time.Second)
+
 	if err != nil {
-		fmt.Println("\033[01;31m[-] Error ! ")
+		fmt.Println("\033[01;31m[-] Error while sending request!\033[0m")
 		ch <- http.StatusInternalServerError
 		return
 	}
+	defer resp.Body.Close()
+
 	ch <- resp.StatusCode
 }
 
 func main() {
+	// ANSI colors (you can use these if needed)
 	// red := "\033[01;31m"
 	// green := "\033[01;32m"
 	// yellow := "\033[01;33m"
+
 	clearScreen()
-	fmt.Println("\033[01;33m")
+	fmt.Println("\033[01;31m") // Bright red
 	fmt.Println(` 
                                 :-.                                   
                          .:   =#-:-----:                              
@@ -70,8 +72,8 @@ func main() {
             #@@@@@@%####**+*%@@@@@@@@@@%*+**####%@@@@@@#              
             -@@@@*:       .  -#@@@@@@#:  .       -#@@@%:              
              *@@%#            -@@@@@@.            #@@@+               
-             .%@@# @esfelurm  +@@@@@@= Sms Bomber #@@#                
-              :@@*           =%@@@@@@%-           *@@:                
+             .%@@# @monsmain01 +@@@@@@= Sms Bomber #@@#                
+              :@@*           =%@@@@@@%-  faster    *@@:                
               #@@%         .*@@@@#%@@@%+.         %@@+                
               %@@@+      -#@@@@@* :%@@@@@*-      *@@@*                
               *@@@@#++*#%@@@@@@+    #@@@@@@%#+++%@@@@=                
@@ -84,9 +86,25 @@ func main() {
                          +%+ %%.+@%:-@* *%-                           
                           .  %# .%#  %+                               
                              :.  %+  :.                               
-                                 -:                                                                                                                                                            												 
-
+                                 -:     
 	`)
+	fmt.Println("\033[0m") // Reset color
+
+	// Example usage of the sms function:
+	// Uncomment and modify the following lines to actually send a request:
+	/*
+		url := "https://example.com/api"
+		headers := map[string]interface{}{
+			"phone": "09123456789",
+			"action": "send_sms",
+		}
+		ch := make(chan int)
+		go sms(url, headers, ch)
+		status := <-ch
+		fmt.Printf("Response status: %d\n", status)
+	*/
+}
+
 	var phone string
 	fmt.Println("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mSms bomber ! number web service : \033[01;31m177 \n\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mCall bomber ! number web service : \033[01;31m6\n\n")
 	fmt.Print("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;32mEnter phone [Ex : 09xxxxxxxxxx]: \033[00;36m")
