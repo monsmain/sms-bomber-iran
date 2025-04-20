@@ -26,67 +26,77 @@ func clearScreen() {
 	cmd.Stdout = os.Stdout
 	cmd.Run()
 }
-func sms(url string, header map[string]interface{}, ch chan<- int) {
-	//time.Sleep(3 * time.Second)
-	jsonData, err := json.Marshal(header)
+func sms(url string, headers map[string]interface{}, ch chan<- int) {
+	jsonData, err := json.Marshal(headers)
 	if err != nil {
-		fmt.Println("\033[01;31m[-] Error ! ")
+		fmt.Println("\033[01;31m[-] Error while encoding JSON!\033[0m")
 		ch <- http.StatusInternalServerError
 		return
 	}
+
 	time.Sleep(3 * time.Second)
+
 	resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonData))
 	time.Sleep(3 * time.Second)
+
 	if err != nil {
-		fmt.Println("\033[01;31m[-] Error ! ")
+		fmt.Println("\033[01;31m[-] Error while sending request!\033[0m")
 		ch <- http.StatusInternalServerError
 		return
 	}
+	defer resp.Body.Close()
+
 	ch <- resp.StatusCode
 }
 
 func main() {
-	// green := "\033[01;31m"
-	// white := "\033[01;32m"
-	// red := "\033[01;33m"
 	clearScreen()
-	fmt.Println("\033[01;33m")
-	fmt.Println(` 
-                                :-.                                   
-                         .:   =#-:-----:                              
-                           **%@#%@@@#*+==:                            
-                       :=*%@@@@@@@@@@@@@@%#*=:                        
-                    -*%@@@@@@@@@@@@@@@@@@@@@@@%#=.                    
-                . -%@@@@@@@@@@@@@@@@@@@@@@@@%%%@@@#:                  
-              .= *@@@@@@@@@@@@@@@@@@@@@@@@@@@%#*+*%%*.                
-             =%.#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#+=+#:               
-            :%=+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%+.+.              
-            #@:%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%..              
-           .%@*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%.              
-           =@@%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#              
-           +@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:             
-           =@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-             
-           .%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:             
-            #@@@@@@%####**+*%@@@@@@@@@@%*+**####%@@@@@@#              
-            -@@@@*:       .  -#@@@@@@#:  .       -#@@@%:              
-             *@@%#            -@@@@@@.            #@@@+               
-            .%@@# @monsmain01 +@@@@@@= Sms Bomber  #@@#                
-              :@@*           =%@@@@@@%-  faster    *@@:                
-              #@@%         .*@@@@#%@@@%+.         %@@+                
-              %@@@+      -#@@@@@* :%@@@@@*-      *@@@*                
-              *@@@@#++*#%@@@@@@+    #@@@@@@%#+++%@@@@=                
-               #@@@@@@@@@@@@@@* Go   #@@@@@@@@@@@@@@*                 
-                =%@@@@@@@@@@@@* :#+ .#@@@@@@@@@@@@#-                  
-                  .---@@@@@@@@@%@@@%%@@@@@@@@%:--.                    
-                      #@@@@@@@@@@@@@@@@@@@@@@+                        
-                       *@@@@@@@@@@@@@@@@@@@@+                         
-                        +@@%*@@%@@@%%@%*@@%=                          
-                         +%+ %%.+@%:-@* *%-                           
-                          .  %# .%#  %+                               
-                             :.  %+  :.                               
-                                 -:                                                                                                                                                            												 
 
-	`)
+	// Top (green)
+	fmt.Println("\033[01;32m")
+	fmt.Println("                                :-.                                   ")
+	fmt.Println("                         .:   =#-:-----:                              ")
+	fmt.Println("                           **%@#%@@@#*+==:                            ")
+	fmt.Println("                       :=*%@@@@@@@@@@@@@@%#*=:                        ")
+	fmt.Println("                    -*%@@@@@@@@@@@@@@@@@@@@@@@%#=.                   ")
+	fmt.Println("                . -%@@@@@@@@@@@@@@@@@@@@@@@@%%%@@@#:                 ")
+	fmt.Println("              .= *@@@@@@@@@@@@@@@@@@@@@@@@@@@%#*+*%%*.               ")
+	fmt.Println("\033[0m")
+
+	// Middle (white)
+	fmt.Println("\033[01;37m")
+	fmt.Println("             =%.#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#+=+#:              ")
+	fmt.Println("            :%=+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%+.+.             ")
+	fmt.Println("            #@:%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%..            ")
+	fmt.Println("           .%@*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%.            ")
+	fmt.Println("           =@@%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#            ")
+	fmt.Println("           +@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:           ")
+	fmt.Println("           =@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-           ")
+	fmt.Println("           .%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:           ")
+	fmt.Println("            #@@@@@@%####**+*%@@@@@@@@@@%*+**####%@@@@@@#            ")
+	fmt.Println("            -@@@@*:       .  -#@@@@@@#:  .       -#@@@%:            ")
+	fmt.Println("             *@@%#            -@@@@@@.            #@@@+             ")
+	fmt.Println("             .%@@# @esfelurm  +@@@@@@= Sms Bomber #@@#              ")
+	fmt.Println("              :@@*           =%@@@@@@%-           *@@:              ")
+	fmt.Println("              #@@%         .*@@@@#%@@@%+.         %@@+              ")
+	fmt.Println("              %@@@+      -#@@@@@* :%@@@@@*-      *@@@*              ")
+	fmt.Println("              *@@@@#++*#%@@@@@@+    #@@@@@@%#+++%@@@@=              ")
+	fmt.Println("               #@@@@@@@@@@@@@@* Go   #@@@@@@@@@@@@@@*               ")
+	fmt.Println("                =%@@@@@@@@@@@@* :#+ .#@@@@@@@@@@@@#-                ")
+	fmt.Println("\033[0m")
+
+	// Bottom (red)
+	fmt.Println("\033[01;31m")
+	fmt.Println("                  .---@@@@@@@@@%@@@%%@@@@@@@@%:--.                   ")
+	fmt.Println("                      #@@@@@@@@@@@@@@@@@@@@@@+                      ")
+	fmt.Println("                       *@@@@@@@@@@@@@@@@@@@@+                       ")
+	fmt.Println("                        +@@%*@@%@@@%%@%*@@%=                         ")
+	fmt.Println("                         +%+ %%.+@%:-@* *%-                          ")
+	fmt.Println("                          .  %# .%#  %+                              ")
+	fmt.Println("                             :.  %+  :.                              ")
+	fmt.Println("                                 -:                                  ")
+	fmt.Println("\033[0m")
+
 	var phone string
 	fmt.Println("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mSms bomber ! number web service : \033[01;31m177 \n\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mCall bomber ! number web service : \033[01;31m6\n\n")
 	fmt.Print("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;32mEnter phone [Ex : 09xxxxxxxxxx]: \033[00;36m")
