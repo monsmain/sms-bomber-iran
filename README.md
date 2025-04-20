@@ -22,9 +22,9 @@ sms bomber pro irani 🇮🇷v1 with Go (Golang)
 
 - Windows : Download Golang programming language from reputable sites
 
-- Linux : `sudo apt install golang`
+- Linux : `sudo apt install golang `
 
-- Termux : `pkg install golang`
+- Termux : `pkg install golang `
 
 ## Run in windows
 
@@ -33,9 +33,10 @@ sms bomber pro irani 🇮🇷v1 with Go (Golang)
 ## Run in Linux/Termux
 
 ```
-git clone https://github.com/esfelurm/iran-bomber
-cd iran-bomber
+git clone https://github.com/monsmain01/sms-bomber-iran-faster
+cd sms-bomber-iran-faster
 go run sms.go
 ```
 
- Good bye
+
+ ### Good bye
