@@ -52,8 +52,7 @@ func sms(url string, headers map[string]interface{}, ch chan<- int) {
 func main() {
 	clearScreen()
 
-	// Top (green)
-	fmt.Println("\033[01;32m")
+	fmt.Println("\033[01;32m")// Top (green)
 	fmt.Println("                                :-.                                   ")
 	fmt.Println("                         .:   =#-:-----:                              ")
 	fmt.Println("                           **%@#%@@@#*+==:                            ")
@@ -66,9 +65,7 @@ func main() {
 	fmt.Println("            #@:%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%..            ")
 	fmt.Println("           .%@*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%.            ")
 fmt.Println("\033[0m")
-
-	// Middle (white)
-	fmt.Println("\033[01;37m")
+	fmt.Println("\033[01;37m")// Middle (white)
 	fmt.Println("           =@@%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#            ")
 	fmt.Println("           +@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:           ")
 	fmt.Println("           =@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-           ")
@@ -81,9 +78,7 @@ fmt.Println("\033[0m")
 	fmt.Println("              #@@%         .*@@@@#%@@@%+.         %@@+              ")
 	fmt.Println("              %@@@+      -#@@@@@* :%@@@@@*-      *@@@*              ")
 fmt.Println("\033[0m")
-
-	// Bottom (red)
-	fmt.Println("\033[01;31m")
+	fmt.Println("\033[01;31m") // Bottom (red)
 	fmt.Println("              *@@@@#++*#%@@@@@@+    #@@@@@@%#+++%@@@@=              ")
 	fmt.Println("               #@@@@@@@@@@@@@@* Go   #@@@@@@@@@@@@@@*               ")
 	fmt.Println("                =%@@@@@@@@@@@@* :#+ .#@@@@@@@@@@@@#-                ")
