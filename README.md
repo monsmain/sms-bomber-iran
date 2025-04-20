@@ -31,10 +31,21 @@ sms bomber pro irani 🇮🇷v1 with Go (Golang)
 ## در Linux/Termux اجرا شود
 
 
+## کپی کردن فایل بمبر در دستگاه
+
 ```
 git clone https://github.com/monsmain01/sms-bomber-iran-faster
+```
+## فراخوان
+```
 cd sms-bomber-iran-faster
+```
+## اجرای آن
+```
 go run sms.go
+```
+```
+xxx
 ```
 
 
