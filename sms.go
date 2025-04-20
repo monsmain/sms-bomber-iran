@@ -62,7 +62,8 @@ func clearScreen() {
 func main() {
 	clearScreen()
 
-	fmt.Print("\033[01;32m") // Top (green)
+	// Print top (green)
+	fmt.Print("\033[01;32m")
 	fmt.Print(`                                :-.                                   
                          .:   =#-:-----:                              
                            **%@#%@@@#*+==:                            
@@ -76,7 +77,9 @@ func main() {
             #@:%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%..            
            .%@*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%.            
 `)
-	fmt.Print("\033[01;37m") // Middle (white)
+	
+	// Print middle (white)
+	fmt.Print("\033[01;37m")
 	fmt.Print(`           
            =@@%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#            
            +@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:           
@@ -90,7 +93,9 @@ func main() {
               #@@%         .*@@@@#%@@@%+.         %@@+             
               %@@@+      -#@@@@@* :%@@@@@*-      *@@@*              
 `)
-	fmt.Print("\033[01;31m") // Bottom (red)
+
+	// Print bottom (red)
+	fmt.Print("\033[01;31m")
 	fmt.Print(`
               *@@@@#++*#%@@@@@@+    #@@@@@@%#+++%@@@@=              
                #@@@@@@@@@@@@@@* Go   #@@@@@@@@@@@@@@*               
@@ -104,7 +109,9 @@ func main() {
                              :.  %+  :.                              
                                  -:                                  
 `)
-	fmt.Print("\033[0m") // Reset color
+
+	// Reset color
+	fmt.Print("\033[0m")
 }
 
 	var phone string
