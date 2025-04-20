@@ -16,7 +16,7 @@ sms bomber pro irani 🇮🇷v1 with Go (Golang)
 - Call : 6 🧨
 
 ## سرعت +
-
+Fast
 ## پشتیبانی از [تست شده]
 - `Linux` ✅
 - `Termux` ✅
