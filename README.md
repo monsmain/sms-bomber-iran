@@ -44,9 +44,5 @@ cd sms-bomber-iran-faster
 ```
 go run sms.go
 ```
-```
-xxx
-```
-
 
  ## خداحافظ 
