@@ -1,6 +1,6 @@
 # sms-iran-bomber-faster
 sms bomber pro irani 🇮🇷v1 with Go (Golang)
-<img src="[photo.jpg/photo.jpg](https://github.com/monsmain01/sms-bomber-iran-faster/blob/main/photo.jpg)">
+<img src="[photo.jpg/photo.jpg]">
 
 <h3>views :</h3>
 <br>
