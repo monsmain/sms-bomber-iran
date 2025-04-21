@@ -1,4 +1,4 @@
-# sms-iran-bomber-faster
+# sms-bomber-iran-faster
 sms bomber pro irani 🇮🇷v1 with Go (Golang)
 
 
