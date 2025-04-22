@@ -109,7 +109,6 @@ func main() {
     fmt.Println("Payload:", payload) 
     go sms("https://app.snapp.taxi/api/api-passenger-oauth/v3/mutotp", payload, ch)
 }
-	}
 
 	for i := 0; i < repeatCount; i++ {
 		statusCode := <-ch
