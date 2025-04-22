@@ -139,7 +139,6 @@ func main() {
 		go sms("https://agent.wide-app.ir/auth/token", map[string]interface{}{
 			"'grant_type': 'otp', 'client_id': '62b30c4af53e3b0cf100a4a0', 'phone'": phone,
 		}, ch) // error site: secure connection
-		sm := fmt.Sprintf("'credential': {'phoneNumber': %s, 'role': 'PASSENGER'}", phone)
 		go sms("https://tap33.me/api/v2/user", map[string]interface{}{
 			"phoneNumber": phone,
 		}, ch)  // edit :4/22/2025
