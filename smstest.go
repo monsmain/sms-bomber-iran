@@ -120,8 +120,6 @@ func main() {
 		}
 		defer resp.Body.Close()
 		ch <- resp.StatusCode
-	}()
-}
 		}, ch)
 		go sms("https://api.digikala.com/v1/user/authenticate/", map[string]interface{}{
 			"username": phone,
