@@ -113,7 +113,8 @@ func main() {
 		}, ch)
 		go sms("https://api.digikala.com/v1/user/authenticate/", map[string]interface{}{
 			"username": phone,
-		}, ch)
+		}, ch)  
+
 		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
 			"userKey": phone,
 		}, ch)
