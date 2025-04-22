@@ -150,4 +150,4 @@ func main() {
 		go sms("https://novinbook.com/index.php?route=account/phone", map[string]interface{}{
 			s57: phone,
 		}, ch)
-		go sms
+		
