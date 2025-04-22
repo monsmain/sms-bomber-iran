@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"os"
@@ -14,30 +13,44 @@ import (
 	"time"
 )
 
+func clearScreen() {
+	cmd := exec.Command("clear")
+	if runtime.GOOS == "windows" {
+		cmd = exec.Command("cmd", "/c", "cls")
+	}
+	cmd.Stdout = os.Stdout
+	cmd.Run()
+}
+
 func sms(url string, payload map[string]interface{}, ch chan<- int) {
 	jsonData, err := json.Marshal(payload)
 	if err != nil {
-		fmt.Println("\033[01;31m[-] Error marshaling JSON!", err)
+		fmt.Println("\033[01;31m[-] Error while encoding JSON!\033[0m")
 		ch <- http.StatusInternalServerError
 		return
 	}
 
-	resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonData))
+	time.Sleep(3 * time.Second)
+
+	resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonData)) 
+	time.Sleep(3 * time.Second)
+
 	if err != nil {
-		fmt.Println("\033[01;31m[-] Error sending request to", url, "!", err)
+		fmt.Println("\033[01;31m[-] Error while sending request to", url, "!", err)
 		ch <- http.StatusInternalServerError
 		return
 	}
 	defer resp.Body.Close()
+
 	ch <- resp.StatusCode
 }
 
-func main() {
-	clearScreen()
+	fmt.Print("\033[0m")
+
 	var phone string
+	fmt.Println("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mSms bomber ! number web service : \033[01;31m177 \n\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mCall bomber ! number web service : \033[01;31m6\n\n")
 	fmt.Print("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;32mEnter phone [Ex : 09xxxxxxxxxx]: \033[00;36m")
 	fmt.Scan(&phone)
-	formattedPhone := "98-" + phone
 
 	var repeatCount int
 	fmt.Print("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;32mEnter Number sms/call : \033[00;36m")
