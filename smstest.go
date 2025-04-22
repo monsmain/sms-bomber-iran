@@ -124,7 +124,7 @@ ch := make(chan int)
 			defer resp.Body.Close()
 			ch <- resp.StatusCode
 		}() 
-		go sms("https://api.digikala.com/v1/user/authenticate/", map[string]interface{}{
+		go sms("https://api.di.g.i.k.a.l.a.com/v1/user/authenticate/", map[string]interface{}{
 			"username": phone,
 		}, ch)
 
