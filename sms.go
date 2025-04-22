@@ -121,7 +121,7 @@ func main() {
 			}
 			defer resp.Body.Close()
 			ch <- resp.StatusCode
-		}() 
+		}()     //active✅
 		go sms("https://api.divar.ir/v5/auth/authenticate", map[string]interface{}{
 			"phone": phone,
 		}, ch)  //active✅
