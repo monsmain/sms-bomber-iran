@@ -107,7 +107,7 @@ func main() {
         "cellphone": phone, 
     }
     fmt.Println("Payload:", payload) 
-    go sms("https://app.snapp.taxi/api/api-passenger-oauth/v3/mutotp", payload, ch)
+    go sms("https://app.snapp.taxi/api/api-passenger-oauth/v3/otp", payload, ch)
 }
 
 	for i := 0; i < repeatCount; i++ {
