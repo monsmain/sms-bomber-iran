@@ -108,9 +108,7 @@ func main() {
 	ch := make(chan int)
 
 	for i := 0; i < repeatCount; i++ {
-		go sms("https://3tex.io/api/1/users/validation/mobile", map[string]interface{}{
-			"receptorPhone": phone,
-		}, ch)
+
 		go sms("https://deniizshop.com/api/v1/sessions/login_request", map[string]interface{}{
 			"mobile_phone": phone,
 		}, ch)
