@@ -11,7 +11,6 @@ import (
 	"time"
 	"net/url"
 	"strings"
-	"io/ioutil"
 )
 
 /*
