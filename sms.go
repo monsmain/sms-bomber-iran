@@ -9,11 +9,9 @@ import (
 	"os/exec"
 	"runtime"
 	"time"
-	net/url
-	strings
 )
 
-/*
+/* import: 	net/url  strings
 ===============================================
 Link Github : https://github.com/monsmain    
 ===============================================
