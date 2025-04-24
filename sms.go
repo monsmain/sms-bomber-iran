@@ -114,15 +114,15 @@ func main() {
 		go sms("https://virgool.io/api/v1.4/auth/verify", map[string]interface{}{
 			"'method': 'phone', 'identifier'": phone,
 		}, ch)
+		go sms("https://virgool.io/api/v1.4/auth/user-existence", map[string]interface{}{
+			"username": phone,
+		}, ch)   // add site
 		go sms("https://cyclops.drnext.ir/v1/patients/auth/send-verification-token", map[string]interface{}{
 			"mobile": phone,
 		}, ch) 
 		go sms("https://ebcom.mci.ir/services/auth/v1.0/otp", map[string]interface{}{
 			"msisdn": phone,
 		}, ch)  
-		go sms("https://virgool.io/api/v1.4/auth/user-existence", map[string]interface{}{
-			"username": phone,
-		}, ch)   // add site
 		go sms("https://account.api.balad.ir/api/web/auth/login/", map[string]interface{}{
 			"phone_number": phone,
 		}, ch)  
