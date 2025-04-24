@@ -788,7 +788,7 @@ func main() {
 
 	}
 
-	for i := 0; i < repeatCount*210; i++ {
+	for i := 0; i < repeatCount*207; i++ {
 		statusCode := <-ch
 		if statusCode == 404 || statusCode == 400 {
 			fmt.Println("\033[01;31m[-] Error ! ")
