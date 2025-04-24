@@ -115,7 +115,7 @@ func main() {
 			"username": phone,
 		}, ch)   // add site
 		go sms("https://virgool.io/api/v1.4/auth/verify", map[string]interface{}{
-			"identifier":0 phone,
+			"identifier": phone0,
 		}, ch)   // add site
 		go sms("https://virgool.io/api/v1.4/auth/verify", map[string]interface{}{
 			"'method': 'phone', 'identifier'": 0phone,
