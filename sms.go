@@ -111,7 +111,7 @@ func main() {
 func cafebazaar() {
 		go sms("https://api.cafebazaar.ir/rest-v1/process/GetOtpTokenRequest", map[string]interface{}{
 			"username": phone,
-		}, ch) // add site
+		}, ch) }// add site
 		go sms("https://gamefa.com/wp-admin/admin-ajax.php", map[string]interface{}{
 			"digits_phone": phone,
 		}, ch)  // add site
