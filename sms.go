@@ -204,9 +204,6 @@ func main() {
 		go sms("https://gw.jabama.com/api/v4/account/send-code", map[string]interface{}{
 			"mobile": phone,
 		}, ch)   // add site
-		go sms("https://uiapi2.saapa.ir/api/otp/sendCode", map[string]interface{}{
-			"mobile": phone,
-		}, ch)   // add site
 		go sms("https://api.epasazh.com/api/v4/blind-otp", map[string]interface{}{
 			"mobile": phone,
 		}, ch)   // add site
