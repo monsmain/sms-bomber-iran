@@ -126,6 +126,7 @@ func main() {
 		go sms("https://my.mobinnet.ir/api/account/SendRegisterVerificationCode", map[string]interface{}{
 			"cellNumber": phone,
 		}, ch)
+
 		s38 := fmt.Sprintf("'phone_number':%s,'os_type':'W'", phone)
 		go sms("https://account.api.balad.ir/api/web/auth/login/", map[string]interface{}{
 			"phone_number": phone,
