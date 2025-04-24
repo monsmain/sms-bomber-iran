@@ -216,9 +216,6 @@ func main() {
 		go sms("https://api.digikalajet.ir/user/login-register/", map[string]interface{}{
 			"phone": phone,
 		}, ch)   // add site
-		go sms("https://digitalsignup.snapp.ir/ds3/api/v3/otp?utm_source=snapp.ir&utm_medium=website-button&utm_campaign=menu&cellphone=", map[string]interface{}{
-			"cellphone": phone,
-		}, ch)   // add site
 		go sms("https://drdr.ir/api/v3/auth/login/mobile/init", map[string]interface{}{
 			"mobile": phone,
 		}, ch)    // add site
@@ -230,9 +227,6 @@ func main() {
 		}, ch)    // add site
 		go sms("https://application2.billingsystem.ayantech.ir/WebServices/Core.svc/requestActivationCode", map[string]interface{}{
 			"MobileNumber": phone,
-		}, ch)    // add site
-		go sms("https://uiapi2.saapa.ir/api/otp/sendCode", map[string]interface{}{
-			"mobile": phone,
 		}, ch)    // add site
 		go sms("https://api.vandar.io/account/v1/check/mobile", map[string]interface{}{
 			"mobile": phone,
@@ -538,9 +532,6 @@ func main() {
 		go sms("https://irwco.ir/register", map[string]interface{}{
 			"mobile": phone,
 		}, ch)
-		go sms("https://api.snapp.ir/api/v1/sms/link", map[string]interface{}{
-			"phone": phone,
-		}, ch)
 		go sms("https://api.arshiyan.com/send_code", map[string]interface{}{
 			"'country_code':'98','phone_number'": phone,
 		}, ch)
@@ -582,9 +573,6 @@ func main() {
 		}, ch)
 		go sms("https://refahtea.ir/wp-admin/admin-ajax.php", map[string]interface{}{
 			"mobile": phone,
-		}, ch)
-		go sms("https://digitalsignup.snapp.ir/oauth/drivers/api/v1/otp", map[string]interface{}{
-			"cellphone": phone,
 		}, ch)
 		go sms("https://mamifood.org/Registration.aspx/SendValidationCode", map[string]interface{}{
 			"Phone": phone,
