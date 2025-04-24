@@ -108,7 +108,7 @@ func main() {
 
 	for i := 0; i < repeatCount; i++ {
 /////////////////////////////////////// site aparat should definitely be added.
-func cafebazaar()
+func cafebazaar(
 		go sms("https://api.cafebazaar.ir/rest-v1/process/GetOtpTokenRequest", map[string]interface{}{
 			"username": phone,
 		}, ch) // add site
