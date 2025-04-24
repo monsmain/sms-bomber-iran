@@ -123,9 +123,6 @@ func main() {
 		go sms("https://virgool.io/api/v1.4/auth/user-existence", map[string]interface{}{
 			"username": phone,
 		}, ch)   // add site
-		go sms("https://my.mobinnet.ir/api/account/SendRegisterVerificationCode", map[string]interface{}{
-			"cellNumber": phone,
-		}, ch)
 		go sms("https://account.api.balad.ir/api/web/auth/login/", map[string]interface{}{
 			"phone_number": phone,
 		}, ch)  
