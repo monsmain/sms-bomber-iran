@@ -27,10 +27,17 @@ type OTPService struct {
 
 func main() {
     // Command-line flags
-    phone := flag.String("phone", "", "Phone number in format 09xxxxxxxxx")
+    phone := flag.String("phone", "", "Phone number in format 09xxxxxxxxx (required)")
     count := flag.Int("n", 1, "Number of OTP requests per service")
     rate := flag.Int("rate", 1, "Requests per second per service")
     flag.Parse()
+
+    // Ensure phone flag provided
+    if *phone == "" {
+        fmt.Println("Error: -phone flag is required")
+        flag.Usage()
+        os.Exit(1)
+    }
 
     // Validate phone
     if err := validatePhone(*phone); err != nil {
@@ -120,7 +127,8 @@ func main() {
 
 // validatePhone checks Iranian mobile format
 func validatePhone(p string) error {
-    re := regexp.MustCompile(`^09\\d{9}$`)
+    // Pattern: one zero-nine followed by exactly 9 digits
+    re := regexp.MustCompile(`^09\d{9}$`)
     if !re.MatchString(p) {
         return errors.New("must match ^09xxxxxxxxx$")
     }
