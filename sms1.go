@@ -158,8 +158,9 @@ func main() {
 	fmt.Printf("Debug: Input phone string: \"%s\"\n", phone)
 	phoneTrimmed := strings.TrimPrefix(phone, "0")
 	fmt.Printf("Debug: Phone string after TrimPrefix(\"0\"): \"%s\"\n", phoneTrimmed)
-	phoneInt, err := strconv.Atoi(phoneTrimmed)
-	fmt.Printf("Debug: Result of Atoi: %v, Error: %v\n", phoneInt, err)
+	// Changed Atoi to ParseInt with bitSize 64
+	phoneInt64, err := strconv.ParseInt(phoneTrimmed, 10, 64)
+	fmt.Printf("Debug: Result of ParseInt: %v, Error: %v\n", phoneInt64, err)
 	// --- End Debugging Prints ---
 
 
@@ -182,14 +183,16 @@ func main() {
 		}, &wg, ch)
 
 		// api.nobat.ir (JSON) - Corrected payload (integer)
-		// Pass phoneInt and err to the goroutine to ensure correct scope
+		// Pass phoneInt64 and err to the goroutine to ensure correct scope
 		wg.Add(1)
-		go func(ctx context.Context, url string, pInt int, conversionErr error, wg *sync.WaitGroup, ch chan<- int) {
+		// Changed pInt type to int64
+		go func(ctx context.Context, url string, pInt64 int64, conversionErr error, wg *sync.WaitGroup, ch chan<- int) {
 			defer wg.Done()
 			if conversionErr == nil {
 
+				// Use pInt64 in the payload
 				payload := map[string]interface{}{
-					"mobile": pInt,
+					"mobile": pInt64,
 				}
 				jsonData, marshalErr := json.Marshal(payload)
 				if marshalErr != nil {
@@ -225,7 +228,7 @@ func main() {
 				ch <- http.StatusInternalServerError
 
 			}
-		}(ctx, "https://api.nobat.ir/patient/login/phone", phoneInt, err, &wg, ch)
+		}(ctx, "https://api.nobat.ir/patient/login/phone", phoneInt64, err, &wg, ch)
 
 
 		wg.Add(1)
