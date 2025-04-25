@@ -293,6 +293,4 @@ func main() {
 			fmt.Println("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mSended") // Success message format from smstest.go
 		}
 	}
-
-	// The final "All requests processed." message is still omitted to match smstest.go style.
 }
