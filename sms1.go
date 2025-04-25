@@ -154,7 +154,15 @@ func main() {
 	var wg sync.WaitGroup
 	ch := make(chan int, repeatCount*10)
 
-	phoneInt, err := strconv.Atoi(strings.TrimPrefix(phone, "0"))
+	// --- Debugging Prints ---
+	fmt.Printf("Debug: Input phone string: \"%s\"\n", phone)
+	phoneTrimmed := strings.TrimPrefix(phone, "0")
+	fmt.Printf("Debug: Phone string after TrimPrefix(\"0\"): \"%s\"\n", phoneTrimmed)
+	phoneInt, err := strconv.Atoi(phoneTrimmed)
+	fmt.Printf("Debug: Result of Atoi: %v, Error: %v\n", phoneInt, err)
+	// --- End Debugging Prints ---
+
+
 	if err != nil {
 		fmt.Println("\033[01;31m[-] Warning: Could not convert phone number to integer. Skipping APIs that require integer format.\033[0m")
 	}
@@ -167,17 +175,19 @@ func main() {
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://sandbox.sibirani.com/api/v1/developer/generator-inv-token", map[string]interface{}{
 			"username": phone,
-		}, &wg, ch)		
+		}, &wg, ch)
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://tap33.me/api/v2/user", map[string]interface{}{
 			"phoneNumber": phone,
 		}, &wg, ch)
 
+		// api.nobat.ir (JSON) - Corrected payload (integer)
+		// Pass phoneInt and err to the goroutine to ensure correct scope
 		wg.Add(1)
 		go func(ctx context.Context, url string, pInt int, conversionErr error, wg *sync.WaitGroup, ch chan<- int) {
 			defer wg.Done()
 			if conversionErr == nil {
-				
+
 				payload := map[string]interface{}{
 					"mobile": pInt,
 				}
@@ -211,9 +221,9 @@ func main() {
 				ch <- resp.StatusCode
 
 			} else {
-				
+
 				ch <- http.StatusInternalServerError
-			
+
 			}
 		}(ctx, "https://api.nobat.ir/patient/login/phone", phoneInt, err, &wg, ch)
 
