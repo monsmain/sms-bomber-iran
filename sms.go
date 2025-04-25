@@ -463,9 +463,6 @@ func main() {
 		go sms("https://melix.shop/site/api/v1/user/validate", map[string]interface{}{
 			"mobile": phone,
 		}, ch)    // edit :4/22/2025
-		go sms("https://api.tandori.ir/client/users/login", map[string]interface{}{
-			"phone": phone,
-		}, ch)  // edit :4/22/2025
 		go sms("https://api6.arshiyaniha.com/api/v2/client/otp/send", map[string]interface{}{
 			"'country_code':'98','cellphone'": phone,
 		}, ch)  // edit :4/22/2025
