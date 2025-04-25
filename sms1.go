@@ -29,14 +29,16 @@ func sendJSONRequest(ctx context.Context, url string, payload map[string]interfa
 
 	jsonData, err := json.Marshal(payload)
 	if err != nil {
-		fmt.Println("[-] Error encoding JSON!")
+		// استفاده از فرمت خطای smstest.go
+		fmt.Println("\033[01;31m[-] Error while encoding JSON!\033[0m")
 		ch <- http.StatusInternalServerError
 		return
 	}
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodPost, url, bytes.NewBuffer(jsonData))
 	if err != nil {
-		fmt.Println("[-] Error creating request!")
+		// استفاده از فرمت خطای smstest.go
+		fmt.Println("\033[01;31m[-] Error while creating request to", url, "!\033[0m", err) // اضافه کردن URL و خطا برای اطلاعات بیشتر
 		ch <- http.StatusInternalServerError
 		return
 	}
@@ -44,7 +46,8 @@ func sendJSONRequest(ctx context.Context, url string, payload map[string]interfa
 
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
-		fmt.Println("[-] Request failed:", err)
+		// استفاده از فرمت خطای smstest.go
+		fmt.Println("\033[01;31m[-] Error while sending request to", url, "!", err)
 		ch <- http.StatusInternalServerError
 		return
 	}
@@ -57,7 +60,8 @@ func sendFormRequest(ctx context.Context, url string, formData url.Values, wg *s
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodPost, url, strings.NewReader(formData.Encode()))
 	if err != nil {
-		fmt.Println("[-] Error creating form request!")
+		// استفاده از فرمت خطای smstest.go
+		fmt.Println("\033[01;31m[-] Error while creating form request to", url, "!\033[0m", err) // اضافه کردن URL و خطا
 		ch <- http.StatusInternalServerError
 		return
 	}
@@ -65,7 +69,8 @@ func sendFormRequest(ctx context.Context, url string, formData url.Values, wg *s
 
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
-		fmt.Println("[-] Request failed:", err)
+		// استفاده از فرمت خطای smstest.go
+		fmt.Println("\033[01;31m[-] Error while sending request to", url, "!", err)
 		ch <- http.StatusInternalServerError
 		return
 	}
@@ -76,7 +81,7 @@ func sendFormRequest(ctx context.Context, url string, formData url.Values, wg *s
 func main() {
 	clearScreen()
 
-	// --- شروع کدهای بنر ASCII رنگی (کپی شده از smstest.go) ---
+	// --- بنر ASCII رنگی ---
 	fmt.Print("\033[01;32m") // Top (green)
 	fmt.Print(`
                                 :-.                                   
@@ -122,15 +127,13 @@ func main() {
 	fmt.Print("\033[0m") // Reset color
 	// --- پایان کدهای بنر ASCII رنگی ---
 
-
-	fmt.Println("[+] SMS bomber started!") // این خط را می توانید حذف کنید یا نگه دارید
-
-	var phone string
-	fmt.Print("Enter phone [Ex: 09xxxxxxxxxx]: ")
+	// پیام معرفی سرویس‌ها و گرفتن ورودی شماره تلفن و تعداد تکرار (مانند smstest.go)
+	fmt.Println("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mSms bomber ! number web service : \033[01;31m177 \n\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mCall bomber ! number web service : \033[01;31m6\n\n")
+	fmt.Print("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;32mEnter phone [Ex : 09xxxxxxxxxx]: \033[00;36m")
 	fmt.Scan(&phone)
 
 	var repeatCount int
-	fmt.Print("Enter number of sms/call: ")
+	fmt.Print("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;32mEnter Number sms/call : \033[00;36m")
 	fmt.Scan(&repeatCount)
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -138,7 +141,8 @@ func main() {
 	signal.Notify(signalChan, os.Interrupt)
 	go func() {
 		<-signalChan
-		fmt.Println("\n[!] Interrupt received. Shutting down...")
+		// پیام وقفه با رنگ مشابه خطا در smstest.go
+		fmt.Println("\n\033[01;31m[!] Interrupt received. Shutting down...\033[0m")
 		cancel()
 	}()
 
@@ -161,14 +165,14 @@ func main() {
 		close(ch)
 	}()
 
-	// Read results from channel until it's closed
+	// Read results from channel until it's closed, با پیام‌ها و رنگ‌های smstest.go
 	for statusCode := range ch {
 		if statusCode == 404 || statusCode == 400 {
-			fmt.Println("[-] Error!")
+			fmt.Println("\033[01;31m[-] Error ! ") // پیام خطای smstest.go
 		} else {
-			fmt.Println("[+] Sent")
+			fmt.Println("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mSended") // پیام موفقیت smstest.go
 		}
 	}
 
-	fmt.Println("[+] All requests processed.")
+	// پیام پایانی "All requests processed." که در smstest.go وجود نداشت، حذف شد.
 }
