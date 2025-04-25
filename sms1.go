@@ -158,11 +158,4 @@ func sendWithRetry(ctx context.Context, client *http.Client, s OTPService, phone
         }
         log.Printf("[%s][%d] unexpected status on attempt %d: %d", s.Name, iter, attempt, resp.StatusCode)
         cancel()
-        return
-    }
-    log.Printf("[%s][%d] all %d attempts failed", s.Name, iter, s.MaxRetries)
-}
-
-// validatePhone checks Iranian mobile format
-func validatePhone(p string) error {
-        re := regexp.MustCompile(`^09\d{9}$`)
+        re
