@@ -9,7 +9,7 @@ import (
 	"os/exec"
 	"runtime"
 	"time"
-	"url"
+	"net/url"
 	"strings"
 )
 
