@@ -11,10 +11,10 @@ import (
     "os"
     "os/signal"
     "regexp"
+    "strings"
     "sync"
     "syscall"
     "time"
-    "strings"
 )
 
 // OTPService defines an OTP API endpoint
@@ -120,7 +120,7 @@ func main() {
 
 // validatePhone checks Iranian mobile format
 func validatePhone(p string) error {
-    re := regexp.MustCompile(`^09\d{9}$`)
+    re := regexp.MustCompile(`^09\\d{9}$`)
     if !re.MatchString(p) {
         return errors.New("must match ^09xxxxxxxxx$")
     }
