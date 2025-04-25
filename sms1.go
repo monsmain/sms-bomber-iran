@@ -360,6 +360,9 @@ func main() {
 		go sms("https://service.tetherland.com/api/v5/login-register", map[string]interface{}{
 			"mobile": phone,
 		}, ch)    // add site  // active ✅
+		go sms("https://api.tandori.ir/client/users/login", map[string]interface{}{
+			"phone": phone,
+		}, ch)  // active ✅
 	}
 
 	go func() {
