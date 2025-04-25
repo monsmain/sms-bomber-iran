@@ -9,6 +9,8 @@ import (
 	"os/exec"
 	"runtime"
 	"time"
+	"url"
+	"strings"
 )
 
 
@@ -248,13 +250,17 @@ func main() {
 			"cellNumber": phone,
 		}, ch)  // active ✅
 
-	for i := 0; i < repeatCount; i++ {
+
+	}
+
+	for i := 0; i < repeatCount*; i++ {
 		statusCode := <-ch
 		if statusCode == 404 || statusCode == 400 {
 			fmt.Println("\033[01;31m[-] Error ! ")
 		} else {
 			fmt.Println("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mSended")
 		}
+
 	}
 }
 /*
