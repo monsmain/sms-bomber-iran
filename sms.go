@@ -483,7 +483,7 @@ func main() {
 		}, ch)  // edit :4/22/2025
 		go sms("https://mamifood.org/Registration.aspx/IsUserAvailable", map[string]interface{}{
 			"cellphone": phone,
-		}, ch  // edit :4/22/2025
+		}, ch)  // edit :4/22/2025
 		go sms("https://server.uphone.ir/api/v1/login/otp/request", map[string]interface{}{
 			"mobile": phone,
 		}, ch)
