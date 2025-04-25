@@ -5,7 +5,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io" // Keep io import just in case, though not reading full body for simple output
 	"net/http"
 	"net/url"
 	"os"
