@@ -173,13 +173,13 @@ func main() {
 			"phoneNumber": phone,
 		}, &wg, ch)
 
-		wg.Add(1) 
-		go func(ctx context.Context, url string, pInt int, conversionErr error, wg *sync.WaitGroup, ch chan<- int) { 
-			defer wg.Done() 
+		wg.Add(1)
+		go func(ctx context.Context, url string, pInt int, conversionErr error, wg *sync.WaitGroup, ch chan<- int) {
+			defer wg.Done()
 			if conversionErr == nil {
 				
 				payload := map[string]interface{}{
-					"mobile": pInt, 
+					"mobile": pInt,
 				}
 				jsonData, marshalErr := json.Marshal(payload)
 				if marshalErr != nil {
