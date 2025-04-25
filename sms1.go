@@ -5,7 +5,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	// io is no longer needed for reading response body
 	"net/http"
 	"net/url"
 	"os"
@@ -14,7 +13,6 @@ import (
 	"runtime"
 	"strings"
 	"sync"
-	// time is no longer strictly needed
 )
 
 // clearScreen clears the terminal screen based on the operating system.
@@ -31,6 +29,7 @@ func clearScreen() {
 // It uses a context for cancellation, a WaitGroup for synchronization,
 // and a channel to report only the HTTP status code.
 func sendJSONRequest(ctx context.Context, url string, payload map[string]interface{}, wg *sync.WaitGroup, ch chan<- int) {
+	// --- CORRECTION: wg.Done() should be deferred here ---
 	defer wg.Done()
 
 	jsonData, err := json.Marshal(payload)
@@ -50,8 +49,14 @@ func sendJSONRequest(ctx context.Context, url string, payload map[string]interfa
 
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
+		// Check if the error is due to context cancellation
+		if ctx.Err() == context.Canceled {
+			fmt.Println("\033[01;31m[!] Request to", url, "canceled.\033[0m")
+			ch <- 0 // Report a specific code for cancellation or handle differently
+			return
+		}
 		fmt.Println("\033[01;31m[-] Error while sending request to", url, "!", err)
-		ch <- http.StatusInternalServerError // Report error status code
+		ch <- http.StatusInternalServerError // Report error status code for other errors
 		return
 	}
 	defer resp.Body.Close()
@@ -64,6 +69,7 @@ func sendJSONRequest(ctx context.Context, url string, payload map[string]interfa
 // It uses a context for cancellation, a WaitGroup for synchronization,
 // and a channel to report only the HTTP status code.
 func sendFormRequest(ctx context.Context, url string, formData url.Values, wg *sync.WaitGroup, ch chan<- int) {
+	// --- CORRECTION: wg.Done() should be deferred here ---
 	defer wg.Done()
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodPost, url, strings.NewReader(formData.Encode()))
@@ -76,8 +82,14 @@ func sendFormRequest(ctx context.Context, url string, formData url.Values, wg *s
 
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
+		// Check if the error is due to context cancellation
+		if ctx.Err() == context.Canceled {
+			fmt.Println("\033[01;31m[!] Request to", url, "canceled.\033[0m")
+			ch <- 0 // Report a specific code for cancellation or handle differently
+			return
+		}
 		fmt.Println("\033[01;31m[-] Error while sending request to", url, "!", err)
-		ch <- http.StatusInternalServerError // Report error status code
+		ch <- http.StatusInternalServerError // Report error status code for other errors
 		return
 	}
 	defer resp.Body.Close()
@@ -164,7 +176,7 @@ func main() {
 		// Launch Goroutine for Snappfood form request
 		wg.Add(1) // Increment WaitGroup counter
 		go func(p string) { // Pass phone value to Goroutine
-			defer wg.Done() // Decrement WaitGroup counter when this Goroutine finishes
+			// defer wg.Done() // --- REMOVED: Moved inside sendFormRequest ---
 			formData := url.Values{}
 			formData.Set("cellphone", p)
 			sendFormRequest(ctx, "https://snappfood.ir/mobile/v4/user/loginMobileWithNoPass?lat=35.774&long=51.418", formData, &wg, ch)
@@ -173,7 +185,7 @@ func main() {
 		// Launch Goroutine for Mobinnet JSON request
 		wg.Add(1) // Increment WaitGroup counter
 		go func(p string) { // Pass phone value to Goroutine
-			defer wg.Done() // Decrement WaitGroup counter when this Goroutine finishes
+			// defer wg.Done() // --- REMOVED: Moved inside sendJSONRequest ---
 			sendJSONRequest(ctx, "https://my.mobinnet.ir/api/account/SendRegisterVerificationCode", map[string]interface{}{"cellNumber": p}, &wg, ch)
 		}(phone) // Pass the current value of phone to the anonymous function
 	}
@@ -187,7 +199,8 @@ func main() {
 	// Read integer status codes from the channel until it is closed and print messages
 	// similar to smstest.go's output.
 	for statusCode := range ch {
-		if statusCode == 404 || statusCode == 400 {
+		// Added a check for status code 0 which we used for cancellation
+		if statusCode == 404 || statusCode == 400 || statusCode == 0 {
 			fmt.Println("\033[01;31m[-] Error ! ") // Error message format from smstest.go
 		} else {
 			fmt.Println("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mSended") // Success message format from smstest.go
