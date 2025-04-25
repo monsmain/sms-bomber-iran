@@ -165,9 +165,4 @@ func sendWithRetry(ctx context.Context, client *http.Client, s OTPService, phone
 
 // validatePhone checks Iranian mobile format
 func validatePhone(p string) error {
-    re := regexp.MustCompile(`^09\\d{9}$`)
-    if !re.MatchString(p) {
-        return errors.New("must match ^09xxxxxxxxx$")
-    }
-    return nil
-}
+        re := regexp.MustCompile(`^09\d{9}$`)
