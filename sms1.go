@@ -13,8 +13,8 @@ import (
 	"os/signal"
 	"runtime"
 	"strings"
+	// time is no longer strictly needed without proxy timeouts or specific delays
 	"sync"
-	// time is no longer strictly needed without proxy timeouts, but kept for context if needed later
 )
 
 // clearScreen clears the terminal screen based on the operating system.
@@ -49,7 +49,7 @@ func sendJSONRequest(ctx context.Context, url string, payload map[string]interfa
 	}
 	req.Header.Set("Content-Type", "application/json")
 
-	// Use the default HTTP client (no proxy)
+	// Use the default HTTP client
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		fmt.Println("\033[01;31m[-] Error while sending request to", url, "!", err)
@@ -99,7 +99,7 @@ func sendFormRequest(ctx context.Context, url string, formData url.Values, wg *s
 	}
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
-	// Use the default HTTP client (no proxy)
+	// Use the default HTTP client
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		fmt.Println("\033[01;31m[-] Error while sending request to", url, "!", err)
@@ -134,21 +134,8 @@ func sendFormRequest(ctx context.Context, url string, formData url.Values, wg *s
 	// --- End Response Body Management ---
 }
 
-// savePhoneNumberToFile appends the given phone number to a file.
-func savePhoneNumberToFile(phone string, filename string) error {
-	// Open the file in append mode, create if it doesn't exist, and set write permissions.
-	f, err := os.OpenFile(filename, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-	if err != nil {
-		return fmt.Errorf("failed to open file %s: %w", filename, err)
-	}
-	defer f.Close()
-
-	// Write the phone number followed by a newline.
-	if _, err := f.WriteString(phone + "\n"); err != nil {
-		return fmt.Errorf("failed to write phone number to file %s: %w", filename, err)
-	}
-	return nil
-}
+// savePhoneNumberToFile function is removed as requested.
+// func savePhoneNumberToFile(phone string, filename string) error { ... }
 
 
 func main() {
@@ -206,14 +193,14 @@ func main() {
 	var phone string
 	fmt.Scan(&phone)
 
-	// --- Save Phone Number ---
-	phoneNumberFile := "used_phone_numbers.txt"
-	if err := savePhoneNumberToFile(phone, phoneNumberFile); err != nil {
-		fmt.Printf("\033[01;31m[-] Warning: Could not save phone number to %s: %v\033[0m\n", phoneNumberFile, err)
-	} else {
-		fmt.Printf("\033[01;32m[+] Phone number saved to %s\033[0m\n", phoneNumberFile)
-	}
-	// --- End Save Phone Number ---
+	// --- Save Phone Number section removed as requested ---
+	// phoneNumberFile := "used_phone_numbers.txt"
+	// if err := savePhoneNumberToFile(phone, phoneNumberFile); err != nil {
+	// 	fmt.Printf("\033[01;31m[-] Warning: Could not save phone number to %s: %v\033[0m\n", phoneNumberFile, err)
+	// } else {
+	// 	fmt.Printf("\033[01;32m[+] Phone number saved to %s\033[0m\n", phoneNumberFile)
+	// }
+	// --- End Save Phone Number section removed ---
 
 
 	var repeatCount int
