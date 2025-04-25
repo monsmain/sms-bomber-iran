@@ -328,11 +328,6 @@ func main() {
 		 	formData.Set("cellphone", p)
 		 	sendFormRequest(ctx, "https://snappfood.ir/mobile/v4/user/loginMobileWithNoPass?lat=35.774&long=51.418", formData, &wg, ch)
 		 }(phone)  // active ✅
-		// api.sibbank.ir (JSON)
-		wg.Add(1)
-		go sendJSONRequest(ctx, "https://api.sibbank.ir/v1/auth/login", map[string]interface{}{
-			"phone_number": phone,
-		}, &wg, ch)
 		// sandbox.sibirani.ir invite (JSON)
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://sandbox.sibirani.ir/api/v1/user/invite", map[string]interface{}{
