@@ -25,14 +25,13 @@ type OTPService struct {
     URL         string
     ContentType string
     BuildBody   func(phone string) (io.Reader, error)
-    Rate        int           // requests per second
-    Timeout     time.Duration // per-request timeout
-    MaxRetries  int           // number of retry attempts
-    Backoff     time.Duration // initial backoff duration
+    Rate        int
+    Timeout     time.Duration
+    MaxRetries  int
+    Backoff     time.Duration
 }
 
 func main() {
-    // Command-line flags
     phone := flag.String("phone", "", "Phone number in format 09xxxxxxxxx (required)")
     count := flag.Int("n", 1, "Number of OTP requests per service")
     flag.Parse()
@@ -46,7 +45,6 @@ func main() {
         log.Fatalf("invalid phone: %v", err)
     }
 
-    // Define services with rate-limits, timeouts, retries, backoff
     services := []OTPService{
         {
             Name:        "SnappFood",
@@ -80,10 +78,7 @@ func main() {
         },
     }
 
-    // Shared HTTP client (no default timeout)
     client := &http.Client{}
-
-    // Cancellation context
     ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
     defer cancel()
 
@@ -106,11 +101,9 @@ func main() {
     log.Println("All done.")
 }
 
-// sendWithRetry attempts the request with retries, backoff, and handles 429
 func sendWithRetry(ctx context.Context, client *http.Client, s OTPService, phone string, iter int) {
     backoff := s.Backoff
     for attempt := 1; attempt <= s.MaxRetries; attempt++ {
-        // per-request timeout
         reqCtx, cancel := context.WithTimeout(ctx, s.Timeout)
         bodyReader, err := s.BuildBody(phone)
         if err != nil {
@@ -142,7 +135,6 @@ func sendWithRetry(ctx context.Context, client *http.Client, s OTPService, phone
             return
         }
         if resp.StatusCode == 429 {
-            // handle rate-limit
             ra := resp.Header.Get("Retry-After")
             secs, err := strconv.Atoi(ra)
             cancel()
@@ -158,4 +150,15 @@ func sendWithRetry(ctx context.Context, client *http.Client, s OTPService, phone
         }
         log.Printf("[%s][%d] unexpected status on attempt %d: %d", s.Name, iter, attempt, resp.StatusCode)
         cancel()
-        re
+        return
+    }
+    log.Printf("[%s][%d] all %d attempts failed", s.Name, iter, s.MaxRetries)
+}
+
+func validatePhone(p string) error {
+    re := regexp.MustCompile(`^09\d{9}$`)
+    if !re.MatchString(p) {
+        return errors.New("must match ^09xxxxxxxxx$")
+    }
+    return nil
+}
