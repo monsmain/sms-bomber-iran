@@ -323,6 +323,10 @@ func main() {
 		go sms("https://cyclops.drnext.ir/v1/patients/auth/send-verification-token", map[string]interface{}{
 			"mobile": phone,
 		}, ch)   // add site
+
+
+
+//70 ta site
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
 			"userKey": phone,
