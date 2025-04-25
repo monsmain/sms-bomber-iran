@@ -259,5 +259,6 @@ for i := 0; i < repeatCount; i++ {
         fmt.Println("\033[01;31m[-] Error ! ")
     } else {
         fmt.Println("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mSended")
-    }
+      }
+   }
 }
