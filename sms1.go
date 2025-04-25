@@ -159,4 +159,3 @@ func sendWithRetry(ctx context.Context, client *http.Client, s OTPService, phone
         log.Printf("[%s][%d] unexpected status on attempt %d: %d", s.Name, iter, attempt, resp.StatusCode)
         cancel()
         re
-  }
