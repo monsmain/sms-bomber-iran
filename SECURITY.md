@@ -4,7 +4,7 @@
 # Security Policy
 
 ## Reporting a Vulnerability
-If you discover a security vulnerability, please send an email to [YOUR_SECURITY_EMAIL@example.com] with **Security Issue** in the subject line. Please include:
+If you discover a security vulnerability, please send an email to [mo.mn@gmail.com] with **Security Issue** in the subject line. Please include:
 
 - A clear description of the vulnerability
 - Reproduction steps or proof-of-concept code
