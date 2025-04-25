@@ -130,7 +130,7 @@ func sendWithRetry(ctx context.Context, client *http.Client, s OTPService, phone
         if err != nil {
             log.Printf("[%s][%d.%d] do request error: %v", s.Name, iter, attempt, err)
             cancel()
-            sleep(backoff)
+            time.Sleep(backoff)
             backoff *= 2
             continue
         }
@@ -144,13 +144,13 @@ func sendWithRetry(ctx context.Context, client *http.Client, s OTPService, phone
         if resp.StatusCode == 429 {
             // handle rate-limit
             ra := resp.Header.Get("Retry-After")
-            if secs, err := strconv.Atoi(ra); err == nil {
+            secs, err := strconv.Atoi(ra)
+            cancel()
+            if err == nil {
                 log.Printf("[%s][%d.%d] 429 received, retry after %d seconds", s.Name, iter, attempt, secs)
-                cancel()
                 time.Sleep(time.Duration(secs) * time.Second)
             } else {
                 log.Printf("[%s][%d.%d] 429 received, backoff %v", s.Name, iter, attempt, backoff)
-                cancel()
                 time.Sleep(backoff)
                 backoff *= 2
             }
