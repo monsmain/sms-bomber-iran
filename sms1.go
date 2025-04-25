@@ -82,7 +82,7 @@ func sendFormRequest(ctx context.Context, url string, formData url.Values, wg *s
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodPost, url, strings.NewReader(formData.Encode()))
 	if err != nil {
-		fmt.Println("\033[01;31m[-] Error while creating form request to", url, "!\033[0m", err)
+		fmt.Println("\033[01;31m[-] Error while creating form request to", url, "!\033[0m")
 		// Send status with error code and URL
 		ch <- RequestStatus{URL: url, StatusCode: http.StatusInternalServerError}
 		return
@@ -299,9 +299,11 @@ func main() {
 	for status := range ch {
 		// Added a check for status code 0 which we used for cancellation
 		if status.StatusCode >= 400 || status.StatusCode == 0 { // Treat any 4xx or 5xx as an error, plus our cancellation code 0
-			fmt.Printf("\033[01;31m[-] Error ! \033[0m (Status: %d, URL: %s)\n", status.StatusCode, status.URL) // Include URL and Status Code
+			// Modified print format to exclude URL
+			fmt.Printf("\033[01;31m[-] Error ! \033[0m (Status: %d)\n", status.StatusCode)
 		} else { // Assume 2xx and 3xx are successful or redirects (treated as success for this purpose)
-			fmt.Printf("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mSended\033[0m (Status: %d, URL: %s)\n", status.StatusCode, status.URL) // Include URL and Status Code
+			// Modified print format to exclude URL
+			fmt.Printf("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mSended\033[0m (Status: %d)\n", status.StatusCode)
 		}
 	}
 }
