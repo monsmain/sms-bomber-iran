@@ -335,6 +335,11 @@ func main() {
 			"device_type": 2,
 		}, &wg, ch) //aghe javab nadad bedalil in hast ke modati masdod shodi. Status Code:429	
 
+		// irantic.com
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://www.irantic.com/api/login/authenticate", map[string]interface{}{
+			"mobile": phone,
+		}, &wg, ch)  // active ✅
 	}
 
 	go func() {
