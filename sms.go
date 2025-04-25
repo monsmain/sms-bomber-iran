@@ -469,7 +469,7 @@ func main() {
 		}, ch)  // edit :4/22/2025
 		go sms("https://www.irantic.com/api/login/authenticate", map[string]interface{}{
 			"mobile": phone,
-		}, ch)  // edit :4/22/2025
+		}, ch)  // active ✅
 		go sms("https://kafegheymat.com/shop/getLoginSms", map[string]interface{}{
 			"phone": phone,
 		}, ch)
