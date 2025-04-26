@@ -273,9 +273,6 @@ func main() {
 		go sms("https://gateway.telewebion.com/shenaseh/api/v2/auth/step-one", map[string]interface{}{
 			"phone": phone,
 		}, ch)    // add site
-		go sms("https://core.gap.im/v1/user/add.json", map[string]interface{}{
-			"mobile": phone,
-		}, ch) // dar khate 602 neveshteh shodeh.
 		go sms("https://hamrahsport.com/send-otp", map[string]interface{}{
 			"cell": phone,
 		}, ch)    // add site
