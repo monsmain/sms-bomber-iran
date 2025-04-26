@@ -240,13 +240,6 @@ func main() {
 
 	for i := 0; i < repeatCount; i++ {
 
-		// virgool.io (JSON) - احتمال زیاد JSON بر اساس ساختار عمومی
-		wg.Add(1)
-		tasks <- func() {
-			sendJSONRequest(ctx, "https://virgool.io/api/v1.4/auth/verify", map[string]interface{}{
-				"identifier": phone,
-			}, &wg, ch)
-		}
 
 		// virgool.io (JSON) - این payload عجیب است، احتمالاً باید JSON باشد اما کلید مالفورم است
 		// فرض میکنیم منظور {"method": "phone", "identifier": phone} بوده
