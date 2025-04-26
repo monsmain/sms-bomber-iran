@@ -520,9 +520,6 @@ func main() {
 		go sms("https://api.doctoreto.com/api/web/patient/v1/accounts/register", map[string]interface{}{
 			"mobile­": "phone",
 		}, ch)  // edit :4/22/2025
-		go sms("https://api.lendo.ir/api/customer/auth/send-otp", map[string]interface{}{
-			"mobile­": "phone",
-		}, ch)  // edit :4/22/2025
 		go sms("https://pakhsh.shop/wp-admin/admin-ajax.php", map[string]interface{}{
 			"phone": "phone",
 		}, ch)  // edit :4/22/2025
