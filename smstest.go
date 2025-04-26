@@ -384,30 +384,20 @@ func main() {
 		// ---- پایان لیست جدید API ها ----
 
 	} // پایان حلقه repeatCount
+	close(tasks)
 
-	// ... (بقیه کد main برای بستن tasks و انتظار wg.Wait و پردازش نتایج بدون تغییر) ...
-	endOfDispatch: // برچسب برای پرش
-		close(tasks)
 
 	go func() {
-		select {
-		case <-ctx.Done():
-			fmt.Println("\033[01;33m[!] Waiting for WaitGroup interrupted by context.\033[0m")
-		case wg.Wait():
-			fmt.Println("\033[01;32m[+] All tasks finished.\033[0m")
-		}
+		wg.Wait()
 		close(ch)
 	}()
 
-	fmt.Println("\033[01;34m[*] Processing results...\033[0m")
+	// پردازش کدهای وضعیت دریافت شده از کانال ch
 	for statusCode := range ch {
-		if statusCode >= 400 || statusCode == 0 {
+		if statusCode >= 400 || statusCode == 0 { // کد وضعیت 0 برای درخواست های لغو شده توسط Context
 			fmt.Println("\033[01;31m[-] Error or Canceled!")
 		} else {
 			fmt.Println("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mSended")
 		}
 	}
-
-	fmt.Println("\033[01;32m[+] Program finished.\033[0m")
-
-} // پایان تابع main
+}
