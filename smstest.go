@@ -338,10 +338,6 @@ func main() {
 		go sms("https://api.zarinplus.com/user/otp/", map[string]interface{}{
 			"phoneNumber": phone,
 		}, ch)  // edit & Alternative :4/22/2025
-		se := fmt.Sprintf("'api_version': '3', 'method': 'sendCode', 'data': {'phone_number': %s, 'send_type': 'SMS'}", phone)
-		go sms("https://messengerg2c4.iranlms.ir/", map[string]interface{}{
-			se: phone,
-		}, ch)  // idon't know ???
  		go sms("https://lms.tamland.ir/api/api/user/signup", map[string]interface{}{
 			"mobile": phone,
 		}, ch)    // add site
