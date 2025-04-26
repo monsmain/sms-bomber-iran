@@ -531,7 +531,7 @@ func main() {
 		go sms("https://www.namava.ir/api/v1.0/accounts/registrations/by-otp/request", map[string]interface{}{
 			"UserName": "phone",
 		}, ch)  // edit :4/22/2025
-		go sms("https://core.gap.im/v1/user/sendOTP.gap"), map[string]interface{}{
+		go sms("https://core.gap.im/v1/user/sendOTP.gap", map[string]interface{}{
 			"mobile­": "phone",
 		}, ch)  // edit :4/22/2025
 		go sms("https://api.mydigipay.com/digipay/api/users/send-sms", map[string]interface{}{
