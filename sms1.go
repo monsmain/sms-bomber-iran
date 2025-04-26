@@ -239,7 +239,18 @@ func main() {
 	}
 
 	for i := 0; i < repeatCount; i++ {
+		
+              
 
+
+
+		wg.Add(1) // digistyle.com (Form)
+		tasks <- func() {
+			formData := url.Values{}
+			// کلید 'loginRegister%5Bemail_phone%5D' decode میشود به 'loginRegister[email_phone]'
+			formData.Set("loginRegister[email_phone]", phone)
+			sendFormRequest(ctx, "https://www.digistyle.com/users/login-register/", formData, &wg, ch)
+		}
 		wg.Add(1) // sandbox.sibbazar.com (JSON)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://sandbox.sibbazar.com/api/v1/user/generator-inv-token", map[string]interface{}{
