@@ -5,7 +5,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"net" // برای بررسی نوع خطا برای تلاش مجدد
+	"net" 
 	"net/http"
 	"net/url"
 	"os"
@@ -14,8 +14,8 @@ import (
 	"runtime"
 	"strings"
 	"sync"
-	"syscall" // برای بررسی نوع خطا
-	"time"    // برای استفاده از time.Sleep
+	"syscall"
+	"time"    
 )
 
 func clearScreen() {
@@ -116,43 +116,42 @@ func sendFormRequest(ctx context.Context, url string, formData url.Values, wg *s
 		req, err := http.NewRequestWithContext(ctx, http.MethodPost, url, strings.NewReader(formData.Encode()))
 		if err != nil {
 			fmt.Printf("\033[01;31m[-] Error while creating form request to %s on retry %d: %v\033[0m\n", url, retry+1, err)
-			if retry == maxRetries-1 { // اگر آخرین تلاش هم ناموفق بود
+			if retry == maxRetries-1 { 
 				ch <- http.StatusInternalServerError
 				return
 			}
 			time.Sleep(retryDelay)
-			continue // برو به تلاش بعدی
+			continue 
 		}
 		req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
 		resp, err := http.DefaultClient.Do(req)
 		if err != nil {
-			// بررسی نوع خطا برای تلاش مجدد
+
 			if netErr, ok := err.(net.Error); ok && (netErr.Timeout() || netErr.Temporary() || strings.Contains(err.Error(), "connection reset by peer") || strings.Contains(err.Error(), "dial tcp")) {
 				fmt.Printf("\033[01;31m[-] Network error for %s on retry %d: %v. Retrying...\033[0m\n", url, retry+1, err)
 				if retry == maxRetries-1 {
 					fmt.Printf("\033[01;31m[-] Max retries reached for %s due to network error.\033[0m\n", url)
-					ch <- http.StatusInternalServerError // یا شاید کد خطای دیگری برای خطاهای شبکه
+					ch <- http.StatusInternalServerError 
 					return
 				}
 				time.Sleep(retryDelay)
-				continue // برو به تلاش بعدی
+				continue 
 			} else if ctx.Err() == context.Canceled {
 				fmt.Printf("\033[01;33m[!] Request to %s canceled.\033[0m\n", url)
-				ch <- 0 // سیگنال لغو
+				ch <- 0 
 				return
 			} else {
-				// خطای غیرمنتظره یا غیرمرتبط با شبکه که نباید تلاش مجدد شود
+
 				fmt.Printf("\033[01;31m[-] Unretryable error for %s on retry %d: %v\033[0m\n", url, retry+1, err)
 				ch <- http.StatusInternalServerError
 				return
 			}
 		}
 
-		// اگر درخواست موفق بود (بدون خطا در ارسال)، وضعیت را میفرستیم و خارج میشویم
 		ch <- resp.StatusCode
-		resp.Body.Close() // بستن بدنه پاسخ پس از استفاده
-		return // درخواست موفق بود، نیازی به تلاش مجدد نیست
+		resp.Body.Close() 
+		return 
 	}
 }
 
@@ -214,41 +213,32 @@ func main() {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	signalChan := make(chan os.Signal, 1)
-	// دریافت سیگنال های Interrupt و Terminate
+
 	signal.Notify(signalChan, syscall.SIGINT, syscall.SIGTERM)
 
 	go func() {
 		<-signalChan
 		fmt.Println("\n\033[01;31m[!] Interrupt received. Shutting down...\033[0m")
-		cancel() // لغو Context
+		cancel() 
 	}()
 
-	// ---- تغییرات برای Worker Pool ----
+	tasks := make(chan func(), repeatCount*40) 
 
-	// کانالی برای ارسال کارها به Workerها
-	// هر "کار" میتونه تابعی باشه که Goroutine کارگر باید اجرا کنه
-	tasks := make(chan func(), repeatCount*40) // اندازه کانال بر اساس تعداد کل درخواست‌ها
 
-	// تعداد Goroutineهای کارگر - قابل تنظیم
 	numWorkers := 20
 
 	var wg sync.WaitGroup
-	ch := make(chan int, repeatCount*40) // کانال دریافت وضعیت‌ها مثل قبل
+	ch := make(chan int, repeatCount*40) 
 
-	// ایجاد و اجرای Goroutineهای کارگر
-	// هر کارگر از کانال tasks میخونه و تابع task() رو اجرا میکنه
 	for i := 0; i < numWorkers; i++ {
 		go func() {
 			for task := range tasks {
-				task() // اجرای وظیفه
+				task() 
 			}
 		}()
 	}
 
-	// حلقه اصلی برای تعریف و ارسال کارها به کانال tasks
 	for i := 0; i < repeatCount; i++ {
-		// برای هر درخواست، یک "وظیفه" تعریف کرده و به کانال tasks میفرستیم
-		// wg.Add(1) برای هر کار در اینجا اضافه میشه
 
 		wg.Add(1) // core.gapfilm.ir (JSON)
 		tasks <- func() {
@@ -502,15 +492,12 @@ func main() {
 				"phone": phone,
 			}, &wg, ch)
 		}
-		// در صورت نیاز به اضافه کردن وب سرویس جدید، یک wg.Add(1) و tasks <- func() {...} اضافه کنید
 	}
 
-	// بعد از اینکه همه کارها به کانال فرستاده شدند، کانال tasks رو میبندیم
-	// این سیگنالی برای Goroutineهای کارگر است که کار بیشتری وجود ندارد و باید به پایان برسند
+	
 	close(tasks)
 
-	// در یک Goroutine جداگانه منتظر میمونیم تا تمام کارها توسط Workerها انجام شوند (wg.Wait())
-	// سپس کانال ch رو میبندیم
+
 	go func() {
 		wg.Wait()
 		close(ch)
