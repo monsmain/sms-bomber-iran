@@ -251,13 +251,6 @@ func main() {
 			}, &wg, ch)
 		}
 
-		// virgool.io (JSON)
-		wg.Add(1)
-		tasks <- func() {
-			sendJSONRequest(ctx, "https://virgool.io/api/v1.4/auth/user-existence", map[string]interface{}{
-				"username": phone,
-			}, &wg, ch)
-		}
 
 		// ebcom.mci.ir (JSON)
 		wg.Add(1)
