@@ -333,9 +333,7 @@ func main() {
 		go sendJSONRequest(ctx, "https://khodro45.com/api/v2/customers/otp/", map[string]interface{}{
 			"mobile": phone,
 			"device_type": 2,
-		}, &wg, ch) 
-//////////////////////////////////////////////////aghe javab nadad bedalil in hast ke modati masdod shodi. Status Code:429	
-
+		}, &wg, ch)// active ✅
 		// irantic.com
 		wg.Add(1)
 		go sendJSONRequest(ctx, "https://www.irantic.com/api/login/authenticate", map[string]interface{}{
