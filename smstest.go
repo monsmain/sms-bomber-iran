@@ -312,10 +312,6 @@ func main() {
 		}, ch)  
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-				s2 := fmt.Sprintf("'userKey':'98-'%s ,'userKeyType': 1", phone)
-		go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
-			s2: phone,
-		}, ch)
                 go sms("https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
 			"userKey": phone,
 		}, ch)   // just check
