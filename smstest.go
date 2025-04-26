@@ -499,9 +499,6 @@ func main() {
 		go sms("https://api.ehteraman.com/api/request/otp", map[string]interface{}{
 			"mobile": phone,
 		}, ch)  // edit :4/22/2025
-		go sms("https://ebcom.mci.ir/services/auth/v1.0/otp", map[string]interface{}{
-			"msisdn": phone,
-		}, ch)  // edit :4/22/2025
 		go sms("https://refahtea.ir/wp-admin/admin-ajax.php", map[string]interface{}{
 			"mobile": phone,
 		}, ch)   // edit :4/22/2025
