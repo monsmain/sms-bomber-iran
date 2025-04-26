@@ -37,8 +37,8 @@ git clone https://github.com/monsmain/sms-bomber-iran-faster
 cd sms-bomber-iran-faster
 ```
 
-# بدلیل تغیییر در ساختار کد و اپدیت api  تا اطلاع ثانوی کد کار نمیکنه:
-# مدت اتمام تغییر :3 روز 
+# ⚠️بدلیل تغیییر در ساختار کد و اپدیت api  تا اطلاع ثانوی کد کار نمیکنه:
+# ⚠️مدت اتمام تغییر :3 روز 
 ## اجرای آن
 ```
 go run sms.go
