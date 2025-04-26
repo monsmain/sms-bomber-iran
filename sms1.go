@@ -626,29 +626,39 @@ func main() {
 	}()
 
     // --- کد مربوط به دریافت وضعیت ها از channel و چاپ خروجی ---
+  // --- کد مربوط به دریافت وضعیت ها از channel و چاپ خروجی ---
     fmt.Println("\n\033[01;33m--- Summary --- \033[0m")
     successCount := 0
     errorCount := 0
     canceledCount := 0
 
+    // <= این خط را پیدا کنید: for statusCode := range ch {
     for statusCode := range ch {
+        // اگر وضعیت موفقیت آمیز است (مثلاً 2xx یا 3xx)
         if statusCode >= 200 && statusCode < 400 {
             successCount++
-        } else if statusCode == 0 { // 0 را برای Cancelled استفاده کردیم
-             canceledCount++
-             // اگر 0 را برای خطاهای اولیه هم استفاده میکنید، خط زیر را هم اضافه کنید
-             errorCount++
-        }
-        else { // Status Code 400 به بالا یا خطاهای سرور یا خطاهای ارسال درخواست (که 500 فرستادیم)
+            // اگر میخواهید برای درخواست های موفق هم وضعیت چاپ شود، خط زیر را فعال کنید
+            // fmt.Printf("\033[01;32m[+] Success (Status: %d)\033[0m\n", statusCode)
+        } else if statusCode == 0 { // 0 را برای Cancelled یا خطاهای اولیه قبل از ارسال استفاده کردیم
+             canceledCount++ // می توانید این را جدا بشمارید یا به خطا اضافه کنید
+             errorCount++ // 0 را به عنوان خطا هم در نظر می گیریم
+             // اگر میخواهید برای خطا هم وضعیت چاپ شود، خط زیر را فعال کنید
+             // fmt.Println("\033[01;33m[!] Canceled or early error.\030[0m") // تصحیح رنگ بندی
+        } else { // <--- اینجا همان else ای است که روی آن خطا می گیرید (خط 646 در فایل شما)
+        // Status Code 400 به بالا یا خطاهای سرور یا خطاهای ارسال درخواست (که 500 فرستادیم)
             errorCount++
+             // اگر میخواهید برای خطا هم وضعیت چاپ شود، خط زیر را فعال کنید
+             // fmt.Printf("\033[01;31m[-] Error (Status: %d)\030[0m\n", statusCode) // تصحیح رنگ بندی
         }
-    }
+    } // <--- این آکولاد بسته کننده حلقه است (نزدیک خط 651 شما)
+    // <= جایگزینی را تا این خط (شامل این خط) انجام دهید
 
-    fmt.Printf("\033[01;32m[+] Successful requests: %d\033[0m\n", successCount)
-    fmt.Printf("\033[01;31m[-] Failed requests: %d\033[0m\n", errorCount)
-    fmt.Printf("\033[01;33m[!] Canceled requests: %d\033[0m\n", canceledCount) // اگر 0 را فقط برای Cancelled استفاده کرده اید
-    fmt.Println("\033[0m") // برگشت به رنگ پیش فرض
+    fmt.Printf("\033[01;32m[+] Successful requests: %d\030m\n", successCount) // تصحیح رنگ بندی
+    fmt.Printf("\033[01;31m[-] Failed requests: %d\030m\n", errorCount) // تصحیح رنگ بندی
+    fmt.Printf("\033[01;33m[!] Canceled requests: %d\030m\n", canceledCount) // نمایش جداگانه Cancelled اگر 0 فقط برای آن استفاده می شود // تصحیح رنگ بندی
+    fmt.Println("\030[0m") // برگشت به رنگ پیش فرض // تصحیح رنگ بندی
 
+    // --- پایان کد مربوط به دریافت وضعیت ها ---
 }
 
 // --- بخش مربوط به Pool پروکسی (تعریف در سطح پکیج، خارج از توابع) ---
