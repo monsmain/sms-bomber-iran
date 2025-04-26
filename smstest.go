@@ -240,17 +240,6 @@ func main() {
               
 // حلقه اصلی برای تعریف و ارسال کارها به کانال tasks
 	for i := 0; i < repeatCount; i++ {
-		// بررسی لغو Context قبل از ارسال هر بلوک از وظایف
-		select {
-		case <-ctx.Done():
-			fmt.Println("\033[01;33m[!] Task dispatching canceled.\033[0m")
-			goto endOfDispatch // پرش به انتهای حلقه
-		default:
-			// ادامه ارسال وظایف
-		}
-
-		// ---- لیست جدید API ها ----
-
 		// 1. api.achareh.co (JSON)
 		wg.Add(1)
 		tasks <- func() {
