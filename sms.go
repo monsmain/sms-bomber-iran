@@ -109,9 +109,6 @@ func main() {
 	for i := 0; i < repeatCount; i++ {
 /////////////////////////////////////// site aparat should definitely be added.
 		
-		go sms("https://sandbox.sibbazar.com/api/v1/user/generator-inv-token", map[string]interface{}{
-			"username": phone,
-		}, ch)  // active ✅
                 go sms("https://virgool.io/api/v1.4/auth/verify", map[string]interface{}{
 			"identifier": phone,
 		}, ch)   // add site
