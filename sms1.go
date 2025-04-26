@@ -240,6 +240,12 @@ func main() {
 
 	for i := 0; i < repeatCount; i++ {
 
+		wg.Add(1) // sandbox.sibbazar.com (JSON)
+		tasks <- func() {
+			sendJSONRequest(ctx, "https://sandbox.sibbazar.com/api/v1/user/generator-inv-token", map[string]interface{}{
+				"username": phone,
+			}, &wg, ch)
+		}
 		wg.Add(1) // core.gapfilm.ir (JSON)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://core.gapfilm.ir/api/v3.2/Account/Login", map[string]interface{}{
