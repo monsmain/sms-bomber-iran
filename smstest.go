@@ -541,9 +541,6 @@ func main() {
 		go sms("https://core.gap.im/v1/user/sendOTP.gap", map[string]interface{}{
 			"mobile­": "phone",
 		}, ch)  // edit :4/22/2025
-		go sms("https://api.mydigipay.com/digipay/api/users/send-sms", map[string]interface{}{
-			"cellNumber": "phone",
-		}, ch)  // edit :4/22/2025
 		go sms("https://gateway.wisgoon.com/api/v1/auth/login/", map[string]interface{}{
 			"phone": "phone",
 		}, ch)  // edit :4/22/2025
