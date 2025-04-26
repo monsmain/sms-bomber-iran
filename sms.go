@@ -590,14 +590,6 @@ func main() {
 			}, &wg, ch)
 		}
 
-		// student.classino.com (JSON)
-		wg.Add(1)
-		tasks <- func() {
-			sendJSONRequest(ctx, "https://student.classino.com/otp/v1/api/login", map[string]interface{}{
-				"mobile": phone,
-			}, &wg, ch)
-		}
-
 		// takshopaccessorise.ir (JSON)
 		wg.Add(1)
 		tasks <- func() {
