@@ -372,12 +372,6 @@ func main() {
 		go sms("https://core.pishkhan24.ayantech.ir/webservices/core.svc/v1/LoginByOTP", map[string]interface{}{
 			"null, Username": phone,
 		}, ch)  // edit :4/22/2025
-		go sms("https://core.pishkhan24.ayantech.ir/webservices/core.svc/v1/LoginByOTP", map[string]interface{}{
-			"Username": phone,
-		}, ch)  // edit :4/22/2025
-		go sms("https://core.pishkhan24.ayantech.ir/webservices/core.svc/v1/LoginByOTP", map[string]interface{}{
-			"Username": phone,
-		}, ch)  // edit :4/22/2025
 		go sms("https://simkhanapi.ir/api/users/registerV2", map[string]interface{}{
 			"mobileNumber": phone,
 		}, ch)  // edit :4/22/2025
