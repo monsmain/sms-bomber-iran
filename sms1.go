@@ -601,20 +601,3 @@ func main() {
 		}
 	}
 	
-	}
-
-	close(tasks)
-
-	go func() {
-		wg.Wait()
-		close(ch)
-	}()
-
-	for statusCode := range ch {
-		if statusCode >= 400 || statusCode == 0 {
-			fmt.Println("\033[01;31m[-] Error or Canceled!")
-		} else {
-			fmt.Println("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mSended")
-		}
-	}
-}
