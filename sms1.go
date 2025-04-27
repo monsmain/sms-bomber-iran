@@ -315,21 +315,15 @@ func main() {
 				sendJSONRequest(ctx, "https://ebcom.mci.ir/services/auth/v1.0/otp", payload, &wg, ch)
 			}
 
+
+
 			// gifkart.com (SMS - POST Form)
 			wg.Add(1)
 			tasks <- func() {
 				formData := url.Values{}
 				formData.Set("PhoneNumber", phone) // شماره کامل
-				sendFormRequest(ctx, "https://gif.kart.com/request/", formData, &wg, ch)
-			}//⚠️⚠️⚠️⚠️
-
-			// gifkart.com (Call - POST Form) - توجه: این به نظر برای درخواست تماس مجدد است و شماره تلفن مستقیما در Payload نیست
-			wg.Add(1)
-			tasks <- func() {
-				formData := url.Values{}
-				formData.Set("SendSMSAgainOTPCode", "Call") // مقدار ثابت، به نظر نمی‌رسد شماره تلفن در اینجا استفاده شود
 				sendFormRequest(ctx, "https://gifkart.com/request/", formData, &wg, ch)
-			}
+			} // hamintori
 
 			// asangem.com (POST Form)
 			wg.Add(1)
