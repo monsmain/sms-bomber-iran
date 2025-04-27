@@ -332,8 +332,8 @@ func main() {
 			formData.Set("digits_redirect_page", "//www.bigtoys.ir/") // ممکن است نیاز به URL Encode داشته باشد
 			formData.Set("digits_form", "3bed3c0f10")                // این مقدار ممکن است داینامیک باشد
 			formData.Set("_wp_http_referer", "/")
-			sendFormRequest(ctx, "https://www.bigtoys.ir/wp-admin/admin-ajax.php", formData, &wg, ch)
-		}
+			sendFormRequest(ctx, "https://www.big.toys.ir/wp-admin/admin-ajax.php", formData, &wg, ch)
+		}//⚠️
 
 		// bigtoys.ir - Variation 2 (Form)
 		wg.Add(1)
