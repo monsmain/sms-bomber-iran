@@ -305,7 +305,7 @@ func main() {
 
 		// beta.raghamapp.com (JSON Array Payload)
 		wg.Add(1)
-		tasks <- func() 
+		tasks <- func() {
 			// توجه: این وب‌سرویس یک آرایه JSON شامل یک شیء ارسال می‌کند، نه فقط یک شیء JSON.
 			// تابع sendJSONRequest برای ارسال یک شیء (map[string]interface{}) طراحی شده است.
 			// برای ارسال آرایه، باید ساختار payload را به []map[string]interface{} تغییر داده و json.Marshal را روی آن فراخوانی کنید.
@@ -346,7 +346,7 @@ func main() {
 					ch <- http.StatusInternalServerError
 					return
 				}
-			}
+			//}
 
 			ch <- resp.StatusCode // ارسال وضعیت پاسخ
 			resp.Body.Close()
