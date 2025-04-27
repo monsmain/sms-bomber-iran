@@ -18,7 +18,7 @@
 
 new site ha: peyda kardam az site hayi ke nazar ha ro baraye har site minevisan ya site haye foroshe cp ya us bazi ha.
 https://nazarkade.com/        https://motabare.ir/
-
+mayava.ir
 mehreganit.com
 pgemshop.com
 gifkart.com
@@ -2974,9 +2974,6 @@ type
 
 
 ---------------------------------------------------------------------------------------------
-
-
-new site run 
 Request URL:
 https://pgemshop.com/wp-admin/admin-ajax.php
 Request Method:
@@ -3074,15 +3071,20 @@ action: validate_and_action
 mobile: 09123456789
 username: 
 security: c9a8393a08
-
-new site stop
-
-
 ---------------------------------------------------------------------------------------------
+Request URL:
+https://core-api.mayava.ir/auth/check
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+176.126.120.200:443
+Referrer Policy:
+strict-origin-when-cross-origin
 
-
-
-
+mobile: 09123456789
+---------------------------------------------------------------------------------------------
 
 
 
