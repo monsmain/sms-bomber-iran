@@ -283,7 +283,18 @@ func main() {
 	}
 
 	for i := 0; i < repeatCount; i++ {
-		// 2. itmall.ir (Form)
+		
+
+		// see5.net (Form)
+		wg.Add(1)
+		tasks <- func() {
+			formData := url.Values{}
+			formData.Set("mobile", phone)
+			formData.Set("name", "sfsfsfsffsf") // یک نام ثابت اینجا اضافه شده
+			formData.Set("demo", "bz_sh_fzltprxh")
+			sendFormRequest(ctx, "https://see5.net/wp-content/themes/see5/webservice_demo2.php", formData, &wg, ch)
+		}
+                // 2. itmall.ir (Form)
 		wg.Add(1)
 		tasks <- func() {
 			formData := url.Values{}
