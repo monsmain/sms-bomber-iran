@@ -351,7 +351,7 @@ func main() {
 			ch <- resp.StatusCode // ارسال وضعیت پاسخ
 			resp.Body.Close()
 			// توجه: منطق تلاش مجدد (Retry) برای این پیاده‌سازی سفارشی اضافه نشده است.
-		}()
+		}//()
 
 		// client.api.paklean.com (Form)
 		wg.Add(1)
