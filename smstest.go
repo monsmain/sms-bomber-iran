@@ -899,7 +899,7 @@ strict-origin-when-cross-origin
 action: refah_send_code
 mobile: 09123456456
 security: e10382e5bd
---------------------------------------------------------------------------------------------- part 1✅
+--------------------------------------------------------------------------------------------- part 1✅ 41 code
 1:
 Request URL:
 https://api.ehteraman.com/api/request/otp
