@@ -497,9 +497,9 @@ func main() {
 		// platform-api.snapptrip.com - request-otp (JSON)
 		wg.Add(1)
 		tasks <- func() {
-			sendJSONRequest(ctx, "https://platform-api.snapptrip.com/profile/auth/request-otp", map[string]interface{}{
+			sendJSONRequest(ctx, "https://platform-api.snapp.trip.com/profile/auth/request-otp", map[string]interface{}{
 				"phoneNumber": phone,
-			}, &wg, ch)
+			}, &wg, ch)//⚠️
 		}
 
 		// backend.digify.shop (JSON)
