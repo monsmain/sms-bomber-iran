@@ -1653,6 +1653,518 @@ mobile
 : 
 "09123456456"
 ---------------------------------------------------------------------------------------------
+Request URL:
+https://api.bitpin.org/v3/usr/authenticate/
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+172.67.75.18:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+{device_type: "web", password: "hPTi4aiXPYUdNCN", phone: "09123456456"}
+device_type
+: 
+"web"
+password
+: 
+"hPTi4aiXPYUdNCN"
+phone
+: 
+"09123456456"
+---------------------------------------------------------------------------------------------
+Request URL:
+https://api.bahramshop.ir/api/user/validate/username
+Request Method:
+POST
+Status Code:
+201 Created
+Remote Address:
+188.114.97.3:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+
+{username: "09123456456",…}
+re_token
+: 
+"03AFcWeA64cU107er-nJp99Nva7GAp6gd9tnClh745KllX3pSODP7Cf-oHOvP9l4TZu9zxcEVbNJ_CUyStOocFCLYxjhweR1_GuoNxELikJPZa4RpW2r4N16qYe6_XuQXdRGhcT-9DcEJSCHi4RtUMVK-MFfgHZRiWqot0Ou40WiMRuGTBA_wBcJhxNl0I316SZaLDK7udhd7a6dmsmmC-Lvk88ViP8RMEN8Y_q3i4nvbiSdyWyls928k8Va2WvSdgo6YgtCczGXMExl3AWf6QCp6ihXL9H06FKTuO-pi6HJC5nuFRVb6p_i09V9cFQTRQ2d8MkPPzpOChATVqha5mDr0ssRMdakIMDHv8iQBy1GkKyNoI8QAnWXNvGe_SPAdredy6E-TmVkfId5ShWXgMQhEkXmOA5FUQs5gkcWY_2fDOTBss5vyUnVRvrp0hsBXSdQNouP6l47_Qvk-kbY89O-j38s_4qlX2-L_PKFqZW9STbI_WbiWKPiaD661sGbw-ayrbAdoCQxPqOoLLmiMV3dPej3Ci5oSFusI68BsH5bUr15uBqBuCeK4tkvqEbKwwNmiZenQ5Nd6pBC7jELyhEPUP-CRzaQKgGIC_xlYD55aVMp3jFv-tAr_Q7wJdDkidbqhcNCs3WqZK39e7y2vCSl4_UrxPnWgOxjnU0qsTkjBWyF3PVErk0uSkVomZtcxb27Neyqoxq91EdHVob6xAQpUeCB9hyz9nypj8lPXdM1UujY22SpbFy8izDUqeU0Ip_IIHtDG-odyOFCC1rubLoWuGKX2cRAoH_UJkGDSzd48y-oR21A_eQiYrGOJuf850t3IFvOOBYkt_Vwili5ZzvagjpQNsbmf1eHeMLpPNOnMxySQhPHil1gdEHvvA37qzdnvxZZbDLpCmiruG6nMgu7K5KBFpq8p24g"
+username
+: 
+"09123456456"
+---------------------------------------------------------------------------------------------
+Request URL:
+https://auth.bitbarg.com/realms/bitbarg/login-actions/authenticate?session_code=aKTzv1MWnO8KRrTK6YEEgp1kB4PY-TpMe4xd1x6GUg0&execution=75cc413a-b9a7-4507-828d-8a96385e540a&client_id=bitbarg&tab_id=eh4A3-GFbEA&client_data=eyJydSI6Imh0dHBzOi8vYml0YmFyZy5jb20vcHJvZmlsZSIsInJ0IjoiY29kZSJ9
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+104.22.5.179:443
+Referrer Policy:
+same-origin
+
+session_code: aKTzv1MWnO8KRrTK6YEEgp1kB4PY-TpMe4xd1x6GUg0
+execution: 75cc413a-b9a7-4507-828d-8a96385e540a
+client_id: bitbarg
+tab_id: eh4A3-GFbEA
+client_data: eyJydSI6Imh0dHBzOi8vYml0YmFyZy5jb20vcHJvZmlsZSIsInJ0IjoiY29kZSJ9
+phoneNumber: 09128887494
+rememberMe: on
+---------------------------------------------------------------------------------------------
+Request URL:
+https://account.bama.ir/api/otp/generate/v4
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+185.143.235.201:443
+Referrer Policy:
+no-referrer
+
+username: 09123456456
+client_id: popuplogin
+---------------------------------------------------------------------------------------------
+Request URL:
+https://lms.tamland.ir/api/api/user/signup
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+185.226.140.140:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+{Mobile: "09128887494", SchoolId: -1, consultantId: "tamland", campaign: "campaign",…}
+Mobile
+: 
+"09128887494"
+SchoolId
+: 
+-1
+campaign
+: 
+"campaign"
+consultantId
+: 
+"tamland"
+utmMedium
+: 
+"wordpress"
+utmSource
+: 
+"tamland"
+---------------------------------------------------------------------------------------------
+Request URL:
+https://api.zarinplus.com/user/otp/
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+185.143.235.201:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+
+{phone_number: "989123456456", source: "zarinplus"}
+phone_number
+: 
+"989123456456"
+source
+: 
+"zarinplus"
+---------------------------------------------------------------------------------------------
+Request URL:
+https://novinbook.com/index.php?route=account/phone
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+185.78.22.67:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+
+route: account/phone
+phone: 09128887464
+g-recaptcha-response: 03AFcWeA675r3hMxYpJZZkCnF5StXuKhT3p3qqN4YH4jQs2iTBz1zj153mBOLcnIXCRk0_6di7w8irBFHGwZFsR8WIFYqKsutBqxBThz_HLdYkgp8L_4MJPu_hDW1oT4KKCR--YeHDQtmDl25BZtDUbVotgEJKbJxpgxQtlj_aC3MHs4uxydfDjgn7Frbc47zAsx7JFGDkAs_nnBXglIhpkTifQ64oKv7YhT5lKSCguHDGdQWhwjua9eb8ixXXVa7S0-EJl-BsH5MQWe-ys0pPp6lkLzwNxDUnyBK9k_MlobUFQ8m2IkH34JeN8op-UQm0iqJy1vnSECSUDvT2MCLwPFK5nS7A39XjWq5XbkAUf72oSZk5p7rlMTwmJ47LUpfi3MfMGyXa5qNNlsOr5LqWLht8eeXubgo-JmOWY9Ja2H5uIZV4Zl5NahHg8s5Hywz2QussuiHHtedqgTsgsiIYZPr2t80gRnObVQjfgQdGAqSSSqq8rlY0CGuFSEsNrrcADKRQXrJuiNduuiBzdMtKKZnjmuP10_6ctA6gbYjk3Njai9edKsfhItzVgmJW1h3Z7yHKIZh5h7K4cWQlvyGQMSFGie-hdGReNOUEK-tgXyZ8u2S8cY-eDPmTNDt-NrdvkxNseFIziZkMfKdIAT7BkFNr520oapvW0PwDcs4PZEp6105udM1orrnlIBdbJd5reHwTXE6SwJ79EehG1-UvIvqFMxvR_GdlPXmYXT9s7c274R47sss2i7MEDc14oWy2xw5AP8SAAeW8UsMbTqZ1Yh6gabih_8YpDTCSf1Ljhae2O8fY-hn5B9yIoiOXW25oDinocssxwqxBRl19FCpNhwhpzTwG15lSZeVR8htdYw9Ab4XT8wZiqu1KMul9VOJia7_n5k-bU-ODJBSO_BkL0-t3Q2HDoHSqBTulDju9xweOaBgxaprr0IQ
+---------------------------------------------------------------------------------------------
+call phone:
+
+Request URL:
+https://novinbook.com/index.php?route=account/phone
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+185.78.22.67:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+
+route: account/phone
+phone: 09128887464
+call: yes
+---------------------------------------------------------------------------------------------
+Request URL:
+https://api.abantether.com/api/v2/auths/register/phone/send
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+185.143.232.201:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+{phone_number: "09128887484"}
+phone_number
+: 
+"09128887484"
+---------------------------------------------------------------------------------------------
+Request URL:
+https://bck.behtarino.com/api/v1/users/jwt_phone_verification/
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+185.166.104.3:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+
+{phone: "09128887464"}
+phone
+: 
+"09128887464"
+---------------------------------------------------------------------------------------------
+Request URL:
+https://flightio.com/bff/Authentication/CheckUserKey
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+185.143.235.201:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+{userKey: "98-9128887494", userKeyType: 1}
+userKey
+: 
+"98-9128887494"
+userKeyType
+: 
+1
+---------------------------------------------------------------------------------------------
+Request URL:
+https://sabziman.com/wp-admin/admin-ajax.php
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+94.182.95.134:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+action: newphoneexist
+phonenumber: 09123456456
+---------------------------------------------------------------------------------------------
+Request URL:
+https://www.namava.ir/api/v1.0/accounts/registrations/by-otp/request
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+94.182.100.133:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+
+{UserName: "+989123456456", ReferralCode: null}
+ReferralCode
+: 
+null
+UserName
+: 
+"+989123456456"
+---------------------------------------------------------------------------------------------
+1:
+Request URL:
+https://filmnet.ir/api-v2/access-token/users/09121111010/approaches
+Request Method:
+GET
+Status Code:
+200 OK
+Remote Address:
+212.33.196.143:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+{data: {approaches: ["otp"], flag: "new_user"},…}
+data
+: 
+{approaches: ["otp"], flag: "new_user"}
+approaches
+: 
+["otp"]
+0
+: 
+"otp"
+flag
+: 
+"new_user"
+meta
+: 
+{c_key: "user:msisdn:989121111010", operation_result: "success", operation_result_code: 2000,…}
+c_key
+: 
+"user:msisdn:989121111010"
+client_ip
+: 
+"5.232.153.5"
+display_message
+: 
+"موفق"
+machine_name
+: 
+"prod-api-public05"
+operation_result
+: 
+"success"
+operation_result_code
+: 
+2000
+server_date_time
+: 
+"2025-04-27T15:17:19"
+
+2:
+Request URL:
+https://filmnet.ir/api-v2/access-token/users/09121111010%20/otp
+Request Method:
+GET
+Status Code:
+200 OK
+Remote Address:
+212.33.196.143:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+
+{data: {ttl: "00:03:00"},…}
+data
+: 
+{ttl: "00:03:00"}
+ttl
+: 
+"00:03:00"
+meta
+: 
+{c_key: "otp:login:989121111010-Web", operation_result: "success", operation_result_code: 2000,…}
+c_key
+: 
+"otp:login:989121111010-Web"
+client_ip
+: 
+"5.232.153.5"
+display_message
+: 
+"موفق"
+machine_name
+: 
+"prod-api-public01"
+operation_result
+: 
+"success"
+operation_result_code
+: 
+2000
+server_date_time
+: 
+"2025-04-27T15:17:19"
+
+3:
+Request URL:
+https://filmnet.ir/_next/data/7VpbihJYft_dPf3vyUOuO/register/otp.json
+Request Method:
+GET
+Status Code:
+304 Not Modified
+Remote Address:
+212.33.196.151:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+{pageProps: {subRoute: "otp", isRegisterRoute: true}, __N_SSG: true}
+pageProps
+: 
+{subRoute: "otp", isRegisterRoute: true}
+isRegisterRoute
+: 
+true
+subRoute
+: 
+"otp"
+__N_SSG
+: 
+true
+---------------------------------------------------------------------------------------------
+Request URL:
+https://fankala.com/wp-admin/admin-ajax.php
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+5.144.131.244:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+
+action: digits_check_mob
+countrycode: +98
+mobileNo: 912 345 6456
+csrf: 781f3959e4
+login: 2
+username: 
+email: 
+captcha: 
+captcha_ses: 
+digits: 1
+json: 1
+whatsapp: 0
+digits_reg_name: fsfhsk
+digregcode: +98
+digits_reg_mail: 912 345 6456
+digregscode2: +98
+mobmail2: 
+digits_reg_password: 
+g-recaptcha-response: 03AFcWeA6n97-5_U7qMsaaRmmBwzvWtcRYAG066Bse0c1UTgVl9zU8skwW8tyn6QSZ3_5N2X9dV4Y5MYYnQFLOdhwnnranaL2X_9QMWezeDOynCFf9AayTvtiSANdYz2t2ade8y68tTEmbx611nb7Flfh9xci6SQMyY4SIxjD1JfshBqZEhvjjjAYHxroTAZSi2tSJzjbFGgczEZ4EAc0KVHaD9CGBWVEaKUOjd3GdDByyvvPq91BRpGjbeG9zpnr2kRNQ8mCXTeDmYtR0BfKXDPP6Dx3K9G6PFHMdzPjZMczSOBFaQQeZ3ZmRwzVc6DngPbM-Cd_fAfbF7mbnc_O872WrgRffOqM3szii4qBubdPbEWYHEXVvKyd83j11P0MOpdXZkftztaTLgd0Y-yZjtbZbszYoaudcBHcuaY2ah1ubK3O8m7tBu0n1hlsnW0QR2ifK08QVt7efbk545c5UlpSxVH744P1zAFAf2kh1GtlqToTdX3LGGPRdh2Ux6H-43QlRKcI6UEUUceCYPGS6xbIX-4WSMlkwTiOzuoudDRsdBXiL9CpxFA3L4oX5EH6lohywsiJH-GchruE2Av-mPajuIkpNSJEcUPxv4Gm6UEYEjiDgJCxXf9k9R_sPz9YF4qTldSEh-1wkIWQv_CrMW7DNQ1fOSbSJmvTWkWRYVhjGsVwkEizj8FcBLTbW_3PmnLYz-eP_ukj4pBZ7kXyVmIeaBZGbK6mmivtpO2ei4zoarI_NDgbj7WZDHcC46xbfwJzvBQBsa29CalzEDCEAOYrQ6SdiM2HcECoUKLGAzmKXR_JpdQfqiSD6jyIBL5beYIUCQ2FTpcXCTXcZmjekAmJVVnLzuSQ5RHxMTBO7_rKH9TXyNq3ZuJ5eEWW7OJSiZnV4OkRqW6SXqLEm-gSvorOpFhMNY46S04oa9x9yQlyrVDU07qGOVLSvlttorXXm_EZ6dBqOC_bN4R-2y9KLiCzJTQMZZ4j-Ece01ya0LY0piXisYnC42jEeIW9-2p303Jx5Vpbt-rwb7a9TVTlkIiRVTCQgZugUo9sOfCnW_VxKlPw3xFz20u8UWljcIOw1yNYtnKKY-9YP2gdem1XYLLAQL7bnu6mEaVJOQrS_7nwnIRPPcSnYjlxcdBltkhKTbbBWbUtANXHZ3BDp_J35BE6wnZK7WfZtkeMX1hlK7io5WcC3nGo8xpxkK4iLqk6RHpuqNJ2EE32RcVG0wh2tSnh6YxxLrrWm2u94bE4OXofGpvp0ovkU_A9V31ioXu3HgPAh10b2bamb0XpK0yn3qfggYmcee4sUh2CS6oFNFCyVpJd5aeixwh_5BYucHqzlnGVW7UqMR4RGXJ5XTYZGey8iGFDigWhZfyFJw0lBhusTkgfyeliD5B8bRkCukxrAEMJ6NTdipdU8Xonqx8Q8JaXXgbqrZG7nRfRlL4cwqb84kcEmLG9s8yKAEUsG8Z_9vgTCSvPWTwFgNpYvACgSBFligWmIZleohwieL7GIm2C_wZKGIN5hjJIj_NOT40mB2H61fZsqcYDef3MHXSI9cHFKjILdikeKJJ6Wyu8o4fS6z80qVOKoFQcum-Q49zJBzjgV5Ls2rOaylZyMBVfWY0BLN0KNBsddJziLTDVZVFJy0H7Hm9q60bFx8uAg27_RaDAkNu0eEeS5wDHuMOQxYWzkM7f4Yhfgj4tZY6sKNyJ3xy-5GdOAKsDp62s7LTk3JeU3BKSBBIksf9je2RIfaUGS1gAsIu_frWTkxtwd3i0vQ3QHMFFr8zI2cjJmYzRa-flXsw_Jb3s3lQX_yOwY-55YcW6U2OE7f52Gc0oKPq1mEHt2TbFk4cvtuxGzrUYTV3nkZvAPYWdg7eNBlFiyrCb0opOKStH4WKfupCbGYz6wGbKLiJ2uK59QSI8TBf2dcg_1_6XlopZ33TiqRklsOifCJhsj7r4C631cSDZR7hOuQBMDH-0c0ClRcLZqZnohQ9BWCXZBKDog9GqM1lS6C3Nx1bmCdiqEmpik1AjZV17RC0_CPN7AiWfGPfTjn98G7z0kKwjpF6nm
+gglcptch: 
+dig_otp: 
+code: 
+dig_reg_mail: 
+dig_nounce: 781f3959e4
+---------------------------------------------------------------------------------------------
+1:
+Request URL:
+https://web-api.fafait.net/api/graphql
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+185.229.133.70:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+
+{operationName: "hasUser", variables: {input: {username: "09123456789"}}, extensions: {,…}}
+extensions
+: 
+{,…}
+persistedQuery
+: 
+{version: 1, sha256Hash: "00fbd099cf5cad12af5114cff9e4676649ba70b9c4c6c3d1ebfcd68972bc1a3f"}
+operationName
+: 
+"hasUser"
+variables
+: 
+{input: {username: "09123456789"}}
+input
+: 
+{username: "09123456789"}
+
+2:
+Request URL:
+https://web-api.fafait.net/api/graphql
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+185.229.133.70:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+
+{variables: {input: {mobile: "09123456789", nickname: "gxgdgdgg g tgdgd"}}, extensions: {,…}}
+extensions
+: 
+{,…}
+persistedQuery
+: 
+{version: 1, sha256Hash: "c86ec16685cd22d6b486686908526066b38df6f4cbcd29bef07bb2f3b18061e6"}
+variables
+: 
+{input: {mobile: "09123456789", nickname: "gxgdgdgg g tgdgd"}}
+input
+: 
+{mobile: "09123456789", nickname: "gxgdgdgg g tgdgd"}
+
+---------------------------------------------------------------------------------------------
+Request URL:
+https://www.tamimpishro.com/site/api/v1/user/otp
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+46.245.86.30:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+{return_url: "", mobile: "09128887494", referrer: "گوگل", national_code: "1001212110",…}
+mobile
+: 
+"09128887494"
+name
+: 
+"ghhghgh hfhhf"
+national_code
+: 
+"1001212110"
+referrer
+: 
+"گوگل"
+return_url
+: 
+""
+---------------------------------------------------------------------------------------------
+Request URL:
+https://api.snapp.market/mart/v1/user/loginMobileWithNoPass?cellphone=09122221212
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+185.143.232.201:443
+Referrer Policy:
+no-referrer-when-downgrade
+
+
+cellphone: 09122221212
+---------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
 
 
 
