@@ -568,10 +568,10 @@ func main() {
 		tasks <- func() {
 			// توجه: پارامتر "did" در این درخواست وجود دارد و ممکن است داینامیک باشد (مانند Device ID).
 			// اگر این مقدار ثابت نباشد، این درخواست احتمالا کار نخواهد کرد یا نیاز به دریافت did جدید در هر بار دارد.
-			sendJSONRequest(ctx, "https://mamifood.org/Registration.aspx/SendValidationCode", map[string]interface{}{
+			sendJSONRequest(ctx, "https://mami.food.org/Registration.aspx/SendValidationCode", map[string]interface{}{
 				"Phone": phone,
 				"did":   "ecdb7f59-9aee-41f5-b0b1-65cde6bf1791", // این مقدار ممکن است نیاز به تولید داینامیک داشته باشد
-			}, &wg, ch)
+			}, &wg, ch)//⚠️
 		}
 
 		// refahtea.ir (Form)
