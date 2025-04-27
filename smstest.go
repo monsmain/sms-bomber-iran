@@ -3076,40 +3076,352 @@ strict-origin-when-cross-origin
 phone_number: 09123456789
 source: next_desktop
 ---------------------------------------------------------------------------------------------
+Request URL:
+https://www.anbaronline.ir/account/sendotpjson
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+31.214.173.155:443
+Referrer Policy:
+strict-origin-when-cross-origin
 
 
+mobile: 09123456789
+captchai: 59
+---------------------------------------------------------------------------------------------
+1:
+Request URL:
+https://appapi.sms.ir/api/app/auth/sign-up/verification-code
+Request Method:
+POST
+Status Code:
+200 OK (from service worker)
+Referrer Policy:
+strict-origin-when-cross-origin
+
+9123456456
+No properties
+
+2:
+Request URL:
+https://appapi.sms.ir/api/app/auth/sign-up/verification-code
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+185.211.56.44:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+9123456456
+No properties
+---------------------------------------------------------------------------------------------
+Request URL:
+https://app.mediana.ir/api/account/AccountApi/CreateOTPWithPhone
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+185.143.232.201:443
+Referrer Policy:
+no-referrer
+
+{phone: "09123456456", referrer: ""}
+phone
+: 
+"09123456456"
+referrer
+: 
+""
+---------------------------------------------------------------------------------------------
+Request URL:
+https://gamefa.com/wp-admin/admin-ajax.php
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+50.7.85.221:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+digits_reg_name: etreetkhrg
+digits_reg_username: rvhrrvvryvr
+digt_countrycode: +98
+phone: 9128887464
+email: koyaref766@kazvi.com
+digits_reg_password: trrdfstrtft
+digits_process_register: 1
+instance_id: 74e5368dbcf91c938f44b2af4b21cb3a
+optional_data: optional_data
+action: digits_forms_ajax
+type: register
+dig_otp: 
+digits: 1
+digits_redirect_page: //gamefa.com/
+digits_form: 3827f92f86
+_wp_http_referer: /?login=true
+
+2:
+Request URL:
+https://gamefa.com/wp-admin/admin-ajax.php
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+50.7.85.221:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+digits_reg_name: etreetkhrg
+digits_reg_username: rvhrrvvryvr
+digt_countrycode: +98
+phone: 9128887464
+email: koyaref766@kazvi.com
+digits_reg_password: trrdfstrtft
+digits_process_register: 1
+sms_otp: 
+otp_step_1: 1
+digits_otp_field: 1
+instance_id: 74e5368dbcf91c938f44b2af4b21cb3a
+optional_data: optional_data
+action: digits_forms_ajax
+type: register
+dig_otp: otp
+digits: 1
+digits_redirect_page: //gamefa.com/
+digits_form: 3827f92f86
+_wp_http_referer: /?login=true
+container: digits_protected
+sub_action: sms_otp
+---------------------------------------------------------------------------------------------
+Request URL:
+https://api.cafebazaar.ir/rest-v1/process/GetOtpTokenRequest
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+185.166.104.3:443
+Referrer Policy:
+strict-origin-when-cross-origin
 
 
+{properties: {language: 2, clientID: "56uuqlpkg8ac0obfqk09jtoylc7grssx",…},…}
+properties
+: 
+{language: 2, clientID: "56uuqlpkg8ac0obfqk09jtoylc7grssx",…}
+clientID
+: 
+"56uuqlpkg8ac0obfqk09jtoylc7grssx"
+clientVersion
+: 
+"web"
+deviceID
+: 
+"56uuqlpkg8ac0obfqk09jtoylc7grssx"
+language
+: 
+2
+singleRequest
+: 
+{getOtpTokenRequest: {username: "989123456565"}}
+getOtpTokenRequest
+: 
+{username: "989123456565"}
+---------------------------------------------------------------------------------------------
+Request URL:
+https://account.api.balad.ir/api/web/auth/login/
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+87.247.184.166:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+{phone_number: "09123456456", os_type: "W"}
+os_type
+: 
+"W"
+phone_number
+: 
+"09123456456"
+---------------------------------------------------------------------------------------------
+Request URL:
+https://ebcom.mci.ir/services/auth/v1.0/otp
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+5.106.5.85:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+{msisdn: "9122221010"}
+msisdn
+: 
+"9122221010"
+---------------------------------------------------------------------------------------------
+Request URL:
+https://virgool.io/api2/app/auth/user-existence
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+185.143.235.201:443
+Referrer Policy:
+strict-origin-when-cross-origin
 
 
+{username: "+989123456456", type: "register", method: "phone"}
+method
+: 
+"phone"
+type
+: 
+"register"
+username
+: 
+"+989123456456"
+---------------------------------------------------------------------------------------------
+Request URL:
+https://virgool.io/api2/app/auth/verify
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+185.143.235.201:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+{method: "phone", identifier: "+989123456456", type: "register"}
+identifier
+: 
+"+989123456456"
+method
+: 
+"phone"
+type
+: 
+"register"
 
 
+---------------------------------------------------------------------------------------------
 
 
+new site run 
+Request URL:
+https://pgemshop.com/wp-admin/admin-ajax.php
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+185.106.201.14:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+action: digits_check_mob
+countrycode: +98
+mobileNo: 09123456456
+csrf: 0a60a620d9
+login: 2
+username: 
+email: 
+captcha: 
+captcha_ses: 
+json: 1
+whatsapp: 0
+---------------------------------------------------------------------------------------------
+Request URL:
+https://gifkart.com/request/
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+104.26.5.196:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+PhoneNumber: 09123456456
+---------------------------------------------------------------------------------------------
+call :
+Request URL:
+https://gifkart.com/request/
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+104.26.5.196:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+SendSMSAgainOTPCode: Call
+
+---------------------------------------------------------------------------------------------
+Request URL:
+https://lintagame.com/wp-admin/admin-ajax.php
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+148.251.244.188:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+action: logini_first
+login: 09123456456
+---------------------------------------------------------------------------------------------
+Request URL:
+https://asangem.com/wp-admin/admin-ajax.php
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+104.26.4.118:443
+Referrer Policy:
+no-referrer
+
+action: mreeir_send_sms
+mobileemail: 09122221110
+userisnotauser: 
+type: mobile
+security: cb94fb1738
+---------------------------------------------------------------------------------------------
+Request URL:
+https://mehreganit.com/wp-admin/admin-ajax.php
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+104.21.3.128:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+action: validate_and_action
+mobile: 09123456789
+username: 
+security: c9a8393a08
+
+new site stop
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+---------------------------------------------------------------------------------------------
 
 
 
