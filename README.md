@@ -13,6 +13,7 @@ sms bomber pro irani 🇮🇷v1 with Go (Golang)
 
 ## سرعت +
 - fast
+- medium
 ## پشتیبانی از [تست شده]
 - `Linux` ✅
 - `Termux` ✅
