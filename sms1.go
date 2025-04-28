@@ -150,6 +150,59 @@ func sendFormRequest(ctx context.Context, url string, formData url.Values, wg *s
 		resp.Body.Close()
 		return
 	}
+} // tabe jadid hastesh
+func sendGETRequest(ctx context.Context, url string, wg *sync.WaitGroup, ch chan<- int) {
+	defer wg.Done()
+
+	const maxRetries = 3
+	const retryDelay = 2 * time.Second // کمی کمتر از POST برای GET
+
+	for retry := 0; retry < maxRetries; retry++ {
+		select {
+		case <-ctx.Done():
+			fmt.Printf("\033[01;33m[!] Request to %s canceled.\033[0m\n", url)
+			ch <- 0
+			return
+		default:
+		}
+
+		req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil) // متد GET و Body = nil
+		if err != nil {
+			fmt.Printf("\033[01;31m[-] Error while creating GET request to %s on retry %d: %v\033[0m\n", url, retry+1, err)
+			if retry == maxRetries-1 {
+				ch <- http.StatusInternalServerError
+				return
+			}
+			time.Sleep(retryDelay)
+			continue
+		}
+
+		resp, err := http.DefaultClient.Do(req)
+		if err != nil {
+			if netErr, ok := err.(net.Error); ok && (netErr.Timeout() || netErr.Temporary() || strings.Contains(err.Error(), "connection reset by peer") || strings.Contains(err.Error(), "dial tcp")) {
+				fmt.Printf("\033[01;31m[-] Network error for %s on retry %d: %v. Retrying...\033[0m\n", url, retry+1, err)
+				if retry == maxRetries-1 {
+					fmt.Printf("\033[01;31m[-] Max retries reached for %s due to network error.\033[0m\n", url)
+					ch <- http.StatusInternalServerError
+					return
+				}
+				time.Sleep(retryDelay)
+				continue
+			} else if ctx.Err() == context.Canceled {
+				fmt.Printf("\033[01;33m[!] Request to %s canceled.\033[0m\n", url)
+				ch <- 0
+				return
+			} else {
+				fmt.Printf("\033[01;31m[-] Unretryable error for %s on retry %d: %v\033[0m\n", url, retry+1, err)
+				ch <- http.StatusInternalServerError
+				return
+			}
+		}
+
+		ch <- resp.StatusCode
+		resp.Body.Close()
+		return // موفقیت آمیز بود، از حلقه تلاش مجدد خارج می شویم
+	}
 }
 // توابع کمکی برای فرمت کردن شماره تلفن (برای استفاده داخلی در task ها)
 // چون اینها منطق ساده ای دارند و از پکیج های موجود استفاده می کنند، اضافه می شوند.
