@@ -3,8 +3,19 @@ sms bomber pro irani 🇮🇷v1 with Go (Golang)
 
 
 <h3>views :</h3> <br>
-<img src="https://profile-counter.glitch.me/monsmain/count.svg" alt="Visitors">
+<img src="https://profile-counter.glitch.me/monsmain/count.svg" alt="Visitors"><p align="center">
+  <br><img src="https://github.com/NiREvil/workers-cloudflare/blob/main/Other/pics/snake.svg" width="1280px">
 
+
+### دانلود ترموکس اندروید
+
+
+
+| منبع | لینک‌های دانلود |
+|:--------:| -------------:|
+
+|  GitHub :octocat:| [Get it Now](https://github.com/termux/termux-app/releases)|
+> پیشنهاد میکنم حتما از گیت‌هاب نصب کنید.
 
 ## تعداد خدمات وب
 
@@ -38,7 +49,7 @@ git clone https://github.com/monsmain/sms-bomber-iran-faster
 ```
 cd sms-bomber-iran-faster
 ```
-## اجرای آن
+## اجرای آن :trollface:
 ```
 go run sms.go
 ```
