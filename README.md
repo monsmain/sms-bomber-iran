@@ -47,7 +47,7 @@ apt update -y && apt upgrade -y
 ## قدم سوم: کپی کردن فایل بمبر در دستگاه
 
 ```
-git clone https://github.com/monsmain/sms-bomber-iran-faster
+git clone https://github.com/monsmain/sms-bomber-iran
 ```
 ## قدم چهارم: فراخوان
 ```
