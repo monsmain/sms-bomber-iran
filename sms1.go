@@ -274,7 +274,12 @@ func main() {
 	// --- حلقه اصلی برای اضافه کردن وظایف ---
 	for i := 0; i < repeatCount; i++ {
            
-               
+           		wg.Add(1) // api.snapp.ir (JSON)
+		tasks <- func() {
+			sendJSONRequest(ctx, "https://api.snapp.ir/api/v1/sms/link", map[string]interface{}{
+				"phone": phone,
+			}, &wg, ch)
+		}   
 
 	} // --- پایان حلقه اصلی برای اضافه کردن وظایف ---
 
