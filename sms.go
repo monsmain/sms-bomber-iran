@@ -1,29 +1,3 @@
-//⚠️⚠️ in kod hayi hastesh ke active✅ hastesh  havaset basheh.⚠️⚠️
-//⚠️⚠️ in kod hayi hastesh ke active✅ hastesh  havaset basheh.⚠️⚠️
-//⚠️⚠️ in kod hayi hastesh ke active✅ hastesh  havaset basheh.⚠️⚠️
-//⚠️⚠️ in kod hayi hastesh ke active✅ hastesh  havaset basheh.⚠️⚠️
-//⚠️⚠️ in kod hayi hastesh ke active✅ hastesh  havaset basheh.⚠️⚠️
-//⚠️⚠️ in kod hayi hastesh ke active✅ hastesh  havaset basheh.⚠️⚠️
-//⚠️⚠️ in kod hayi hastesh ke active✅ hastesh  havaset basheh.⚠️⚠️
-//⚠️⚠️ in kod hayi hastesh ke active✅ hastesh  havaset basheh.⚠️⚠️
-//⚠️⚠️ in kod hayi hastesh ke active✅ hastesh  havaset basheh.⚠️⚠️
-//⚠️⚠️ in kod hayi hastesh ke active✅ hastesh  havaset basheh.⚠️⚠️
-//⚠️⚠️ in kod hayi hastesh ke active✅ hastesh  havaset basheh.⚠️⚠️
-//⚠️⚠️ in kod hayi hastesh ke active✅ hastesh  havaset basheh.⚠️⚠️
-//⚠️⚠️ in kod hayi hastesh ke active✅ hastesh  havaset basheh.⚠️⚠️
-//⚠️⚠️ in kod hayi hastesh ke active✅ hastesh  havaset basheh.⚠️⚠️
-//⚠️⚠️ in kod hayi hastesh ke active✅ hastesh  havaset basheh.⚠️⚠️
-//⚠️⚠️ in kod hayi hastesh ke active✅ hastesh  havaset basheh.⚠️⚠️
-//⚠️⚠️ in kod hayi hastesh ke active✅ hastesh  havaset basheh.⚠️⚠️
-//⚠️⚠️ in kod hayi hastesh ke active✅ hastesh  havaset basheh.⚠️⚠️
-//⚠️⚠️ in kod hayi hastesh ke active✅ hastesh  havaset basheh.⚠️⚠️
-//⚠️⚠️ in kod hayi hastesh ke active✅ hastesh  havaset basheh.⚠️⚠️
-//⚠️⚠️ in kod hayi hastesh ke active✅ hastesh  havaset basheh.⚠️⚠️
-//⚠️⚠️ in kod hayi hastesh ke active✅ hastesh  havaset basheh.⚠️⚠️
-//⚠️⚠️ in kod hayi hastesh ke active✅ hastesh  havaset basheh.⚠️⚠️
-//⚠️⚠️ in kod hayi hastesh ke active✅ hastesh  havaset basheh.⚠️⚠️
-
-
 package main
 
 import (
