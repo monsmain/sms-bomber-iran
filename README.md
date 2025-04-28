@@ -19,7 +19,7 @@ sms bomber pro irani 🇮🇷v1 with Go (Golang)
 
 ## تعداد خدمات وب
 
-- Sms : 177 🧨
+- Sms : 156 🧨
 - Call : 6 🧨
 
 ## سرعت +
