@@ -1,4 +1,4 @@
-# sms-bomber-iran-faster
+# sms-bomber-iran
 sms bomber irani with Go (Golang)
 
 
@@ -51,7 +51,7 @@ git clone https://github.com/monsmain/sms-bomber-iran
 ```
 ## قدم چهارم: فراخوان
 ```
-cd sms-bomber-iran-faster
+cd sms-bomber-iran
 ```
 ## و در نهایت: اجرای آن
 ```
