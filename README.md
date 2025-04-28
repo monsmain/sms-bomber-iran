@@ -23,8 +23,8 @@ sms bomber pro irani 🇮🇷v1 with Go (Golang)
 - Call : 6 🧨
 
 ## سرعت +
-- fast
-- medium
+- Fast
+- Medium
 
 ## پشتیبانی از [تست شده]
 - `Linux` ✅
