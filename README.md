@@ -29,27 +29,31 @@ sms bomber pro irani 🇮🇷v1 with Go (Golang)
 ## پشتیبانی از [تست شده]
 - `Linux` ✅
 - `Termux` ✅
+# بیایید امتحان کنیم :trollface:
+## قدم اول: نصب بروزرسانی ها
+```
+apt update -y && apt upgrade -y
+```
 
-## پیش نیاز:
+
+## قدم دوم: پیش نیاز
 
 - Linux : `sudo apt install golang `
 
 - Termux : `pkg install golang `
 
 
-## در Linux / Termux اجرا شود
 
-
-## کپی کردن فایل بمبر در دستگاه
+## قدم سوم: کپی کردن فایل بمبر در دستگاه
 
 ```
 git clone https://github.com/monsmain/sms-bomber-iran-faster
 ```
-## فراخوان
+## قدم چهارم: فراخوان
 ```
 cd sms-bomber-iran-faster
 ```
-## اجرای آن :trollface:
+## و در نهایت: اجرای آن
 ```
 go run sms.go
 ```
