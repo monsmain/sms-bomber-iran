@@ -15,7 +15,8 @@ import (
 	"strings"
 	"sync"
 	"syscall"
-	"time"    
+	"time"  
+        "net/http/cookiejar"  
 )
 //Code by @monsmain
 func clearScreen() {
@@ -27,130 +28,7 @@ func clearScreen() {
 	cmd.Run()
 }
 
-func sendJSONRequest(ctx context.Context, url string, payload map[string]interface{}, wg *sync.WaitGroup, ch chan<- int) {
-	defer wg.Done() 
-
-	const maxRetries = 3          
-	const retryDelay = 2 * time.Second 
-
-	for retry := 0; retry < maxRetries; retry++ {
-		select {
-		case <-ctx.Done(): 
-			fmt.Printf("\033[01;33m[!] Request to %s canceled.\033[0m\n", url)
-			ch <- 0 
-			return
-		default:
-		}//Code by @monsmain
-
-		jsonData, err := json.Marshal(payload)
-		if err != nil {
-			fmt.Printf("\033[01;31m[-] Error while encoding JSON for %s on retry %d: %v\033[0m\n", url, retry+1, err)
-			if retry == maxRetries-1 { 
-				ch <- http.StatusInternalServerError
-				return
-			}
-			time.Sleep(retryDelay)
-			continue 
-		}
-
-		req, err := http.NewRequestWithContext(ctx, http.MethodPost, url, bytes.NewBuffer(jsonData))
-		if err != nil {
-			fmt.Printf("\033[01;31m[-] Error while creating request to %s on retry %d: %v\033[0m\n", url, retry+1, err)
-			if retry == maxRetries-1 { 
-				ch <- http.StatusInternalServerError
-				return
-			}
-			time.Sleep(retryDelay)
-			continue 
-		}
-		req.Header.Set("Content-Type", "application/json")
-
-		resp, err := http.DefaultClient.Do(req)
-		if err != nil {
-			if netErr, ok := err.(net.Error); ok && (netErr.Timeout() || netErr.Temporary() || strings.Contains(err.Error(), "connection reset by peer") || strings.Contains(err.Error(), "dial tcp")) {
-				fmt.Printf("\033[01;31m[-] Network error for %s on retry %d: %v. Retrying...\033[0m\n", url, retry+1, err)
-				if retry == maxRetries-1 {
-					fmt.Printf("\033[01;31m[-] Max retries reached for %s due to network error.\033[0m\n", url)
-					ch <- http.StatusInternalServerError 
-					return
-				}
-				time.Sleep(retryDelay)
-				continue 
-			} else if ctx.Err() == context.Canceled {
-				fmt.Printf("\033[01;33m[!] Request to %s canceled.\033[0m\n", url)
-				ch <- 0 
-				return
-			} else {
-				fmt.Printf("\033[01;31m[-] Unretryable error for %s on retry %d: %v\033[0m\n", url, retry+1, err)
-				ch <- http.StatusInternalServerError
-				return
-			}
-		}
-
-		ch <- resp.StatusCode
-		resp.Body.Close() 
-		return 
-	}
-}
-//Code by @monsmain
-func sendFormRequest(ctx context.Context, url string, formData url.Values, wg *sync.WaitGroup, ch chan<- int) {
-	defer wg.Done()
-
-	const maxRetries = 3           
-	const retryDelay = 3 * time.Second 
-
-	for retry := 0; retry < maxRetries; retry++ {
-		select {
-		case <-ctx.Done(): 
-			fmt.Printf("\033[01;33m[!] Request to %s canceled.\033[0m\n", url)
-			ch <- 0 
-			return
-		default:
-
-		}
-
-		req, err := http.NewRequestWithContext(ctx, http.MethodPost, url, strings.NewReader(formData.Encode()))
-		if err != nil {
-			fmt.Printf("\033[01;31m[-] Error while creating form request to %s on retry %d: %v\033[0m\n", url, retry+1, err)
-			if retry == maxRetries-1 { 
-				ch <- http.StatusInternalServerError
-				return
-			}
-			time.Sleep(retryDelay)
-			continue 
-		}
-		req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-
-		resp, err := http.DefaultClient.Do(req)
-		if err != nil {
-
-			if netErr, ok := err.(net.Error); ok && (netErr.Timeout() || netErr.Temporary() || strings.Contains(err.Error(), "connection reset by peer") || strings.Contains(err.Error(), "dial tcp")) {
-				fmt.Printf("\033[01;31m[-] Network error for %s on retry %d: %v. Retrying...\033[0m\n", url, retry+1, err)
-				if retry == maxRetries-1 {
-					fmt.Printf("\033[01;31m[-] Max retries reached for %s due to network error.\033[0m\n", url)
-					ch <- http.StatusInternalServerError 
-					return
-				}
-				time.Sleep(retryDelay)
-				continue 
-			} else if ctx.Err() == context.Canceled {
-				fmt.Printf("\033[01;33m[!] Request to %s canceled.\033[0m\n", url)
-				ch <- 0 
-				return
-			} else {
-
-				fmt.Printf("\033[01;31m[-] Unretryable error for %s on retry %d: %v\033[0m\n", url, retry+1, err)
-				ch <- http.StatusInternalServerError
-				return
-			}
-		}
-
-		ch <- resp.StatusCode
-		resp.Body.Close() 
-		return 
-	}
-}
-func sendGETRequest(ctx context.Context, url string, wg *sync.WaitGroup, ch chan<- int) {
+func sendJSONRequest(client *http.Client, ctx context.Context, url string, payload map[string]interface{}, wg *sync.WaitGroup, ch chan<- int) {
 	defer wg.Done()
 
 	const maxRetries = 3
@@ -165,9 +43,9 @@ func sendGETRequest(ctx context.Context, url string, wg *sync.WaitGroup, ch chan
 		default:
 		}
 
-		req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil) // متد GET و Body = nil
+		jsonData, err := json.Marshal(payload)
 		if err != nil {
-			fmt.Printf("\033[01;31m[-] Error while creating GET request to %s on retry %d: %v\033[0m\n", url, retry+1, err)
+			fmt.Printf("\033[01;31m[-] Error while encoding JSON for %s on retry %d: %v\033[0m\n", url, retry+1, err)
 			if retry == maxRetries-1 {
 				ch <- http.StatusInternalServerError
 				return
@@ -176,7 +54,20 @@ func sendGETRequest(ctx context.Context, url string, wg *sync.WaitGroup, ch chan
 			continue
 		}
 
-		resp, err := http.DefaultClient.Do(req)
+		req, err := http.NewRequestWithContext(ctx, http.MethodPost, url, bytes.NewBuffer(jsonData))
+		if err != nil {
+			fmt.Printf("\033[01;31m[-] Error while creating request to %s on retry %d: %v\033[0m\n", url, retry+1, err)
+			if retry == maxRetries-1 {
+				ch <- http.StatusInternalServerError
+				return
+			}
+			time.Sleep(retryDelay)
+			continue
+		}
+		req.Header.Set("Content-Type", "application/json")
+
+		// >>>>> از پارامتر client برای ارسال درخواست استفاده می‌کنیم <<<<<
+		resp, err := client.Do(req)
 		if err != nil {
 			if netErr, ok := err.(net.Error); ok && (netErr.Timeout() || netErr.Temporary() || strings.Contains(err.Error(), "connection reset by peer") || strings.Contains(err.Error(), "dial tcp")) {
 				fmt.Printf("\033[01;31m[-] Network error for %s on retry %d: %v. Retrying...\033[0m\n", url, retry+1, err)
@@ -200,7 +91,120 @@ func sendGETRequest(ctx context.Context, url string, wg *sync.WaitGroup, ch chan
 
 		ch <- resp.StatusCode
 		resp.Body.Close()
-		return 
+		return
+	}
+}
+//Code by @monsmain
+func sendFormRequest(client *http.Client, ctx context.Context, url string, formData url.Values, wg *sync.WaitGroup, ch chan<- int) {
+	defer wg.Done()
+
+	const maxRetries = 3
+	const retryDelay = 3 * time.Second
+
+	for retry := 0; retry < maxRetries; retry++ {
+		select {
+		case <-ctx.Done():
+			fmt.Printf("\033[01;33m[!] Request to %s canceled.\033[0m\n", url)
+			ch <- 0
+			return
+		default:
+
+		}
+
+		req, err := http.NewRequestWithContext(ctx, http.MethodPost, url, strings.NewReader(formData.Encode()))
+		if err != nil {
+			fmt.Printf("\033[01;31m[-] Error while creating form request to %s on retry %d: %v\033[0m\n", url, retry+1, err)
+			if retry == maxRetries-1 {
+				ch <- http.StatusInternalServerError
+				return
+			}
+			time.Sleep(retryDelay)
+			continue
+		}
+		req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+
+		// >>>>> از پارامتر client برای ارسال درخواست استفاده می‌کنیم <<<<<
+		resp, err := client.Do(req)
+		if err != nil {
+
+			if netErr, ok := err.(net.Error); ok && (netErr.Timeout() || netErr.Temporary() || strings.Contains(err.Error(), "connection reset by peer") || strings.Contains(err.Error(), "dial tcp")) {
+				fmt.Printf("\033[01;31m[-] Network error for %s on retry %d: %v. Retrying...\033[0m\n", url, retry+1, err)
+				if retry == maxRetries-1 {
+					fmt.Printf("\033[01;31m[-] Max retries reached for %s due to network error.\033[0m\n", url)
+					ch <- http.StatusInternalServerError
+					return
+				}
+				time.Sleep(retryDelay)
+				continue
+			} else if ctx.Err() == context.Canceled {
+				fmt.Printf("\033[01;33m[!] Request to %s canceled.\033[0m\n", url)
+				ch <- 0
+				return
+			} else {
+
+				fmt.Printf("\033[01;31m[-] Unretryable error for %s on retry %d: %v\033[0m\n", url, retry+1, err)
+				ch <- http.StatusInternalServerError
+				return
+			}
+		}
+
+		ch <- resp.StatusCode
+		resp.Body.Close()
+		return
+	}
+}
+func sendGETRequest(client *http.Client, ctx context.Context, url string, wg *sync.WaitGroup, ch chan<- int) {
+	defer wg.Done()
+
+	const maxRetries = 3
+	const retryDelay = 2 * time.Second // کمی کمتر از POST برای GET
+
+	for retry := 0; retry < maxRetries; retry++ {
+		select {
+		case <-ctx.Done():
+			fmt.Printf("\033[01;33m[!] Request to %s canceled.\033[0m\n", url)
+			ch <- 0
+			return
+		default:
+		}
+
+		req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil) // متد GET و Body = nil
+		if err != nil {
+			fmt.Printf("\033[01;31m[-] Error while creating GET request to %s on retry %d: %v\033[0m\n", url, retry+1, err)
+			if retry == maxRetries-1 {
+				ch <- http.StatusInternalServerError
+				return
+			}
+			time.Sleep(retryDelay)
+			continue
+		}
+
+		// >>>>> از پارامتر client برای ارسال درخواست استفاده می‌کنیم <<<<<
+		resp, err := client.Do(req)
+		if err != nil {
+			if netErr, ok := err.(net.Error); ok && (netErr.Timeout() || netErr.Temporary() || strings.Contains(err.Error(), "connection reset by peer") || strings.Contains(err.Error(), "dial tcp")) {
+				fmt.Printf("\033[01;31m[-] Network error for %s on retry %d: %v. Retrying...\033[0m\n", url, retry+1, err)
+				if retry == maxRetries-1 {
+					fmt.Printf("\033[01;31m[-] Max retries reached for %s due to network error.\033[0m\n", url)
+					ch <- http.StatusInternalServerError
+					return
+				}
+				time.Sleep(retryDelay)
+				continue
+			} else if ctx.Err() == context.Canceled {
+				fmt.Printf("\033[01;33m[!] Request to %s canceled.\033[0m\n", url)
+				ch <- 0
+				return
+			} else {
+				fmt.Printf("\033[01;31m[-] Unretryable error for %s on retry %d: %v\033[0m\n", url, retry+1, err)
+				ch <- http.StatusInternalServerError
+				return
+			}
+		}
+
+		ch <- resp.StatusCode
+		resp.Body.Close()
+		return // موفقیت آمیز بود، از حلقه تلاش مجدد خارج می شویم
 	}
 }//Code by @monsmain
 //(faghat baraye site payagym.com)
