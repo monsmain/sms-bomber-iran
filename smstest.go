@@ -1262,6 +1262,463 @@ zabane python:FARBODxME
 
 ('https://vinaaccessory.com/api/v1/sessions/login_request', {"mobile_phone" : "0" + number + ""}),
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Request URL:
+https://account724.com/wp-admin/admin-ajax.php
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+80.249.115.20:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+action: stm_login_register
+type: mobile
+input: 09123456456
+---------------------------------------------------------------------------------------------
+Request URL:
+https://nikanbike.com/?rand=1745917742131
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+185.94.98.218:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+rand: 1745917742131
+controller: authentication
+ajax: true
+back: my-account
+fc: module
+module: iverify
+phone_mobile: 09123456456
+account_type: individual
+force_sms: 0
+SubmitCheck: ایجاد حساب کاربری
+verify_token: alhLVzFLMitONHFCRDY3enRTd3Mzdz09
+---------------------------------------------------------------------------------------------
+Request URL:
+https://titomarket.com/fa-ir/index.php?route=extension/websky_otp/module/websky_otp.send_code&emailsend=0
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+185.164.72.189:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+route: extension/websky_otp/module/websky_otp.send_code
+emailsend: 0
+telephone: 09123456456
+---------------------------------------------------------------------------------------------
+Request URL:
+https://elecmarket.ir/wp-admin/admin-ajax.php
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+188.114.96.3:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+action: stm_login_register
+type: mobile
+input: 09123456456
+---------------------------------------------------------------------------------------------
+Request URL:
+https://novinparse.com/page/pageaction.aspx
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+134.255.200.164:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+Action: SendVerifyCode
+mobile: 09123456456
+verifyCode: 
+repeatFlag: true
+Language: FA
+ipaddress: 5.232.133.109
+---------------------------------------------------------------------------------------------
+Request URL:
+https://ickala.com/
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+130.185.76.28:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+controller: authentication
+SubmitCreate: 1
+ajax: true
+email_create: 
+otp_mobile_num: 09123456456
+lbm_id_country: 112
+OPTnotrequired: 0
+back: my-account
+tokensms: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NDU5MTgwMTEsImlzcyI6InBvb3lhLmlja2FsYS5zbXMiLCJuYmYiOjE3NDU5MTgwMTEsImV4cCI6MTc0NTkxODMxMSwidXNlck5hbWUiOiJhZG1pbnBvb3lhIn0.52lT5haqxD6rg6aknIfCppNR4Hyc7noK3v3N5Laadqop3vL9XeuLN0sEsImKVzh73Wick70q0MogVwPMF68l5A
+
+---------------------------------------------------------------------------------------------
+Request URL:
+https://meidane.com/accounts/Login
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+185.7.212.71:443
+Referrer Policy:
+same-origin
+
+csrfmiddlewaretoken: Aak7CicLIIOWxHuijeEkp3z1xTnr4bz8Dk1xFNXze4orEfRXaOhcn32CwN84rUon
+phone_number: 09123456456
+---------------------------------------------------------------------------------------------
+Request URL:
+https://mahouney.com/fa/Account/LoginOrRegisterWithVerifyCode?viewResult=ValidateByVerifyCode&MobaileNumber=09123456456&UserStatuse=Register&ReturnUrl=https://mahouney.com/
+Request Method:
+GET
+Status Code:
+200 OK
+Remote Address:
+46.245.80.82:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+
+viewResult: ValidateByVerifyCode
+MobaileNumber: 09123456456
+UserStatuse: Register
+ReturnUrl: https://mahouney.com/
+---------------------------------------------------------------------------------------------
+Request URL:
+https://gitamehr.ir/wp-admin/admin-ajax.php
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+104.21.31.153:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+action: mreeir_send_sms
+mobileemail: 09122221010
+userisnotauser: 
+type: mobile
+captcha: 
+captchahash: 
+security: 75d313bc3e
+---------------------------------------------------------------------------------------------
+Request URL:
+https://www.adinehbook.com/gp/flex/sign-in.html
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+94.232.174.244:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+path: /gp/css/homepage.html
+action: sign
+phone_cell_or_email: 09123456456
+login-submit: تایید
+---------------------------------------------------------------------------------------------
+Request URL:
+https://maxbax.com/bakala/ajax/send_code/
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+46.245.78.154:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+action: bakala_send_code
+phone_email: 09123466456
+---------------------------------------------------------------------------------------------
+Request URL:
+https://www.zzzagros.com/wp-admin/admin-ajax.php
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+144.76.114.126:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+action: awsa-login-with-phone-send-code
+nonce: 9a4e9547c3
+username: 09123456456
+---------------------------------------------------------------------------------------------
+Request URL:
+https://mellishoes.ir/panel/?endp=step-2
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+185.143.232.201:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+endp: step-2
+redirect_to: 
+action: nirweb_panel_login_form
+nirweb_panel_username: 09123456456
+---------------------------------------------------------------------------------------------
+Request URL:
+https://hiss.ir/bakala/ajax/send_code/
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+162.55.31.52:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+action: bakala_send_code
+phone_email: 09128887464
+---------------------------------------------------------------------------------------------
+Request URL:
+https://www.nalinoco.com/api/customers/login-register
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+31.7.79.68:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+
+step: 1
+ReturnUrl: /
+mobile: 09123456456
+---------------------------------------------------------------------------------------------
+Request URL:
+https://manoshahr.ir/jq.php
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+171.22.25.71:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+token: 
+mobile: 09123456456
+id_parent_m: 0
+view: 1200px
+class_name: public_login
+function_name: sendCode
+id_load: login_mdm
+return_id_val: 
+id_parent: 
+page: 
+user: manoshahr
+---------------------------------------------------------------------------------------------
+Request URL:
+https://bartarinha.com/Advertisement/Users/RequestLoginMobile
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+194.59.214.164:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+__RequestVerificationToken: aax6H3F5_Cz-TTcmLggGbc_APGbGguMSKG6gNTdQgBb-lqmzdCamPivSPy2PAjynRrxI_geB9IBKsFJXWAu96mQnnTXcf7RZKXkzY4KzElE1
+mobileNo: 09123456456
+X-Requested-With: XMLHttpRequest
+---------------------------------------------------------------------------------------------
+1:
+Request URL:
+https://payagym.com/wp-admin/admin-ajax.php
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+89.39.208.22:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+digits_phone: 912 345 6456
+login_digt_countrycode: +98
+action_type: phone
+rememberme: 1
+digits: 1
+instance_id: b7eb3adbaa8742f85bcf97b64fd2e8c5
+action: digits_forms_ajax
+type: login
+digits_step_1_type: 
+digits_step_1_value: 
+digits_step_2_type: 
+digits_step_2_value: 
+digits_step_3_type: 
+digits_step_3_value: 
+digits_login_email_token: 
+digits_redirect_page: //payagym.com/?page=1&redirect_to=https%3A%2F%2Fpayagym.com%2F
+digits_form: 5b78541bad
+_wp_http_referer: /?login=true&page=1&redirect_to=https%3A%2F%2Fpayagym.com%2F
+aio_special_field: 
+show_force_title: 1
+
+2:
+Request URL:
+https://payagym.com/wp-admin/admin-ajax.php
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+89.39.208.22:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+digits_phone: 912 345 6456
+login_digt_countrycode: +98
+action_type: phone
+sms_otp: 
+otp_step_1: 1
+digits_otp_field: 1
+rememberme: 1
+digits: 1
+instance_id: b7eb3adbaa8742f85bcf97b64fd2e8c5
+action: digits_forms_ajax
+type: login
+digits_step_1_type: 
+digits_step_1_value: 
+digits_step_2_type: 
+digits_step_2_value: 
+digits_step_3_type: 
+digits_step_3_value: 
+digits_login_email_token: 
+digits_redirect_page: //payagym.com/?page=1&redirect_to=https%3A%2F%2Fpayagym.com%2F
+digits_form: 5b78541bad
+_wp_http_referer: /?login=true&page=1&redirect_to=https%3A%2F%2Fpayagym.com%2F
+aio_special_field: 
+show_force_title: 1
+container: digits_protected
+sub_action: sms_otp
+---------------------------------------------------------------------------------------------
+1:
+Request URL:
+https://primashop.ir/index.php?route=extension/module/websky_otp/send_code
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+80.249.115.158:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+route: extension/module/websky_otp/send_code
+telephone: 09123456456
+csrf_token: c0bbc562c74de6362204d4cecf2b96f3c2b9842c70c3cb26864c3a84e495cdf5
+
+2:
+Request URL:
+https://primashop.ir/index.php?route=extension/module/websky_otp/verify_design&telephone=09123456456
+Request Method:
+GET
+Status Code:
+200 OK
+Remote Address:
+80.249.115.158:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+route: extension/module/websky_otp/verify_design
+telephone: 09123456456
+---------------------------------------------------------------------------------------------
+Request URL:
+https://www.rubeston.com/api/customers/login-register
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+78.109.199.179:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+step: 1
+ReturnUrl: /
+mobile: 09123456456
+---------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
