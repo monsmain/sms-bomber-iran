@@ -1329,6 +1329,8 @@ def snapmarket(num, proxies):
                 },
 
 
+python:
+  return $this->s002("https://www.namava.ir/api/v1.0/accounts/registrations/by-phone/request", ["UserName" => '+98' . $this->$Number]);
 
 
 
