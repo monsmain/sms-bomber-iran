@@ -17,6 +17,7 @@ import (
 	"sync"
 	"syscall"
 	"time"
+        "net/http/cookiejar"
 )
 
 func clearScreen() {
