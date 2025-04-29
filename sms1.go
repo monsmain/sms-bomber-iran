@@ -426,7 +426,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) // ارسال client اصلی به تابع خارجی
                     }
-		}
+		
 //Code by @monsmain
 	close(tasks)
 
