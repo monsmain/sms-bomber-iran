@@ -1733,8 +1733,124 @@ step: 1
 ReturnUrl: /
 mobile: 09123456456
 ---------------------------------------------------------------------------------------------
+Request URL:
+https://narsisbeauty.com/wp-admin/admin-ajax.php
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+31.214.251.228:443
+Referrer Policy:
+strict-origin-when-cross-origin
 
+phone_number: 09123456789
+wupp_remember_me: on
+action: wupp_sign_up
+---------------------------------------------------------------------------------------------
+Request URL:
+https://kapanigold.com/wp-admin/admin-ajax.php
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+87.236.210.4:443
+Referrer Policy:
+strict-origin-when-cross-origin
 
+action: digits_check_mob
+countrycode: +98
+mobileNo: 9123456456
+csrf: 0ac799ee6b
+login: 1
+username: 
+email: 
+captcha: 
+captcha_ses: 
+digits: 1
+json: 1
+whatsapp: 0
+mobmail: 9123456456
+dig_otp: 
+dig_nounce: 0ac799ee6b
+---------------------------------------------------------------------------------------------
+Request URL:
+https://skmei-iran.com/api/customer/member/register/
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+94.182.154.67:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+email: 09123456456
+---------------------------------------------------------------------------------------------
+Request URL:
+https://api.123kif.com/api/auth/Register
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+185.143.235.201:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+{mobile: "09123456789", password: "stdtrfrf", firstName: "fbgvtfg", lastName: "ryfvfbvbt",…}
+firstName
+: 
+"fbgvtfg"
+lastName
+: 
+"ryfvfbvbt"
+mobile
+: 
+"09123456789"
+password
+: 
+"stdtrfrf"
+platform
+: 
+"web"
+refferCode
+: 
+""
+---------------------------------------------------------------------------------------------
+Request URL:
+https://lavinbg.com/wp-admin/admin-ajax.php
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+89.32.248.89:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+login_digt_countrycode: +98
+digits_phone: 9123456456
+digits_email: 
+action_type: phone
+rememberme: 1
+digits: 1
+instance_id: 7f6c73277ab9794c635ffcf5dc32c15a
+action: digits_forms_ajax
+type: login
+digits_step_1_type: 
+digits_step_1_value: 
+digits_step_2_type: 
+digits_step_2_value: 
+digits_step_3_type: 
+digits_step_3_value: 
+digits_login_email_token: 
+digits_redirect_page: //lavinbg.com/?page=2&redirect_to=https%3A%2F%2Flavinbg.com%2F
+digits_form: 1c256ae905
+_wp_http_referer: /?login=true&page=2&redirect_to=https%3A%2F%2Flavinbg.com%2F
+show_force_title: 1
+---------------------------------------------------------------------------------------------
 
 
 
