@@ -203,6 +203,17 @@ func sendGETRequest(ctx context.Context, url string, wg *sync.WaitGroup, ch chan
 		return 
 	}
 }//Code by @monsmain
+//(faghat baraye site payagym.com)
+func formatPhoneWithSpaces(p string) string {
+	p = getPhoneNumberNoZero(p) 
+	if len(p) >= 10 {
+		if len(p) >= 10 {
+			return p[0:3] + " " + p[3:6] + " " + p[6:10]
+		}
+		return p
+	}
+	return p 
+}
 func getPhoneNumberNoZero(phone string) string {
 	if strings.HasPrefix(phone, "0") {
 		return phone[1:]
