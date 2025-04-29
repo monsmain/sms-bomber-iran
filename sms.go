@@ -322,8 +322,13 @@ func main() {
 		cancel()
 	}()
 
-	tasks := make(chan func(), repeatCount*40)
+cookieJar, _ := cookiejar.New(nil)
+	client := &http.Client{
+		Jar: cookieJar,
+        Timeout: 10 * time.Second,
+	}
 
+	tasks := make(chan func(), repeatCount*40)
 
 	var wg sync.WaitGroup
 
