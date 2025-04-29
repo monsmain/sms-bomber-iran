@@ -802,7 +802,7 @@ func main() {
 
 				sendFormRequest(c, ctx, "https://gamefa.com/wp-admin/admin-ajax.php", formData, &wg, ch) // ارسال c
 			}
-
+                }
 	}
 	// --- پایان حلقه اصلی ---
 
