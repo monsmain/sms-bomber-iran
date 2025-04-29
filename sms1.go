@@ -723,12 +723,13 @@ func main() {
 			sendJSONRequest(ctx, "https://api.payping.ir/v1/user/Register", payload, &wg, ch)
 		}
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		// gateway.telewebion.com (SMS - POST Form) - بر اساس نمونه پایتون
+	// gateway.telewebion.com (SMS - POST Form) - اصلاح فرمت شماره تلفن
 		wg.Add(1)
 		tasks <- func() {
 			formData := url.Values{}
 			formData.Set("code", "98")
-			formData.Set("phone", phone) // استفاده مستقیم از شماره تلفن ورودی
+			// استفاده از تابع کمکی برای حذف صفر اول
+			formData.Set("phone", getPhoneNumberNoZero(phone))
 			formData.Set("smsStatus", "default")
 			sendFormRequest(ctx, "https://gateway.telewebion.com/shenaseh/api/v2/auth/step-one", formData, &wg, ch)
 		}
