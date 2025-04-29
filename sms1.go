@@ -723,15 +723,16 @@ func main() {
 			sendJSONRequest(ctx, "https://api.payping.ir/v1/user/Register", payload, &wg, ch)
 		}
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// gateway.telewebion.com (SMS - POST Form) - اصلاح فرمت شماره تلفن
+// gateway.telewebion.com (SMS - POST JSON) - بر اساس اطلاعات جدید و نمونه پایتون
 		wg.Add(1)
 		tasks <- func() {
-			formData := url.Values{}
-			formData.Set("code", "98")
-			// استفاده از تابع کمکی برای حذف صفر اول
-			formData.Set("phone", getPhoneNumberNoZero(phone))
-			formData.Set("smsStatus", "default")
-			sendFormRequest(ctx, "https://gateway.telewebion.com/shenaseh/api/v2/auth/step-one", formData, &wg, ch)
+			// ساختار payload به صورت JSON بر اساس اطلاعات جدید
+			payload := map[string]interface{}{
+				"code": "98",
+				"phone": getPhoneNumberNoZero(phone), // ارسال بدون صفر اول بر اساس اطلاعات جدید
+				"smsStatus": "default",
+			}
+			sendJSONRequest(ctx, "https://gateway.telewebion.com/shenaseh/api/v2/auth/step-one", payload, &wg, ch)
 		}
 	}
 	// --- پایان حلقه اصلی ---
