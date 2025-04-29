@@ -728,7 +728,6 @@ func main() {
 // gamefa.com (Register flow 2 - SMS OTP step - POST Form) - اضافه کردن digits_reg_username
 		wg.Add(1)
 		tasks <- func() { // ساختار برای پاس دادن client
-			return func() {
 				formData := url.Values{}
 				formData.Set("action", "digits_forms_ajax")
 				formData.Set("type", "register")
@@ -749,7 +748,7 @@ func main() {
 				// >>>>>> اضافه کردن پارامتر digits_reg_username <<<<<<
 				formData.Set("digits_reg_username", "randomuser123") // یک مقدار نمونه، میتونی از یک تابع برای تولید اسم تصادفی استفاده کنی
 
-				sendFormRequest(c, ctx, "https://gamefa.com/wp-admin/admin-ajax.php", formData, &wg, ch) // ارسال c
+				sendFormRequest(ctx, "https://gamefa.com/wp-admin/admin-ajax.php", formData, &wg, ch) // ارسال c
 			}
                 }
 	}
