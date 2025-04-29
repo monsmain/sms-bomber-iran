@@ -1216,6 +1216,7 @@ asangem.com
 			}, &wg, ch)
 		}
 ❌❌❌❌❌kar nakardand 6:
+gamefa.com
 nikanbike.com
 elecmarket.ir
 ickala.com
