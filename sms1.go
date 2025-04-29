@@ -341,7 +341,13 @@ func main() {
 
 	// --- حلقه اصلی برای اضافه کردن وظایف ---
 	for i := 0; i < repeatCount; i++ {
-        
+		// gifkart.com (SMS - POST Form) - مثال موجود در کد شما
+		wg.Add(1)
+		tasks <- func() {
+			formData := url.Values{}
+			formData.Set("PhoneNumber", phone)
+			sendFormRequest(ctx, "https://gifkart.com/request/", formData, &wg, ch)
+		}
 
 		// account724.com (SMS - POST Form)
 		wg.Add(1)
