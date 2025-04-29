@@ -283,15 +283,15 @@ func main() {
 	switch strings.ToLower(speedChoice) { 
 	case "fast":
 
-		numWorkers = 100 
+		numWorkers = 90 
 		fmt.Println("\033[01;33m[*] Fast mode selected. Using", numWorkers, "workers.\033[0m")
 	case "medium":
 
-		numWorkers = 30 
+		numWorkers = 40 
 		fmt.Println("\033[01;33m[*] Medium mode selected. Using", numWorkers, "workers.\033[0m")
 	default:
 
-		numWorkers = 30 
+		numWorkers = 40 
 		fmt.Println("\033[01;31m[-] Invalid speed choice. Defaulting to medium mode using", numWorkers, "workers.\033[0m")
 	}//Code by @monsmain
 
