@@ -2097,6 +2097,41 @@ nickname
 : 
 "dfdfidf sadef"
 ---------------------------------------------------------------------------------------------
+Request URL:
+https://api.payping.ir/v1/user/Register
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+185.143.232.201:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+{isOfficialSubmited: false, username: "rfewofuedhfyis", password: "1234567890Aa",…}
+isOfficialSubmited
+: 
+false
+password
+: 
+"1234567890Aa"
+phoneNumber
+: 
+"09123456456"
+planId
+: 
+0
+referralCode
+: 
+""
+repeatPassword
+: 
+"1234567890Aa"
+username
+: 
+"rfewofuedhfyis"
+
+---------------------------------------------------------------------------------------------
 
 
 
