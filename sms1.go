@@ -722,6 +722,7 @@ func main() {
 			}
 			sendJSONRequest(ctx, "https://api.payping.ir/v1/user/Register", payload, &wg, ch)
 		}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		// gateway.telewebion.com (SMS - POST Form) - بر اساس نمونه پایتون
 		wg.Add(1)
 		tasks <- func() {
