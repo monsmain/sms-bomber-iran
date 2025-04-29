@@ -823,7 +823,7 @@ cookieJar, _ := cookiejar.New(nil)
 				}
 				sendJSONRequest(c, ctx, "https://core-api.mayava.ir/auth/check", payload, &wg, ch) // ارسال c
 			}
-		}
+		}(client)
 
 		// pgemshop.com (POST Form)
 		wg.Add(1)
