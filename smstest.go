@@ -1299,6 +1299,257 @@ zabane python:https://github.com/secabuser
         verify=False
     ),
 
+---------------------------------------------------------------------------------------------
+Request URL:
+https://ws.alibaba.ir/api/v3/account/mobile/otp
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+45.89.201.11:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+{phoneNumber: "09123456456"}
+phoneNumber
+: 
+"09123456456"
+---------------------------------------------------------------------------------------------
+1:
+Request URL:
+https://football360.ir/api/auth/v2/verify-phone/
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+185.143.232.124:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+{phone_number: "+989123456456"}
+phone_number
+: 
+"+989123456456"
+
+2:
+Request URL:
+https://football360.ir/api/auth/v2/send_otp/
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+185.143.232.124:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+{phone_number: "+989123456456", otp_token: "RL9veY33SPFHfkMsshUcsA01", auto_read_platform: "ST"}
+auto_read_platform
+: 
+"ST"
+otp_token
+: 
+"RL9veY33SPFHfkMsshUcsA01"
+phone_number
+: 
+"+989123456456"
+---------------------------------------------------------------------------------------------
+Request URL:
+https://pubg-sell.ir/loginuser
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+46.4.67.240:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+username: 09123456456
+---------------------------------------------------------------------------------------------
+Request URL:
+https://pirankalaco.ir/SendPhone.php
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+89.32.248.38:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+phone: 09123456456
+---------------------------------------------------------------------------------------------
+Request URL:
+https://api.vandar.io/account/v1/check/mobile
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+185.143.232.201:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+{mobile: "09123456456",…}
+captcha
+: 
+"0.2JlyjSu-AEZP_gaxKAo3QzGTsO46ZUpvOq4egaO5QLF1HQZIPVc54Hl74WNLtSz59eK9-7vNc1wHVLnTEwZG_mJ6bV2Glq4syl8RdrplKiuYtgAKrIMvBKVW7BeAnXOnj-1HYdA5hpM78CO44p7DqB0iJJY7q9H_cJh5pgZESPBo_NczoC6NZ4_ltegLe8ZWEN69ozwDzzfqc0bdDgJ9891bZ3Um7kgh7Uv9wYhPeod_EtAliYitInjYyBabcDbj-jhd24lCLxzmhfiIpk9tXEgwn3I17f1LA_0f7zPzsRhOwy3fFvKTrhBuIUqqGm74SOxgxbSuvRyq5MZHDSNi1nqmf2JQSv75xN5l9-FdmUwEXGnO9EkmiyEL9l2ltsq3v2oD_3AetsFEWFSSKwd9EpY_HtMXfIHLKMayb6XDWQWzwWZqWlZbrFJqqTaQcytu8xB5yGestdYaqjompJ7i0OISFRF69XnN59sDyvRZQGhY0Y-WozcsP9J5mwGcdKoRdfTxTeevC4yyD3DfMeehIrzUMaRj3WHAhdWHpsi8JkEev--dEe5P9_PSnuG-9j2QrCgUHd-XZSy_cv-_Tptt-gC8FI-aidNtI3BzzuDToEBww0ClfoBmAR9FAiWthd6ArmHrzVXKdb233Sxt0f18xsPgnLgB76buX8SwObZq8QPCxKOMm-JDxFm0bnJDzAa2Dq6PsQrJjSCfgEFGhHyBdEZFz9h-mc3A2E29j7ihNcqodYoO1vQUsCfk_DNxMoIFuvQUYzguFckw-uCOf2_zZ4ewEUFBJHnByQF5K-qdaN4r4yTEOdwMzRaMrS1viUeVzHPawwicCYqacxEgEak0bxpXlysHpJL7gr2e5Pfc7TQ.ZgbgMH_LPHEwbwA_Mx-e0w.e2782cb88484a61158d341a289e17c3a550c342792835e690a271a9d932c569f"
+captcha_provider
+: 
+"CLOUDFLARE"
+mobile
+: 
+"09123456456"
+---------------------------------------------------------------------------------------------
+Request URL:
+https://www.dolichi.com/login?back=my-account
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+31.214.250.234:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+back: my-account
+username: 09123456456
+id_customer: 
+back: 
+firstname: بثعاهبتنب
+lastname: ببعباثعبهث
+email: koyakef766@kazvi.com
+password: 1234567890
+action: register
+back: my-account
+ajax: 1
+---------------------------------------------------------------------------------------------
+1:
+Request URL:
+https://safarmarket.com//api/security/v1/user/is_phone_available?phone=09123456456
+Request Method:
+GET
+Status Code:
+200 OK
+Remote Address:
+185.143.235.201:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+phone: 09123456456
+
+
+2:
+Request URL:
+https://safarmarket.com//api/security/v2/user/otp
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+185.143.235.201:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+{phone: "09123456456"}
+phone
+: 
+"09123456456"
+
+3:
+Request URL:
+https://recaptcha.safarmarket.com/api/v1/create
+Request Method:
+GET
+Status Code:
+200 OK
+Remote Address:
+185.143.232.201:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+{id: "1cec84db-b688-4637-a084-57d449a3446e", success: true}
+id
+: 
+"1cec84db-b688-4637-a084-57d449a3446e"
+success
+: 
+true
+---------------------------------------------------------------------------------------------
+Request URL:
+https://app.inchand.com/api/v1/authentication/initialize
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+185.143.235.201:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+{mobile: "09123456456"}
+mobile
+: 
+"09123456456"
+---------------------------------------------------------------------------------------------
+1:
+Request URL:
+https://bikoplus.com/api/client/v3/authentications/check-phone-number?phoneNumber=09123456456
+Request Method:
+GET
+Status Code:
+200 OK
+Remote Address:
+185.8.173.44:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+
+phoneNumber: 09123456456
+
+
+2:
+Request URL:
+https://bikoplus.com/login/otp?_rsc=2h7h9
+Request Method:
+GET
+Status Code:
+200 OK
+Remote Address:
+185.8.173.44:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+_rsc: 2h7h9
+---------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
