@@ -354,6 +354,15 @@ cookieJar, _ := cookiejar.New(nil)
 
 
 
+		// skmei-iran.com register (Registration/OTP - POST Form)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				formData.Set("email", phone) // از شماره تلفن به جای ایمیل استفاده شده
+				sendFormRequest(c, ctx, "https://skmei-iran.com/api/customer/member/register/", formData, &wg, ch)
+			}
+		}(client)
 		// hoomangold.com panel (Login/OTP - POST Form)
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
