@@ -144,38 +144,289 @@ asangem.com
 ---------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------
+Request URL:
+https://livarfars.ir/wp-admin/admin-ajax.php
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+188.114.96.3:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+digt_countrycode: +98
+phone: 9123466456
+digits_process_register: 1
+instance_id: c615328f4685ecfc0bb3378a99c1cc44
+optional_data: optional_data
+action: digits_forms_ajax
+type: register
+dig_otp: 
+digits: 1
+digits_redirect_page: //livarfars.ir/product-category/electronic-devices/wearable-gadget/?page=2&redirect_to=https%3A%2F%2Flivarfars.ir%2Fproduct-category%2Felectronic-devices%2Fwearable-gadget%2F
+digits_form: 673112fec7
+_wp_http_referer: /product-category/electronic-devices/wearable-gadget/?login=true&page=2&redirect_to=https%3A%2F%2Flivarfars.ir%2Fproduct-category%2Felectronic-devices%2Fwearable-gadget%2F
+
+2:
+Request URL:
+https://livarfars.ir/wp-admin/admin-ajax.php
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+188.114.96.3:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+digt_countrycode: +98
+phone: 9123466456
+digits_process_register: 1
+sms_otp: 
+otp_step_1: 1
+digits_otp_field: 1
+instance_id: c615328f4685ecfc0bb3378a99c1cc44
+optional_data: optional_data
+action: digits_forms_ajax
+type: register
+dig_otp: otp
+digits: 1
+digits_redirect_page: //livarfars.ir/product-category/electronic-devices/wearable-gadget/?page=2&redirect_to=https%3A%2F%2Flivarfars.ir%2Fproduct-category%2Felectronic-devices%2Fwearable-gadget%2F
+digits_form: 673112fec7
+_wp_http_referer: /product-category/electronic-devices/wearable-gadget/?login=true&page=2&redirect_to=https%3A%2F%2Flivarfars.ir%2Fproduct-category%2Felectronic-devices%2Fwearable-gadget%2F
+container: digits_protected
+sub_action: sms_otp
 ---------------------------------------------------------------------------------------------
+1:
+Request URL:
+https://ashraafi.com/wp-admin/admin-ajax.php
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+94.182.89.235:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+
+action: check_phone_number
+phone_number: 09123456789
+
+2:
+Request URL:
+https://ashraafi.com/wp-admin/admin-ajax.php
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+94.182.89.235:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+action: send_verification_code
+phone_number: 09123456789
 ---------------------------------------------------------------------------------------------
+1:
+Request URL:
+https://moshaveran724.ir/m/uservalidate.php
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+89.32.250.168:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+number: 09123456456
+cache: false
+
+2:
+Request URL:
+https://moshaveran724.ir/m/pms.php
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+89.32.250.168:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+number: 09123456456
+cache: false
 ---------------------------------------------------------------------------------------------
+Request URL:
+https://simkhanapi.ir/api/users/registerV2
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+94.182.189.54:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+{mobileNumber: "09122221010", key: "16a85bef-70be-41b2-934b-994e2aa113b7", ReSendSMS: false}
+ReSendSMS
+: 
+false
+key
+: 
+"16a85bef-70be-41b2-934b-994e2aa113b7"
+mobileNumber
+: 
+"09122221010"
 ---------------------------------------------------------------------------------------------
+1:
+Request URL:
+https://pakhsh.shop/wp-admin/admin-ajax.php
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+104.21.48.1:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+digt_countrycode: +98
+phone: 9123466456
+digits_reg_name: ghbfgf
+digits_process_register: 1
+instance_id: d49463434e4d494fa93e5f6a1bdcd189
+optional_data: optional_data
+action: digits_forms_ajax
+type: register
+dig_otp: 
+digits: 1
+digits_redirect_page: //pakhsh.shop/?page=1&redirect_to=https%3A%2F%2Fpakhsh.shop%2F
+digits_form: 65ecb01c4f
+_wp_http_referer: /?login=true&page=1&redirect_to=https%3A%2F%2Fpakhsh.shop%2F
+
+2:
+Request URL:
+https://pakhsh.shop/wp-admin/admin-ajax.php
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+104.21.48.1:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+digt_countrycode: +98
+phone: 9123466456
+digits_reg_name: ghbfgf
+digits_process_register: 1
+sms_otp: 
+otp_step_1: 1
+signup_otp_mode: 1
+instance_id: d49463434e4d494fa93e5f6a1bdcd189
+optional_data: optional_data
+action: digits_forms_ajax
+type: register
+dig_otp: 
+digits: 1
+digits_redirect_page: //pakhsh.shop/?page=1&redirect_to=https%3A%2F%2Fpakhsh.shop%2F
+digits_form: 65ecb01c4f
+_wp_http_referer: /?login=true&page=1&redirect_to=https%3A%2F%2Fpakhsh.shop%2F
+container: digits_protected
+sub_action: sms_otp
 ---------------------------------------------------------------------------------------------
+Request URL:
+https://api.doctoreto.com/api/web/patient/v1/accounts/register
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+185.143.232.201:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+{mobile: "9123456789", country_id: 205, captcha: ""}
+captcha
+: 
+""
+country_id
+: 
+205
+mobile
+: 
+"9123456789"
+---------------------------------------------------------------------------------------------
+Request URL:
+https://backend.digify.shop/user/merchant/otp/
+Request Method:
+POST
+Status Code:
+201 Created
+Remote Address:
+87.247.170.250:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+{phone_number: "09123456789"}
+phone_number
+: 
+"09123456789"
+---------------------------------------------------------------------------------------------
+Request URL:
+https://api.watchonline.shop/api/v1/otp/request
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+158.58.191.140:443
+Referrer Policy:
+strict-origin-when-cross-origin
 
 
+{mobile: "09123456456"}
+mobile
+: 
+"09123456456"
+---------------------------------------------------------------------------------------------
+Request URL:
+https://www.offch.com/login
+Request Method:
+POST
+Status Code:
+303 See Other
+Remote Address:
+185.143.232.201:443
+Referrer Policy:
+strict-origin-when-cross-origin
 
+1_invite_code: 
+1_username: 09123456456
+0: [{"message":""},"$K1"]
 
+---------------------------------------------------------------------------------------------
+Request URL:
+https://www.glite.ir/wp-admin/admin-ajax.php
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+168.119.136.243:443
+Referrer Policy:
+strict-origin-when-cross-origin
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+action: mreeir_send_sms
+mobileemail: 09123456456
+userisnotauser: 
+type: mobile
+captcha: 
+captchahash: 
+security: 5881793717
 
 
 
