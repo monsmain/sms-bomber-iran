@@ -20,7 +20,6 @@
 https://backend.digify.shop
 https://api.watchonline.shop
 https://www.offch.com/
-"https://refahtea.ir/
 https://www.glite.ir
 tagmond.com
 chamedoun.com
