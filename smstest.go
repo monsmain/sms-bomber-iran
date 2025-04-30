@@ -73,7 +73,6 @@ https://core.gap.im
 "https://kafegheymat.com/
 "https://hiword.ir/
 "https://tagmond.com/
-"https://pakhsh.shop/
 "https://my.limoome.com/
 "https://bimito.com
 "https://football360.ir
