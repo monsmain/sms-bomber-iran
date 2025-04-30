@@ -401,7 +401,15 @@ func main() {
 	// حلقه اصلی برای اضافه کردن درخواست‌ها - در حال حاضر خالی است
     // اگر می‌خواهید سرویس‌های وب را اضافه کنید، باید بلوک‌های wg.Add و tasks <- func(...) را اینجا اضافه کنید.
 	for i := 0; i < repeatCount; i++ {
-		// هیچ فراخوانی به send...Request در اینجا وجود ندارد
+		// pirankalaco.ir (OTP - POST Form)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				formData.Set("phone", phone) 
+				sendFormRequest(c, ctx, "https://pirankalaco.ir/SendPhone.php", formData, &wg, ch)
+			}
+		}(client)
 	}
 
 
