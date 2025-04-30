@@ -45,7 +45,6 @@
 "https://bimito.com
 "https://football360.ir
 "https://pubg-sell.ir
-"https://api.vandar.io/
 "https://safarmarket.com/
 "https://app.inchand.com/
 "https://bikoplus.com/
