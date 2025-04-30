@@ -111,7 +111,6 @@ api.digighate.com
 api.hovalvakil.com
 martday.ir
 civapp.ir
-web-api.fafait.net
 api.payping.ir
 mayava.ir
 mehreganit.com
