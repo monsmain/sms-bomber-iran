@@ -7,7 +7,7 @@ sms bomber irani with Go (Golang)
   <br><img src="https://github.com/NiREvil/workers-cloudflare/blob/main/Other/pics/snake.svg" width="1280px">
 
 
-### دانلود ترموکس اندروید
+### دانلود ترموکس اندروید:
 
 
 
@@ -17,12 +17,12 @@ sms bomber irani with Go (Golang)
 |  GitHub :octocat:| [Get it Now](https://github.com/termux/termux-app/releases)|
 > پیشنهاد میکنم حتما از گیت‌هاب نصب کنید.
 
-## تعداد خدمات وب
+## تعداد خدمات وب:
 
 - Sms : 156 🧨
 - Call : 6 🧨
 
-## سرعت +
+## سرعت:
 - Fast
 - Medium
 
