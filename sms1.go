@@ -346,7 +346,16 @@ cookieJar, _ := cookiejar.New(nil)
 	for i := 0; i < repeatCount; i++ {
 
 
-
+		// gateway.joordaroo.com request-otp (OTP - POST JSON)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"mobile": phone, // فرمت 09...
+				}
+				sendJSONRequest(c, ctx, "https://gateway.joordaroo.com/lgc/v1/auth/request-otp", payload, &wg, ch)
+			}
+		}(client)
                     }
 		
 //Code by @monsmain
