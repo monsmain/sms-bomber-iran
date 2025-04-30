@@ -7,18 +7,9 @@
 //⚠️⚠️in kodi hast ke kole api hayi ke vojod dasht az ghablan ke dar sms.go bod ro be inja montaghel kardam. havaset basheh.⚠️⚠️
 //⚠️⚠️ in kodi hast ke kole api hayi ke vojod dasht az ghablan ke dar sms.go bod ro be inja montaghel kardam. havaset basheh.⚠️⚠️
 //⚠️⚠️ in kodi hast ke kole api hayi ke vojod dasht az ghablan ke dar sms.go bod ro be inja montaghel kardam. havaset basheh.⚠️⚠️
-
-new site ha: peyda kardam az site hayi ke nazar ha ro baraye har site minevisan ya site haye foroshe cp ya us bazi ha.
-https://nazarkade.com/        https://motabare.ir/
-mayava.ir
-mehreganit.com
-pgemshop.com
-gifkart.com
-lintagame.com
-asangem.com
 ---------------------------------------------------------------------------------------------
 ❌❌❌❌kar nakardand :
-	        
+	      captcha ro pak kardam.  
 "https://livarfars.ir/
 "https://ashraafi.com/
 "https://moshaveran724.ir
@@ -30,9 +21,6 @@ https://api.watchonline.shop
 https://www.offch.com/
 "https://refahtea.ir/
 https://www.glite.ir
-bitex24.com
-bazidone.com
-behzadshami.com
 tagmond.com
 chamedoun.com
 gateway.wisgoon.com
@@ -44,7 +32,6 @@ https://core.gap.im
 "https://www.delino.com
 "https://api.timcheh.com
 "raghamapp.com 
-"https://client.api.paklean.com/
 "https://mashinbank.com/
 "https://takfarsh.com/
 "https://dicardo.com/
@@ -54,36 +41,27 @@ https://core.gap.im
 "https://api.zarinplus.com/
 "https://api.abantether.com/
 "https://bck.behtarino.com/
-"https://flightio.com/
-"https://www.namava.ir/
-"https://novinbook.com/
 "https://web-api.fafait.net/
 "https://www.tamimpishro.com
-"https://gateway.telewebion.com/
 "https://app.itoll.com/
 "https://api.lendo.ir/
-"https://api.pinorest.com
 "https://api.mobit.ir/
 "https://api.vandar.io
 "https://drdr.ir
  "https://www.azki.com
  "https://api.epasazh.com/
 "https://ws.alibaba.ir
-"https://app.ezpay.ir:
- "https://api.motabare.ir/
+"https://app.ezpay.ir
 "https://oteacher.org
-"https://fankala.com/
 "https://arastag.ir/
 "https://www.zzzagros.com
 "https://hamrahsport.com/
 "https://elecmake.com/
 "https://roustaee.com/
 "https://nazarkade.com/
-"https://nazarkade.com/
 "https://api.snapp.express/
 "https://sabziman.com
 "https://www.technolife.com/
-"https://www.anbaronline.ir/
 "https://ebcom.mci.ir/
 "https://asangem.com
 "https://mehreganit.com/
@@ -95,15 +73,34 @@ https://core.gap.im
 "https://kafegheymat.com/
 "https://hiword.ir/
 "https://tagmond.com/
-https://okcs.com
 "https://pakhsh.shop/
-"https://pakhsh.shop
-"https://www.didnegar.com/
 "https://my.limoome.com/
 "https://bimito.com
+"https://football360.ir
+"https://pubg-sell.ir
+"https://api.vandar.io/
+"https://safarmarket.com/
+"https://app.inchand.com/
+"https://bikoplus.com/
+"https://www.adinehbook.com/
+"https://maxbax.com/
+"https://www.nalinoco.com
+"https://kapanigold.com/
+"https://lavinbg.com/
+"https://gateway.telewebion.com/
+"https://mofidteb.com/
+"https://www.webpoosh.com
+"https://masterkala.com/
+"https://sensishopping.com
+"https://gruccia.ir
+"https://mobilexpress.ir/
+"https://api.beroozmart.com/
+"https://www.2nabsh.com
+"https://api.sibche.com
+"https://flightio.com/
+"https://www.namava.ir/
 gamefa.com
 nikanbike.com
-elecmarket.ir
 ickala.com
 meidane.com
 mahouney.com
@@ -124,7 +121,6 @@ baradarantoy.ir
 hsaria.com
 setshoe.ir
 karlancer.com
-igame.ir
 hamrahsport.com
 ketabium.com
 api.digighate.com
@@ -133,29 +129,11 @@ martday.ir
 civapp.ir
 web-api.fafait.net
 api.payping.ir
-"https://ws.alibaba.ir
-"https://football360.ir
-"https://pubg-sell.ir
-"https://api.vandar.io/
-"https://safarmarket.com/
-"https://app.inchand.com/
-"https://bikoplus.com/
-"https://www.adinehbook.com/
-"https://maxbax.com/
-"https://www.nalinoco.com
-"https://kapanigold.com/
-"https://lavinbg.com/
-"https://mofidteb.com/
-"https://www.webpoosh.com
-"https://masterkala.com/
-"https://sensishopping.com
-"https://gruccia.ir
-"https://mobilexpress.ir/
-"https://mobilexpress.ir/
-"https://api.beroozmart.com/
-"https://api.beroozmart.com/
-"https://www.2nabsh.com
-"https://api.sibche.com
+mayava.ir
+mehreganit.com
+pgemshop.com
+lintagame.com
+asangem.com
 ---------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------
