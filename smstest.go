@@ -63,7 +63,6 @@ https://auth.mrbilit.ir
 "https://steelalborz.com
 "https://kafegheymat.com/
 "https://hiword.ir/
-"https://tagmond.com/
 "https://my.limoome.com/
 "https://bimito.com
 "https://football360.ir
