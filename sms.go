@@ -404,7 +404,7 @@ cookieJar, _ := cookiejar.New(nil)
 		tasks <- func(c *http.Client) func() {
 			return func() {
 				formData := url.Values{}
-				formData.Set("email", phone) /
+				formData.Set("email", phone) 
 				sendFormRequest(c, ctx, "https://skmei-iran.com/api/customer/member/register/", formData, &wg, ch)
 			}
 		}(client)
