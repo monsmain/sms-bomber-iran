@@ -1,5 +1,5 @@
 # sms-bomber-iran
-sms bomber irani with Go (Golang)
+اس ام اس بمبر ایرانی با زبان GO (Golang)
 
 
  <h3>views :</h3> <br>
