@@ -67,7 +67,6 @@ https://core.gap.im
 "https://asangem.com
 "https://mehreganit.com/
 "https://farsgraphic.com/
-"https://www.glite.ir/
 "https://raminashop.com/
 "https://www.chaymarket.com/
 "https://steelalborz.com
