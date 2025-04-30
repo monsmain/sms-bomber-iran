@@ -439,8 +439,7 @@ cookieJar, _ := cookiejar.New(nil)
 				sendFormRequest(c, ctx, "https://www.namava.ir/api/v1.0/accounts/registrations/by-phone/request", formData, &wg, ch)
 			}
 		}(client)
-		
-//Code by @monsmain
+	}
 	close(tasks)
 
 	go func() {
