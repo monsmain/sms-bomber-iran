@@ -17,8 +17,6 @@
 "https://pakhsh.shop/
 "https://api.doctoreto.com/
 https://backend.digify.shop
-https://api.watchonline.shop
-https://www.offch.com/
 https://www.glite.ir
 
 
@@ -375,39 +373,6 @@ strict-origin-when-cross-origin
 phone_number
 : 
 "09123456789"
----------------------------------------------------------------------------------------------
-Request URL:
-https://api.watchonline.shop/api/v1/otp/request
-Request Method:
-POST
-Status Code:
-200 OK
-Remote Address:
-158.58.191.140:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-
-{mobile: "09123456456"}
-mobile
-: 
-"09123456456"
----------------------------------------------------------------------------------------------
-Request URL:
-https://www.offch.com/login
-Request Method:
-POST
-Status Code:
-303 See Other
-Remote Address:
-185.143.232.201:443
-Referrer Policy:
-strict-origin-when-cross-origin
-
-1_invite_code: 
-1_username: 09123456456
-0: [{"message":""},"$K1"]
-
 ---------------------------------------------------------------------------------------------
 Request URL:
 https://www.glite.ir/wp-admin/admin-ajax.php
