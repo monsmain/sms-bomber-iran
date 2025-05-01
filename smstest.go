@@ -93,6 +93,22 @@ lintagame.com
 ---------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------
+alibaba: https://ws.alibaba.ir/api/v3/account/mobile/otp (POST JSON)
+bit24: https://bit24.cash/auth/bit24/api/v3/auth/check-mobile (POST JSON)
+rubika: https://messengerg2c4.iranlms.ir/ (POST JSON با ساختار پیچیده)
+drto: https://api.doctoreto.com/api/web/patient/v1/accounts/register (GET با پارامتر در URL)
+3tex: https://3tex.io/api/1/users/validation/mobile (POST JSON)
+deniizshop: https://deniizshop.com/api/v1/sessions/login_request (POST JSON - آدرس اصلی deniizshop.com جدید است)
+flightio: https://flightio.com/bff/Authentication/CheckUserKey (POST JSON)
+azki: https://www.azki.com/api/vehicleorder/api/customer/register/login-with-vocal-verification-code?phoneNumber= (GET با شماره در URL)
+pooleno: https://api.pooleno.ir/v1/auth/check-mobile (POST JSON)
+emtiyaz: https://web.emtiyaz.app/json/login (POST Form Data)
+bama: https://bama.ir/signin-checkforcellnumber (POST Form Data)
+bitbarg: https://api.bitbarg.com/api/v1/authentication/registerOrLogin (POST JSON)
+takshop: https://takshopaccessorise.ir/api/v1/sessions/login_request (POST JSON - آدرس اصلی takshopaccessorise.ir جدید است)
+chamedoon: https://chamedoon.com/api/v1/membership/guest/request_mobile_verification (POST JSON)
+kilid: https://server.kilid.com/global_auth_api/v1.0/authenticate/login/realm/otp/start (GET با پارامترها)
+namava: https://www.namava.ir/api/v1.0/accounts/registrations/by-phone/request (POST JSON)
 
 
 
