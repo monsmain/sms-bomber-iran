@@ -2089,59 +2089,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) // ارسال client اصلی به تابع خارجی
 
-        // gateway.telewebion.com (SMS - POST JSON) - این بلوک دستی اصلاح شده و از client.Do استفاده میکند
-        // بنابراین نیازی به تغییر ساختار تابع بی‌نام برای پاس دادن client ندارد
-		wg.Add(1)
-		tasks <- func() {
-			// ساختار payload به صورت JSON
-			payload := map[string]interface{}{
-				"code": "98",
-				"phone": getPhoneNumberNoZero(phone), // ارسال بدون صفر اول
-				"smsStatus": "default",
-			}
 
-            jsonData, err := json.Marshal(payload)
-            if err != nil {
-                fmt.Printf("\033[01;31m[-] Error while encoding JSON for telewebion.com: %v\033[0m\n", err)
-                ch <- http.StatusInternalServerError
-                return
-            }
-
-			// ساخت درخواست با context و body
-			req, err := http.NewRequestWithContext(ctx, http.MethodPost, "https://gateway.telewebion.com/shenaseh/api/v2/auth/step-one", bytes.NewBuffer(jsonData))
-			if err != nil {
-				fmt.Printf("\033[01;31m[-] Error while creating request to telewebion.com: %v\033[0m\n", err)
-				ch <- http.StatusInternalServerError
-				return
-			}
-
-			// اضافه کردن هدرهای درخواستی
-			req.Header.Set("Content-Type", "application/json")
-			req.Header.Set("Accept", "application/json, text/plain, */*")
-			req.Header.Set("Accept-Language", "en-US,en;q=0.9,fa;q=0.8")
-			req.Header.Set("Origin", "https://gate.telewebion.com")
-			req.Header.Set("Referer", "https://gate.telewebion.com/")
-			req.Header.Set("Sec-Ch-Ua", "\"Google Chrome\";v=\"135\", \"Not-A.Brand\";v=\"8\", \"Chromium\";v=\"135\"")
-			req.Header.Set("Sec-Ch-Ua-Mobile", "?0")
-			req.Header.Set("Sec-Ch-Ua-Platform", "\"Windows\"")
-			req.Header.Set("Sec-Fetch-Dest", "empty")
-			req.Header.Set("Sec-Fetch-Mode", "cors")
-			req.Header.Set("Sec-Fetch-Site", "same-site")
-			req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36")
-
-			
-			resp, err := client.Do(req) 
-			if err != nil {
-			
-				fmt.Printf("\033[01;31m[-] Error sending request to telewebion.com: %v\033[0m\n", err)
-				ch <- http.StatusInternalServerError
-				return
-			}
-			defer resp.Body.Close()
-
-			
-			ch <- resp.StatusCode
-		}
 	}
 
 	close(tasks)
