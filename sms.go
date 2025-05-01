@@ -916,7 +916,7 @@ cookieJar, _ := cookiejar.New(nil)
 				sendJSONRequest(c, ctx, "https://bimebazar.com/accounts/api/login_sec/", payload, &wg, ch)
 			}
 		}(client)
-//number 20-1
+//number 20-1✅
 		// microele.com (Registration - POST Form)
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
@@ -1273,7 +1273,7 @@ cookieJar, _ := cookiejar.New(nil)
 				sendFormRequest(c, ctx, "https://pirankalaco.ir/SendPhone.php", formData, &wg, ch) // ارسال c
 			}
 		}(client) // ارسال client اصلی به تابع خارجی
-
+//number 30-1
 		// https://gharar.ir/users/phone_number/ (Form Data)
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
