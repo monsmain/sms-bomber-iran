@@ -540,28 +540,244 @@ RememberMe: false
 VerifyCode: 
 X-Requested-With: XMLHttpRequest
 ---------------------------------------------------------------------------------------------
+Request URL:
+https://iraanbaba.com/api/v1/users/check-phone
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+185.83.114.153:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+{phone: "09123466456"}
+phone
+: 
+"09123466456"
+---------------------------------------------------------------------------------------------
+1:
+Request URL:
+https://digido.ir/login?back=https%3A%2F%2Fdigido.ir%2F%3Futm_medium%3Dcompany_profile
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+94.101.186.193:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+back: https://digido.ir/?utm_medium=company_profile
+username: 09123456456
+action: login
+back: https://digido.ir/?utm_medium=company_profile
+ajax: 1
 
 
+2:
+Request URL:
+https://digido.ir/login?back=https%3A%2F%2Fdigido.ir%2F%3Futm_medium%3Dcompany_profile
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+94.101.186.193:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+back: https://digido.ir/?utm_medium=company_profile
+id_customer: 
+back: 
+firstname: بثعاهبتنب
+lastname: ببعباثعبهث
+email: koyakef766@kazvi.com
+password: fgcghgvrvhg
+action: register
+username: 09123456456
+back: https://digido.ir/?utm_medium=company_profile
+ajax: 1
+---------------------------------------------------------------------------------------------
+Request URL:
+https://api.faradars.org/api/client/v1/auth/otp
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+185.143.232.201:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+{mobile: "09123456783", digits: 5, platforms: "web", source: "faradars"}
+digits
+: 
+5
+mobile
+: 
+"09123456783"
+platforms
+: 
+"web"
+source
+: 
+"faradars"
+---------------------------------------------------------------------------------------------
+Request URL:
+https://api.fidibo.com/identity/device
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+185.143.234.217:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+{serial: "h6f37pio6w0q2weszwhzgu52jvu6tj3u", vendor: "web", os: "windows", os_version: "web",…}
+app_version
+: 
+"1.0.0"
+installation_source
+: 
+"Chrome 135"
+model
+: 
+"web-windows"
+os
+: 
+"windows"
+os_version
+: 
+"web"
+serial
+: 
+"h6f37pio6w0q2weszwhzgu52jvu6tj3u"
+vendor
+: 
+"web"
 
 
+2:
+Request URL:
+https://api.fidibo.com/identity/login/prepare
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+185.143.234.217:443
+Referrer Policy:
+strict-origin-when-cross-origin
 
+{username: "98-9123456456"}
+username
+: 
+"98-9123456456"
+---------------------------------------------------------------------------------------------
+Request URL:
+https://vandadcooler.com/livewire/message/auth.register
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+89.32.250.178:443
+Referrer Policy:
+strict-origin-when-cross-origin
 
+{,…}
+fingerprint
+: 
+{id: "t101qpLMwpKQ3ztmEcfp", name: "auth.register", locale: "fa", path: "register", method: "GET"}
+id
+: 
+"t101qpLMwpKQ3ztmEcfp"
+locale
+: 
+"fa"
+method
+: 
+"GET"
+name
+: 
+"auth.register"
+path
+: 
+"register"
+serverMemo
+: 
+{children: [], errors: [], htmlHash: "c76bf060",…}
+checksum
+: 
+"490c0cb2087b6c67a3c769fce1612a2443b937f0b15416a15b40565edda17584"
+children
+: 
+[]
+data
+: 
+{name: null, password: null, password_confirmation: null, mobile: null, code: null, step: 1}
+dataMeta
+: 
+[]
+errors
+: 
+[]
+htmlHash
+: 
+"c76bf060"
+updates
+: 
+[{type: "syncInput", payload: {name: "mobile", value: "09123456789"}},…]
+0
+: 
+{type: "syncInput", payload: {name: "mobile", value: "09123456789"}}
+1
+: 
+{type: "callMethod", payload: {method: "sendSMS", params: []}}
+---------------------------------------------------------------------------------------------
+1:
+Request URL:
+https://takdoo.com/wp-admin/admin-ajax.php
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+45.156.184.26:443
+Referrer Policy:
+strict-origin-when-cross-origin
 
+action: ahcpro_track_visitor
+page_id: 208879
+page_title: ورود و ثبت نام تکدو
+post_type: page
+referer: https://takdoo.com/?utm_medium=company_profile
+utm_source: nazarkade.com
+utm_campaign: domain_click
+useragent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36
+servername: takdoo.com
+hostname: takdoo.com
+request_uri: login/
 
+2:
+Request URL:
+https://takdoo.com/wp-admin/admin-ajax.php
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+45.156.184.26:443
+Referrer Policy:
+strict-origin-when-cross-origin
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+login_method: code
+phone_number: 09123456789
+action: ehraz_sms_otp_phone_verify
+ehraz_nonce: 3d4e8f09a6
+---------------------------------------------------------------------------------------------
 
 
 
