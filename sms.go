@@ -357,6 +357,9 @@ func sendJSONRequest(client *http.Client, ctx context.Context, url string, paylo
         wg.Done()
     }()
     fmt.Printf("\033[01;34m[Debug] Starting JSON task for URL: %s\033[0m\n", url) // پیام شروع
+// انتخاب تصادفی یک User-Agent از لیست
+randomIndex := rand.Intn(len(userAgents))
+selectedUserAgent := userAgents[randomIndex]
 
 	const maxRetries = 3
 	const retryDelay = 2 * time.Second
@@ -429,7 +432,9 @@ func sendFormRequest(client *http.Client, ctx context.Context, url string, formD
         wg.Done()
     }()
     fmt.Printf("\033[01;34m[Debug] Starting Form task for URL: %s\033[0m\n", url) // پیام شروع
-
+// انتخاب تصادفی یک User-Agent از لیست
+randomIndex := rand.Intn(len(userAgents))
+selectedUserAgent := userAgents[randomIndex]
 
 	const maxRetries = 3
 	const retryDelay = 3 * time.Second
@@ -494,7 +499,9 @@ func sendGETRequest(client *http.Client, ctx context.Context, url string, wg *sy
     }()
     fmt.Printf("\033[01;34m[Debug] Starting GET task for URL: %s\033[0m\n", url) // پیام شروع
 
-
+// انتخاب تصادفی یک User-Agent از لیست
+randomIndex := rand.Intn(len(userAgents))
+selectedUserAgent := userAgents[randomIndex]
 	const maxRetries = 3
 	const retryDelay = 2 * time.Second
 
