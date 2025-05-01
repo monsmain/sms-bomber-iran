@@ -152,7 +152,34 @@ https://hiword.ir/wp-json/otp-login/v1/login
 https://api.bit24.cash/api/v3/auth/check-mobile
 https://a4baz.com/api/web/login
 
-
+https://bitex24.com/api/v1/auth/sendSms
+https://farsgraphic.com/wp-admin/admin-ajax.php
+https://www.mipersia.com/wp-admin/admin-ajax.php
+https://tajtehran.com/RegisterRequest
+https://zivanpet.com/wp-admin/admin-ajax.php
+https://client.api.paklean.com/user/resendVoiceCode
+https://web.raghamapp.com/api/users/code
+https://gateway.trip.ir/api/registers
+https://gateway.trip.ir/api/Totp
+https://auth.homtick.com/api/V1/User/GetVerifyCode
+https://amoomilad.demo-hoonammaharat.ir/api/v1.0/Account/Sendcode
+https://ashraafi.com/wp-admin/admin-ajax.php
+https://my.limoome.com/api/auth/login/otp
+https://www.mihanpezeshk.com/ConfirmCodeSbm_Patient
+https://i.devslop.app/app/ifollow/api/otp.php/
+http://shop.tnovin.com/login
+https://hamlex.ir/register.php
+https://tagmond.com/phone_number
+https://lendo.ir/register
+https://www.pakhsh.shop/wp-admin/admin-ajax.php
+https://api.basalam.com/user (آدرس auth.basalam.com/captcha/otp-request در لیست قبلی بود، اما این یک آدرس متفاوت است)
+https://api.chartex.net/api/v2/user/validate
+https://www.snapptrip.com/register (آدرس platform-api.snapptrip.com/profile/auth/request-otp در لیست قبلی بود، اما این یک آدرس متفاوت است)
+https://api-v2.filmnet.ir/access-token/users/
+https://core.gap.im/v1/user/add.json
+https://app.mydigipay.com/digipay/api/users/send-sms
+https://shadmessenger12.iranlms.ir/
+https://apollo.digify.shop/graphql
 
 
 
