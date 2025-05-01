@@ -26,7 +26,6 @@
 apt update -y && apt upgrade -y
 ```
 
-
 ## قدم دوم: پیش نیاز
 
 - Linux : `sudo apt install golang `
