@@ -697,9 +697,6 @@ cookieJar, _ := cookiejar.New(nil)
 				sendJSONRequest(c, ctx, "https://gateway.telewebion.com/shenaseh/api/v2/auth/step-one", payload, &wg, ch)
 			}
 		}(client)
-		// --- پایان اضافه کردن سرویس Telewebion ---
-
-	}
 	}
 
 	close(tasks)
