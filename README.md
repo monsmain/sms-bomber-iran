@@ -13,7 +13,6 @@
 
 |  GitHub :octocat:| [Get it Now](https://github.com/termux/termux-app/releases)|
 > پیشنهاد میکنم حتما از گیت‌هاب نصب کنید.
-
 ## تعداد خدمات وب:
 
 - Sms : 156 🧨
