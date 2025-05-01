@@ -110,6 +110,47 @@ chamedoon: https://chamedoon.com/api/v1/membership/guest/request_mobile_verifica
 kilid: https://server.kilid.com/global_auth_api/v1.0/authenticate/login/realm/otp/start (GET با پارامترها)
 namava: https://www.namava.ir/api/v1.0/accounts/registrations/by-phone/request (POST JSON)
 
+https://melix.shop/site/api/v1/user/otp
+https://restaurant.delino.com/user/register
+https://dastkhat-isad.ir/api/v1/user/store
+https://api.sibbank.ir/v1/auth/login
+https://api.arshiyan.com/send_code
+https://api.dadhesab.ir/user/entry
+https://app.dosma.ir/sendverify/
+https://api.ehteraman.com/api/request/otp
+https://api-ebcom.mci.ir/services/auth/v1.0/otp
+https://api.hbbs.ir/authentication/SendCode
+https://api.iranamlaak.net/authenticate/send/otp/to/mobile/via/sms
+https://api.kcd.app/api/v1/auth/login
+https://mazoocandle.ir/login
+https://api.rayshomar.ir/api/Register/RegistrMobile
+https://mobogift.com/signin
+https://cinematicket.org/api/v1/users/signup
+https://www.irantic.com/api/login/request (این آدرس با آدرس irantic.com در لیست قبلی متفاوت است)
+https://kafegheymat.com/shop/getLoginSms
+https://api.snapp.express/mobile/v4/user/loginMobileWithNoPass (این آدرس با آدرس snapp.market در لیست قبلی متفاوت است)
+https://www.delino.com/user/register (این آدرس با آدرس restaurant.delino.com در لیست قبلی متفاوت است)
+https://api.timcheh.com/auth/otp/send
+https://www.iranketab.ir/account/register
+https://ketabchi.com/api/v1/auth/requestVerificationCode
+https://www.offdecor.com/index.php?route=account/login/sendCode
+https://exo.ir/index.php?route=account/mobile_login
+https://shahrfarsh.com/Account/Login
+https://takfarsh.com/wp-content/themes/bakala/template-parts/send.php
+https://shop.beheshticarpet.com/my-account/
+https://www.khanoumi.com/accounts/sendotp (این آدرس با آدرس accounts.khanoumi.com در لیست قبلی متفاوت است)
+https://rojashop.com/api/auth/sendOtp
+https://dadpardaz.com/advice/getLoginConfirmationCode
+https://mashinbank.com/api2/users/check
+https://api.pezeshket.com/core/v1/auth/requestCode (این آدرس با آدرس /requestCodeByMobile در لیست قبلی متفاوت است)
+https://tikban.com/Account/LoginAndRegister
+https://nobat.ir/api/public/patient/login/phone (این آدرس با آدرس api.nobat.ir در لیست قبلی متفاوت است)
+https://www.buskool.com/send_verification_code
+https://www.simkhanapi.ir/api/users/registerV2
+https://sandbox.sibirani.ir/api/v1/user/invite (این آدرس با آدرس sandbox.sibbazar.com در لیست قبلی متفاوت است)
+https://hiword.ir/wp-json/otp-login/v1/login
+https://api.bit24.cash/api/v3/auth/check-mobile
+https://a4baz.com/api/web/login
 
 
 
