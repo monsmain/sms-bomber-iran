@@ -38,8 +38,6 @@ apt update -y && apt upgrade -y
 
 - Termux : `pkg install golang `
 
-
-
 ## قدم سوم: کپی کردن فایل بمبر در دستگاه
 
 ```
