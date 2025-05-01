@@ -1071,6 +1071,330 @@ strict-origin-when-cross-origin
 action: bakala_send_code
 phone_email: 09123466456
 ---------------------------------------------------------------------------------------------
+Request URL:
+https://oauth.dgland.tech/api/otp/generate
+Request Method:
+POST
+Status Code:
+202 Accepted
+Remote Address:
+185.143.233.120:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+{PhoneNumber: "09123456456"}
+PhoneNumber
+: 
+"09123456456"
+---------------------------------------------------------------------------------------------
+Request URL:
+https://ketabejam.com/wp-admin/admin-ajax.php
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+104.21.49.86:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+action: digits_check_mob
+countrycode: +98
+mobileNo: 9121111010
+csrf: e8f4decb49
+login: 1
+username: 
+email: 
+captcha: 
+captcha_ses: 
+digits: 1
+json: 1
+whatsapp: 0
+mobmail: 9121111010
+dig_otp: 
+rememberme: 1
+dig_nounce: e8f4decb49
+---------------------------------------------------------------------------------------------
+Request URL:
+https://emersun.com/wp-admin/admin-ajax.php
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+89.32.248.197:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+
+login_digt_countrycode: +98
+digits_phone: 9123456456
+action_type: phone
+digits: 1
+instance_id: 9f589f8adb081e9833262250aa9680d9
+action: digits_forms_ajax
+type: login
+digits_step_1_type: 
+digits_step_1_value: 
+digits_step_2_type: 
+digits_step_2_value: 
+digits_step_3_type: 
+digits_step_3_value: 
+digits_login_email_token: 
+digits_redirect_page: //emersun.com/?utm_medium=company_profile&utm_source=nazarkade.com&utm_campaign=domain_click&page=1&redirect_to=https%3A%2F%2Femersun.com%2F%3Futm_medium%3Dcompany_profile%26utm_source%3Dnazarkade.com%26utm_campaign%3Ddomain_click
+digits_form: 42df606b45
+_wp_http_referer: /?utm_medium=company_profile&utm_source=nazarkade.com&utm_campaign=domain_click&login=true&page=1&redirect_to=https%3A%2F%2Femersun.com%2F%3Futm_medium%3Dcompany_profile%26utm_source%3Dnazarkade.com%26utm_campaign%3Ddomain_click
+show_force_title: 1
+
+2:
+Request URL:
+https://emersun.com/wp-admin/admin-ajax.php
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+89.32.248.197:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+
+login_digt_countrycode: +98
+digits_phone: 9123456456
+action_type: phone
+sms_otp: 
+digits_otp_field: 1
+digits: 1
+instance_id: 9f589f8adb081e9833262250aa9680d9
+action: digits_forms_ajax
+type: login
+digits_step_1_type: 
+digits_step_1_value: 
+digits_step_2_type: 
+digits_step_2_value: 
+digits_step_3_type: 
+digits_step_3_value: 
+digits_login_email_token: 
+digits_redirect_page: //emersun.com/?utm_medium=company_profile&utm_source=nazarkade.com&utm_campaign=domain_click&page=1&redirect_to=https%3A%2F%2Femersun.com%2F%3Futm_medium%3Dcompany_profile%26utm_source%3Dnazarkade.com%26utm_campaign%3Ddomain_click
+digits_form: 42df606b45
+_wp_http_referer: /?utm_medium=company_profile&utm_source=nazarkade.com&utm_campaign=domain_click&login=true&page=1&redirect_to=https%3A%2F%2Femersun.com%2F%3Futm_medium%3Dcompany_profile%26utm_source%3Dnazarkade.com%26utm_campaign%3Ddomain_click
+show_force_title: 1
+container: digits_protected
+sub_action: sms_otp
+
+---------------------------------------------------------------------------------------------
+Request URL:
+https://moeinsoft.com/wp-admin/admin-ajax.php
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+185.116.163.162:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+login_digt_countrycode: +98
+digits_phone: 9123456456
+action_type: phone
+sms_otp: 
+otp_step_1: 1
+digits_otp_field: 1
+rememberme: 1
+digits: 1
+instance_id: 11a95874f5dd9c103de01cc177267c8a
+action: digits_forms_ajax
+type: login
+digits_step_1_type: 
+digits_step_1_value: 
+digits_step_2_type: 
+digits_step_2_value: 
+digits_step_3_type: 
+digits_step_3_value: 
+digits_login_email_token: 
+digits_redirect_page: //moeinsoft.com/?utm_medium=company_profile&utm_source=nazarkade.com&utm_campaign=domain_click&page=1&redirect_to=https%3A%2F%2Fmoeinsoft.com%2F%3Futm_medium%3Dcompany_profile%26utm_source%3Dnazarkade.com%26utm_campaign%3Ddomain_click
+digits_form: 083c9c68db
+_wp_http_referer: /?utm_medium=company_profile&utm_source=nazarkade.com&utm_campaign=domain_click&login=true&page=1&redirect_to=https%3A%2F%2Fmoeinsoft.com%2F%3Futm_medium%3Dcompany_profile%26utm_source%3Dnazarkade.com%26utm_campaign%3Ddomain_click
+show_force_title: 1
+container: digits_protected
+sub_action: sms_otp
+---------------------------------------------------------------------------------------------
+Request URL:
+https://havincenter.com/livewire/message/auth.register
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+91.207.205.15:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+
+{,…}
+fingerprint
+: 
+{id: "AmMliELaH6y3B6ZoHpjO", name: "auth.register", locale: "fa", path: "register", method: "GET",…}
+id
+: 
+"AmMliELaH6y3B6ZoHpjO"
+locale
+: 
+"fa"
+method
+: 
+"GET"
+name
+: 
+"auth.register"
+path
+: 
+"register"
+v
+: 
+"acj"
+serverMemo
+: 
+{children: [], errors: [], htmlHash: "c76bf060",…}
+checksum
+: 
+"7233191bfde779a228b1e18adc5967708592712687d4ff9ca8e06aedbb492d3c"
+children
+: 
+[]
+data
+: 
+{name: null, password: null, password_confirmation: null, mobile: null, code: null, step: 1}
+code
+: 
+null
+mobile
+: 
+null
+name
+: 
+null
+password
+: 
+null
+password_confirmation
+: 
+null
+step
+: 
+1
+dataMeta
+: 
+[]
+errors
+: 
+[]
+htmlHash
+: 
+"c76bf060"
+updates
+: 
+[{type: "syncInput", payload: {id: "0uxk", name: "mobile", value: "09128887494"}},…]
+0
+: 
+{type: "syncInput", payload: {id: "0uxk", name: "mobile", value: "09128887494"}}
+payload
+: 
+{id: "0uxk", name: "mobile", value: "09128887494"}
+id
+: 
+"0uxk"
+name
+: 
+"mobile"
+value
+: 
+"09128887494"
+type
+: 
+"syncInput"
+1
+: 
+{type: "callMethod", payload: {id: "snrc", method: "sendSMS", params: []}}
+payload
+: 
+{id: "snrc", method: "sendSMS", params: []}
+id
+: 
+"snrc"
+method
+: 
+"sendSMS"
+params
+: 
+[]
+type
+: 
+"callMethod"
+---------------------------------------------------------------------------------------------
+Request URL:
+https://darsman.com/Accounting/CheckExistUser?countryCode=0098&mobileNumber=9123456456&emailAddress=&returnUrl=
+Request Method:
+GET
+Status Code:
+200 OK
+Remote Address:
+185.164.72.229:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+countryCode: 0098
+mobileNumber: 9123456456
+emailAddress: 
+returnUrl: 
+---------------------------------------------------------------------------------------------
+Request URL:
+https://ketab.land/wp-admin/admin-ajax.php
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+65.21.37.242:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+action: voorodak__submit-username
+username: 09123456456
+security: 813bec1db8
+---------------------------------------------------------------------------------------------
+Request URL:
+https://etma.ir/fa/Account/LaunchTinyNote
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+78.38.221.225:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+name: 8
+note: 09123456456
+__RequestVerificationToken: iRNmL3SaYXjOvY-hgKHjs8t_ugWo8XVzwNgNS_GDAyKVODFK2STBkaOFopc6ajnsQiLdcSlUKRBnJIAoulJq221_ZWE1
+---------------------------------------------------------------------------------------------
+Request URL:
+https://www.irangan.com/account/Account/GetUserIdentity
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+185.143.235.201:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+mobile: 09123456456
+email: 
+---------------------------------------------------------------------------------------------
+
+
+
 
 
 
