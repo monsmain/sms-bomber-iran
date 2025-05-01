@@ -27,11 +27,9 @@ apt update -y && apt upgrade -y
 ```
 
 ## قدم دوم: پیش نیاز
-
 - Linux : `sudo apt install golang `
 - Termux : `pkg install golang `
 ## قدم سوم: کپی کردن فایل بمبر در دستگاه
-
 ```
 git clone https://github.com/monsmain/sms-bomber-iran
 ```
@@ -47,8 +45,6 @@ go run sms.go
 ```
 git pull
 ```
-
-
 >  **لطفا توجه کنید**                        
 
 >1:بعد از اجرای دستورات بالا در قسمت`Enter phone [Ex : 09xxxxxxxxxx]`شماره شخص را با` 0 `بنویسید و اینتر بزنید.
