@@ -352,14 +352,10 @@ func clearScreen() {
 }
 
 func sendJSONRequest(client *http.Client, ctx context.Context, url string, payload map[string]interface{}, wg *sync.WaitGroup, ch chan<- int) {
-	defer func() {
-        fmt.Printf("\033[01;34m[Debug] Finishing JSON task for URL: %s\033[0m\n", url) // پیام پایان
-        wg.Done()
-    }()
-    fmt.Printf("\033[01;34m[Debug] Starting JSON task for URL: %s\033[0m\n", url) // پیام شروع
-// انتخاب تصادفی یک User-Agent از لیست
-randomIndex := rand.Intn(len(userAgents))
-selectedUserAgent := userAgents[randomIndex]
+	defer wg.Done()
+
+	randomIndex := rand.Intn(len(userAgents))
+	selectedUserAgent := userAgents[randomIndex]
 
 	const maxRetries = 3
 	const retryDelay = 2 * time.Second
@@ -427,14 +423,10 @@ selectedUserAgent := userAgents[randomIndex]
 }
 //Code by @monsmain
 func sendFormRequest(client *http.Client, ctx context.Context, url string, formData url.Values, wg *sync.WaitGroup, ch chan<- int) {
-	defer func() {
-        fmt.Printf("\033[01;34m[Debug] Finishing Form task for URL: %s\033[0m\n", url) // پیام پایان
-        wg.Done()
-    }()
-    fmt.Printf("\033[01;34m[Debug] Starting Form task for URL: %s\033[0m\n", url) // پیام شروع
-// انتخاب تصادفی یک User-Agent از لیست
-randomIndex := rand.Intn(len(userAgents))
-selectedUserAgent := userAgents[randomIndex]
+	defer wg.Done()
+
+	randomIndex := rand.Intn(len(userAgents))
+	selectedUserAgent := userAgents[randomIndex]
 
 	const maxRetries = 3
 	const retryDelay = 3 * time.Second
@@ -493,18 +485,14 @@ selectedUserAgent := userAgents[randomIndex]
 	}
 }
 func sendGETRequest(client *http.Client, ctx context.Context, url string, wg *sync.WaitGroup, ch chan<- int) {
-	defer func() {
-        fmt.Printf("\033[01;34m[Debug] Finishing GET task for URL: %s\033[0m\n", url) // پیام پایان
-        wg.Done()
-    }()
-    fmt.Printf("\033[01;34m[Debug] Starting GET task for URL: %s\033[0m\n", url) // پیام شروع
+	defer wg.Done()
 
-// انتخاب تصادفی یک User-Agent از لیست
-randomIndex := rand.Intn(len(userAgents))
-selectedUserAgent := userAgents[randomIndex]
+	randomIndex := rand.Intn(len(userAgents))
+	selectedUserAgent := userAgents[randomIndex]
+
+
 	const maxRetries = 3
 	const retryDelay = 2 * time.Second
-
 
 	for retry := 0; retry < maxRetries; retry++ {
 		select {
@@ -2169,9 +2157,5 @@ cookieJar, _ := cookiejar.New(nil)
 			fmt.Println("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mSended")
 		}
 	}
-    client.CloseIdleConnections()
-
-    fmt.Println("\033[01;33m[*] Done sending requests.\033[0m")
-
 }
 //Code by @monsmain
