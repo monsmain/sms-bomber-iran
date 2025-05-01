@@ -681,9 +681,7 @@ cookieJar, _ := cookiejar.New(nil)
 	}
 
     channelSize := repeatCount * totalActiveServices
-    if totalActiveServices == 0 {
-        channelSize = 1
-    }
+    if totalActiveServices == 124
 	tasks := make(chan func(), repeatCount*124)
 
 	var wg sync.WaitGroup
