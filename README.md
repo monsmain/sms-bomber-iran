@@ -6,8 +6,6 @@
 
 ## دانلود ترموکس اندروید:
 
-
-
 | منبع | لینک‌های دانلود |
 |:--------:| -------------:|
 |  GitHub :octocat:| [Get it Now](https://github.com/termux/termux-app/releases)|
