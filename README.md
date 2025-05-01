@@ -8,8 +8,8 @@
 
 | منبع | لینک‌های دانلود |
 |:--------:| -------------:|
-| GitHub 🐈‍⬛|[Get it Now](https://github.com/termux/termux-app/releases)|
-> پیشنهاد میکنم حتما از گیت‌هاب نصب کنید.
+| GitHub 🐈‍⬛|[Get it Now](https://github.com/termux/termux-app/releases)|                                     پیشنهاد میکنم حتما از گیت‌هاب نصب کنید.<
+
 ## تعداد خدمات وب:
 
 - Sms : 156 🧨
