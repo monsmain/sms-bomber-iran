@@ -681,7 +681,7 @@ cookieJar, _ := cookiejar.New(nil)
 	}
 
     channelSize := repeatCount * totalActiveServices
-    if totalActiveServices == 124 {
+    if totalActiveServices == 0 {
         channelSize = 1
     }
 	tasks := make(chan func(), repeatCount*124)
