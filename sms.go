@@ -352,10 +352,11 @@ func clearScreen() {
 }
 
 func sendJSONRequest(client *http.Client, ctx context.Context, url string, payload map[string]interface{}, wg *sync.WaitGroup, ch chan<- int) {
-	defer wg.Done()
-
-	randomIndex := rand.Intn(len(userAgents))
-	selectedUserAgent := userAgents[randomIndex]
+	defer func() {
+        fmt.Printf("\033[01;34m[Debug] Finishing JSON task for URL: %s\033[0m\n", url) // پیام پایان
+        wg.Done()
+    }()
+    fmt.Printf("\033[01;34m[Debug] Starting JSON task for URL: %s\033[0m\n", url) // پیام شروع
 
 	const maxRetries = 3
 	const retryDelay = 2 * time.Second
@@ -423,10 +424,12 @@ func sendJSONRequest(client *http.Client, ctx context.Context, url string, paylo
 }
 //Code by @monsmain
 func sendFormRequest(client *http.Client, ctx context.Context, url string, formData url.Values, wg *sync.WaitGroup, ch chan<- int) {
-	defer wg.Done()
+	defer func() {
+        fmt.Printf("\033[01;34m[Debug] Finishing Form task for URL: %s\033[0m\n", url) // پیام پایان
+        wg.Done()
+    }()
+    fmt.Printf("\033[01;34m[Debug] Starting Form task for URL: %s\033[0m\n", url) // پیام شروع
 
-	randomIndex := rand.Intn(len(userAgents))
-	selectedUserAgent := userAgents[randomIndex]
 
 	const maxRetries = 3
 	const retryDelay = 3 * time.Second
@@ -485,14 +488,16 @@ func sendFormRequest(client *http.Client, ctx context.Context, url string, formD
 	}
 }
 func sendGETRequest(client *http.Client, ctx context.Context, url string, wg *sync.WaitGroup, ch chan<- int) {
-	defer wg.Done()
-
-	randomIndex := rand.Intn(len(userAgents))
-	selectedUserAgent := userAgents[randomIndex]
+	defer func() {
+        fmt.Printf("\033[01;34m[Debug] Finishing GET task for URL: %s\033[0m\n", url) // پیام پایان
+        wg.Done()
+    }()
+    fmt.Printf("\033[01;34m[Debug] Starting GET task for URL: %s\033[0m\n", url) // پیام شروع
 
 
 	const maxRetries = 3
 	const retryDelay = 2 * time.Second
+
 
 	for retry := 0; retry < maxRetries; retry++ {
 		select {
