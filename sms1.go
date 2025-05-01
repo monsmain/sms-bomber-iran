@@ -630,7 +630,7 @@ func main() {
                                  -:                                  
 `)
 	fmt.Print("\033[0m")
-
+  totalActiveServices := 124
 
 	fmt.Println("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mSms bomber ! number web service : \033[01;31m177 \n\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mCall bomber ! number web service : \033[01;31m6\n\n")
 	fmt.Print("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;32mEnter phone [Ex : 09xxxxxxxxxx]: \033[00;36m")
@@ -680,6 +680,10 @@ cookieJar, _ := cookiejar.New(nil)
         Timeout: 10 * time.Second,
 	}
 
+    channelSize := repeatCount * totalActiveServices
+    if totalActiveServices == 124 {
+        channelSize = 124
+    }
 	tasks := make(chan func(), repeatCount*124)
 
 	var wg sync.WaitGroup
