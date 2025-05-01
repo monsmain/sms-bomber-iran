@@ -1658,7 +1658,7 @@ cookieJar, _ := cookiejar.New(nil)
 				sendFormRequest(c, ctx, "https://www.digistyle.com/users/login-register/", formData, &wg, ch) // ارسال c
 			}
 		}(client) // ارسال client اصلی به تابع خارجی
-//nimber30-2
+//nimber30-2✅
 		// sandbox.sibbazar.com (JSON)
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
@@ -1957,7 +1957,7 @@ cookieJar, _ := cookiejar.New(nil)
 				}, &wg, ch)
 			}
 		}(client) // ارسال client اصلی به تابع خارجی
-
+//number30-3
 		// anargift.com auth (JSON)
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
