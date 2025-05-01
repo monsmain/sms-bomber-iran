@@ -49,7 +49,7 @@ apt update -y && apt upgrade -y
 ```
 git clone https://github.com/monsmain/sms-bomber-iran
 ```
-## قدم چهارم: فراخوان
+## قدم چهارم: فراخوانی
 ```
 cd sms-bomber-iran
 ```
