@@ -1273,7 +1273,7 @@ cookieJar, _ := cookiejar.New(nil)
 				sendFormRequest(c, ctx, "https://pirankalaco.ir/SendPhone.php", formData, &wg, ch) // ارسال c
 			}
 		}(client) // ارسال client اصلی به تابع خارجی
-//number 30-1
+//number 30-1✅
 		// https://gharar.ir/users/phone_number/ (Form Data)
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
@@ -1658,7 +1658,7 @@ cookieJar, _ := cookiejar.New(nil)
 				sendFormRequest(c, ctx, "https://www.digistyle.com/users/login-register/", formData, &wg, ch) // ارسال c
 			}
 		}(client) // ارسال client اصلی به تابع خارجی
-
+//nimber30-2
 		// sandbox.sibbazar.com (JSON)
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { // ساختار جدید برای پاس دادن client
