@@ -778,39 +778,299 @@ phone_number: 09123456789
 action: ehraz_sms_otp_phone_verify
 ehraz_nonce: 3d4e8f09a6
 ---------------------------------------------------------------------------------------------
+1:
+Request URL:
+https://ramzinex.com/exchange/api/v1.0/exchange/auth/v4/register_without_password
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+185.166.104.4:443
+Referrer Policy:
+origin-when-cross-origin
+
+{cell_number: "09123456456", is_legal: false}
+cell_number
+: 
+"09123456456"
+is_legal
+: 
+false
+
+2:
+Request URL:
+https://ramzinex.com/signup/verification/?info=09123456456&_rsc=zsvv5
+Request Method:
+GET
+Status Code:
+200 OK
+Remote Address:
+185.166.104.4:443
+Referrer Policy:
+origin-when-cross-origin
+
+info: 09123456456
+_rsc: zsvv5
+
+3:
+Request URL:
+https://ramzinex.com/exchange/api/v1.0/exchange/auth/v4/send_code/register
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+185.166.104.4:443
+Referrer Policy:
+origin-when-cross-origin
+
+{cell_number: "09123456456", ramzinex_client_type: "pwa"}
+cell_number
+: 
+"09123456456"
+ramzinex_client_type
+: 
+"pwa"
+---------------------------------------------------------------------------------------------
+Request URL:
+https://oldpanel.avalpardakht.com/panel/api/v1/auth/register
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+45.156.187.22:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+{email: "koyakef766@kazvi.com", mobile: "09128887494", password: "fxsctxgvfbvgv@1A", rules: true,…}
+email
+: 
+"koyakef766@kazvi.com"
+is_business
+: 
+0
+mobile
+: 
+"09128887494"
+online_chat_token
+: 
+""
+password
+: 
+"fxsctxgvfbvgv@1A"
+rules
+: 
+true
+---------------------------------------------------------------------------------------------
+Request URL:
+https://irancoral.ir/wp-admin/admin-ajax.php
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+176.31.83.131:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+send_nonce: 7214278f44
+login_method: code
+phone_number: 09122221212
+action: eh_send_code
+---------------------------------------------------------------------------------------------
+Request URL:
+https://sanjagh.pro/reborn-api/exp/api/session/v2/registerCell
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+185.53.140.21:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+{cell: "09123456456"}
+cell
+: 
+"09123456456"
+---------------------------------------------------------------------------------------------
+Request URL:
+https://kalazem.com/login?back=my-account
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+94.130.44.82:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+back: my-account
+username: 09123456456
+id_customer: 
+back: 
+firstname: بثعاهبتنب
+lastname: ببعباثعبهث
+password: sfgttthg435g676
+action: register
+back: my-account
+ajax: 1
+---------------------------------------------------------------------------------------------
+1:
+Request URL:
+https://www.ecell.ir/cdn-cgi/rum?
+Request Method:
+POST
+Status Code:
+204 No Content
+Remote Address:
+172.67.129.28:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+{memory: {totalJSHeapSize: 15382804, usedJSHeapSize: 10386200, jsHeapSizeLimit: 4294705152},…}
+dt
+: 
+""
+eventType
+: 
+1
+firstContentfulPaint
+: 
+0
+firstPaint
+: 
+0
+location
+: 
+"https://www.ecell.ir/"
+memory
+: 
+{totalJSHeapSize: 15382804, usedJSHeapSize: 10386200, jsHeapSizeLimit: 4294705152}
+nt
+: 
+"reload"
+pageloadId
+: 
+"c054f858-742c-4119-9d65-394554defaaf"
+referrer
+: 
+"https://www.ecell.ir/?utm_medium=company_profile&utm_source=nazarkade.com&utm_campaign=domain_click"
+resources
+: 
+[]
+serverTimings
+: 
+[{name: "cfCacheStatus", dur: 0, desc: "DYNAMIC"}, {name: "cfL4", dur: 0,…}]
+siteToken
+: 
+"4c61785a3809488cbcf01b907bd18401"
+st
+: 
+2
+startTime
+: 
+1746108966708.1
+timingsV2
+: 
+{unloadEventStart: 2887.5, unloadEventEnd: 2887.5, domInteractive: 3254.5,…}
+versions
+: 
+{fl: "2025.4.0-1-g37f21b1", js: "2024.6.1", timings: 2}
+
+2:
+Request URL:
+https://www.ecell.ir/wp-admin/admin-ajax.php
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+172.67.129.28:443
+Referrer Policy:
+strict-origin-when-cross-origin
+
+digits_reg_name: afdff
+digits_reg_lastname: rrgrggrrgt
+digt_countrycode: +98
+phone: 912 346 6456
+digits_process_register: 1
+instance_id: 48e6f9d2811fa048c6eaf9d6fb56926c
+optional_data: optional_data
+action: digits_forms_ajax
+type: register
+dig_otp: 
+digits: 1
+digits_redirect_page: https://www.ecell.ir/my-account/
+digits_form: fba6016387
+_wp_http_referer: /?login=true&redirect_to=https%3A%2F%2Fwww.ecell.ir%2Fmy-account%2F&page=1
 
 
+3:
+Request URL:
+https://www.ecell.ir/wp-admin/admin-ajax.php
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+172.67.129.28:443
+Referrer Policy:
+strict-origin-when-cross-origin
 
 
+digits_reg_name: afdff
+digits_reg_lastname: rrgrggrrgt
+digt_countrycode: +98
+phone: 912 346 6456
+digits_process_register: 1
+sms_otp: 
+otp_step_1: 1
+signup_otp_mode: 1
+instance_id: 48e6f9d2811fa048c6eaf9d6fb56926c
+optional_data: optional_data
+action: digits_forms_ajax
+type: register
+dig_otp: 
+digits: 1
+digits_redirect_page: https://www.ecell.ir/my-account/
+digits_form: fba6016387
+_wp_http_referer: /?login=true&redirect_to=https%3A%2F%2Fwww.ecell.ir%2Fmy-account%2F&page=1
+container: digits_protected
+sub_action: sms_otp
 
+---------------------------------------------------------------------------------------------
+Request URL:
+https://maktabkhooneh.org/api/v1/auth/check-active-user
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+185.143.232.201:443
+Referrer Policy:
+strict-origin-when-cross-origin
 
+csrfmiddlewaretoken: ORM661UYpbUeHd8m3SkNXZqx3Oz0oGzF5qh4Gw3AJuA8j3fvHGtZgkfiDS48tBt8
+tessera: 09123456456
+g-recaptcha-response: recaptcha-token
+---------------------------------------------------------------------------------------------
+Request URL:
+https://mahamdg.com/bakala/ajax/send_code/
+Request Method:
+POST
+Status Code:
+200 OK
+Remote Address:
+188.212.22.235:443
+Referrer Policy:
+strict-origin-when-cross-origin
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+action: bakala_send_code
+phone_email: 09123466456
+---------------------------------------------------------------------------------------------
 
 
 
