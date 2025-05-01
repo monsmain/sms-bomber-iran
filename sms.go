@@ -21,7 +21,6 @@ import (
 	"math/rand" 
 )
 
-// لیست User-Agentهایی که شما ارائه دادید
 var userAgents = []string{
 	"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
 	"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:124.0) Gecko/20100101 Firefox/124.0",
@@ -49,7 +48,7 @@ var userAgents = []string{
 	"Mozilla/5.0 (Macintosh; Intel Mac OS X 14_3_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
 	"Mozilla/5.0 (Linux; Android 13; SM-A546E) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.6367.119 Mobile Safari/537.36",
 	"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36",
-	"Mozilla/5.0 (Linux; Android 10; Infinix X682B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.6312.122 Mobile Safari/537.136", // مقدار نمونه
+	"Mozilla/5.0 (Linux; Android 10; Infinix X682B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.6312.122 Mobile Safari/537.136", 
 	"Mozilla/5.0 (iPhone; CPU iPhone OS 14_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.4 Mobile Safari/605.1.15",
 	"Mozilla/5.0 (Linux; Android 11; SM-A515F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.6367.119 Mobile Safari/537.36",
 	"Mozilla/5.0 (X11; Fedora; Linux x86_64; rv:124.0) Gecko/20100101 Firefox/124.0",
@@ -69,7 +68,6 @@ func clearScreen() {
 func sendJSONRequest(client *http.Client, ctx context.Context, url string, payload map[string]interface{}, wg *sync.WaitGroup, ch chan<- int) {
 	defer wg.Done()
 
-	// انتخاب تصادفی یک User-Agent از لیست
 	randomIndex := rand.Intn(len(userAgents))
 	selectedUserAgent := userAgents[randomIndex]
 
@@ -107,7 +105,7 @@ func sendJSONRequest(client *http.Client, ctx context.Context, url string, paylo
 			continue
 		}
 		req.Header.Set("Content-Type", "application/json")
-        req.Header.Set("User-Agent", selectedUserAgent) // اضافه کردن User-Agent انتخاب شده
+        req.Header.Set("User-Agent", selectedUserAgent) 
 
 
 		resp, err := client.Do(req)
@@ -141,7 +139,6 @@ func sendJSONRequest(client *http.Client, ctx context.Context, url string, paylo
 func sendFormRequest(client *http.Client, ctx context.Context, url string, formData url.Values, wg *sync.WaitGroup, ch chan<- int) {
 	defer wg.Done()
 
-    // انتخاب تصادفی یک User-Agent از لیست
 	randomIndex := rand.Intn(len(userAgents))
 	selectedUserAgent := userAgents[randomIndex]
 
@@ -169,7 +166,7 @@ func sendFormRequest(client *http.Client, ctx context.Context, url string, formD
 			continue
 		}
 		req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-        req.Header.Set("User-Agent", selectedUserAgent) // اضافه کردن User-Agent انتخاب شده
+        req.Header.Set("User-Agent", selectedUserAgent) 
 
 
 		resp, err := client.Do(req)
@@ -204,7 +201,6 @@ func sendFormRequest(client *http.Client, ctx context.Context, url string, formD
 func sendGETRequest(client *http.Client, ctx context.Context, url string, wg *sync.WaitGroup, ch chan<- int) {
 	defer wg.Done()
 
-    // انتخاب تصادفی یک User-Agent از لیست
 	randomIndex := rand.Intn(len(userAgents))
 	selectedUserAgent := userAgents[randomIndex]
 
@@ -231,7 +227,7 @@ func sendGETRequest(client *http.Client, ctx context.Context, url string, wg *sy
 			time.Sleep(retryDelay)
 			continue
 		}
-        req.Header.Set("User-Agent", selectedUserAgent) // اضافه کردن User-Agent انتخاب شده
+        req.Header.Set("User-Agent", selectedUserAgent)
 
 
 		resp, err := client.Do(req)
@@ -288,7 +284,7 @@ func getPhoneNumberPlus98NoZero(phone string) string {
 }
 
 func main() {
-    // راه‌اندازی مولد اعداد تصادفی برای انتخاب User-Agent
+
 	rand.Seed(time.Now().UnixNano())
 
 	clearScreen()
@@ -1846,10 +1842,10 @@ cookieJar, _ := cookiejar.New(nil)
 			req.Header.Set("Sec-Fetch-Site", "same-site")
 			req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36")
 
-			// ارسال درخواست با client جدید که کوکی ها را مدیریت می کند
-			resp, err := client.Do(req) // استفاده از client
+			
+			resp, err := client.Do(req) 
 			if err != nil {
-				// مدیریت خطا
+			
 				fmt.Printf("\033[01;31m[-] Error sending request to telewebion.com: %v\033[0m\n", err)
 				ch <- http.StatusInternalServerError
 				return
