@@ -543,7 +543,7 @@ func sendGETRequest(client *http.Client, ctx context.Context, url string, wg *sy
 		return
 	}
 }
-//Code by @monsmain
+// Code by @monsmain
 func formatPhoneWithSpaces(p string) string {
 	p = getPhoneNumberNoZero(p)
 	if len(p) >= 10 {
