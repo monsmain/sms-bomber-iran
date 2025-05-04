@@ -8,6 +8,7 @@
 
 | منبع | لینک‌های دانلود |
 |:--------:| -------------:|
+| GitHub 🐈‍⬛|[Get it Now](https://github.com/termux/termux-app/releases)|
 | GitHub 🐈‍⬛|[Get it Now](https://github.com/termux/termux-app/releases)|    
 | Google Play | [get it       
 Now](https://play.google.com/store/apps/details?id=com.termux)|                     
