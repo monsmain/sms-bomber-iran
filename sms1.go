@@ -1,3 +1,6 @@
+/* coded by @monsmain
+⚠️note: copy mamnoe.
+❌befahmam copy kardi khahareto migam...*/
 package main
 
 import (
