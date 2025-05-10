@@ -717,4 +717,6 @@ cookieJar, _ := cookiejar.New(nil)
 		}
 	}
 }
-//Code by @monsmain
+/* coded by @monsmain
+⚠️note: copy mamnoe.
+❌befahmam copy kardi khahareto migam...*/
