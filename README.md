@@ -2,7 +2,7 @@
 ## اس ام اس بمبر ایرانی با زبان GO (Golang)
 
  <h3>views :</h3> <br>
- <img src="https://profile-counter.glitch.me/monsmain/count.svg" alt="Visitors"><p align="center">  <br><img src="https://github.com/NiREvil/workers-cloudflare/blob/main/Other/pics/snake.svg" width="1280px">
+ <img src="https://profile-counter.glitch.me/monsmain/count.svg" alt="Visitors"><p align="page">  <br><img src="https://github.com/NiREvil/workers-cloudflare/blob/main/Other/pics/snake.svg" width="1280px">
 
 ## دانلود ترموکس اندروید:
 
