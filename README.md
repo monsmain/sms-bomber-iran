@@ -29,7 +29,8 @@ apt update -y && apt upgrade -y
 
 ## قدم دوم: پیش نیاز ها
 - Linux : `sudo apt install golang `
-- Termux : `pkg install golang -y `
+- Termux : `pkg install golang -y &&  pkg install git -y 
+ `
 
 -  and install:  
 ```
