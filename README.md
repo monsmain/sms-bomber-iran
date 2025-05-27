@@ -11,7 +11,6 @@
 | Google Play|[Get it Now](https://play.google.com/store/apps/details?id=com.termux)|                    
 > پیشنهاد میکنم حتما از گیت‌هاب نصب کنید.
 ## تعداد خدمات وب:
-
 - Sms : 156 🧨
 - Call : 6 🧨
 ## سرعت:
