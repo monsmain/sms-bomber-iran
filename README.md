@@ -55,7 +55,7 @@ git pull
 >3:در مرحله بعدی در قسمت `:Choose speed [medium/fast]` سرعت ارسال رو با توجه به (سرعت اینترنت و قدرت موبایلتون) انتخاب کنید 
 
 ### و بووووووووم💣 🔥☠️
-# ❤️ Donate ❤️:
+# ❤️ Donate ❤️
 #### USDT TRC20: `0xCE00bc3CF18b02Fd68B27Bc13b27A0D6df0530da`
 #### tron: `0xCE00bc3CF18b02Fd68B27Bc13b27A0D6df0530da`
 #### USDT Polygon: `TUbfZzk65ABHceGhYjP6RLfALczsFfBW3q`
