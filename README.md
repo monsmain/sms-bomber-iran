@@ -24,8 +24,9 @@
 apt update -y && apt upgrade -y
 ```
 ### قدم دوم: پیش نیاز ها
-- Termux : `pkg install golang -y &&  pkg install git -y 
- `
+```
+pkg install golang -y &&  pkg install git -y
+```
 ### قدم سوم: کپی کردن فایل بمبر در دستگاه
 ```
 git clone https://github.com/monsmain/sms-bomber-iran
