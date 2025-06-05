@@ -2,20 +2,20 @@
 
  <h3>viewers:</h3> <br> <img src="https://profile-counter.glitch.me/monsmain/count.svg" alt="Visitors"><p align="center"> <br><img src="https://github.com/NiREvil/workers-cloudflare/blob/main/Other/pics/snake.svg" width="1280px">
 
-## 📥دانلود ترموکس اندروید:
+### 📥دانلود ترموکس اندروید:
 
 | منبع | لینک‌های دانلود |
 |:--------:| -------------:|
 | GitHub 🐈‍⬛|[Get it Now](https://github.com/termux/termux-app/releases)|
 | Google Play|[Get it Now](https://play.google.com/store/apps/details?id=com.termux)|                    
 > پیشنهاد میکنم حتما از گیت‌هاب نصب کنید.
-## تعداد خدمات وب:
+### تعداد خدمات وب:
 - Sms : 156 🧨
 - Call : 6 🧨
-## سرعت:
+### سرعت:
 - Fast 🛸
 - Medium 🚀
-## پشتیبانی از : (تست شده)
+### پشتیبانی از : (تست شده)
 - `Linux` ✅
 - `Termux` ✅
 ## بیایید امتحان کنیم :trollface:
