@@ -834,7 +834,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client)
 
-	//(Tapsi) - POST JSON
+	        //(Tapsi) - POST JSON
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
@@ -995,7 +995,7 @@ cookieJar, _ := cookiejar.New(nil)
 				sendJSONRequest(c, ctx, "https://bimebazar.com/accounts/api/login_sec/", payload, &wg, ch)
 			}
 		}(client)
-//number 21-1✅
+
 		// microele.com (Registration - POST Form)
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
@@ -1349,7 +1349,7 @@ cookieJar, _ := cookiejar.New(nil)
 				sendFormRequest(c, ctx, "https://pirankalaco.ir/SendPhone.php", formData, &wg, ch) 
 			}
 		}(client) 
-//number 30-1✅
+
 		// https://gharar.ir/users/phone_number/ (Form Data)
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
@@ -1733,7 +1733,6 @@ cookieJar, _ := cookiejar.New(nil)
 				sendFormRequest(c, ctx, "https://www.digistyle.com/users/login-register/", formData, &wg, ch) 
 			}
 		}(client) 
-//nimber30-2✅
 		// sandbox.sibbazar.com (JSON)
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
@@ -2032,7 +2031,6 @@ cookieJar, _ := cookiejar.New(nil)
 				}, &wg, ch)
 			}
 		}(client)
-//number30-3✅
 		// anargift.com auth (JSON)
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
@@ -2163,7 +2161,6 @@ cookieJar, _ := cookiejar.New(nil)
 				}, &wg, ch)
 			}
 		}(client)
-//number13_1
 
 	}
 
