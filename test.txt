@@ -13,29 +13,6 @@ strict-origin-when-cross-origin
 email
 09123456456
 -----------------------------------------------
-Request URL
-https://gama.ir/api/v1/users/login
-Request Method
-POST
-Status Code
-200 OK
-Remote Address
-185.53.142.133:443
-Referrer Policy
-strict-origin-when-cross-origin
-
-csrf_token
-MTc0OTQ1NDIyMTA4ODkzMzAxMzhkZGJiMjZlNzg0MTczNDEyMTUwY2MxMDgwOTQ1Y2YyOWQ2ZmY2MmYxOTIzYmIzN2NiOTRlZjYxM2QwZTk0Zjc5NzVmZTkz
-captcha_token
-identity
-091223456456
-pass
-code
-type
-request
-switchToOTP
-true
----------------------------------------------------------------------------------------------------------
 1:
 Request URL
 https://www.coffeete.ir/Account/SignUp
