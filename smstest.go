@@ -357,11 +357,11 @@ cookieJar, _ := cookiejar.New(nil)
         Timeout: 10 * time.Second,
 	}
 
-	tasks := make(chan func(), repeatCount*)
+	tasks := make(chan func(), repeatCount*10)
 
 	var wg sync.WaitGroup
 
-	ch := make(chan int, repeatCount*)
+	ch := make(chan int, repeatCount*10)
 
 	for i := 0; i < numWorkers; i++ {
 		go func() {
@@ -372,19 +372,8 @@ cookieJar, _ := cookiejar.New(nil)
 	}
 
 	for i := 0; i < repeatCount; i++ {
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				randomUsername := fmt.Sprintf("user%d", rand.Intn(100000))
 
-				formData := url.Values{}
-				formData.Set("PhoneNumber", phone)
-				formData.Set("UserName", randomUsername) 
-				formData.Set("Password", phone)        
-				formData.Set("ConfirmPassword", phone)   
-				sendFormRequest(c, ctx, "https://www.coffeete.ir/Account/SignUp", formData, &wg, ch)
-			}
-		}(client)
+
 
 	}
 
