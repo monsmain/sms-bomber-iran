@@ -467,11 +467,11 @@ cookieJar, _ := cookiejar.New(nil)
         Timeout: 10 * time.Second,
 	}
 
-	tasks := make(chan func(), repeatCount*142)
+	tasks := make(chan func(), repeatCount*144)
 
 	var wg sync.WaitGroup
 
-	ch := make(chan int, repeatCount*142)
+	ch := make(chan int, repeatCount*144)
 
 	for i := 0; i < numWorkers; i++ {
 		go func() {
