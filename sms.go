@@ -486,8 +486,15 @@ cookieJar, _ := cookiejar.New(nil)
 
 
 
-
-
+                //operator-100.ir
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				formData.Set("email", phone)
+				sendFormRequest(c, ctx, "https://operator-100.ir/api/customer/member/register/", formData, &wg, ch)
+			}
+		}(client)
                 //gama.ir
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
