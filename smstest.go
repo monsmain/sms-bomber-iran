@@ -376,12 +376,36 @@ cookieJar, _ := cookiejar.New(nil)
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
-				payload := map[string]interface{}{
-					"email": phone,
-				}
+				payload := map[string]interface{}{"email": phone}
 				sendJSONRequest(c, ctx, "https://operator-100.ir/api/customer/member/register/", payload, &wg, ch)
 			}
 		}(client)
+
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{"email": getPhoneNumberNoZero(phone)}
+				sendJSONRequest(c, ctx, "https://operator-100.ir/api/customer/member/register/", payload, &wg, ch)
+			}
+		}(client)
+
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{"email": getPhoneNumber98NoZero(phone)}
+				sendJSONRequest(c, ctx, "https://operator-100.ir/api/customer/member/register/", payload, &wg, ch)
+			}
+		}(client)
+
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{"email": getPhoneNumberPlus98NoZero(phone)}
+				sendJSONRequest(c, ctx, "https://operator-100.ir/api/customer/member/register/", payload, &wg, ch)
+			}
+		}(client)
+
+
 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
