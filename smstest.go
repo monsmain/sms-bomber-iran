@@ -406,17 +406,6 @@ cookieJar, _ := cookiejar.New(nil)
 		}(client)
 
 
-
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				formData := url.Values{}
-				formData.Set("identity", phone)  
-				formData.Set("switchToOTP", "true")  
-				sendFormRequest(c, ctx, "https://gama.ir/api/v1/users/login", formData, &wg, ch)
-			}
-		}(client)
-
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
