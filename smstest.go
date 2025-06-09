@@ -372,18 +372,6 @@ cookieJar, _ := cookiejar.New(nil)
 	}
 
 	for i := 0; i < repeatCount; i++ {
-		
-// سرویس operator-100.ir (با روش صحیح Form)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				formData := url.Values{}
-				formData.Set("email", phone) // نام فیلد همان email است
-				sendFormRequest(c, ctx, "https://operator-100.ir/api/customer/member/register/", formData, &wg, ch)
-			}
-		}(client)
-
-
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
