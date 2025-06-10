@@ -7,7 +7,7 @@
 | منبع | لینک‌های دانلود |
 |:--------:| -------------:|
 | GitHub 🐈‍⬛|[Get it Now](https://github.com/termux/termux-app/releases)|
-| Google Play|[Get it Now](https://play.google.com/store/apps/details?id=com.termux)|                    
+| Google Play|[Get it Now](https://play.google.com/store/apps/details?id=com.termux)|                   
 > پیشنهاد میکنم حتما از گیت‌هاب نصب کنید.
 ### تعداد خدمات وب:
 - Sms : 156 🧨
@@ -24,7 +24,7 @@
 apt update -y && apt upgrade -y && pkg install golang -y && pkg install git -y && git clone https://github.com/monsmain/sms-bomber-iran
 cd sms-bomber-iran && go run sms.go
 ```
-
+### اجرای چند خط:
 ### قدم اول: نصب بروزرسانی ها
 ```
 apt update -y && apt upgrade -y
