@@ -19,6 +19,12 @@
 - `Linux` ✅
 - `Termux` ✅
 ## بیایید امتحان کنیم :trollface:
+### اجرای تک خط:
+```
+apt update -y && apt upgrade -y && pkg install golang -y && pkg install git -y && git clone https://github.com/monsmain/sms-bomber-iran
+cd sms-bomber-iran && go run sms.go
+```
+
 ### قدم اول: نصب بروزرسانی ها
 ```
 apt update -y && apt upgrade -y
