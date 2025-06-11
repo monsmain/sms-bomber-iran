@@ -484,7 +484,16 @@ cookieJar, _ := cookiejar.New(nil)
 		
 
 
-
+               // Fitamin.ir (JSON Request)
+               wg.Add(1)
+               tasks <- func(c *http.Client) func() {
+	               return func() {
+		payload := map[string]interface{}{
+			"mobile": getPhoneNumber98NoZero(phone),
+		}
+		sendJSONRequest(c, ctx, "https://services.fitamin.ir/fitamin-central-service/api/fitamin/send-verification-code", payload, &wg, ch)
+         	}
+              }(client)
                 //operator-100.ir
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
