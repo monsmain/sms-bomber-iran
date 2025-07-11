@@ -1,5 +1,14 @@
 <div align="center"> <h1>اس ام اس بمبر ایرانی</h1>
-</div> <h3>viewers:</h3> <br> <img src="https://profile-counter.glitch.me/monsmain/count.svg" alt="Visitors"><p align="center"> <br><img src="https://github.com/monsmain/ighack/blob/main/images/snake.svg" width="1280px"> 
+<div align="center">
+    <h2>تماس با من📞</h2>
+</div>
+<p align="center">
+  <a href="https://youtube.com/@monsmain"><img src="https://img.shields.io/badge/Youtube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" /></a>
+  <a href="https://t.me/monsmain"><img src="https://img.shields.io/badge/Telegram-26A5E4?style=for-the-badge&logo=telegram&logoColor=white" /></a>
+  <a href="https://x.com/mons_main"><img src="https://img.shields.io/badge/X-000000?style=for-the-badge&logo=x&logoColor=white" /></a>
+  <a href="https://instagram.com/themonsmain"><img src="https://img.shields.io/badge/Instagram-FF0069?style=for-the-badge&logo=instagram&logoColor=white" /></a>
+</p>
+</div>
 
 ### آخرین آپدیت : 1404/04/16
 ### 📥دانلود ترموکس اندروید:
