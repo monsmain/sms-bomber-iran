@@ -58,19 +58,8 @@ git pull
 
 >3:در مرحله بعدی در قسمت `:Choose speed [medium/fast]` سرعت ارسال رو با توجه به (سرعت اینترنت و قدرت موبایلتون) انتخاب کنید 
 ## اهدا❤️
-اگر این کد را برای خود مفید می‌دانید، می‌توانید با اهدای هر مبلغی از آن حمایت کنید.
+اگر این کد را برای خود مفید می‌دانید، می‌توانید با اهدای هر مبلغی از آن حمایت کنید
   <a href="https://monsmain.github.io/index.html#timeline03-1l"><img src="https://img.shields.io/badge/Donate-E5322D?style=for-the-badge&logo=ilovepdf&logoColor=white" /></a>
-
-<div align="center">
-<h2>تماس با من📞</h2>
-</div>
-<p align="center">
-  <a href="https://t.me/monsmain"><img src="https://img.shields.io/badge/Telegram-26A5E4?style=for-the-badge&logo=telegram&logoColor=white" /></a>
-  <a href="https://monsmain.github.io/index.html#form02-6"><img src="https://img.shields.io/badge/gmail-242424?style=for-the-badge&logo=gmail&logoColor=White" /></a>
-  <a href="https://youtube.com/@monsmain"><img src="https://img.shields.io/badge/Youtube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" /></a>
-  <a href="https://x.com/mons_main"><img src="https://img.shields.io/badge/X-000000?style=for-the-badge&logo=X&logoColor=white" /></a>
-  <a href="https://instagram.com/themonsmain"><img src="https://img.shields.io/badge/Instagram-FF0069?style=for-the-badge&logo=instagram&logoColor=white" /></a>
-</p>
 
 ## چگونه مشارکت کنیم:
 اگر علاقه‌مند به مشارکت در پروژه Sms Bomber Iran هستید، می‌توانید مخزن را فورک کنید، تغییرات یا بهبودهای لازم را اعمال کنید و درخواست pull ارسال کنید. مشارکت‌های شما در افزایش کارایی و قابلیت اطمینان ابزار برای همه کاربران ارزشمند است.
