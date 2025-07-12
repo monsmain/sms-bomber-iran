@@ -62,7 +62,7 @@ git pull
   <a href="https://monsmain.github.io/index.html#timeline03-1l"><img src="https://img.shields.io/badge/Donate-E5322D?style=for-the-badge&logo=ilovepdf&logoColor=white" /></a>
 
 ## مشارکت:
-ما همیشه به دنبال بهبود ابزار هستیم! اگر ایده‌ای دارید یا باگ پیدا کردید، لطفاً یک [Issue](https://github.com/monsmain/EP-Scanner/issues) جدید ایجاد کنید یا یک [Pull Request](https://github.com/monsmain/EP-Scanner/pulls) ارسال کنید.
+ما همیشه به دنبال بهبود ابزار هستیم! اگر ایده‌ای دارید یا باگ پیدا کردید، لطفاً یک [Issue](https://github.com/monsmain/sms-bomber-iran/issues) جدید ایجاد کنید یا یک [Pull Request](https://github.com/monsmain/sms-bomber-iran/pulls) ارسال کنید.
 ## سلب مسئولیت
 * توسعه‌دهنده این برنامه **هیچ‌گونه مسئولیتی** در قبال نحوه استفاده کاربران از آن بر عهده ندارد. اینکه کاربر چگونه از این ابزار استفاده می‌کند و آیا این استفاده قانونی یا اخلاقی است، **تماماً بر عهده خود کاربر است.**
 * با دانلود، یا استفاده از این کد ، شما صراحتاً با تمامی موارد ذکر شده در این سلب مسئولیت موافقت می‌نمایید.
