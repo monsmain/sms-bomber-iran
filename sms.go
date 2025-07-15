@@ -877,7 +877,7 @@ cookieJar, _ := cookiejar.New(nil)
 				sendJSONRequest(c, ctx, "https://cyclops.drnext.ir/v1/patients/auth/send-verification-token", payload, &wg, ch)
 			}
 		}(client)
-		// skmei-iran.com register (Registration/OTP - POST Form)
+		// skmei-iran.com
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
