@@ -1165,7 +1165,7 @@ cookieJar, _ := cookiejar.New(nil)
 				formData.Set("verifyCode", "")
 				formData.Set("repeatFlag", "true")
 				formData.Set("Language", "FA")
-				formData.Set("ipaddress", "5.232.133.109")
+				formData.Set("ipaddress", "95.38.60.151")
 				sendFormRequest(c, ctx, "https://novinparse.com/page/pageaction.aspx", formData, &wg, ch) 
 			}
 		}(client) 
