@@ -908,7 +908,7 @@ cookieJar, _ := cookiejar.New(nil)
 				sendJSONRequest(c, ctx, "https://gateway.joordaroo.com/lgc/v1/auth/request-otp", payload, &wg, ch)
 			}
 		}(client)
-		// vitrin.shop request_code (OTP - POST JSON)
+		// vitrin.shop
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
