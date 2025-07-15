@@ -919,7 +919,7 @@ cookieJar, _ := cookiejar.New(nil)
 				sendJSONRequest(c, ctx, "https://www.vitrin.shop/api/v1/user/request_code", payload, &wg, ch)
 			}
 		}(client)
-		// titomarket.com send_code (OTP - POST Form)
+		// titomarket.com
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
