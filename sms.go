@@ -956,7 +956,7 @@ cookieJar, _ := cookiejar.New(nil)
 				sendFormRequest(c, ctx, "https://pirankalaco.ir/SendPhone.php", formData, &wg, ch)
 			}
 		}(client)
-		// narsisbeauty.com admin-ajax.php (OTP - POST Form)
+		// narsisbeauty.com 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
