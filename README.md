@@ -17,7 +17,7 @@
 - **ارسال درخواست:** دارای 156 API برای پیام و 6 تا برای تماس💣🔥
 - **تنظیم سرعت:** دارای 2 حالت سرعت( تند و متوسط )🛸🚀
 ## استفاده از ابزار:
-- استفاده از این ابزار از طریق 2 روش امکان پذیر است [ترموکس](https://github.com/monsmain/sms-bomber-iran/blob/main/README-Termux.md) یا [برنامه](https://github.com/monsmain/sms-bomber-iran/edit/main/README.md#%D8%AF%D8%A7%D9%86%D9%84%D9%88%D8%AF%EF%B8%8F) 
+- استفاده از این ابزار از طریق 2 روش امکان پذیر است [ترموکس](https://github.com/monsmain/sms-bomber-iran/blob/main/README-Termux.md) یا [برنامه](https://github.com/monsmain/sms-bomber-iran/blob/main/README.md#%D8%AF%D8%A7%D9%86%D9%84%D9%88%D8%AF%EF%B8%8F) 
 
 ## دانلود⬇️
 
