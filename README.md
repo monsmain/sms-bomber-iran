@@ -10,12 +10,6 @@
 - استفاده از این ابزار از طریق 2 روش امکان پذیر است [ترموکس](https://github.com/monsmain/sms-bomber-iran/blob/main/README-Termux.md) یا [برنامه](https://github.com/monsmain/sms-bomber-iran/blob/main/README.md#%D8%AF%D8%A7%D9%86%D9%84%D9%88%D8%AF%EF%B8%8F) 
 
 
-
-<p align="center">
-    <img src="images/photo1.png" alt="photo1.png">
-</p>
-
-
 ## ویژگی‌ها💫
 
 - **کاربرپسند:** رابط کاربری ساده و آسان
