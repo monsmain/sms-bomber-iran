@@ -1699,7 +1699,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// api.mootanroo.com (JSON)
+		// api.mootanroo.com (JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -1709,7 +1709,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// accounts.khanoumi.com (Form)
+		// accounts.khanoumi.com (Form) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -1800,8 +1800,8 @@ cookieJar, _ := cookiejar.New(nil)
 				}, &wg, ch)
 			}
 		}(client) 
-
-		// shab.ir login-otp (JSON)
+// az in 2 ta yekish kar mikoneh fekr konam.
+		// shab.ir login-otp (JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -1811,7 +1811,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// shab.ir (JSON)
+		// shab.ir (JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
