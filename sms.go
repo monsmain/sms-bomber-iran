@@ -482,7 +482,17 @@ cookieJar, _ := cookiejar.New(nil)
 
 	for i := 0; i < repeatCount; i++ {
 		
-
+               // darsban.com (JSON)
+               wg.Add(1)
+               tasks <- func(c *http.Client) func() {
+                        return func() {
+               payload := map[string]interface{}{
+                "type":  "firstPhone",
+                "phone": phone, 
+                }
+                sendJSONRequest(c, ctx, "https://www.darsban.com/api/usersmslogin", payload, &wg, ch)
+                }
+        }(client)
 		// novinparse.com (SMS - POST Form)
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
