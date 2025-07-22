@@ -851,22 +851,6 @@ tasks <- func(c *http.Client) func() {
     }
 }(client)
 
-// --- 4hair.ir (POST, FORM)
-wg.Add(1)
-tasks <- func(c *http.Client) func() {
-    return func() {
-        formData := url.Values{}
-        formData.Set("action", "mreeir_send_sms")
-        formData.Set("mobileemail", phone)
-        formData.Set("userisnotauser", "")
-        formData.Set("type", "mobile")
-        formData.Set("captcha", "")
-        formData.Set("captchahash", "")
-        formData.Set("security", "dfd624b63d")
-        sendFormRequest(c, ctx, "https://4hair.ir/wp-admin/admin-ajax.php", formData, &wg, ch)
-    }
-}(client)
-
 // --- kanoonbook.ir (POST, FORM)
 wg.Add(1)
 tasks <- func(c *http.Client) func() {
@@ -878,17 +862,6 @@ tasks <- func(c *http.Client) func() {
     }
 }(client)
 
-// --- zzzagros.com (POST, FORM)
-wg.Add(1)
-tasks <- func(c *http.Client) func() {
-    return func() {
-        formData := url.Values{}
-        formData.Set("action", "awsa-login-with-phone-send-code")
-        formData.Set("nonce", "19b172d9c2") 
-        formData.Set("username", phone)
-        sendFormRequest(c, ctx, "https://www.zzzagros.com/wp-admin/admin-ajax.php", formData, &wg, ch)
-    }
-}(client)
 
 
 
