@@ -1821,17 +1821,6 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// virgool.io (JSON)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				sendJSONRequest(c, ctx, "https://virgool.io/api/v1.4/auth/verify", map[string]interface{}{
-					"method":     "phone",
-					"identifier": phone,
-				}, &wg, ch)
-			}
-		}(client) 
-
 		// Mobinnet (JSON)
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
