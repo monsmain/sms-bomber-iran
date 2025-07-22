@@ -584,7 +584,18 @@ tasks <- func(c *http.Client) func() {
     }
 }(client)
 
-
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        formData := url.Values{}
+        formData.Set("name", "ferer")
+        formData.Set("famil", "eerrwrsrw")
+        formData.Set("mobile", phone)
+        formData.Set("job", "rrr ee")
+        formData.Set("register", "عضویت")
+        sendFormRequest(c, ctx, "https://www.tala.ir/user/register", formData, &wg, ch)
+    }
+}(client)
 
 	}
 
