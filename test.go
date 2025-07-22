@@ -915,16 +915,6 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// shimashoes.com (Registration - POST Form)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				formData := url.Values{}
-				formData.Set("email", phone)
-				sendFormRequest(c, ctx, "https://shimashoes.com/api/customer/member/register/", formData, &wg, ch) // ارسال c
-			}
-		}(client) 
-
 		// api.123kif.com Register (Registration/OTP - POST JSON)
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
