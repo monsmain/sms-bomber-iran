@@ -585,7 +585,7 @@ cookieJar, _ := cookiejar.New(nil)
 				sendJSONRequest(c, ctx, "https://api-gw.karnameh.com/switch/api/auth/otp/send/", payload, &wg, ch)
 			}
 		}(client)
-		// afrak.com 
+		// afrak.com  ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
@@ -1058,7 +1058,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// telketab.com (POST Form)
+		// telketab.com (POST Form) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() { 
@@ -1286,7 +1286,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client)
 
-		// chechilas.com (SMS - POST Form)
+		// chechilas.com (SMS - POST Form) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -1389,7 +1389,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// gifkart.com (SMS - POST Form)
+		// gifkart.com (SMS - POST Form) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
