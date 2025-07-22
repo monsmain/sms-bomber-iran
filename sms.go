@@ -1660,15 +1660,7 @@ cookieJar, _ := cookiejar.New(nil)
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////ofline-ofline-ofline
-		// pirankalaco.ir (OTP - POST Form)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				formData := url.Values{}
-				formData.Set("phone", phone) 
-				sendFormRequest(c, ctx, "https://pirankalaco.ir/SendPhone.php", formData, &wg, ch)
-			}
-		}(client)
+
 		// narsisbeauty.com 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
