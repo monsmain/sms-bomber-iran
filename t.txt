@@ -1,33 +1,8 @@
 added:
-https://www.darsban.com
-https://novinparse.com
-https://services.fitamin.ir
-https://gama.ir
-https://api-gw.karnameh.com
-https://client.afrak.com
-https://iranous.com
-https://digido.ir
-https://api.nikpardakht.com
-https://irancoral.ir
-https://api.fidibo.com
-https://apigateway.fadaktrains.com
-https://api.faradars.org
-https://hoseinifinance.com
-https://iraanbaba.com
-https://sanjagh.pro
-https://gateway.telewebion.com
-https://api.zarinplus.com
-https://api.abantether.com
-https://auth.mrbilit.ir
-https://api.bitpin.org
-https://gateway.wisgoon.com
-https://account.api.balad.ir
-https://api.torob.com
-https://cyclops.drnext.ir
-https://skmei-iran.com
-https://hoomangold.com
-https://gateway.joordaroo.com
-https://www.dolichi.com
+https://www.darsban.com https://novinparse.com https://services.fitamin.ir https://gama.ir https://api-gw.karnameh.com https://client.afrak.com  https://iranous.com https://digido.ir 
+https://api.nikpardakht.com https://irancoral.ir https://api.fidibo.com https://apigateway.fadaktrains.com https://api.faradars.org https://hoseinifinance.com https://iraanbaba.com
+https://sanjagh.pro https://gateway.telewebion.com https://api.zarinplus.com https://api.abantether.com https://auth.mrbilit.ir https://api.bitpin.org https://gateway.wisgoon.com
+https://account.api.balad.ir https://api.torob.com https://cyclops.drnext.ir https://skmei-iran.com https://hoomangold.com https://gateway.joordaroo.com https://www.dolichi.com
 https://davidjonesonline.ir
 https://bimebazar.com
 https://telketab.com
