@@ -890,17 +890,6 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client)
 
-		// techsiro.com (SMS - POST Form)
- 		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				payload := map[string]interface{}{
-					"user_number": phone,
-				}
-				sendJSONRequest(c, ctx, "https://api.techsiro.com/auth/generate-verification-code/", payload, &wg, ch) 
-			}
-		}(client) 
-
 		// api.123kif.com Register (Registration/OTP - POST JSON)
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
