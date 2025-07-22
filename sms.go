@@ -1790,18 +1790,6 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client)
 
-		// see5.net (Form)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				formData := url.Values{}
-				formData.Set("mobile", phone)
-				formData.Set("name", "sfsfsfsffsf")
-				formData.Set("demo", "bz_sh_fzltprxh")
-				sendFormRequest(c, ctx, "https://see5.net/wp-content/themes/see5/webservice_demo2.php", formData, &wg, ch)
-			}
-		}(client) 
-
 		// itmall.ir (Form)
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
