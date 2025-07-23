@@ -490,27 +490,15 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// --- 123kif - CheckMobile (POST, JSON)
-wg.Add(1)
-tasks <- func(c *http.Client) func() {
-    return func() {
-        payload := map[string]interface{}{
-            "mobile": phone,
-        }
-        sendJSONRequest(c, ctx, "https://api.123kif.com/api/auth/CheckMobile", payload, &wg, ch)
-    }
-}(client)
-
 // --- 123kif - Register (POST, JSON)
 wg.Add(1)
 tasks <- func(c *http.Client) func() {
     return func() {
         payload := map[string]interface{}{
+            "firstName": "mons",
+            "lastName": "main",
             "mobile": phone,
-            "password": "testpassword123",
-            "firstName": "user",
-            "lastName": "name",
+            "password": "monsmain@0",
             "platform": "web",
             "refferCode": "",
         }
