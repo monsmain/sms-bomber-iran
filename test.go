@@ -490,18 +490,6 @@ cookieJar, _ := cookiejar.New(nil)
 			}
 		}(client) 
 
-		// https://refahtea.ir (Form Data)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() { 
-			return func() {
-				formData := url.Values{}
-				formData.Set("action", "refah_send_code")
-				formData.Set("mobile", phone)
-				formData.Set("security", "157e0ae7ff") //cheack
-				sendFormRequest(c, ctx, "https://refahtea.ir/wp-admin/admin-ajax.php", formData, &wg, ch) 
-			}
-		}(client) 
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // --- 123kif - CheckMobile (POST, JSON)
 wg.Add(1)
