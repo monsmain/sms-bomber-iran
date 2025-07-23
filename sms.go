@@ -1896,6 +1896,16 @@ tasks <- func(c *http.Client) func() {
 			}
 		}(client) 
 
+		// https://benedito.ir/ (Form Data) ✅ 
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() { 
+			return func() {
+				formData := url.Values{}
+				formData.Set("mobile", phone)
+				formData.Set("sdvssd45fsdv", "brtht33yjuj7s")  // cheack
+				sendFormRequest(c, ctx, "https://api.benedito.ir/v1/customer/register-login?version=new1", formData, &wg, ch) 
+			}
+		}(client) 
 
 
 
