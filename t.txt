@@ -2,7 +2,8 @@ felan of shodan:
 https://pashikshoes.com/  https://gitamehr.ir/
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-add:
+
+
 
 Request URL
 https://ultraamooz.com/wp-admin/admin-ajax.php
@@ -44,22 +45,598 @@ code
 dig_reg_mail
 dig_nounce
 a6fd7f4d05
-------------------------------------------
+---------------------------------------------------------------
+Request URL
+https://api.pateh.com/ath/auth/login-or-register
+
+{mobile: "09122221515"}
+mobile
+: 
+"09122221515"
+---------------------------------------------------------------
+Request URL
+https://aloghesti.com/wp-admin/admin-ajax.php
+
+login_digt_countrycode
++98
+digits_phone
+9121221212
+action_type
+phone
+digits_reg_name
+monsmain
+digits_process_register
+1
+sms_otp
+otp_step_1
+1
+digits_otp_field
+1
+digits
+1
+instance_id
+14a99a5919d973c4ac4f811d93cde732
+action
+digits_forms_ajax
+type
+login
+digits_step_1_type
+digits_step_1_value
+digits_step_2_type
+digits_step_2_value
+digits_step_3_type
+digits_step_3_value
+digits_login_email_token
+digits_redirect_page
+//aloghesti.com/?page=1&redirect_to=https%3A%2F%2Faloghesti.com%2F
+digits_form
+b3b7e8ee3b
+_wp_http_referer
+/?login=true&page=1&redirect_to=https%3A%2F%2Faloghesti.com%2F
+show_force_title
+1
+container
+digits_protected
+sub_action
+sms_otp
+---------------------------------------------------------------
+Request URL
+https://accounts.khanoumi.com/account/login/init
+
+applicationId
+b92fdd0f-a44d-4fcc-a2db-6d955cce2f5e
+loginIdentifier
+09128887494
+loginSchemeName
+sms
+---------------------------------------------------------------
+1:
+Request URL
+https://api.malltina.com/check-user
+Request Method
+POST
+Status Code
+404 Not Found
+
+{username: "09123456456"}
+username
+: 
+"09123456456"
+
+2:
+Request URL
+https://api.malltina.com/profiles
+Request Method
+POST
+Status Code
+200 OK
+
+{password: "Monsmain1", mobile: "09123456456", sign_up_referral_link: "https://www.google.com/"}
+mobile
+: 
+"09123456456"
+password
+: 
+"Monsmain1"
+sign_up_referral_link
+: 
+"https://www.google.com/"
+---------------------------------------------------------------
+Request URL
+https://www.1001kharid.com/wp-admin/admin-ajax.php
+Request Method
+POST
+Status Code
+200 OK
+
+digt_countrycode
++98
+phone
+912 346 6456
+email
+codedbymonsmain@gmail.com
+digits_process_register
+1
+sms_otp
+digits_otp_field
+1
+instance_id
+d6cb3048bb8d26ad37ff3614aca5af44
+optional_data
+optional_data
+action
+digits_forms_ajax
+type
+register
+dig_otp
+otp
+digits
+1
+digits_redirect_page
+//www.1001kharid.com/?page=2&redirect_to=https%3A%2F%2Fwww.1001kharid.com%2F
+digits_form
+4b99e55cbf
+_wp_http_referer
+/?login=true&page=2&redirect_to=https%3A%2F%2Fwww.1001kharid.com%2F
+container
+digits_protected
+sub_action
+sms_otp
+---------------------------------------------------------------
+Request URL
+https://1000gem.org/livewire/message/login-register
+Request Method
+POST
+Status Code
+200 OK
+
+{,…}
+fingerprint
+: 
+{id: "mDsPd183oa27dqVVUoLZ", name: "login-register", locale: "fa", path: "login", method: "GET",…}
+id
+: 
+"mDsPd183oa27dqVVUoLZ"
+locale
+: 
+"fa"
+method
+: 
+"GET"
+name
+: 
+"login-register"
+path
+: 
+"login"
+v
+: 
+"acj"
+serverMemo
+: 
+{children: [], errors: [], htmlHash: "f1e4f4d5",…}
+checksum
+: 
+"927fb6d3e90ac196294671f3c0ba1b6bd424151ae9becef9a8ae58656ca1522c"
+children
+: 
+[]
+data
+: 
+{email: null, phone: null, password: null, name: null, step: 1, ruser: 0, code: null,…}
+code
+: 
+null
+cverify_cred_rend
+: 
+false
+email
+: 
+null
+name
+: 
+null
+passw
+: 
+null
+password
+: 
+null
+ph0_s3cret
+: 
+null
+phone
+: 
+null
+registerForm
+: 
+false
+ruser
+: 
+0
+step
+: 
+1
+u4att3mpt
+: 
+null
+u4att3mpts
+: 
+0
+u4tim3rl0gin
+: 
+1753216200
+dataMeta
+: 
+[]
+errors
+: 
+[]
+htmlHash
+: 
+"f1e4f4d5"
+updates
+: 
+[{type: "syncInput", payload: {id: "erab", name: "phone", value: "09122221514"}},…]
+0
+: 
+{type: "syncInput", payload: {id: "erab", name: "phone", value: "09122221514"}}
+payload
+: 
+{id: "erab", name: "phone", value: "09122221514"}
+id
+: 
+"erab"
+name
+: 
+"phone"
+value
+: 
+"09122221514"
+type
+: 
+"syncInput"
+1
+: 
+{type: "callMethod", payload: {id: "0k13", method: "sendsms", params: []}}
+payload
+: 
+{id: "0k13", method: "sendsms", params: []}
+id
+: 
+"0k13"
+method
+: 
+"sendsms"
+params
+: 
+[]
+type
+: 
+"callMethod"
+---------------------------------------------------------------
+Request URL
+https://www.hamrah-mechanic.com/api/v1/membership/otp
+Request Method
+POST
+Status Code
+200 OK
+
+{PhoneNumber: "09122221514", prevDomainUrl: "https://www.google.com/",…}
+PhoneNumber
+: 
+"09122221514"
+landingPageUrl
+: 
+"https://www.hamrah-mechanic.com/cars-for-sale/"
+orderPageUrl
+: 
+"https://www.hamrah-mechanic.com/membersignin/"
+prevDomainUrl
+: 
+"https://www.google.com/"
+prevUrl
+: 
+"https://www.hamrah-mechanic.com/cars-for-sale/"
+referrer
+: 
+"https://www.google.com/"
+---------------------------------------------------------------
+Request URL
+https://kart.ir/api/auth/authenticate
+Request Method
+POST
+Status Code
+200 OK
+
+{username: "09123456456"}
+username
+: 
+"09123456456"
+---------------------------------------------------------------
+1:
+Request URL
+https://nickdigi.ir/wp-content/plugins/Shahkar/includes/AJAX/Clients/AUTH/CheckUserExists.php
+Request Method
+POST
+Status Code
+200 OK
 
 
+username
+09123456456
+type
+CheckUsername
+
+2:
+Request URL
+https://nickdigi.ir/wp-content/plugins/Shahkar/includes/AJAX/Clients/AUTH/register.php
+Request Method
+POST
+Status Code
+200 OK
 
 
+password
+monsmain@
+---------------------------------------------------------------
+1:
+Request URL
+https://market-backend.dgshahr.com/shop/user/user_login/
+Request Method
+POST
+Status Code
+200 OK
+
+{phone_number: "09128887494"}
+phone_number
+: 
+"09128887494"
+
+2:
+Request URL
+https://market-backend.dgshahr.com/shop/utils/sessions/
+Request Method
+POST
+Status Code
+200 OK
+
+{device_id: "1753380675041", user_id: null, device: "desktop",…}
+action_event
+: 
+"visit"
+device
+: 
+"desktop"
+device_dimension
+: 
+"458x826"
+device_id
+: 
+"1753380675041"
+first_visit_page
+: 
+"/plp/category/2236"
+medium
+: 
+null
+source
+: 
+null
+user_agent_original_text
+: 
+"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36"
+user_id
+: 
+null
+---------------------------------------------------------------
+Request URL
+https://irani24.ir/signin?do
+Request Method
+POST
+Status Code
+200 OK
+
+do
+user_mobile
+09122221514
+confirm_code
+---------------------------------------------------------------
+Request URL
+https://api.footballi.net/api/v2/user/check
+Request Method
+POST
+Status Code
+200 OK
+
+{login: "09122221515", country_code: "+98"}
+country_code
+: 
+"+98"
+login
+: 
+"09122221515"
+---------------------------------------------------------------
+Request URL
+https://70kala.ir/wp-admin/admin-ajax.php
+Request Method
+POST
+Status Code
+200 OK
+
+login_digt_countrycode
++98
+digits_phone
+912 222 1515
+action_type
+phone
+digits
+1
+instance_id
+7b0048080e38e916af365b7a33363096
+action
+digits_forms_ajax
+type
+login
+digits_step_1_type
+digits_step_1_value
+digits_step_2_type
+digits_step_2_value
+digits_step_3_type
+digits_step_3_value
+digits_login_email_token
+digits_redirect_page
+//70kala.ir/?page=1&redirect_to=https%3A%2F%2F70kala.ir%2F
+digits_form
+3057f39e8c
+_wp_http_referer
+/?login=true&page=1&redirect_to=https%3A%2F%2F70kala.ir%2F
+show_force_title
+1
+---------------------------------------------------------------
+1:
+Request URL
+https://www.onlinekala.ir/login?back=my-account
+Request Method
+POST
+Status Code
+200 OK
+
+back
+my-account
+action
+showForm
+type
+register
+username
+ajax
+1
+
+2:
+Request URL
+https://www.onlinekala.ir/login?back=my-account
+Request Method
+POST
+Status Code
+200 OK
+
+back
+my-account
+username
+09122221515
+id_customer
+back
+firstname
+مانس 
+lastname
+مین
+action
+register
+back
+my-account
+ajax
+1
+---------------------------------------------------------------
+Request URL
+https://evanhamrah.com/wp-admin/admin-ajax.php
+Request Method
+POST
+Status Code
+200 OK
+
+phone_number
+09123456789
+action
+ajax_login_register
+wcp_nonce
+290a8a31b9
+---------------------------------------------------------------
+Request URL
+https://user.zirbana.com/v2/register
+Request Method
+POST
+Status Code
+201 Created
 
 
+mobile
+09122221515
+client_id
+12
+client_secret
+yKrlLyr4IBxXhZSyvjKZLObsUF8iSGNhtEEcjfIr
+---------------------------------------------------------------
+Request URL
+https://geminja.com/wp-json/api/sendSmsMelliPayamak
+Request Method
+POST
+Status Code
+200 OK
 
+//noting
 
+2:
+Request URL
+https://geminja.com/login?type=register
+Request Method
+POST
+Status Code
+200 OK
 
+type
+register
+regMobile
+09122221515
+dlr-register
+ثبت نام
+_dlr_mobits
+register
+---------------------------------------------------------------
+Request URL
+https://api.arzplus.net/api/v1/accounts/signup/init/
+Request Method
+POST
+Status Code
+200 OK
 
+{phone: "09123466456"}
+phone
+: 
+"09123466456"
+---------------------------------------------------------------
+Request URL
+https://gooshi.online/site/api/v1/user/otp
+Request Method
+POST
+Status Code
+200 OK
 
+{return_url: "", mobile: "09122221010", name: "مانس مین", referrer: "گوگل",…}
+mobile
+: 
+"09122221010"
+name
+: 
+"مانس مین"
+national_code
+: 
+"1000000000"
+referrer
+: 
+"گوگل"
+return_url
+: 
+""
+---------------------------------------------------------------
+Request URL
+https://www.vidovin.com/Users/LoginPopup
+Request Method
+POST
+Status Code
+200 OK
 
-
-
-
+{ 'MobileNo': '09122221515'}
+---------------------------------------------------------------
 
 
 
