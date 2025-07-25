@@ -638,19 +638,6 @@ tasks <- func(c *http.Client) func() {
     }
 }(client)
 
-// --- user.zirbana.com/v2/register (JSON) ---
-wg.Add(1)
-tasks <- func(c *http.Client) func() {
-    return func() {
-        payload := map[string]interface{}{
-            "mobile": phone,
-            "client_id": "12",
-            "client_secret": "yKrlLyr4IBxXhZSyvjKZLObsUF8iSGNhtEEcjfIr",
-        }
-        sendJSONRequest(c, ctx, "https://user.zirbana.com/v2/register", payload, &wg, ch)
-    }
-}(client)
-
 // --- geminja.com/login?type=register (FORM) ---
 wg.Add(1)
 tasks <- func(c *http.Client) func() {
