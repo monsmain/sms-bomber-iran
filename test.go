@@ -373,36 +373,14 @@ cookieJar, _ := cookiejar.New(nil)
 	}
 
 	for i := 0; i < repeatCount; i++ {
-		
-		
-		// api.ostadkr.com (JSON)
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				sendJSONRequest(c, ctx, "https://api.ostadkr.com/login", map[string]interface{}{ 
-					"mobile": phone,
-				}, &wg, ch)
-			}
-		}(client) 
 
-		// caropex.com (JSON)
+		// caropex.com (JSON) updateing site = ofline
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
 			return func() {
 				sendJSONRequest(c, ctx, "https://caropex.com/api/v1/user/login", map[string]interface{}{ 
 					"mobile": phone,
 				}, &wg, ch)
-			}
-		}(client)
-		// narsisbeauty.com 
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				formData := url.Values{}
-				formData.Set("phone_number", phone) 
-				formData.Set("wupp_remember_me", "on") 
-				formData.Set("action", "wupp_sign_up") 
-				sendFormRequest(c, ctx, "https://narsisbeauty.com/wp-admin/admin-ajax.php", formData, &wg, ch)
 			}
 		}(client)
 
