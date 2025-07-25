@@ -374,16 +374,6 @@ cookieJar, _ := cookiejar.New(nil)
 
 	for i := 0; i < repeatCount; i++ {
 
-		// caropex.com (JSON) updateing site = ofline
-		wg.Add(1)
-		tasks <- func(c *http.Client) func() {
-			return func() {
-				sendJSONRequest(c, ctx, "https://caropex.com/api/v1/user/login", map[string]interface{}{ 
-					"mobile": phone,
-				}, &wg, ch)
-			}
-		}(client)
-
 		//  toprayan.com 
 		wg.Add(1)
 		tasks <- func(c *http.Client) func() {
@@ -683,11 +673,6 @@ tasks <- func(c *http.Client) func() {
         sendJSONRequest(c, ctx, "https://my.okcs.com/api/check-mobile", payload, &wg, ch)
     }
 }(client)
-
-
-
-
-		
 
 		
 	}
