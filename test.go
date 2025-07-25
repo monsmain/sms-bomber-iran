@@ -892,11 +892,6 @@ tasks <- func(c *http.Client) func() {
         headers := map[string]string{
             "Host":            "ws.alibaba.ir",
             "User-Agent":     *
-
-
-
-
-
 	}
 
 	close(tasks)
