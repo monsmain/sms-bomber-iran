@@ -107,41 +107,6 @@ username
 "09122221515"
 ---------------------------------------------------------------
 Request URL
-https://gw.darmankade.com/Account/SendCode
-Request Method
-POST
-Status Code
-200 OK
-
-{UserName: "09122221515", invitationCode: "",…}
-CaptchaToken
-: 
-"AePsWyPrqV74ei89KcYiXaLwLubFieVvKg"
-RouterPath
-: 
-"/c/psychologist/"
-UserAgent
-: 
-"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36"
-UserName
-: 
-"09122221515"
-invitationCode
-: 
-""
----------------------------------------------------------------
-Request URL
-https://api.snapp.doctor/core/Api/Common/v1/sendVerificationCode/09122221515/sms?cCode=%2B98
-Request Method
-GET
-Status Code
-200 OK
-
-
-cCode
-+98
----------------------------------------------------------------
-Request URL
 https://api.doctoreto.com/api/web/patient/v1/accounts/register
 Request Method
 POST
