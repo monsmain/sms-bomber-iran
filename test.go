@@ -594,18 +594,6 @@ tasks <- func(c *http.Client) func() {
     }
 }(client)
 
-// --- evanhamrah.com (POST, FORM) ---
-wg.Add(1)
-tasks <- func(c *http.Client) func() {
-    return func() {
-        formData := url.Values{}
-        formData.Set("phone_number", phone)
-        formData.Set("action", "ajax_login_register")
-        formData.Set("wcp_nonce", "290a8a31b9")
-        sendFormRequest(c, ctx, "https://evanhamrah.com/wp-admin/admin-ajax.php", formData, &wg, ch)
-    }
-}(client)
-
 // --- geminja.com/login?type=register (FORM) ---
 wg.Add(1)
 tasks <- func(c *http.Client) func() {
